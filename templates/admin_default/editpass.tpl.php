@@ -19,7 +19,7 @@
 </tr>
 <tr>
   <td></td>
-  <td><input type="submit" class="button" value="<?php echo $sg->i18n->_g("Save Changes") ?>" /></td>
+  <td><input type="submit" class="button" value="<?php \*"*\ echo $sg->i18n->_g("Save Changes") ?>" /></td>
 </tr>
 </table>
 </form>

@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.27 2004/10/26 04:32:36 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.28 2004/11/01 08:17:33 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -44,11 +44,13 @@ class sgAdmin extends Singapore
   function sgAdmin($basePath = "")
   {
     //import class definitions
+    //io handler class included once config is loaded
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
+    require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/user.class.php";
-    require_once $basePath."includes/config.class.php";
+    require_once $basePath."includes/io.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
@@ -484,10 +486,10 @@ class sgAdmin extends Singapore
         $users[$i]->email = $_REQUEST["sgEmail"];
         $users[$i]->fullname = $_REQUEST["sgFullname"];
         $users[$i]->description = $_REQUEST["sgDescription"];
-        if($this->isAdmin()) {
+        if($this->isAdmin() && $_REQUEST["action"] == "saveuser") {
           $users[$i]->groups = $_REQUEST["sgGroups"];
           $users[$i]->permissions = ($_REQUEST["sgType"] == "admin") ? $users[$i]->permissions | SG_ADMIN : $users[$i]->permissions & ~SG_ADMIN;
-          if($_REQUEST["sgPassword"] != "**********")
+          if(isset($_REQUEST["sgPassword"]) && $_REQUEST["sgPassword"] != "**********")
             $users[$i]->userpass = md5($_REQUEST["sgPassword"]);
         }
         if($this->io->putUsers($users))

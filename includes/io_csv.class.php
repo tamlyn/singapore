@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.13 2004/10/11 05:24:11 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.14 2004/11/01 08:17:33 tamlyn Exp $
  */
 
 /**
@@ -14,30 +14,17 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @copyright (c)2003, 2004 Tamlyn Rhodes
  */
-class sgIO_csv {
+class sgIO_csv extends sgIO
+{
+  //constructor provided by parent class
   
-  /**
-   * instance of a {@link sgConfig} object representing the current 
-   * script configuration
-   * @var sgConfig
-   */
-  var $config;
-  
-  /**
-   * @param sgConfig pointer to a {@link sgConfig} object representing 
-   *   the current script configuration
-   */
-  function sgIO_csv(&$config)
-  {
-    $this->config =& $config;
-  }
-
   /**
    * Fetches gallery info for the specified gallery and immediate children.
    * @param string gallery id
    * @param string language code spec for this request (optional)
+   * @param bool    true to fetch one level of child galleries (optional)
    */
-  function getGallery($galleryId, $language = null) 
+  function getGallery($galleryId, $language = null, $getChildGalleries = true) 
   {
     $gal = new sgGallery($galleryId);
 
@@ -56,7 +43,7 @@ class sgIO_csv {
       
       list(
         $gal->filename,
-        ,
+        $gal->thumbnail,
         $gal->owner,
         $gal->groups,
         $gal->permissions,
@@ -104,156 +91,35 @@ class sgIO_csv {
             : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
       }
         
-    } elseif(file_exists($this->config->base_path.$this->config->pathto_galleries.$galleryId)) { 
-      //no metadata so use iifn
-
-      $bits = explode("/",$gal->id);
-      $temp = strtr($bits[count($bits)-1], "_", " ");
-      if($temp == ".")
-        $gal->name = $this->config->gallery_name;
-      elseif($this->config->enable_iifn && strpos($temp, " - ")) 
-        list($gal->artist,$gal->name) = explode(" - ", $temp);
-      else
-        $gal->name = $temp;
-      
-      $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$gal->id."/", "images");
-      
-      //set gallery thumbnail to first image in gallery (if any)
-      if(isset($dir->files[0])) $gal->filename = $dir->files[0];
-      
-      for($i=0;$i<count($dir->files);$i++) {
-        $gal->images[$i] = new sgImage();
-        $gal->images[$i]->filename = $dir->files[$i];
-        //trim off file extension and replace underscores with spaces
-        $temp = strtr(substr($gal->images[$i]->filename, 0, strrpos($gal->images[$i]->filename,".")-strlen($gal->images[$i]->filename)), "_", " ");
-        //split string in two on " - " delimiter
-        if($this->config->enable_iifn && strpos($temp, " - ")) 
-          list($gal->images[$i]->artist,$gal->images[$i]->name) = explode(" - ", $temp);
-        else
-          $gal->images[$i]->name = $temp;
-      
-        //get image size and type
-        list(
-          $gal->images[$i]->width, 
-          $gal->images[$i]->height, 
-          $gal->images[$i]->type
-        ) = @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
-      }
-    } else {
-      //selected gallery does not exist
-      return null;
-    }
+    } else
+      //no metadata found so use iifn method implemented in parent class
+      return parent::getGallery($galleryId, $language, false);
     
-    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$gal->id."/", "dirs");
-
-    foreach($dir->dirs as $gallery) 
-      $gal->galleries[] = $this->getSubGallery($this->config->base_path.$this->config->pathto_galleries, $gal->id."/".$gallery, $language);
+    //discover child galleries
+    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
+    if($getChildGalleries)
+      //but only fetch their info if required too
+      foreach($dir->dirs as $gallery) 
+        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, false);
+    else
+      //otherwise just copy their names in so they can be counted
+      $gal->galleries = $dir->dirs;
     
     return $gal;
   }
   
   /**
-   * @private
+   * Stores gallery information.
+   * @param sgGallery  instance of gallery object to be stored
    */
-  function getSubGallery($path, $galleryId, $language)
-  {
-    
-    $gallery = new sgGallery($galleryId);
-    
-    $fp = @fopen($path.$galleryId."/metadata.$language.csv","r");
-    if(!$fp) 
-      $fp = @fopen($path.$galleryId."/metadata.csv","r");
-    
-    if($fp) { //get info from metadata file
-
-      while($temp[] = fgetcsv($fp,2048));
-      fclose($fp);
-      
-      list(
-        $gallery->filename,
-        ,
-        $gallery->owner,
-        $gallery->groups,
-        $gallery->permissions,
-        $gallery->categories,
-        $gallery->name,
-        $gallery->artist,
-        $gallery->email,
-        $gallery->copyright,
-        $gallery->desc,
-        $gallery->summary,
-        $gallery->date
-      ) = $temp[1];
-      
-      for($i=0;$i<count($temp)-3;$i++) {
-        $gallery->images[$i] = new sgImage();
-        list(
-          $gallery->images[$i]->filename,
-          $gallery->images[$i]->thumbnail,
-          $gallery->images[$i]->owner,
-          $gallery->images[$i]->groups,
-          $gallery->images[$i]->permissions,
-          $gallery->images[$i]->categories,
-          $gallery->images[$i]->name,
-          $gallery->images[$i]->artist,
-          $gallery->images[$i]->email,
-          $gallery->images[$i]->copyright,
-          $gallery->images[$i]->desc,
-          $gallery->images[$i]->location,
-          $gallery->images[$i]->date,
-          $gallery->images[$i]->camera,
-          $gallery->images[$i]->lens,
-          $gallery->images[$i]->film,
-          $gallery->images[$i]->darkroom,
-          $gallery->images[$i]->digital
-        ) = $temp[$i+2];
-      }
-    
-    } else { //get info from file name (iifn)
-   
-      $bits = explode("/",$galleryId);
-      $temp = strtr($bits[count($bits)-1], "_", " ");
-      if($this->config->enable_iifn && strpos($temp, " - ")) 
-        list($gallery->artist,$gallery->name) = explode(" - ", $temp);
-      else
-        $gallery->name = $temp;
-      
-      $dir = Singapore::getListing($path.$galleryId."/", "images");
-      
-      //set gallery thumbnail to first image in gallery (if any)
-      if(isset($dir->files[0])) $gallery->filename = $dir->files[0];
-      
-      for($i=0;$i<count($dir->files);$i++) {
-        $gallery->images[$i] = new sgImage;
-        $gallery->images[$i]->filename = $dir->files[$i];
-        //trim off file extension and replace underscores with spaces
-        $temp = strtr(substr($gallery->images[$i]->filename, 0, strrpos($gallery->images[$i]->filename,".")-strlen($gallery->images[$i]->filename)), "_", " ");
-        //split string in two on " - " delimiter
-        if($this->config->enable_iifn && strpos($temp, " - ")) 
-          list($gallery->images[$i]->artist,$gallery->images[$i]->name) = explode(" - ", $temp);
-        else
-          $gallery->images[$i]->name = $temp;
-      }
-      
-    }
-    
-    $dir = Singapore::getListing($path.$galleryId."/", "dirs");
-    
-    foreach($dir->dirs as $gal) 
-      $gallery->galleries[] = $gal;
-   
-    return $gallery;
-  }
-  
   function putGallery($gallery) {
     
     $fp = fopen($this->config->base_path.$this->config->pathto_galleries.$gallery->id."/metadata.csv","w");
     
-    if(!$fp) return false;
+    if(!$fp)
+      return false;
     
-    $success = true;
-  
-    $success &= (bool) fwrite($fp,"filename,thumbnail,owner,group(s),permissions,catergories,image name,artist name,artist email,copyright,image description,image location,date taken,camera info,lens info,film info,darkroom manipulation,digital manipulation");
+    $success  = (bool) fwrite($fp,"filename,thumbnail,owner,group(s),permissions,catergories,image name,artist name,artist email,copyright,image description,image location,date taken,camera info,lens info,film info,darkroom manipulation,digital manipulation");
     $success &= (bool) fwrite($fp,"\n\"".
       $gallery->filename."\",,".
       $gallery->owner.",".
@@ -295,8 +161,11 @@ class sgIO_csv {
     return $success;
   }
   
+  /**
+   * Fetches hit data from file.
+   * @param string  id of gallery to fetch hits for
+   */
   function getHits($galleryId) {
-    
     
     $fp = @fopen($this->config->base_path.$this->config->pathto_logs.strtr("views".$galleryId,":/?\\","----").".log","r");
     
@@ -332,6 +201,11 @@ class sgIO_csv {
     return $hits;
   }
   
+  /**
+   * Stores gallery hits.
+   * @param string      id of gallery to store hits for
+   * @param sgStdClass  instance of object holding hit data
+   */
   function putHits($galleryId, $hits) {
   
     $fp = fopen($this->config->base_path.$this->config->pathto_logs.strtr("views".$galleryId,":/?\\","----").".log","w");
@@ -353,6 +227,9 @@ class sgIO_csv {
     return true;
   }
   
+  /**
+   * Fetches all registered users.
+   */
   function getUsers() {
     $fp = fopen($this->config->base_path.$this->config->pathto_data_dir."users.csv.php","r");
     
@@ -377,6 +254,10 @@ class sgIO_csv {
     return $users;
   }
   
+  /**
+   * Stores all registered users.
+   * @param array  an array of sgUser objects representing the users to store
+   */
   function putUsers($users) {
     $fp = fopen($this->config->base_path.$this->config->pathto_data_dir."users.csv.php","w");
     if(!$fp) return false;
@@ -388,6 +269,7 @@ class sgIO_csv {
     fclose($fp);
     return $success;
   }
+  
 }
 
 ?>

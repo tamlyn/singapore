@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.7 2004/09/27 07:43:03 tamlyn Exp $
+ * @version $Id: extract.php,v 1.8 2004/11/01 08:17:34 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -98,15 +98,15 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   
   // Get all files matching pattern in current template
   $files = parseDirectory("../".$config->pathto_templates.$config->admin_template_name.'/');
-  $files[count($files)] = "../includes/admin.class.php";
-  $files[count($files)] = "../admin.php";
+  $files[] = "../includes/admin.class.php";
+  $files[] = "../admin.php";
   fwrite($fp, implode("\n", $files));
   
   // Close tempfile
   fclose($fp);
   
   // Call gettext
-  $res = shell_exec("{$GETTEXT_EXTRACT} --debug --keyword=_g --keyword=_ng:1,2 --keyword=__g -C -F -x \"" . $standardPot . "\" --output=\"" . $adminPot . "\" --files-from=\"" . $temp . "\"");
+  $res = shell_exec("{$GETTEXT_EXTRACT} --debug --keyword=_g --keyword=_ng:1,2 -C -F -x \"" . $standardPot . "\" --output=\"" . $adminPot . "\" --files-from=\"" . $temp . "\"");
   if (trim($res)) die("Something seemed to go wrong with gettext:\n" . $res . "\n");
   else echo "Admin strings extracted to $adminPot<br />";
   

@@ -1,6 +1,6 @@
 <h1><?php echo $sg->i18n->_g("new image") ?></h1>
 
-<?php if($sg->galleryHasSubGalleries()) echo "<p>".$sg->i18n->_g("This image will not be visible because this gallery contains subgalleries.")."</p>"; ?>
+<?php if($sg->galleryHasSubGalleries()) echo "<p>".$sg->i18n->_g("This image will not be visible because this gallery is not an album: it contains child galleries.")."</p>"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data" method="post">
 <input type="hidden" name="action" value="addimage" />
@@ -45,7 +45,7 @@
 </tr>
 <tr>
   <td colspan="2"></td>
-  <td><input type="submit" class="button" value="<?php echo $sg->i18n->_g("Create") ?>" /></td>
+  <td><input type="submit" class="button" value="<?php \*"*\ echo $sg->i18n->_g("Create"); ?>" /></td>
 </tr>
 </table>
   

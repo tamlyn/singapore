@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2004-09-27 08:35+0100\n"
+"POT-Creation-Date: 2004-11-01 07:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,11 @@ msgstr ""
 
 #: ../admin.php:41 ../admin.php:55 ../admin.php:87 ../admin.php:104
 #: ../admin.php:125 ../admin.php:143 ../admin.php:162 ../admin.php:170
-#: ../admin.php:177 ../admin.php:185 ../admin.php:192 ../admin.php:213
-#: ../admin.php:227 ../admin.php:235 ../admin.php:242 ../admin.php:253
-#: ../admin.php:273 ../admin.php:283 ../admin.php:296 ../admin.php:308
-#: ../admin.php:321 ../admin.php:333 ../admin.php:365
+#: ../admin.php:177 ../admin.php:185 ../admin.php:192 ../admin.php:199
+#: ../admin.php:220 ../admin.php:234 ../admin.php:242 ../admin.php:249
+#: ../admin.php:260 ../admin.php:280 ../admin.php:290 ../admin.php:303
+#: ../admin.php:315 ../admin.php:328 ../admin.php:340 ../admin.php:352
+#: ../admin.php:384
 msgid "You do not have permission to perform this operation."
 msgstr ""
 
@@ -28,9 +29,10 @@ msgid "Gallery added"
 msgstr ""
 
 #: ../admin.php:48 ../admin.php:66 ../admin.php:75 ../admin.php:93
-#: ../admin.php:111 ../admin.php:131 ../admin.php:149 ../admin.php:202
-#: ../admin.php:247 ../admin.php:259 ../admin.php:289 ../admin.php:302
-#: ../admin.php:314 ../admin.php:327 ../admin.php:339 ../admin.php:370
+#: ../admin.php:111 ../admin.php:131 ../admin.php:149 ../admin.php:209
+#: ../admin.php:254 ../admin.php:266 ../admin.php:296 ../admin.php:309
+#: ../admin.php:321 ../admin.php:334 ../admin.php:346 ../admin.php:358
+#: ../admin.php:389
 msgid "An error occurred:"
 msgstr ""
 
@@ -43,7 +45,8 @@ msgid "Archive contents added"
 msgstr ""
 
 #: ../admin.php:89 ../admin.php:106 ../admin.php:127 ../admin.php:145
-#: ../admin.php:255
+#: ../admin.php:262 ../templates/admin_default/changethumbnail.tpl.php:19
+#: ../templates/admin_default/confirm.tpl.php:9
 msgid "confirm|OK"
 msgstr ""
 
@@ -52,7 +55,8 @@ msgid "Thumbnail changed"
 msgstr ""
 
 #: ../admin.php:95 ../admin.php:114 ../admin.php:133 ../admin.php:151
-#: ../admin.php:261
+#: ../admin.php:268 ../templates/admin_default/changethumbnail.tpl.php:20
+#: ../templates/admin_default/confirm.tpl.php:10
 msgid "confirm|Cancel"
 msgstr ""
 
@@ -98,206 +102,201 @@ msgstr ""
 msgid "Are you sure you want to permanently delete user %s?"
 msgstr ""
 
-#: ../admin.php:199
+#: ../admin.php:206
 msgid "Welcome to singapore admin!"
 msgstr ""
 
-#: ../admin.php:208
+#: ../admin.php:215
 msgid "Thank you and goodbye!"
 msgstr ""
 
-#: ../admin.php:257
+#: ../admin.php:264
 msgid "Thumbnail cache purged"
 msgstr ""
 
-#: ../admin.php:264
+#: ../admin.php:271
 msgid "purge cached thumbnails"
 msgstr ""
 
-#: ../admin.php:266
+#: ../admin.php:273
 #, possible-c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr ""
 
-#: ../admin.php:276
+#: ../admin.php:283
 #, possible-c-format
 msgid "Gallery re-indexed. %s images added."
 msgstr ""
 
-#: ../admin.php:286
+#: ../admin.php:293
 msgid "Gallery info saved"
 msgstr ""
 
-#: ../admin.php:299
-msgid "Image saved successfully"
+#: ../admin.php:306
+msgid "Image info saved"
 msgstr ""
 
-#: ../admin.php:311
+#: ../admin.php:318
 msgid "Password saved"
 msgstr ""
 
-#: ../admin.php:324
+#: ../admin.php:331
 msgid "Permissions saved"
 msgstr ""
 
-#: ../admin.php:336 ../admin.php:368
+#: ../admin.php:343 ../admin.php:355 ../admin.php:387
 msgid "User info saved"
 msgstr ""
 
-#: ../includes/admin.class.php:202
+#: ../includes/admin.class.php:206
 msgid "admin bar|Back"
 msgstr ""
 
-#: ../includes/admin.class.php:204
+#: ../includes/admin.class.php:208
 msgid "admin bar|Admin"
 msgstr ""
 
-#: ../includes/admin.class.php:205
+#: ../includes/admin.class.php:209
 msgid "admin bar|Galleries"
 msgstr ""
 
-#: ../includes/admin.class.php:206
+#: ../includes/admin.class.php:210
 msgid "admin bar|Log out"
 msgstr ""
 
-#: ../includes/admin.class.php:208
+#: ../includes/admin.class.php:212
 #: ../templates/admin_default/gallery.tpl.php:28
 msgid "admin bar|Edit gallery"
 msgstr ""
 
-#: ../includes/admin.class.php:209
+#: ../includes/admin.class.php:213
 #: ../templates/admin_default/gallery.tpl.php:29
 msgid "admin bar|Edit permissions"
 msgstr ""
 
-#: ../includes/admin.class.php:210
+#: ../includes/admin.class.php:214
 #: ../templates/admin_default/gallery.tpl.php:30
 msgid "admin bar|Delete gallery"
 msgstr ""
 
-#: ../includes/admin.class.php:211
+#: ../includes/admin.class.php:215
 #: ../templates/admin_default/gallery.tpl.php:31
 msgid "admin bar|New subgallery"
 msgstr ""
 
-#: ../includes/admin.class.php:212
+#: ../includes/admin.class.php:216
 #: ../templates/admin_default/gallery.tpl.php:32
 msgid "admin bar|Re-index gallery"
 msgstr ""
 
-#: ../includes/admin.class.php:214
+#: ../includes/admin.class.php:218
 msgid "admin bar|Edit image"
 msgstr ""
 
-#: ../includes/admin.class.php:215
+#: ../includes/admin.class.php:219
 msgid "admin bar|Delete image"
 msgstr ""
 
-#: ../includes/admin.class.php:217
+#: ../includes/admin.class.php:221
 msgid "admin bar|New image"
 msgstr ""
 
-#: ../includes/admin.class.php:241 ../includes/admin.class.php:436
-#: ../includes/admin.class.php:465 ../includes/admin.class.php:493
-#: ../includes/admin.class.php:513
+#: ../includes/admin.class.php:245 ../includes/admin.class.php:440
+#: ../includes/admin.class.php:469 ../includes/admin.class.php:497
+#: ../includes/admin.class.php:517
 msgid "Could not save user info"
 msgstr ""
 
-#: ../includes/admin.class.php:244
+#: ../includes/admin.class.php:248
 msgid "New password must be between 6 and 16 characters long."
 msgstr ""
 
-#: ../includes/admin.class.php:246
+#: ../includes/admin.class.php:250
 msgid "The new passwords you entered do not match."
 msgstr ""
 
-#: ../includes/admin.class.php:248
+#: ../includes/admin.class.php:252
 msgid ""
 "The current password you entered does not match the one in the database."
 msgstr ""
 
-#: ../includes/admin.class.php:251
+#: ../includes/admin.class.php:255
 msgid "The username specified was not found in the database."
 msgstr ""
 
-#: ../includes/admin.class.php:281
+#: ../includes/admin.class.php:285
 msgid "Your account has been suspended"
 msgstr ""
 
-#: ../includes/admin.class.php:292
+#: ../includes/admin.class.php:296
 msgid "Username and/or password incorrect"
 msgstr ""
 
-#: ../includes/admin.class.php:295
+#: ../includes/admin.class.php:299
 msgid "You must enter a username and password"
 msgstr ""
 
-#: ../includes/admin.class.php:369 ../includes/admin.class.php:553
-#: ../includes/admin.class.php:605
+#: ../includes/admin.class.php:373 ../includes/admin.class.php:557
+#: ../includes/admin.class.php:595 ../includes/admin.class.php:625
 msgid "Could not save gallery info"
 msgstr ""
 
-#: ../includes/admin.class.php:427
+#: ../includes/admin.class.php:431
 msgid "Username already exists"
 msgstr ""
 
-#: ../includes/admin.class.php:451
+#: ../includes/admin.class.php:455
 msgid "Cannot delete built in accounts"
 msgstr ""
 
-#: ../includes/admin.class.php:469 ../includes/admin.class.php:496
-#: ../includes/admin.class.php:516
+#: ../includes/admin.class.php:473 ../includes/admin.class.php:500
+#: ../includes/admin.class.php:520
 msgid "Username not recognised"
 msgstr ""
 
-#: ../includes/admin.class.php:568
+#: ../includes/admin.class.php:573
 msgid "Gallery already exists"
 msgstr ""
 
-#: ../includes/admin.class.php:575
+#: ../includes/admin.class.php:578
 msgid "Could not create directory"
 msgstr ""
 
-#: ../includes/admin.class.php:626
+#: ../includes/admin.class.php:646
 msgid "Cannot delete the top level directory"
 msgstr ""
 
-#: ../includes/admin.class.php:681 ../includes/admin.class.php:777
-#: ../includes/admin.class.php:809
+#: ../includes/admin.class.php:701 ../includes/admin.class.php:797
+#: ../includes/admin.class.php:829
 msgid "File already exists"
 msgstr ""
 
-#: ../includes/admin.class.php:686 ../includes/admin.class.php:730
+#: ../includes/admin.class.php:706 ../includes/admin.class.php:750
 msgid "Could not upload file"
 msgstr ""
 
-#: ../includes/admin.class.php:706
+#: ../includes/admin.class.php:726
 msgid "Could not add image to gallery"
 msgstr ""
 
-#: ../includes/admin.class.php:720
+#: ../includes/admin.class.php:740
 msgid "Could not find temporary storage space"
 msgstr ""
 
-#: ../includes/admin.class.php:740
+#: ../includes/admin.class.php:760
 msgid "Could not decompress archive"
 msgstr ""
 
-#: ../includes/admin.class.php:829
+#: ../includes/admin.class.php:849
 msgid "Some archive contents could not be added"
 msgstr ""
 
-#: ../includes/admin.class.php:859
+#: ../includes/admin.class.php:879
 msgid "Could not save image information"
 msgstr ""
 
-#: ../includes/admin.class.php:885
+#: ../includes/admin.class.php:905
 msgid "Could not delete image"
-msgstr ""
-
-#: ../templates/admin_default/album.tpl.php:14
-#: ../templates/admin_default/gallery.tpl.php:15
-msgid "Select gallery..."
 msgstr ""
 
 #: ../templates/admin_default/changethumbnail.tpl.php:1
@@ -346,6 +345,15 @@ msgstr ""
 
 #: ../templates/admin_default/editgallery.tpl.php:44
 msgid "Summary"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:53
+#: ../templates/admin_default/editimage.tpl.php:64
+#: ../templates/admin_default/editpass.tpl.php:22
+#: ../templates/admin_default/editpermissions.tpl.php:45
+#: ../templates/admin_default/editprofile.tpl.php:24
+#: ../templates/admin_default/edituser.tpl.php:31
+msgid "Save Changes"
 msgstr ""
 
 #: ../templates/admin_default/editimage.tpl.php:1
@@ -422,13 +430,23 @@ msgstr ""
 msgid "World permissions"
 msgstr ""
 
+#: ../templates/admin_default/editprofile.tpl.php:1
+msgid "my profile"
+msgstr ""
+
+#: ../templates/admin_default/editprofile.tpl.php:8
+#: ../templates/admin_default/edituser.tpl.php:15
+msgid "Username"
+msgstr ""
+
+#: ../templates/admin_default/editprofile.tpl.php:16
+#: ../templates/admin_default/edituser.tpl.php:23
+msgid "Full name"
+msgstr ""
+
 #: ../templates/admin_default/edituser.tpl.php:1
 #: ../templates/admin_default/manageusers.tpl.php:1
 msgid "user management"
-msgstr ""
-
-#: ../templates/admin_default/edituser.tpl.php:15
-msgid "Username"
 msgstr ""
 
 #: ../templates/admin_default/edituser.tpl.php:17
@@ -443,10 +461,6 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: ../templates/admin_default/edituser.tpl.php:23
-msgid "Full name"
-msgstr ""
-
 #: ../templates/admin_default/edituser.tpl.php:26
 msgid "Password"
 msgstr ""
@@ -455,7 +469,7 @@ msgstr ""
 msgid "admin bar|View gallery"
 msgstr ""
 
-#: ../templates/admin_default/gallery.tpl.php:33
+#: ../templates/admin_default/gallery.tpl.php:34
 msgid "admin bar|Change thumbnail"
 msgstr ""
 
@@ -500,6 +514,10 @@ msgstr ""
 msgid "If you do not have a username then you may log in as a guest."
 msgstr ""
 
+#: ../templates/admin_default/login.tpl.php:20
+msgid "Log in as guest"
+msgstr ""
+
 #: ../templates/admin_default/manageusers.tpl.php:3
 msgid "You must be an administrator to access this area."
 msgstr ""
@@ -530,6 +548,12 @@ msgstr ""
 
 #: ../templates/admin_default/manageusers.tpl.php:28
 msgid "create new user"
+msgstr ""
+
+#: ../templates/admin_default/manageusers.tpl.php:33
+#: ../templates/admin_default/newgallery.tpl.php:14
+#: ../templates/admin_default/newimage.tpl.php:48
+msgid "Create"
 msgstr ""
 
 #: ../templates/admin_default/menu.tpl.php:1
@@ -579,7 +603,8 @@ msgstr ""
 
 #: ../templates/admin_default/newimage.tpl.php:3
 msgid ""
-"This image will not be visible because this gallery contains subgalleries."
+"This image will not be visible because this gallery is not an album: it "
+"contains child galleries."
 msgstr ""
 
 #: ../templates/admin_default/newimage.tpl.php:13

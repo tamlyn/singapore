@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.34 2004/10/26 04:32:36 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.35 2004/11/01 08:17:33 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -27,7 +27,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.10CVS";
+  var $version = "0.9.11CVS";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -74,9 +74,10 @@ class Singapore
     //io handler class included once config is loaded
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
+    require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/user.class.php";
-    require_once $basePath."includes/config.class.php";
+    require_once $basePath."includes/io.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
@@ -812,9 +813,9 @@ class Singapore
   function galleryCount($index = null)
   {
     if($index === null)
-      return @count($this->gallery->galleries);
+      return count($this->gallery->galleries);
     else
-      return @count($this->gallery->galleries[$index]->galleries);
+      return count($this->gallery->galleries[$index]->galleries);
   }
   
   /**

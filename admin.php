@@ -11,7 +11,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.27 2004/09/27 07:29:26 tamlyn Exp $
+ * @version $Id: admin.php,v 1.28 2004/11/01 08:17:31 tamlyn Exp $
  */
 
 //include main class
@@ -187,6 +187,13 @@ if($sg->isLoggedIn() || $sg->action == "login")
       } else
         $includeFile = "editpermissions";
       break;
+    case "editprofile" :
+      if($sg->isGuest()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } else
+        $includeFile = "editprofile";
+      break;
     case "edituser" :
       if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username || $sg->isGuest()) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
@@ -296,7 +303,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "view";
       } elseif($sg->saveImage()) {
-        $adminMessage = $sg->i18n->_g("Image saved successfully");
+        $adminMessage = $sg->i18n->_g("Image info saved");
         $includeFile = "view";
       } else {
         $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
@@ -328,13 +335,25 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "editpermissions";
       }
       break;
-    case "saveuser" :
-      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username || $sg->isGuest()) {
+    case "saveprofile" :
+      if($_REQUEST["user"] != $_SESSION["sgUser"]->username || $sg->isGuest()) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif($sg->saveUser()) {
         $adminMessage = $sg->i18n->_g("User info saved");
-        $includeFile = $sg->isAdmin() ? "manageusers" : "menu";
+        $includeFile = "menu";
+      } else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editprofile";
+      }
+      break;
+    case "saveuser" :
+      if(!$sg->isAdmin()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } elseif($sg->saveUser()) {
+        $adminMessage = $sg->i18n->_g("User info saved");
+        $includeFile = "manageusers";
       } else {
         $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
         $includeFile = "edituser";
