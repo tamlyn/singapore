@@ -150,7 +150,13 @@ header</a>. You may do this at any stage of the translation.</p>
   translated strings between the double-quotes on the following lines (those 
   starting <code>msgstr</code> or <code>msgstr[<em>x</em>]</code> in the case of
   plurals).</li>
-</ol>
+  
+  <li>Obsolete entries<br />
+  When updating a PO file, obsolete entries (i.e. those strings which appeared 
+  in the previous version but do not in the current version) are placed at the 
+  end of the PO file and prepended by <code>#~</code>. There is no need to 
+  translate these entries as they are ignored by the compiler.</li>
+  </ol>
 
 <p>Once you have translated all the strings and filled in the header, you need 
 to compile the PO file into a PHP serialized object file for use with
@@ -486,7 +492,7 @@ the value of <code>nplurals</code>.</p>
 </ul>
 
 
-<p><em>$Date: 2003/12/15 01:50:01 $</em></p>
+<p><em>$Date: 2003/12/20 14:19:59 $</em></p>
 
 </body>
 </html>

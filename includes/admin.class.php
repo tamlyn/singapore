@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.6 2003/12/15 00:42:21 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.7 2003/12/20 14:20:00 tamlyn Exp $
  */
 
 /**
@@ -316,6 +316,11 @@ class sgAdmin extends Singapore
     $this->gallery->email = stripslashes($_REQUEST["sgArtistEmail"]);
     $this->gallery->copyright = stripslashes($_REQUEST["sgCopyright"]);
     $this->gallery->desc = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgGalleryDesc"]));
+    
+    //recognise URLs and htmlise them
+    //$this->gallery->desc = preg_replace("{(http://|https://|mailto:|ftp://)([^ \n\r\"\<\\]+)}", '<a href="$1$2">$1$2</a>', $this->gallery->desc);  //general protocol match
+    //$this->gallery->desc = preg_replace("{www\.([^ \n\r\\\"<]+)}", '<a href="http://www.$1">www.$1</a>', $this->gallery->desc);  //web addresses starting www.*
+    //$this->gallery->desc = preg_replace("{([^ \n\r\\\"<]+)\@([^ \n\r\\\"<]+)\.([^ \n\r\\\"<]+[^ \n\r\\\"<.])}", '<a href="mailto:$2@$3.$4">$2@$3.$4</a>', $this->gallery->desc);  //email addresses *@*.*
     
     if($this->io->putGallery($this->gallery))
       return true;

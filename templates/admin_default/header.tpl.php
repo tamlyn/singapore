@@ -35,8 +35,11 @@
 
 <?php if(isset($adminMessage)): ?>
 <div id="sgAdminMessages">
-  Admin message:<br />
-  &nbsp;&nbsp;<?php echo $adminMessage ?>
+  <?php 
+    echo $sg->_g("Admin message:");
+    echo "<br />\n&nbsp;&nbsp;";
+    echo $adminMessage; 
+  ?>
 </div>
 <?php endif; ?>
 
