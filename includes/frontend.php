@@ -71,13 +71,15 @@ function sgShowIndex($gallery, $startat)
     echo "  <td class=\"sgGallery\"><a href=\"index.php?gallery=$gal->id\">";
     
     switch($gal->filename) {
+    case "__random__" :
+      if(count($gal->img)>0) {
+        srand(time());
+        $index = rand(0,count($gal->img)-1);
+        echo "<img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$index]->filename}&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgThumbnail\" alt=\"Sample image from gallery\" />";
+        break;
+      }
     case "__none__" :
       echo "No<br />thumbnail";
-      break;
-    case "__random__" :
-      srand(time());
-      $index = rand(0,count($gal->img)-1);
-      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$index]->filename}&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgThumbnail\" alt=\"Sample image from gallery\" />";
       break;
     default :
       echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgGallery\" alt=\"Sample image from gallery\" />";
