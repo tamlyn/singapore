@@ -1,23 +1,23 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2003 Free Software Foundation, Inc.
-# Denise van der Linden-Morris <djmorris@dds.nl>, 2003.
+# NEDERLANDSE VERTALING VOOR SINGAPORE FOTOALBUMPROGRAMMA.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Jonathan Richter <singapore@upsidedown-questionmark>, 2004.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.6\n"
-"POT-Creation-Date: 2004-01-10 20:37+0000\n"
-"PO-Revision-Date: 2003-08-22 14:13+0100\n"
-"Last-Translator: Denise van der Linden-Morris <djmorris@dds.nl>\n"
-"Language-Team: Dutch <djmorris@dds.nl>\n"
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2003-11-24 20:36+0001\n"
+"Last-Translator: Jonathan Richter <singapore@upsidedown-questionmark>\n"
+"Language-Team: Nederlands\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n==1 ? 0 : 1;\n"
 #
 # File: ../includes/singapore.class.php, line: 323
 #, c-format
 msgid "Page created in %s seconds"
-msgstr "Pagina aangemaakt in %s seconden"
+msgstr "Pagina opgebouwd in %s seconden"
 #
 # File: ../includes/singapore.class.php, line: 340
 #, c-format
@@ -26,55 +26,51 @@ msgstr "Powered by %s"
 #
 # File: ../includes/singapore.class.php, line: 345
 msgid "All rights reserved."
-msgstr "All rights reserved."
+msgstr "Alle rechten voorbehouden"
 #
 # File: ../includes/singapore.class.php, line: 350
 msgid ""
 "Images may not be reproduced in any form without the express written "
 "permission of the copyright holder."
-msgstr ""
-"Afbeeldingen mogen niet worden gereproduceerd in welke vorm dan ook zonder "
-"de uitdrukkelijke schriftelijke toestemming van de copyright houder."
+msgstr "Afbeeldingen mogen op geen enkele wijze gereproduceerd worden zonder voorafgaande schriftelijke toestemming van de beeldrechthouder. "
 #
 # File: ../includes/singapore.class.php, line: 355
 msgid "Log in"
-msgstr "Log in"
+msgstr "Aanmelden"
 #
 # File: ../includes/singapore.class.php, line: 490
 msgid "crumb line|You are here:"
-msgstr "Je bent nu hier:"
+msgstr "U bent hier:"
 #
 # File: ../includes/singapore.class.php, line: 530
 #, c-format
 msgid "%s gallery"
 msgid_plural "%s galleries"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s album"
+msgstr[1] "%s albums"
 #
 # File: ../includes/singapore.class.php, line: 559
 #, c-format
 msgid "%s image"
 msgid_plural "%s images"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s afbeelding"
+msgstr[1] "%s afbeeldingen"
 #
 # File: ../includes/singapore.class.php, line: 603
 # File: ../includes/singapore.class.php, line: 613
 msgid "Sample image from gallery"
-msgstr "Voorbeeld afbeelding uit gallerij"
+msgstr "Voorvertoning van het album"
 #
 # File: ../includes/singapore.class.php, line: 607
 msgid ""
 "No\n"
 "thumbnail"
-msgstr ""
-"No\n"
-"thumbnail"
+msgstr "Geen voorvertoning beschikbaar"
 #
 # File: ../includes/singapore.class.php, line: 647
 #, c-format
 msgid "Showing %s-%s of %s"
-msgstr "Afbeelding %s-%s van %s"
+msgstr "Vertoont %s-%s van %s"
 #
 # File: ../includes/singapore.class.php, line: 659
 msgid "gallery|Up"
@@ -82,7 +78,7 @@ msgstr "Naar boven"
 #
 # File: ../includes/singapore.class.php, line: 659
 msgid "gallery|Up one level"
-msgstr "Niveau omhoog"
+msgstr "EŽn niveau naar boven"
 #
 # File: ../includes/singapore.class.php, line: 683
 # File: ../includes/singapore.class.php, line: 752
@@ -90,9 +86,8 @@ msgid "gallery|Previous"
 msgstr "Vorige"
 #
 # File: ../includes/singapore.class.php, line: 684
-#, fuzzy
 msgid "gallery|First"
-msgstr "Volgende"
+msgstr "Eerste"
 #
 # File: ../includes/singapore.class.php, line: 687
 # File: ../includes/singapore.class.php, line: 740
@@ -100,15 +95,14 @@ msgid "gallery|Next"
 msgstr "Volgende"
 #
 # File: ../includes/singapore.class.php, line: 688
-#, fuzzy
 msgid "gallery|Last"
-msgstr "Volgende"
+msgstr "Laatste"
 #
 # File: ../includes/singapore.class.php, line: 760
 # File: ../includes/singapore.class.php, line: 991
 #, c-format
 msgid "artist name|by %s"
-msgstr "door %s"
+msgstr "Gefotografeerd door %s"
 #
 # File: ../includes/singapore.class.php, line: 836
 # File: ../includes/singapore.class.php, line: 838
@@ -120,14 +114,14 @@ msgstr "Email"
 # File: ../includes/singapore.class.php, line: 840
 # File: ../includes/singapore.class.php, line: 1146
 msgid "Description"
-msgstr "Omschrijving"
+msgstr "Beschrijving"
 #
 # File: ../includes/singapore.class.php, line: 842
 # File: ../includes/singapore.class.php, line: 844
 # File: ../includes/singapore.class.php, line: 1158
 # File: ../includes/singapore.class.php, line: 1160
 msgid "Copyright"
-msgstr "Copyright"
+msgstr "Beeldrecht"
 #
 # File: ../includes/singapore.class.php, line: 846
 # File: ../includes/singapore.class.php, line: 1162
@@ -136,36 +130,35 @@ msgstr "Bekeken"
 #
 # File: ../includes/singapore.class.php, line: 846
 # File: ../includes/singapore.class.php, line: 1162
-#, fuzzy, c-format
+#, c-format
 msgid "viewed|%s time"
 msgid_plural "viewed|%s times"
-msgstr[0] "%s keer"
+msgstr[0] "%s keer bekeken"
+msgstr[1] "%s keer bekeken"
 #
 # File: ../includes/singapore.class.php, line: 959
 msgid "Add a comment"
-msgstr ""
+msgstr "Voeg commentaar toe"
 #
 # File: ../includes/singapore.class.php, line: 1068
 msgid "image|Previous"
 msgstr "Vorige"
 #
 # File: ../includes/singapore.class.php, line: 1079
-#, fuzzy
 msgid "image|First"
-msgstr ""
+msgstr "Eerste"
 #
 # File: ../includes/singapore.class.php, line: 1096
 msgid "image|Thumbnails"
-msgstr "Thumbnails"
+msgstr "Voorvertoningen"
 #
 # File: ../includes/singapore.class.php, line: 1107
 msgid "image|Next"
 msgstr "Volgende"
 #
 # File: ../includes/singapore.class.php, line: 1118
-#, fuzzy
 msgid "image|Last"
-msgstr "
+msgstr "Laatste"
 #
 # File: ../includes/singapore.class.php, line: 1142
 msgid "Location"
@@ -177,7 +170,7 @@ msgstr "Datum"
 #
 # File: ../includes/singapore.class.php, line: 1148
 msgid "Camera"
-msgstr "Kamera"
+msgstr "Camera"
 #
 # File: ../includes/singapore.class.php, line: 1150
 msgid "Lens"
@@ -189,8 +182,8 @@ msgstr "Film"
 #
 # File: ../includes/singapore.class.php, line: 1154
 msgid "Darkroom manipulation"
-msgstr "Donkere kamer manipulatie"
+msgstr "Dokabewerking"
 #
 # File: ../includes/singapore.class.php, line: 1156
 msgid "Digital manipulation"
-msgstr "Digitale manipulatie"
+msgstr "Computerbewerking"

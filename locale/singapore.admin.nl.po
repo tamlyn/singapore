@@ -1,60 +1,60 @@
-# SOME DESCRIPTIVE TITLE.
+# NEDERLANDSE VERTALING VOOR HET ADMINISTRATIEGEDEELTE VAN HET SINGAPORE FOTOALBUMPROGRAMMA.
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Jonathan Richter <singapore@upsidedown-questionmark>, 2004.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2004-02-19 00:45+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2003-11-24 20:36+0001\n"
+"Last-Translator: Jonathan Richter <singapore@upsidedown-questionmark>\n"
+"Language-Team: Nederlands\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=iso-8859-15\\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../admin.php:43
 msgid "Welcome to singapore admin!"
-msgstr ""
+msgstr "Welkom bij het administratiegedeelte van Singapore!"
 
 #: ../admin.php:46 ../admin.php:55 ../admin.php:64 ../admin.php:79
 #: ../admin.php:93 ../admin.php:104 ../admin.php:121 ../admin.php:139
 #: ../admin.php:153 ../admin.php:163 ../admin.php:188
 msgid "An error occurred:"
-msgstr ""
+msgstr "Er ging iets fout:"
 
 #: ../admin.php:52
 msgid "Thank you and goodbye!"
-msgstr ""
+msgstr "Bedankt en tot ziens!"
 
 #: ../admin.php:62
 msgid "Password saved"
-msgstr ""
+msgstr "Wachtwoord opgeslagen"
 
 #: ../admin.php:76
 msgid "Gallery added"
-msgstr ""
+msgstr "Album toegevoegd"
 
 #: ../admin.php:90
 msgid "Gallery info saved"
-msgstr ""
+msgstr "Albumgegevens opgeslagen"
 
 #: ../admin.php:99 ../admin.php:117 ../admin.php:159 ../admin.php:184
 msgid "confirm|OK"
-msgstr ""
+msgstr "Ok"
 
 #: ../admin.php:102
 msgid "Gallery deleted"
-msgstr ""
+msgstr "Album verwijderd"
 
 #: ../admin.php:107 ../admin.php:123 ../admin.php:165 ../admin.php:189
 msgid "confirm|Cancel"
-msgstr ""
+msgstr "Annuleer"
 
 #: ../admin.php:110
 msgid "delete gallery"
-msgstr ""
+msgstr "verwijder album"
 
 #: ../admin.php:111
 #, possible-c-format
@@ -63,338 +63,344 @@ msgid ""
 "Are you sure you want to irretrievably delete it and all subgalleries and "
 "images it contains?"
 msgstr ""
+"Album %s bevat afbeeldingen.\n"
+"Weet u zeker dat alle subalbums en afbeeldingen onherstelbaar wilt wissen?"
 
 #: ../admin.php:119
 msgid "Thumbnail changed"
-msgstr ""
+msgstr "Voorvertoning veranderd"
 
 #: ../admin.php:136
 msgid "Image added"
-msgstr ""
+msgstr "Afbeelding toegevoegd"
 
 #: ../admin.php:150
 msgid "Image saved successfully"
-msgstr ""
+msgstr "Afbeelding is bewaard"
 
 #: ../admin.php:161
 msgid "Image deleted"
-msgstr ""
+msgstr "Afbeelding is gewist"
 
 #: ../admin.php:168
 msgid "delete image"
-msgstr ""
+msgstr "wis afbeelding"
 
 #: ../admin.php:169
 #, possible-c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
-msgstr ""
+msgstr "Weet u zeker dat u afbeelding %s onherstelbaar wilt verwijderen uit album %s"
 
 #: ../admin.php:186
 msgid "Thumbnail cache purged"
-msgstr ""
+msgstr "Voorvertoningsgeheugen gewist"
 
 #: ../admin.php:192
 msgid "purge cached thumbnails"
-msgstr ""
+msgstr "wis voorvertoningsgeheugen"
 
 #: ../admin.php:194
 #, possible-c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
-msgstr ""
-
-#: ../includes/admin.class.php:138
-msgid "admin bar|Back"
-msgstr ""
-
-#: ../includes/admin.class.php:140
-msgid "admin bar|Admin"
-msgstr ""
-
-#: ../includes/admin.class.php:141
-msgid "admin bar|Galleries"
-msgstr ""
-
-#: ../includes/admin.class.php:142
-msgid "admin bar|Log out"
-msgstr ""
-
-#: ../includes/admin.class.php:144
-msgid "admin bar|Edit gallery"
-msgstr ""
-
-#: ../includes/admin.class.php:145
-msgid "admin bar|Delete gallery"
-msgstr ""
-
-#: ../includes/admin.class.php:146
-msgid "admin bar|New subgallery"
-msgstr ""
-
-#: ../includes/admin.class.php:148
-msgid "admin bar|Edit image"
-msgstr ""
-
-#: ../includes/admin.class.php:149
-msgid "admin bar|Delete image"
-msgstr ""
-
-#: ../includes/admin.class.php:151
-msgid "admin bar|New image"
-msgstr ""
-
-#: ../includes/admin.class.php:175
-msgid "There was an error saving the new password."
-msgstr ""
+msgstr "Weet u zeker dat u alle %s voorvertoningen wilt wissen?"
 
 #: ../includes/admin.class.php:178
-msgid "New password must be between 6 and 16 characters long."
-msgstr ""
+msgid "admin bar|Back"
+msgstr "Terug"
 
 #: ../includes/admin.class.php:180
-msgid "The new passwords you entered do not match."
-msgstr ""
+msgid "admin bar|Admin"
+msgstr "Administratie"
+
+#: ../includes/admin.class.php:181
+msgid "admin bar|Galleries"
+msgstr "Albums"
 
 #: ../includes/admin.class.php:182
-msgid ""
-"The current password you entered does not match the one in the database."
-msgstr ""
+msgid "admin bar|Log out"
+msgstr "Afmelden"
+
+#: ../includes/admin.class.php:184
+msgid "admin bar|Edit gallery"
+msgstr "Bewerk album"
 
 #: ../includes/admin.class.php:185
+msgid "admin bar|Delete gallery"
+msgstr "Wis album"
+
+#: ../includes/admin.class.php:186
+msgid "admin bar|New subgallery"
+msgstr "Nieuw subalbum"
+
+#: ../includes/admin.class.php:188
+msgid "admin bar|Edit image"
+msgstr "Bewerk afbeelding"
+
+#: ../includes/admin.class.php:189
+msgid "admin bar|Delete image"
+msgstr "Wis afbeelding"
+
+#: ../includes/admin.class.php:191
+msgid "admin bar|New image"
+msgstr "Nieuwe afbeelding"
+
+#: ../includes/admin.class.php:215
+msgid "There was an error saving the new password."
+msgstr "Het bewaren van het nieuwe wachtwoord is niet gelukt."
+
+#: ../includes/admin.class.php:218
+msgid "New password must be between 6 and 16 characters long."
+msgstr "Het nieuwe wachtwoord moet moet tussen 6 en 16 tekens lang zijn."
+
+#: ../includes/admin.class.php:220
+msgid "The new passwords you entered do not match."
+msgstr "De nieuw ingevoerde wachtwoorden kloppen niet."
+
+#: ../includes/admin.class.php:222
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr "Het huidig ingevoerd wachtwoord klopt niet met dat in de database."
+
+#: ../includes/admin.class.php:225
 msgid "The username specified was not found in the database."
-msgstr ""
+msgstr "De gebruikersnaam komt niet voor in de database."
 
-#: ../includes/admin.class.php:221
+#: ../includes/admin.class.php:261
 msgid "Username and/or password incorrect"
-msgstr ""
+msgstr "Gebruikersnaam en/of wachtwoord klopt niet."
 
-#: ../includes/admin.class.php:224
+#: ../includes/admin.class.php:264
 msgid "You must enter a username and password"
-msgstr ""
+msgstr "U moet een gebruikersnaam en wachtwoord opgeven."
 
-#: ../includes/admin.class.php:249
+#: ../includes/admin.class.php:289
 msgid "Gallery already exists"
-msgstr ""
+msgstr "Album bestaat al"
 
-#: ../includes/admin.class.php:256
+#: ../includes/admin.class.php:296
 msgid "Could not create directory"
-msgstr ""
+msgstr "De map kon niet aangemaakt worden"
 
-#: ../includes/admin.class.php:287
+#: ../includes/admin.class.php:327
 msgid "Could not save gallery info"
-msgstr ""
+msgstr "De albumgegevens konden niet opgeslagen worden"
 
-#: ../includes/admin.class.php:305
+#: ../includes/admin.class.php:345
 msgid "Cannot delete the top level directory"
-msgstr ""
+msgstr "De hoofdmap kon niet gewist worden"
 
-#: ../includes/admin.class.php:346
+#: ../includes/admin.class.php:386
 msgid "File already exists"
-msgstr ""
+msgstr "Dit bestand betaat al"
 
-#: ../includes/admin.class.php:351
+#: ../includes/admin.class.php:391
 msgid "Could not upload file"
-msgstr ""
+msgstr "Het bestand kon niet ge-upload worden"
 
-#: ../includes/admin.class.php:356
+#: ../includes/admin.class.php:396
 msgid "Invalid location choice"
-msgstr ""
+msgstr "Niet mogelijke locatie"
 
-#: ../includes/admin.class.php:375
+#: ../includes/admin.class.php:415
 msgid "Could not add image to gallery"
-msgstr ""
+msgstr "Niet mogelijk de afbeelding aan het album toe te voegen"
 
-#: ../includes/admin.class.php:408
+#: ../includes/admin.class.php:448
 msgid "Could not save image information"
-msgstr ""
+msgstr "Niet mogelijk de afbeeldinggegevens te bewaren"
 
-#: ../includes/admin.class.php:430
+#: ../includes/admin.class.php:470
 msgid "Could not delete image"
-msgstr ""
+msgstr "Niet mogelijk de afbeelding te wissen"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:1
 msgid "choose thumbnail"
-msgstr ""
+msgstr "kies voorvertoning"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:6
 msgid "Choose the filename of the image used to represent this gallery."
-msgstr ""
+msgstr "Kies de bestandsnaam voor de voorbeeldafbeelding voor dit album."
 
 #: ../templates/admin_default/changethumbnail.tpl.php:9
 msgid "thumbnail|None"
-msgstr ""
+msgstr "Geen"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:10
 msgid "thumbnail|Random"
-msgstr ""
+msgstr "Willekeurig"
 
 #: ../templates/admin_default/editgallery.tpl.php:1
 msgid "edit gallery"
-msgstr ""
+msgstr "bewerk album"
 
 #: ../templates/admin_default/editgallery.tpl.php:14
 msgid "Gallery thumbnail:"
-msgstr ""
+msgstr "Voorvertoning van album:"
 
 #: ../templates/admin_default/editgallery.tpl.php:18
 msgid ""
 "Random\n"
 "thumbnail"
 msgstr ""
+"Willekeurige\n"
+"voorvertoning"
 
 #: ../templates/admin_default/editgallery.tpl.php:23
 msgid "thumbnail|Change..."
-msgstr ""
+msgstr "Verander..."
 
 #: ../templates/admin_default/editgallery.tpl.php:27
 #: ../templates/admin_default/galleryhits.tpl.php:22
 msgid "Gallery name"
-msgstr ""
+msgstr "Albumnaam"
 
 #: ../templates/admin_default/editgallery.tpl.php:31
 #: ../templates/admin_default/editimage.tpl.php:22
 msgid "Artist name"
-msgstr ""
+msgstr "Gefotografeerd door"
 
 #: ../templates/admin_default/editimage.tpl.php:1
 msgid "edit image"
-msgstr ""
+msgstr "bewerk afbeelding"
 
 #: ../templates/admin_default/editimage.tpl.php:14
 msgid "Image"
-msgstr ""
+msgstr "Afbeelding"
 
 #: ../templates/admin_default/editimage.tpl.php:18
 #: ../templates/admin_default/imagehits.tpl.php:22
 msgid "Image name"
-msgstr ""
+msgstr "Afbeeldingsnaam"
 
 #: ../templates/admin_default/editpass.tpl.php:1
 msgid "change password"
-msgstr ""
+msgstr "verander wachtwoord"
 
 #: ../templates/admin_default/editpass.tpl.php:2
 msgid "Please choose a new password between 6 and 16 characters in length."
-msgstr ""
+msgstr "Kies een wachtwoord van tussen de 6 en 16 tekens."
 
 #: ../templates/admin_default/editpass.tpl.php:9
 msgid "Current password:"
-msgstr ""
+msgstr "Huidig wachtwoord:"
 
 #: ../templates/admin_default/editpass.tpl.php:13
 msgid "New password:"
-msgstr ""
+msgstr "Nieuw wachtwoord:"
 
 #: ../templates/admin_default/editpass.tpl.php:17
 msgid "Confirm password:"
-msgstr ""
+msgstr "Bevestig wachtwoord:"
 
 #: ../templates/admin_default/footer.tpl.php:3
 msgid "singapore|Powered by"
-msgstr ""
+msgstr "Powered by"
 
 #: ../templates/admin_default/galleryhits.tpl.php:22
 #: ../templates/admin_default/imagehits.tpl.php:22
 msgid "hits table|Graph"
-msgstr ""
+msgstr "Grafiek"
 
 #: ../templates/admin_default/galleryhits.tpl.php:22
 #: ../templates/admin_default/imagehits.tpl.php:22
 msgid "hits table|Hits"
-msgstr ""
+msgstr "Hits"
 
 #: ../templates/admin_default/galleryhits.tpl.php:22
 #: ../templates/admin_default/imagehits.tpl.php:22
 msgid "hits table|Last hit"
-msgstr ""
+msgstr "Nieuwste"
 
 #: ../templates/admin_default/header.tpl.php:39
 msgid "Admin message:"
-msgstr ""
+msgstr "Administratie bericht:"
 
 #: ../templates/admin_default/loggedout.tpl.php:1
 msgid "Return to galleries."
-msgstr ""
+msgstr "Terug naar de albums."
 
 #: ../templates/admin_default/login.tpl.php:1
 msgid "log in"
-msgstr ""
+msgstr "aanmelden"
 
 #: ../templates/admin_default/login.tpl.php:3
 msgid ""
 "Only authorised users are allowed into the admin section.\n"
 "Please enter your admin username and password below."
 msgstr ""
+"Alleen bevoegde gebruikers zijn toegestaan in het administratiegedeelte.\n"
+"Vul uw gebruikersnaam en wachtwoord in."
 
 #: ../templates/admin_default/login.tpl.php:8
 msgid "Username:"
-msgstr ""
+msgstr "Gebruikersnaam:"
 
 #: ../templates/admin_default/login.tpl.php:9
 msgid "Password:"
-msgstr ""
+msgstr "Wachtwoord:"
 
 #: ../templates/admin_default/menu.tpl.php:1
 msgid "Please choose an option:"
-msgstr ""
+msgstr "Maak een keuze:"
 
 #: ../templates/admin_default/menu.tpl.php:4
 msgid "Manage galleries and images"
-msgstr ""
+msgstr "Album- en afbeeldingenbeheer"
 
 #: ../templates/admin_default/menu.tpl.php:5
 msgid "View gallery hits"
-msgstr ""
+msgstr "Bekijk albumhits"
 
 #: ../templates/admin_default/menu.tpl.php:6
 msgid "Purge cached thumbnails"
-msgstr ""
+msgstr "Wis voorvertoningsgeheugen"
 
 #: ../templates/admin_default/menu.tpl.php:7
 msgid "Change password"
-msgstr ""
+msgstr "Verander wachtwoord"
 
 #: ../templates/admin_default/menu.tpl.php:8
 msgid "Log out of admin"
-msgstr ""
+msgstr "Afmelden uit administratiegedeelte"
 
 #: ../templates/admin_default/newgallery.tpl.php:1
 msgid "new gallery"
-msgstr ""
+msgstr "nieuw album"
 
 #: ../templates/admin_default/newgallery.tpl.php:9
 #: ../templates/admin_default/newimage.tpl.php:28
 msgid "Identifier:"
-msgstr ""
+msgstr "Bestandsnaam"
 
 #: ../templates/admin_default/newimage.tpl.php:1
 msgid "new image"
-msgstr ""
+msgstr "nieuwe afbeelding"
 
 #: ../templates/admin_default/newimage.tpl.php:3
 msgid ""
 "This image will not be visible because this gallery contains subgalleries."
-msgstr ""
+msgstr "Deze afbeelding wordt niet zichtbaar omdat dit album subalbums heeft."
 
 #: ../templates/admin_default/newimage.tpl.php:12
 msgid "Remote file"
-msgstr ""
+msgstr "Niet-locaal bestand"
 
 #: ../templates/admin_default/newimage.tpl.php:16
 msgid "URL of image:"
-msgstr ""
+msgstr "URL van de afbeelding:"
 
 #: ../templates/admin_default/newimage.tpl.php:20
 msgid "Local file"
-msgstr ""
+msgstr "Locaal bestand"
 
 #: ../templates/admin_default/newimage.tpl.php:24
 msgid "Image file to upload:"
-msgstr ""
+msgstr "Toe te voegen afbeelding:"
 
 #: ../templates/admin_default/newimage.tpl.php:30
 msgid "Use filename of uploaded file."
-msgstr ""
+msgstr "Gebruik de bestandsnaam van de verzonden afbeelding."
 
 #: ../templates/admin_default/newimage.tpl.php:31
 msgid "Specify different filename:"
-msgstr ""
+msgstr "Vul een andere bestandsnaam in:"
