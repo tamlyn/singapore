@@ -169,7 +169,7 @@ function rmdir_all($wd)
 
     if(doSetup()) {
       setupHeader("OK");
-      setupMessage("All operations completed successfully. <a href=\"index.php\">Proceed to singapore</a>.");
+      setupMessage("All operations completed successfully. Before <a href=\"index.php\">proceeding</a> you should delete this file to prevent anyone from deleting your cache and logs directories.");
     } else {
       setupHeader("Oops");
       setupError("There was a problem. Please fix it and run this script again.");
