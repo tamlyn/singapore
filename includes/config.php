@@ -25,9 +25,9 @@
 function sgGetConfig($var) {
   switch($var) {
     case "main_thumb_size" :      return 100;
-       //maximum pixel size of normal thambnails
-       //if you make this much bigger you will also need to
-       //increase some values in styles/sg.css 
+       //maximum pixel size of normal thumbnails
+       //if you make this much bigger you will probably 
+       //also need to increase some values in the stylesheet 
        
     case "main_thumb_number" :    return 20;
        //maximum number of thumbnails to show on one screen
@@ -91,6 +91,10 @@ function sgGetConfig($var) {
     case "secret_string" :        return "That girl understood, man. Phew! She fell in love with me, man.";
        //this string can be *anything* you want but should
        //be unique to your site and be kept secret
+       
+    case "thumbnail_quality" :    return 50;
+       //the JPEG quality of generated thumbnails
+       //100 is the best quality; 0 is the lowest
   }
   return null;
 }
