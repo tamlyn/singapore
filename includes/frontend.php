@@ -1,6 +1,6 @@
 <?php 
 
- /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\ 
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *  frontend.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>     *
  *                                                                     *
  *  This file is part of singapore v0.9.3                              *
@@ -20,7 +20,7 @@
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-//display functions - produce XHTML output 
+//display functions - produce XHTML output
 
 function sgShowAdminBar()
 {
@@ -29,7 +29,7 @@ function sgShowAdminBar()
   echo "<div class=\"sgAdminBar\">\n";
   echo "  <a href=\"admin.php\">Admin</a>\n";
   echo "  <a href=\"index.php\">Galleries</a>\n";
-  echo "  <a href=\"admin.php?action=logout\">Logout</a>\n";
+  echo "  <a href=\"admin.php?action=logout\">Log out</a>\n";
   echo "  <span class=\"sgAdminBarSeparator\"> </span>\n";
   
   if(isset($_REQUEST["image"]) && !(isset($_REQUEST["action"]) && strpos($_REQUEST["action"],"-confirmed"))) {
@@ -59,8 +59,8 @@ function sgShowIndex($gallery, $startat)
   
   echo "Showing ".($startat+1)."-".($startat+sgGetConfig("gallery_thumb_number")>count($dir->dirs)?count($dir->dirs):$startat+sgGetConfig("gallery_thumb_number"))." of ".count($dir->dirs);
   
-  if($startat>0) echo " | <a href=\"?startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a>";
-  if(count($dir->dirs)>$startat+sgGetConfig("gallery_thumb_number")) echo " | <a href=\"?startat=".($startat+sgGetConfig("gallery_thumb_number"))."\">Next</a>";
+  if($startat>0) echo " | <a href=\"index.php?startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a>";
+  if(count($dir->dirs)>$startat+sgGetConfig("gallery_thumb_number")) echo " | <a href=\"index.php?startat=".($startat+sgGetConfig("gallery_thumb_number"))."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
@@ -70,11 +70,11 @@ function sgShowIndex($gallery, $startat)
     
     echo "<div class=\"sgGallery\"><table class=\"sgGallery\">\n";
     echo "<tr valign=\"top\">\n";
-    echo "  <td class=\"sgGallery\"><a href=\"?gallery=$gal->id\">";
+    echo "  <td class=\"sgGallery\"><a href=\"index.php?gallery=$gal->id\">";
     
     switch($gal->filename) {
     case "__none__" :
-      echo "No<br />thumbnail<br />selected";
+      echo "No<br />thumbnail";
       break;
     case "__random__" :
       echo "Random!";
@@ -83,7 +83,7 @@ function sgShowIndex($gallery, $startat)
       echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" />";
     }
     echo "</a></td>\n";
-    echo "  <td><p><strong><a href=\"?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n";
+    echo "  <td><p><strong><a href=\"index.php?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n";
     echo "</tr>\n";
     echo "</table></div>\n\n";
   }
@@ -111,9 +111,9 @@ function sgShowThumbnails($gallery, $startat)
   
   echo "Showing ".($startat+1)."-".($startat+sgGetConfig("main_thumb_number")>count($gal->img)?count($gal->img):$startat+sgGetConfig("main_thumb_number"))." of ".count($gal->img)." | ";
   
-  if($startat>0) echo "<a href=\"?gallery=$gal->id&amp;startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a> | ";
-  echo "<a href=\"?\" title=\"Back to galleries list\">Up</a>";
-  if(count($gal->img)>$startat+sgGetConfig("main_thumb_number")) echo " | <a href=\"?gallery=$gal->id&amp;startat=".($startat+sgGetConfig("main_thumb_number"))."\">Next</a>";
+  if($startat>0) echo "<a href=\"index.php?gallery=$gal->id&amp;startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a> | ";
+  echo "<a href=\"index.php\" title=\"Back to galleries list\">Up</a>";
+  if(count($gal->img)>$startat+sgGetConfig("main_thumb_number")) echo " | <a href=\"index.php?gallery=$gal->id&amp;startat=".($startat+sgGetConfig("main_thumb_number"))."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
@@ -127,7 +127,7 @@ function sgShowThumbnails($gallery, $startat)
     echo "    <img class=\"borderTR\" src=\"$pathto_currenttheme/images/slide-tr.gif\" alt=\"\" />\n";
     
     echo "    <table><tr><td>\n";
-    echo "      <a href=\"?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">\n";
+    echo "      <a href=\"index.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">\n";
     echo "        <img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}&amp;size=";
     echo sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"{$gal->img[$i]->name}";
     if(!empty($gal->img[$i]->artist)) echo " by {$gal->img[$i]->artist}";
@@ -166,18 +166,18 @@ function sgShowImage($gallery, $image)
   //top navigation bar and preview thumbnails
   echo "<div class=\"sgNavBar\"><p>\n";
   for($i=count($img->prev)-1;$i>=0;$i--)
-    echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[$i]->filename}\">".
+    echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->prev[$i]->filename}\">".
          "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->prev[$i]->filename}&amp;size=".sgGetConfig("preview_thumb_size")."\" alt=\"{$img->prev[$i]->name} by {$img->prev[$i]->artist}\" />".
          "</a>\n";
   echo "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->filename}&amp;size=".sgGetConfig("preview_thumb_size")."\" class=\"sgNavBarCurrent\" alt=\"{$img->name} by {$img->artist}\" />\n";
   for($i=0;$i<count($img->next);$i++)
-    echo "<a href=\"?gallery=$gallery&amp;image={$img->next[$i]->filename}\">".
+    echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->next[$i]->filename}\">".
          "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->next[$i]->filename}&amp;size=".sgGetConfig("preview_thumb_size")."\" alt=\"{$img->next[$i]->name} by {$img->next[$i]->artist}\" />".
          "</a>\n";
   echo "<br />\n";
-  if(isset($img->prev[0])) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
-  echo "<a href=\"?gallery=$gallery&amp;startat=".(floor($img->index/sgGetConfig("main_thumb_number"))*sgGetConfig("main_thumb_number"))."\">Thumbnails</a>\n";
-  if(isset($img->next[0])) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
+  if(isset($img->prev[0])) echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
+  echo "<a href=\"index.php?gallery=$gallery&amp;startat=".(floor($img->index/sgGetConfig("main_thumb_number"))*sgGetConfig("main_thumb_number"))."\">Thumbnails</a>\n";
+  if(isset($img->next[0])) echo " | <a href=\"index.php?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
   
   //heading with image name and artist
@@ -204,9 +204,9 @@ function sgShowImage($gallery, $image)
   
   //bottom navigation bar
   echo "<div class=\"sgNavBar\"><p>\n";
-  if(isset($img->prev[0])) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
-  echo "<a href=\"?gallery=$gallery\">Thumbnails</a>\n";
-  if(isset($img->next[0])) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
+  if(isset($img->prev[0])) echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
+  echo "<a href=\"index.php?gallery=$gallery\">Thumbnails</a>\n";
+  if(isset($img->next[0])) echo " | <a href=\"index.php?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
 
   //image name and artist

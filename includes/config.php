@@ -101,11 +101,13 @@ function sgGetConfig($var) {
        //  gd2 = GD v2.x
        //  im  = ImageMagick (not yet)
        
-    case "directory_mode" :       return 0777;
+       
+    //these two options have no effect yet:
+    case "directory_mode" :       return 0755;
        //the permissions to set on directories
        //(i.e. galleries) created by the script
        
-    case "file_mode" :            return 0666;
+    case "file_mode" :            return 0644;
        //the permissions to set on files (i.e. images, metadata 
        //files, thumbnails and logs) created by the script
   }

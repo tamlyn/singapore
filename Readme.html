@@ -132,14 +132,14 @@ things that can be done to customise it to your needs. Here are some:</p>
     <li><code>cache/</code></li>
     <li><code>galleries/</code> and all subdirectories and files</li>
     <li><code>includes/adminusers.csv</code></li>
-  </ul>  
-  <span class="note">NOTE: There must be at least one gallery in <code>galleries/</code> or the script 
-  will fall over. This will be fixed in a future release.</span>
+    <li><code>logs/</code> unless logging is disabled</li>
+  </ul>
   </li>
 
   <li>Log into the admin section and change the password. The username is 
-  <code>admin</code> and the default password is <code>password</code>. <br /><span class="note">NOTE: 
-  a future release will allow multiple admin users with different passwords.</span></li>
+  <code>admin</code> and the default password is <code>password</code>.<br />
+  <span class="note">NOTE: a future release will allow multiple admin users with 
+  different passwords.</span></li>
   
   <li>If your PHP installation uses GD version 2.0.1 or later or you have access to 
   ImageMagick then you can get nicer generated thumbnails by changing the option 
@@ -148,25 +148,19 @@ things that can be done to customise it to your needs. Here are some:</p>
 
 <p>Things you MIGHT do:</p>
 <ul>
-  <li>Edit the values in <code>includes/config.php</code>. The file is commented
-  and should be self-explanatory. For most purposes the default values will 
-  be fine.</li>
-  
   <li>Edit <code>includes/header.php</code> and <code>includes/footer.php</code>
   or use your own custom header and/or footer files by editing the paths in 
   <code>includes/config.php</code>.</li>
 
+  <li>Edit the values in <code>includes/config.php</code>. The file is commented
+  and should be self-explanatory. For most purposes the default values will 
+  be fine.</li>
+  
   <li>Make custom "themes" using CSS. <a href="#themes">More info</a>.</li>
-  
-  
 </ul>
 
 
 <h2><a name="managing">Managing your galleries</a></h2>
-
-<p class="note">NOTE: In a future release all gallery management functionality 
-will be provided via the web interface but in the meantime an alternative method is
-required.</p>
 
 <p>If using the <a href="#iifn">info in file name</a> system then all management can be done 
 directly on the files using, for example, an ftp client. To create new galleries
@@ -174,16 +168,13 @@ simply create a new subdirectory of <code>galleries/</code>. To add, move or del
 images in a gallery simply add, move or delete the image files in the 
 appropriate directory.</p>
 
-<p>If using metadata files (recommended) then more care is needed. Currently the best way to 
-make galleries is to create a subdirectory of <code>galleries/</code> for each gallery and 
-populate it with images. Then log-in to admin, navigate to the new gallery and 
-click on "Edit current gallery" or "Edit current image" on the Admin bar. You can the enter as much or 
-as little information about each image and gallery as you want and it will be saved into a 
-CSV file. Note, however, that this method does not yet allow 
-addition or removal of images once the gallery has been created. If you feel up to the task of 
-editing the metadata files manually (not as difficult as it sounds - use Excel or equivalent) 
-then you may manipulate your gallery however you want. See  
-the <a href="Development.html#csvformat">database format description</a>.
+<p>If you use the admin mode to edit your galleries or images it will 
+automatically create the relevant metadata files. If these files are deleted  
+<strong>singapore</strong> will revert to using <em>info in file name</em>.</p>
+ 
+<p>There is currently no support for bulk image upload via the admin interface. You
+are recommended to use FTP to upload your images and then use the admin mode to
+add image information and for occasional additions and deletions.</p>
 
 <h2><a name="iifn">Info in file name</a></h2>
 
@@ -283,7 +274,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/08 15:35:46 $</em></p>
+<p><em>$Date: 2003/05/10 15:09:53 $</em></p>
 
 </body>
 </html>

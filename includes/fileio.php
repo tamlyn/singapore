@@ -1,6 +1,6 @@
 <?php 
 
- /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\ 
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *  fileio.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>       *
  *                                                                     *
  *  This file is part of singapore v0.9.3                              *
@@ -24,6 +24,7 @@
 
 function sgGetGallery($gallery, $galleryOnly = false) {
   $gal->id = $gallery;
+  $gal->img = array();
   
   $fp = @fopen(sgGetConfig("pathto_galleries")."$gal->id/metadata.csv","r");
   
@@ -71,7 +72,6 @@ function sgGetGallery($gallery, $galleryOnly = false) {
     
     return $gal;
   } elseif($dir = sgGetListing(sgGetConfig("pathto_galleries")."$gal->id/", "jpegs")) {
-    for($i=0;$i<count($dir->files);$i++) $gal->img[$i]->filename = $dir->files[$i];
     
     $temp = strtr($gal->id, "_", " ");
     if(strpos($temp, " - ")) list($gal->artist,$gal->name) = explode(" - ", $temp);
@@ -80,8 +80,8 @@ function sgGetGallery($gallery, $galleryOnly = false) {
       $gal->name = $temp;
     }
     
-    //set default values;
-    $gal->filename = isset($gal->img[0]->filename)?$gal->img[0]->filename:"__none__";
+    //set default values
+    $gal->filename = isset($dir->files[0])?$dir->files[0]:"__none__";
     $gal->owner = "__nobody__";
     $gal->groups = "__nogroup__";
     $gal->permissions = 4096;
@@ -92,7 +92,8 @@ function sgGetGallery($gallery, $galleryOnly = false) {
     
     if($galleryOnly) return $gal;
     
-    for($i=0;$i<count($gal->img);$i++) {
+    for($i=0;$i<count($dir->files);$i++) {
+      $gal->img[$i]->filename = $dir->files[$i];
       //trim off file extension and replace underscores with spaces
       $temp = strtr(substr($gal->img[$i]->filename, 0, strrpos($gal->img[$i]->filename,".")-strlen($gal->img[$i]->filename)), "_", " ");
       //split string in two on " - " delimiter
@@ -102,8 +103,9 @@ function sgGetGallery($gallery, $galleryOnly = false) {
         $gal->img[$i]->artist = "";
       }
       
+      //set default values
       $gal->img[$i]->thumbnail = "";
-      $gal->img[$i]->owner = "__nogroup__";
+      $gal->img[$i]->owner = "__nobody__";
       $gal->img[$i]->groups = "__nogroup__";
       $gal->img[$i]->permissions = 4096;
       $gal->img[$i]->categories = "";

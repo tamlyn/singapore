@@ -128,11 +128,11 @@ function sgEditGallery($gallery)
   $gal = sgGetGalleryInfo($gallery);
   if(!$gal) {
     echo("<h1>gallery '$gallery' not found</h1>\n");
-    sgShowIndex(sgGetConfig("pathto_galleries"),0);
+    sgShowIndex("",0);
     return;
   }
   
-  echo "<h1>edit gallery</h1>\n";
+  echo "<h1>edit gallery</h1>\n\n";
   
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"savegallery\" />\n";
@@ -140,20 +140,21 @@ function sgEditGallery($gallery)
   echo "<input type=\"hidden\" name=\"sgOwner\" value=\"$gal->owner\" />\n";
   echo "<input type=\"hidden\" name=\"sgGroups\" value=\"$gal->groups\" />\n";
   echo "<input type=\"hidden\" name=\"sgPermissions\" value=\"$gal->permissions\" />\n";
-  echo "<input type=\"hidden\" name=\"sgCategories\" value=\"$gal->categories\" />\n";
+  echo "<input type=\"hidden\" name=\"sgCategories\" value=\"$gal->categories\" />\n\n";
   
   echo "<table class=\"formTable\">\n";
   echo "<tr>\n  <td>Gallery thumbnail:</td>\n  <td><div class=\"inputbox sgImageInput\">";
   switch($gal->filename) {
   case "__none__" :
-    echo "No<br />thumbnail<br />selected";
+    echo "No<br />thumbnail";
     break;
   case "__random__" :
     echo "Random!";
     break;
   default :
-    echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" />";
+    echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgThumbnail\" alt=\"Example image from gallery\" />";
   }
+  echo "<br />\n<a href=\"admin.php?action=changethumbnail&amp;gallery=$gal->id\">Change...</a>\n";
   echo "</div></td>\n</tr>\n";
   echo "<tr>\n  <td>Gallery name:</td>\n  <td><input type=\"text\" name=\"sgGalleryName\" value=\"".htmlentities($gal->name)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Artist name:</td>\n  <td><input type=\"text\" name=\"sgArtistName\" value=\"".htmlentities($gal->artist)."\" size=\"40\" />*</td>\n</tr>\n";
@@ -163,7 +164,7 @@ function sgEditGallery($gallery)
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
   echo "</table>\n";
   
-  echo "<p>Note: fields marked * are stored in the database but are not currently displayed.</p>";
+  echo "<p>Note: fields marked * are stored in the database but are not currently displayed.</p>\n";
   echo "</form>\n";
 }
 
@@ -182,16 +183,12 @@ function sgSaveGallery($gallery)
   $gal->copyright = stripslashes($_REQUEST["sgCopyright"]);
   $gal->desc = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgGalleryDesc"]));
   
-  sgPutGallery($gal);
-  
   if(sgPutGallery($gal)) echo "<h1>gallery saved</h1>\n";
   else echo "<h1>gallery not saved</h1>\n";
   echo 
   "<ul>\n".
   "  <li><a href=\"index.php?gallery=$gallery\">View gallery</a></li>\n".
   "  <li><a href=\"admin.php?action=newgallery\">New gallery</a></li>\n".
-  //"  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgNextImage]\">Edit next image</a></li>\n".
-  //"  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgPrevImage]\">Edit previous image</a></li>\n".
   "</ul>\n";
 }
 
@@ -216,7 +213,7 @@ function sgShowGalleryDeleteConfirmation($gallery)
 function sgDeleteGallery($gallery)
 {
   //checks that there are no "../" references in the gallery name
-  //this ensures that the gallery being deleted reall is a 
+  //this ensures that the gallery being deleted really is a 
   //subdirectory of the galleries directory 
   if(strpos($gallery,"../") !== false) return false;
   
@@ -225,21 +222,56 @@ function sgDeleteGallery($gallery)
 }
 
 
+function sgChangeThumbnail($gallery)
+{
+  $gal = sgGetGallery($gallery);
+
+  echo "<h1>choose thumbnail</h1>\n";
+  
+  echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"savethumbnail\" />\n";
+  echo "<input type=\"hidden\" name=\"gallery\" value=\"$gallery\" />\n";
+  echo "<p>Choose the filename of the image used to represent this gallery.</p>\n";
+  
+  echo "<p><select name=\"sgThumbName\">\n";
+  echo "<option value=\"__none__\">None</option>\n";
+  foreach($gal->img as $img) echo "<option value=\"$img->filename\">$img->filename: $img->name by $img->artist</option>\n";
+  echo "</select></p>\n";
+  echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
+  echo "<input type=\"submit\" class=\"button\" name=\"confirm\" value=\"Cancel\"></p>";
+  echo "</form>\n";
+ 
+}
+
+function sgSaveThumbnail($gallery, $thumbnail)
+{
+  $gal = sgGetGallery($gallery);
+
+  $gal->filename = $thumbnail;
+  
+  return sgPutGallery($gal);
+}
+
+
 //
 //image handling functions
 //
 
 function sgNewImage($gallery) {
-  echo "<h1>new image</h1>\n";
+  echo "<h1>new image</h1>\n\n";
   
   echo "<form action=\"$_SERVER[PHP_SELF]\" enctype=\"multipart/form-data\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"gallery\" value=\"$gallery\" />\n";
-  echo "<input type=\"hidden\" name=\"action\" value=\"addimage\" />\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"addimage\" />\n\n";
   
   echo "<table class=\"formTable\">\n";
-  echo "<tr>\n  <td>Identifier:</td>\n  <td>\n    <input type=\"radio\" class=\"radio\" name=\"sgNameChoice\" value=\"same\" checked=\"true\"> Use filename of uploaded file.<br />\n";
-  echo "    <input type=\"radio\" class=\"radio\" name=\"sgNameChoice\" value=\"new\"> Specify different filename:<br />\n    <input type=\"text\" name=\"sgFileName\" value=\"".md5(uniqid(rand(),1)).".jpeg\" size=\"40\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td><input type=\"radio\" class=\"radio\" name=\"sgLocationChoice\" value=\"remote\"> Remote file</td>\n  <td></td>\n<tr>\n";
+  echo "<tr>\n  <td>URL of image:</td>\n  <td><input type=\"text\" name=\"sgImageURL\" value=\"http://\" size=\"40\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td><input type=\"radio\" class=\"radio\" name=\"sgLocationChoice\" value=\"local\" checked=\"true\"> Local file</td>\n  <td></td>\n<tr>\n";
   echo "<tr>\n  <td>Image file to upload:</td>\n  <td><input type=\"file\" name=\"sgImageFile\" value=\"\" size=\"40\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td>Identifier:</td>\n  <td>\n    <input type=\"radio\" class=\"radio\" name=\"sgNameChoice\" value=\"same\" checked=\"true\"> Use filename of uploaded file.<br />\n";
+  echo "    <input type=\"radio\" class=\"radio\" name=\"sgNameChoice\" value=\"new\"> Specify different filename:<br />\n";
+  echo "    <input type=\"text\" name=\"sgFileName\" value=\"".md5(uniqid(rand(),1)).".jpeg\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Create\" /></td>\n</tr>\n";
   echo "</table>\n";
   
@@ -252,26 +284,41 @@ function sgAddImage($gallery)
   $gal = sgGetGallery($gallery);
   if(!$gal) return false;
   
-  //set filename as requested
-  if($_REQUEST["sgNameChoice"] == "same") $image = $_FILES["sgImageFile"]["name"];
-  else $image = $_REQUEST["sgFileName"];
+  if($_REQUEST["sgLocationChoice"] == "remote") $image = $_REQUEST["sgImageURL"];
+  elseif($_REQUEST["sgLocationChoice"] == "local") {
+    //set filename as requested
+    if($_REQUEST["sgNameChoice"] == "same") $image = $_FILES["sgImageFile"]["name"];
+    else $image = $_REQUEST["sgFileName"];
+    
+    //make sure file has a .jpeg extension
+    if(!preg_match("/(\.jpeg)|(\.jpg)$/i",$image)) $image .= ".jpeg";
+    
+    $path = sgGetConfig("pathto_galleries")."$gallery/$image";
+    
+    if(file_exists($path) || !move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) 
+      return false;
+  } else return false;
   
-  //make sure file has a .jpeg extension
-  if(!preg_match("/(\.jpeg)|(\.jpg)$/i",$image)) $image .= ".jpeg";
+  $i = count($gal->img);
   
-  $path = sgGetConfig("pathto_galleries")."$gallery/$image";
+  $gal->img[$i]->filename = $image;
+  $gal->img[$i]->name = $image;
   
-  if(file_exists($path) || !move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) 
-    return false;
+  //set default values
+  $gal->img[$i]->thumbnail = "";
+  $gal->img[$i]->owner = "__nobody__";
+  $gal->img[$i]->groups = "__nogroup__";
+  $gal->img[$i]->permissions = 4096;
+  $gal->img[$i]->categories = "";
   
-  $index = count($gal->img);
-  
-  $gal->img[$index]->filename = $image;
-  $gal->img[$index]->name = $image;
-  
-  sgPutGallery($gal);
-  
-  return $image;
+  $gal->img[$i]->artist =
+  $gal->img[$i]->email = $gal->img[$i]->copyright = $gal->img[$i]->desc =
+  $gal->img[$i]->location = $gal->img[$i]->date = $gal->img[$i]->camera =
+  $gal->img[$i]->lens = $gal->img[$i]->film = $gal->img[$i]->darkroom =
+  $gal->img[$i]->digital = "";
+
+  if(sgPutGallery($gal)) return $image;
+  else return false;
 }
 
 function sgEditImage($gallery, $image)
@@ -283,7 +330,7 @@ function sgEditImage($gallery, $image)
     return;
   }
   
-  echo "<h1>edit image</h1>\n";
+  echo "<h1>edit image</h1>\n\n";
   
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"saveimage\" />\n";
@@ -341,11 +388,9 @@ function sgSaveImage($gallery, $image)
   echo 
   "<ul>\n".
   "  <li><a href=\"index.php?gallery=$gallery&amp;image=$image\">View image</a></li>\n".
-  "  <li><a href=\"admin.php?action=newimage&amp;gallery=$gallery\">New image</a></li>\n".
   "  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgNextImage]\">Edit next image</a></li>\n".
   "  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgPrevImage]\">Edit previous image</a></li>\n".
   "  <li><a href=\"index.php?gallery=$gallery\">View gallery</a></li>\n".
-  "  <li><a href=\"admin.php?action=editgallery&amp;gallery=$gallery\">Edit gallery</a></li>\n".
   "</ul>\n";
   
 }
@@ -360,8 +405,10 @@ function sgShowImageDeleteConfirmation($gallery, $image)
   echo "<input type=\"hidden\" name=\"action\" value=\"deleteimage-confirmed\" />\n";
   echo "<input type=\"hidden\" name=\"gallery\" value=\"$gallery\" />\n";
   echo "<input type=\"hidden\" name=\"image\" value=\"$img->filename\" />\n";
+  echo "<input type=\"hidden\" name=\"sgPrevImage\" value=\"".(isset($img->prev[0])?$img->prev[0]->filename:"")."\" />\n";
+  echo "<input type=\"hidden\" name=\"sgNextImage\" value=\"".(isset($img->next[0])?$img->next[0]->filename:"")."\" />\n";
   echo "<p>Are you sure you want to irretrievable delete image <em>'$img->name'";
-  if($img->author) echo " by $img->author";
+  if(!empty($img->author)) echo " by $img->author";
   echo "</em> from gallery <em>$img->galname</em>?</p>\n";
   echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
   echo "<input type=\"submit\" class=\"button\" name=\"confirm\" value=\"Cancel\"></p>";
@@ -376,7 +423,9 @@ function sgDeleteImage($gallery, $image)
   for($i=0;$i<count($gal->img);$i++)
     if($gal->img[$i]->filename == $image)
       array_splice($gal->img,$i,1);
-  return (unlink(sgGetConfig("pathto_galleries")."$gallery/$image") && sgPutGallery($gal));
+  if(file_exists(sgGetConfig("pathto_galleries")."$gallery/$image"))
+    return(unlink(sgGetConfig("pathto_galleries")."$gallery/$image") && sgPutGallery($gal));
+  else return sgPutGallery($gal);
 }
 
 
@@ -520,7 +569,5 @@ function sgShowAdminOptions()
   echo "  <li><a href=\"admin.php?action=logout\">Logout</a></li>\n";
   echo "</ul>\n";
 }
-
-
 
 ?>

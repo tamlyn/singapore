@@ -21,6 +21,7 @@
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 ?>
+
 <!-- end of generated content -->
 
 <div id="footer"><p>

@@ -47,3 +47,4 @@ $pathto_extra_css = sgGetConfig("pathto_extra_css")==""?$pathto_current_theme."/
 <div id="header"><img src="<?php echo $pathto_current_theme."/header.gif" ?>" alt="singapore" /></div>
 
 <!-- start of generated content -->
+
