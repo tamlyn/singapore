@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.19 2005/03/22 21:46:52 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.20 2005/03/23 12:31:29 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.19 $";
+    return "$Revision: 1.20 $";
   }
 
   /**
@@ -128,8 +128,8 @@ class sgIO_csv extends sgIO
               : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
         }
       //otherwise just create an empty array of the appropriate length
-      } else {
-        $gal->images = array_fill(0, count($temp), "");
+      } else if(count($temp) > 3) {
+        $gal->images = array_fill(0, count($temp)-3, "");
       }
         
     } else
