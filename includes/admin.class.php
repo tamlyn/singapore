@@ -5,8 +5,8 @@
  * 
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.10 2004/01/13 03:07:44 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: admin.class.php,v 1.11 2004/02/02 16:31:35 tamlyn Exp $
  */
 
 /**
@@ -14,7 +14,7 @@
  * 
  * @uses Singapore
  * @package singapore
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  */
 class sgAdmin extends Singapore
 {
@@ -63,7 +63,7 @@ class sgAdmin extends Singapore
     //read the standard language file
     $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->language.".pmo");
     //read extra admin language file
-    $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin".$this->config->language.".pmo");
+    $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin.".$this->config->language.".pmo");
 
     //create IO handler
     $this->io = new sgIO_csv($this->config);

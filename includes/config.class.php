@@ -3,10 +3,10 @@
 /**
  * Config class.
  * 
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: config.class.php,v 1.3 2003/12/14 14:39:18 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: config.class.php,v 1.4 2004/02/02 16:31:36 tamlyn Exp $
  */
 
 /**
@@ -14,8 +14,8 @@
  * as properties of itself.
  * 
  * @package singapore
- * @author Tamlyn Rhodes <tam at zenology dot org>
- * @copyright (c)2003 Tamlyn Rhodes
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
  */
 class sgConfig
 {

@@ -5,10 +5,10 @@
  * with all existing language files (singapore.LANG.po)
  * 
  * @author Joel Sjögren <joel dot sjogren at nonea dot se>
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: merge.php,v 1.2 2003/09/09 17:10:37 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: merge.php,v 1.3 2004/02/02 16:31:37 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)

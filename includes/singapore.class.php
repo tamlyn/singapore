@@ -3,8 +3,8 @@
 /**
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.13 2004/01/13 03:07:44 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: singapore.class.php,v 1.14 2004/02/02 16:36:04 tamlyn Exp $
  */
  
 /**
@@ -13,7 +13,7 @@
  * @uses sgImage
  * @uses sgConfig
  * @package singapore
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  */
 class Singapore
 {
@@ -138,7 +138,7 @@ class Singapore
     //check if gallery was successfully fetched
     if($this->gallery == null) {
       $this->gallery = new sgGallery($galleryId);
-      $this->gallery->name = $this->i18n->_g("Gallery not found '%s'",$image);
+      $this->gallery->name = $this->i18n->_g("Gallery not found '%s'",$galleryId);
     }
     
     //sort galleries and images
@@ -398,7 +398,7 @@ class Singapore
     $dp = opendir($dir->path);
     
     if(!$dp) return false;
-    
+
     switch($type) {
       case "images" :
         while(false !== ($entry = readdir($dp)))
@@ -408,13 +408,12 @@ class Singapore
         rewinddir($dp);
         //run on and get dirs too
       case "dirs" :
-        while(false !== ($entry = readdir($dp)))
+       while(false !== ($entry = readdir($dp)))
           if(
             is_dir($wd.$entry) && 
             $entry{0} != '.'
           ) $dir->dirs[] = $entry;
         sort($dir->dirs);
-        
         break;
       case "all" :
         while(false !== ($entry = readdir($dp)))

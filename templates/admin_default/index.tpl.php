@@ -3,8 +3,8 @@
 /**
  * Default singapore admin template.
  * 
- * @author Tamlyn Rhodes <tam at zenology dot org>
- * @copyright (c)2003 Tamlyn Rhodes
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
  * @version 1.0
  */
 

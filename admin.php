@@ -6,11 +6,11 @@
  * Checks the selected 'action', calls the appropriate methods and sets the 
  * required include file. Finally it includes the admin template's index file.
  * 
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.20 2004/01/13 03:07:42 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: admin.php,v 1.21 2004/02/02 16:31:35 tamlyn Exp $
  */
 
 //include main class

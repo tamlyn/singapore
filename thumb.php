@@ -4,10 +4,10 @@
  * Creates and caches a thumbnail of the specified size for the 
  * specified image. 
  * 
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.20 2004/01/09 20:58:46 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: thumb.php,v 1.21 2004/02/02 16:31:35 tamlyn Exp $
  */
 
 //require config class
@@ -64,8 +64,9 @@ function showThumb($gallery, $image, $maxsize) {
     $thumbWidth = $maxsize;
     $thumbHeight = round($imageHeight/$imageWidth * $maxsize);
   } else {
-    $thumbWidth = $imageWidth;
-    $thumbHeight = $imageHeight;
+    //image is smaller than required dimensions so output it and exit
+    readfile($imagePath);
+    exit;
   }
 
   //set default files permissions

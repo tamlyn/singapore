@@ -3,15 +3,16 @@
 /**
  * Translation class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: translator.class.php,v 1.1 2004/01/13 03:07:44 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: translator.class.php,v 1.2 2004/02/02 16:36:04 tamlyn Exp $
  */
  
 /**
  * Provides functions for translating strings using GNU Gettext PO files
  * @package singapore
  * @author Joel Sjögren <joel dot sjogren at nonea dot se>
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
  */
 class Translator
 {

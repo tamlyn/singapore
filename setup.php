@@ -4,10 +4,10 @@
  * Creates cache and logs directories required to run singapore and ensures 
  * all required directories are writeable.
  * 
- * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: setup.php,v 1.8 2003/09/09 17:10:36 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: setup.php,v 1.9 2004/02/02 16:31:35 tamlyn Exp $
  */
 
 //require config class

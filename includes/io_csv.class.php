@@ -3,16 +3,16 @@
 /**
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.6 2004/01/13 03:07:44 tamlyn Exp $
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @version $Id: io_csv.class.php,v 1.7 2004/02/02 16:31:36 tamlyn Exp $
  */
 
 /**
  * Static (but instantiable) class used to read and write data to and from CSV files.
  * @see sgIO_iifn
  * @package singapore
- * @author Tamlyn Rhodes <tam at zenology dot org>
- * @copyright (c)2003 Tamlyn Rhodes
+ * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
+ * @copyright (c)2003, 2004 Tamlyn Rhodes
  */
 class sgIO_csv {
   
