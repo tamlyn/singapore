@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.17 2004/12/08 10:57:36 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.18 2004/12/15 17:04:56 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Ver: $";
+    return "$Revision: 1.18 $";
   }
 
   /**

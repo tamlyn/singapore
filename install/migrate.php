@@ -12,61 +12,8 @@ define("SG_WLD_DELETE", 128);
 
 $basePath = "../";
 
-function setPerms($obj) {
-  $obj->permissions = 0;
-  if(!empty($_POST["sgGrpRead"]))   $obj->permissions |= SG_GRP_READ;
-  if(!empty($_POST["sgGrpEdit"]))   $obj->permissions |= SG_GRP_EDIT;
-  if(!empty($_POST["sgGrpAdd"]))    $obj->permissions |= SG_GRP_ADD;
-  if(!empty($_POST["sgGrpDelete"])) $obj->permissions |= SG_GRP_DELETE;
-  if(!empty($_POST["sgWldRead"]))   $obj->permissions |= SG_WLD_READ;
-  if(!empty($_POST["sgWldEdit"]))   $obj->permissions |= SG_WLD_EDIT;
-  if(!empty($_POST["sgWldAdd"]))    $obj->permissions |= SG_WLD_ADD;
-  if(!empty($_POST["sgWldDelete"])) $obj->permissions |= SG_WLD_DELETE;
-  
-  $obj->groups = $_REQUEST["sgGroups"];
-  $obj->owner = $_REQUEST["sgOwner"];
-  
-  return $obj;
-}
-
-
-function convertDirectory ($path, $io_in, $io_out)
-{
-  if (is_dir($path)) {
-    $gallery = $io_in->getGallery($path);
-    echo "<ul><li>Checking $path<br />\n";
-    if($gallery) {
-      if($gallery->summary != "" && empty($_REQUEST["convertOverwrite"]))
-        echo "Did NOT overwrite non-empty summary in $path<br />\n";
-      else {
-        if($_REQUEST["convertType"]!='none')
-          $gallery->summary = $gallery->desc;
-        if($_REQUEST["convertType"]=='move')
-          $gallery->desc = "";
-      }
-
-      $gallery = setPerms($gallery);
-      
-      for($i=0; $i<count($gallery->images); $i++)
-        $gallery->images[$i] = setPerms($gallery->images[$i]);
-      
-      if($io_out->putGallery($gallery))
-        echo "Successfully converted $path<br />\n";
-      else
-        echo "Problem saving data file for $path<br />\n";
-    } else
-      echo "Skipping $path<br />\n";
-    $d = dir($path);
-    while (($file = $d->read()) !== false) {
-      if ($file == '.' || $file == '..') continue;
-      $path = $d->path."/".$file;
-      if (is_dir($path)) {
-        convertDirectory($path);
-      }
-    }
-    echo "</li></ul>\n";
-  }
-}
+//determine current step in setup process
+$setupStep = isset($_REQUEST["step"]) ? $_REQUEST["step"] : "choose";
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -85,8 +32,6 @@ function convertDirectory ($path, $io_in, $io_out)
 require_once $basePath."includes/config.class.php";
 require_once $basePath."includes/gallery.class.php";
 require_once $basePath."includes/image.class.php";
-require_once $basePath."includes/io.class.php";
-require_once $basePath."includes/io_sql.class.php";
 $config = new sgConfig($basePath."singapore.ini");
 
 

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_sqlite.class.php,v 1.2 2004/12/08 10:57:36 tamlyn Exp $
+ * @version $Id: io_sqlite.class.php,v 1.3 2004/12/15 17:04:56 tamlyn Exp $
  */
 
 //include the generic SQL class
@@ -46,7 +46,7 @@ class sgIO_sqlite extends sgIOsql
    */
   function getVersion()
   {
-    return "$Ver: $";
+    return "$Revision: 1.3 $";
   }
 
   /**

@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: install.php,v 1.1 2004/12/02 12:01:59 tamlyn Exp $
+ * @version $Id: install.php,v 1.2 2004/12/15 17:04:56 tamlyn Exp $
  */
 
 //path to singapore root
@@ -93,9 +93,6 @@ switch($setupStep) {
     $config = new sgConfig($basePath."singapore.ini");
     $config->loadConfig($basePath."secret.ini.php");
     $config->base_path = $basePath;
-    //include base classes
-    require_once $basePath."includes/io.class.php";
-    require_once $basePath."includes/io_sql.class.php";
     
     switch($config->io_handler) {
       case "csv" :
