@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.37 2004/12/01 23:55:27 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.38 2004/12/02 01:36:55 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -89,7 +89,7 @@ class Singapore
     
     //load config from singapore root directory
     $this->config = new sgConfig($basePath."singapore.ini");
-    $this->config->loadConfig("secret.ini.php");
+    $this->config->loadConfig($basePath."secret.ini.php");
     
     //if instantiated remotely...
     if(!empty($basePath)) {
