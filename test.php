@@ -23,12 +23,38 @@
 function doTests()
 {
   setupHeader("Testing PHP version");
-  setupMessage("PHP version ".phpversion());
+  setupMessage("PHP version is ".phpversion());
   $bits = explode(".",phpversion());
   if(strcmp($bits[0],"4")<0 || strcmp($bits[0],"4")==0 && strcmp($bits[1],"1")<0) {
     setupError("singapore requires PHP 4.1.0 or higher ");
     return false;
   }
+  
+  setupHeader("Testing PHP configuration");
+  //setupMessage("If any of these tests fail, you may be able to change the configuration ".
+  //             "directive (specified in brackets) either in php.ini or by adding ".
+  //             "<code>ini_set(\"<b>directive_name</b>, 1)</code> to <code>includes/header.php</code>");
+
+  if(!ini_get("safe_mode")) setupMessage("Safe mode disabled");
+  else setupError("PHP is running in 'safe mode' (<code>safe_mode</code>). Singapore <b>should</b> still function correctly but safe mode operation is not supported");
+  
+  if(is_writable(ini_get("session.save_path")) && ini_get("session.save_handler")=="files") setupMessage("Session save path correctly specified");
+  else setupError("Session save path does not exist or is not writable (<code>session.save_path</code>). Singapore will function but you will not be able to use the admin interface");
+
+  if(ini_get("session.use_trans_sid")) setupMessage("Transparent session id support enabled");
+  else setupMessage("Transparent session id support disabled (<code>use_trans_sid</code>). Singapore will function but will <b>require</b> cookies for the admin interface to function");
+
+  if(ini_get("file_uploads")) setupMessage("File uploading enabled");
+  else setupError("File uploading disabled (<code>file_uploads</code>). Singapore will function but you will not be able to upload images via the admin interface");
+
+  if(is_writable(ini_get("upload_tmp_dir"))) setupMessage("Upload directory correctly specified");
+  else setupError("Upload directory directory does not exist or is not writable (<code>upload_tmp_dir</code>). Singapore will function but you will not be able to upload images via the admin interface");
+  
+  if(ini_get("allow_url_fopen")) setupMessage("Remote file handling enabled");
+  else setupError("Remote file handling disabled (<code>allow_url_fopen</code>). Singapore will function but you will not be able to generate thumbnails for remotely hosted files");
+  
+  
+  
 
   setupHeader("Searching for config file");
   
@@ -47,7 +73,7 @@ function doTests()
   $phpinfo = stristr($phpinfo,"gd version");
   $phpinfo = stristr($phpinfo,"version");
   
-  if(!$phpinfo) setupMessage("GD not found");
+  if(!$phpinfo) setupMessage("GD not found. You may be able to use ImageMagick instead");
   else {
     setupMessage("Found GD");
     //extract text version and number version
@@ -59,8 +85,7 @@ function doTests()
       " use the higher quality thumbnail generation functions of GD 2");
   }
   
-  //setupHeader("Testing for ImageMagick");
-  
+    
   return true;
 }
 
