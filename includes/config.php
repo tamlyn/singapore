@@ -92,14 +92,15 @@ function sgGetConfig($var) {
        //this string can be *anything* you want but should
        //be unique to your site and be kept secret
        
-    case "thumbnail_quality" :    return 70;
+    case "thumbnail_quality" :    return 75;
        //the JPEG quality of generated thumbnails
        //100 is the best quality; 0 is the lowest
+       
     case "thumbnail_software" :   return "gd1";
        //the software to use to generate the thumbnails
        //  gd1 = GD v1.x
        //  gd2 = GD v2.x
-       //  im  = ImageMagick (not yet)
+       //  im  = ImageMagick
        
        
     //these two options have no effect yet:

@@ -46,7 +46,7 @@ table.formTable input.radio, table.formTable input.radio {
 div.sgAdminBar {
   background-color: #f0f0f0;
   border: 1px solid #000;
-  margin-top: 0.75em;;
+  margin: 1em 0 1em 0;
   padding: 5px;
   font-size: x-small;
 }
@@ -140,7 +140,7 @@ table.sgShadow td.bm {
   background-image: url('images/shadow-bm.gif');
 }
 
-td.br {
+table.sgShadow td.br {
   background-image: url('images/shadow-br.gif');
 }
 

@@ -48,20 +48,21 @@ function showThumb($gallery, $image, $maxsize) {
 
   if($imgSize[0]<$imgSize[1]){
     $y = $maxsize;
-    $x = $imgSize[0]/$imgSize[1] * $maxsize; 
+    $x = round($imgSize[0]/$imgSize[1] * $maxsize);
   }else{
     $x = $maxsize;
-    $y = $imgSize[1]/$imgSize[0] * $maxsize;
+    $y = round($imgSize[1]/$imgSize[0] * $maxsize);
   }
 
   
   switch(sgGetConfig("thumbnail_software")) {
-  case "im" :
-    //use ImageMagick if available
+  case "im" : //use ImageMagick
+    
+    exec("convert -geometry {$x}x{$y} -quality $thumbQuality \"".escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"');
+    readfile($thumbPath);
     
     break;
-  case "gd2" :
-    //use GD 2.x if available
+  case "gd2" : //use GD 2.x 
     
     $image = ImageCreateFromJPEG($imagePath);
     $thumb = ImageCreateTrueColor($x,$y);
@@ -75,8 +76,7 @@ function showThumb($gallery, $image, $maxsize) {
     
     break;
   case "gd1" :
-  default :
-    //use GD 1.6.x by default
+  default : //use GD 1.6.x by default
     
     $image = ImageCreateFromJPEG($imagePath);
     $thumb = ImageCreate($x,$y);

@@ -22,6 +22,10 @@ li {
   margin-right: 2em;
 }
 
+ul.things > li {
+  margin-top: 0.75em;
+}
+
 code {
   color: #006;
 }
@@ -119,7 +123,7 @@ things that can be done to customise it to your needs. Here are some:</p>
 </ul>
 
 <p>Things you SHOULD do:</p>
-<ul>
+<ul class="things">
   <li>Add some galleries and images into the <code>galleries/</code> directory 
   (and remove the example ones provided). <a href="#managing">More info</a>.</li>
 
@@ -141,9 +145,9 @@ things that can be done to customise it to your needs. Here are some:</p>
   <span class="note">NOTE: a future release will allow multiple admin users with 
   different passwords.</span></li>
   
-  <li>If your PHP installation uses GD version 2.0.1 or later or you have access to 
-  ImageMagick then you can get nicer generated thumbnails by changing the option 
-  in <code>includes/config.php</code>.</li>
+  <li>If your PHP installation uses GD version 2 or later or you have access to 
+  ImageMagick then you can get much nicer generated thumbnails by changing the 
+  option in <code>includes/config.php</code>.</li>
 </ul>
 
 <p>Things you MIGHT do:</p>
@@ -210,9 +214,9 @@ o changed
 
 <p>
 + web admin can add and delete images and galleries<br />
-+ added config option for GD 2.0.x support<br />
-+ added config option for generated thumbnail JPEG quality<br />
++ added GD 2 and ImageMagic thumbnail generation support<br />
 * does not generate any E_NOTICE errors anymore<br />
++ added config option for generated thumbnail JPEG quality<br />
 * handles extended characters in gallery ansd image names (Piotr)<br />
 * fixed 'images link back to correct page of gallery'<br />
 + added directory_mode and file_mode options<br />
@@ -274,7 +278,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/10 15:09:53 $</em></p>
+<p><em>$Date: 2003/05/10 20:39:56 $</em></p>
 
 </body>
 </html>
