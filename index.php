@@ -30,23 +30,29 @@ if(isset($_REQUEST["sgAdmin"])) {
   session_start();
 }
 
+//require config class
+require_once "includes/class_configuration.php";
+//create config object
+$sgConfig = new sgConfiguration();
+
+
 //include required files
-require "includes/config.php";
-require "includes/frontend.php";
-require "includes/utils.php";
-require "includes/backend.php";
+require_once "includes/frontend.php";
+require_once "includes/utils.php";
+require_once "includes/backend.php";
+
 
 //include header file
-include sgGetConfig("pathto_header");
+include $GLOBALS["sgConfig"]->pathto_header;
 
-//show admin toolbar (only if user is logged in)
-sgShowAdminBar();
+//if user is logged in show admin toolbar
+if(sgIsLoggedIn()) sgShowAdminBar();
 
 if(isset($_REQUEST["image"])) sgShowImage($_REQUEST["gallery"],$_REQUEST["image"]);
 elseif(isset($_REQUEST["gallery"])) sgShowThumbnails($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
 else sgShowIndex(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
 
 //include footer file
-include sgGetConfig("pathto_footer");
+include $GLOBALS["sgConfig"]->pathto_footer;
 
 ?>

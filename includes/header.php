@@ -23,9 +23,8 @@
 $scriptStartTime = microtime();
 
 if(empty($pageTitle)) $pageTitle = "singapore";
-$pathto_current_theme = sgGetConfig("pathto_themes").sgGetConfig("theme_name");
-$pathto_main_css = $pathto_current_theme."/main.css";
-$pathto_extra_css = sgGetConfig("pathto_extra_css")==""?$pathto_current_theme."/extra.css":sgGetConfig("pathto_extra_css");
+$pathto_main_css = $GLOBALS["sgConfig"]->pathto_current_theme."main.css";
+$pathto_extra_css = $GLOBALS["sgConfig"]->pathto_extra_css==""?$GLOBALS["sgConfig"]->pathto_current_theme."extra.css":$GLOBALS["sgConfig"]->pathto_extra_css;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -44,7 +43,7 @@ $pathto_extra_css = sgGetConfig("pathto_extra_css")==""?$pathto_current_theme."/
 
 <body>
 
-<div id="header"><img src="<?php echo $pathto_current_theme."/header.gif" ?>" alt="singapore" /></div>
+<div id="header"><img src="<?php echo $GLOBALS["sgConfig"]->pathto_current_theme ?>header.gif" alt="singapore" /></div>
 
 <!-- start of generated content -->
 

@@ -24,8 +24,6 @@
 
 function sgShowAdminBar()
 {
-  if(!sgIsLoggedIn()) return;
-  
   echo "<div class=\"sgAdminBar\">\n";
   echo "  <a href=\"admin.php\">Admin</a>\n";
   echo "  <a href=\"index.php\">Galleries</a>\n";
@@ -49,7 +47,7 @@ function sgShowAdminBar()
 
 function sgShowIndex($gallery, $startat)
 {
-  $dir = sgGetListing(sgGetConfig("pathto_galleries").$gallery);
+  $dir = sgGetListing($GLOBALS["sgConfig"]->pathto_galleries.$gallery);
   
   //get contaner xhtml
   $code = sgGetContainerCode();
@@ -57,10 +55,10 @@ function sgShowIndex($gallery, $startat)
   //container frame top (tab)
   echo $code->tab1;
   
-  echo "Showing ".($startat+1)."-".($startat+sgGetConfig("gallery_thumb_number")>count($dir->dirs)?count($dir->dirs):$startat+sgGetConfig("gallery_thumb_number"))." of ".count($dir->dirs);
+  echo "Showing ".($startat+1)."-".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number>count($dir->dirs)?count($dir->dirs):$startat+$GLOBALS["sgConfig"]->gallery_thumb_number)." of ".count($dir->dirs);
   
-  if($startat>0) echo " | <a href=\"index.php?startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a>";
-  if(count($dir->dirs)>$startat+sgGetConfig("gallery_thumb_number")) echo " | <a href=\"index.php?startat=".($startat+sgGetConfig("gallery_thumb_number"))."\">Next</a>";
+  if($startat>0) echo " | <a href=\"index.php?startat=".($startat-$GLOBALS["sgConfig"]->main_thumb_number)."\">Previous</a>";
+  if(count($dir->dirs)>$startat+$GLOBALS["sgConfig"]->gallery_thumb_number) echo " | <a href=\"index.php?startat=".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number)."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
@@ -77,10 +75,12 @@ function sgShowIndex($gallery, $startat)
       echo "No<br />thumbnail";
       break;
     case "__random__" :
-      echo "Random!";
+      srand(time());
+      $index = rand(0,count($gal->img)-1);
+      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$index]->filename}&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgThumbnail\" alt=\"Example image from gallery\" />";
       break;
     default :
-      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" />";
+      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgGallery\" alt=\"Example image from gallery\" />";
     }
     echo "</a></td>\n";
     echo "  <td><p><strong><a href=\"index.php?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n";
@@ -109,27 +109,25 @@ function sgShowThumbnails($gallery, $startat)
   //container frame top (tab)
   echo $code->tab1;
   
-  echo "Showing ".($startat+1)."-".($startat+sgGetConfig("main_thumb_number")>count($gal->img)?count($gal->img):$startat+sgGetConfig("main_thumb_number"))." of ".count($gal->img)." | ";
+  echo "Showing ".($startat+1)."-".($startat+$GLOBALS["sgConfig"]->main_thumb_number>count($gal->img)?count($gal->img):$startat+$GLOBALS["sgConfig"]->main_thumb_number)." of ".count($gal->img)." | ";
   
-  if($startat>0) echo "<a href=\"index.php?gallery=$gal->id&amp;startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a> | ";
+  if($startat>0) echo "<a href=\"index.php?gallery=$gal->id&amp;startat=".($startat-$GLOBALS["sgConfig"]->main_thumb_number)."\">Previous</a> | ";
   echo "<a href=\"index.php\" title=\"Back to galleries list\">Up</a>";
-  if(count($gal->img)>$startat+sgGetConfig("main_thumb_number")) echo " | <a href=\"index.php?gallery=$gal->id&amp;startat=".($startat+sgGetConfig("main_thumb_number"))."\">Next</a>";
+  if(count($gal->img)>$startat+$GLOBALS["sgConfig"]->main_thumb_number) echo " | <a href=\"index.php?gallery=$gal->id&amp;startat=".($startat+$GLOBALS["sgConfig"]->main_thumb_number)."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
   
-  $pathto_currenttheme = sgGetConfig("pathto_themes").sgGetConfig("theme_name");
-  
-  for($i=$startat;$i<$startat+sgGetConfig("main_thumb_number") && $i<count($gal->img);$i++) {
+  for($i=$startat;$i<$startat+$GLOBALS["sgConfig"]->main_thumb_number && $i<count($gal->img);$i++) {
     echo "<div class=\"sgThumbnail\">\n";
     echo "  <div class=\"sgThumbnailContent\">\n";
-    echo "    <img class=\"borderTL\" src=\"$pathto_currenttheme/images/slide-tl.gif\" alt=\"\" />\n";
-    echo "    <img class=\"borderTR\" src=\"$pathto_currenttheme/images/slide-tr.gif\" alt=\"\" />\n";
+    echo "    <img class=\"borderTL\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-tl.gif\" alt=\"\" />\n";
+    echo "    <img class=\"borderTR\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-tr.gif\" alt=\"\" />\n";
     
     echo "    <table><tr><td>\n";
     echo "      <a href=\"index.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">\n";
     echo "        <img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}&amp;size=";
-    echo sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"{$gal->img[$i]->name}";
+    echo $GLOBALS["sgConfig"]->main_thumb_size."\" class=\"sgThumbnail\" alt=\"{$gal->img[$i]->name}";
     if(!empty($gal->img[$i]->artist)) echo " by {$gal->img[$i]->artist}";
     echo "\" />\n      </a>\n";
     echo "    </td></tr></table>\n";
@@ -137,8 +135,8 @@ function sgShowThumbnails($gallery, $startat)
     echo "    <div class=\"roundedCornerSpacer\">&nbsp;</div>\n";
     echo "  </div>\n";
     echo "  <div class=\"bottomCorners\">\n";
-    echo "    <img class=\"borderBL\" src=\"$pathto_currenttheme/images/slide-bl.gif\" alt=\"\" />\n";
-    echo "    <img class=\"borderBR\" src=\"$pathto_currenttheme/images/slide-br.gif\" alt=\"\" />\n";
+    echo "    <img class=\"borderBL\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-bl.gif\" alt=\"\" />\n";
+    echo "    <img class=\"borderBR\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-br.gif\" alt=\"\" />\n";
     echo "  </div>\n";
     echo "</div>\n\n";
   }
@@ -147,7 +145,7 @@ function sgShowThumbnails($gallery, $startat)
   echo $code->bottom;
   
   //log gallery hit
-  if(sgGetConfig("track_views")) sgLogView($gallery);
+  if($GLOBALS["sgConfig"]->track_views) sgLogView($gallery);
 }
 
 function sgShowImage($gallery, $image) 
@@ -167,16 +165,16 @@ function sgShowImage($gallery, $image)
   echo "<div class=\"sgNavBar\"><p>\n";
   for($i=count($img->prev)-1;$i>=0;$i--)
     echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->prev[$i]->filename}\">".
-         "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->prev[$i]->filename}&amp;size=".sgGetConfig("preview_thumb_size")."\" alt=\"{$img->prev[$i]->name} by {$img->prev[$i]->artist}\" />".
+         "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->prev[$i]->filename}&amp;size=".$GLOBALS["sgConfig"]->preview_thumb_size."\" alt=\"{$img->prev[$i]->name} by {$img->prev[$i]->artist}\" />".
          "</a>\n";
-  echo "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->filename}&amp;size=".sgGetConfig("preview_thumb_size")."\" class=\"sgNavBarCurrent\" alt=\"{$img->name} by {$img->artist}\" />\n";
+  echo "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->filename}&amp;size=".$GLOBALS["sgConfig"]->preview_thumb_size."\" class=\"sgNavBarCurrent\" alt=\"{$img->name} by {$img->artist}\" />\n";
   for($i=0;$i<count($img->next);$i++)
     echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->next[$i]->filename}\">".
-         "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->next[$i]->filename}&amp;size=".sgGetConfig("preview_thumb_size")."\" alt=\"{$img->next[$i]->name} by {$img->next[$i]->artist}\" />".
+         "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->next[$i]->filename}&amp;size=".$GLOBALS["sgConfig"]->preview_thumb_size."\" alt=\"{$img->next[$i]->name} by {$img->next[$i]->artist}\" />".
          "</a>\n";
   echo "<br />\n";
   if(isset($img->prev[0])) echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
-  echo "<a href=\"index.php?gallery=$gallery&amp;startat=".(floor($img->index/sgGetConfig("main_thumb_number"))*sgGetConfig("main_thumb_number"))."\">Thumbnails</a>\n";
+  echo "<a href=\"index.php?gallery=$gallery&amp;startat=".(floor($img->index/$GLOBALS["sgConfig"]->main_thumb_number)*$GLOBALS["sgConfig"]->main_thumb_number)."\">Thumbnails</a>\n";
   if(isset($img->next[0])) echo " | <a href=\"index.php?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
   
@@ -191,7 +189,7 @@ function sgShowImage($gallery, $image)
   
   //check if image is local (filename does not start with 'http://')
   if(substr($img->filename,0,7)!="http://") 
-    echo sgGetConfig("pathto_galleries").rawurlencode($gallery)."/".rawurlencode($img->filename);
+    echo $GLOBALS["sgConfig"]->pathto_galleries.rawurlencode($gallery)."/".rawurlencode($img->filename);
   else 
     echo $img->filename;
     
@@ -227,8 +225,8 @@ function sgShowImage($gallery, $image)
   if($img->digital)  echo "<strong>Digital manipulation:</strong> $img->digital<br />\n";
   if($img->copyright) echo "<strong>Copyright:</strong> $img->copyright<br />\n";
   elseif($img->artist) echo "<strong>Copyright:</strong> $img->artist<br />\n";
-  if(sgGetConfig("track_views")) $hits = sgLogView($gallery,$image);
-  if(sgGetConfig("show_views")) echo "<strong>Viewed:</strong> $hits times<br />\n";
+  if($GLOBALS["sgConfig"]->track_views) $hits = sgLogView($gallery,$image);
+  if($GLOBALS["sgConfig"]->show_views) echo "<strong>Viewed:</strong> $hits times<br />\n";
   echo "</p>\n";
 }
 
@@ -237,11 +235,11 @@ function sgGetContainerCode()
   $code->tab1 = 
   "<div class=\"sgShadow\"><table class=\"sgShadow\" cellspacing=\"0\">\n".
   "  <tr>\n".
-  "    <td><img src=\"".sgGetConfig("pathto_themes").sgGetConfig("theme_name")."/images/shadow-tabl.gif\" alt=\"\" /></td>\n".
+  "    <td><img src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/shadow-tabl.gif\" alt=\"\" /></td>\n".
   "    <td class=\"tabm\"><table class=\"sgShadowTab\" cellspacing=\"0\"><tr><td>";
   
   $code->tab2 = 
-  "</td><td><img src=\"".sgGetConfig("pathto_themes").sgGetConfig("theme_name")."/images/shadow-tabr.gif\" alt=\"\" /></td></tr></table></td>\n".
+  "</td><td><img src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/shadow-tabr.gif\" alt=\"\" /></td></tr></table></td>\n".
   "    <td class=\"tabr\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "  </tr>\n".
   "  <tr>\n".

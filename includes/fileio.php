@@ -26,7 +26,7 @@ function sgGetGallery($gallery, $galleryOnly = false) {
   $gal->id = $gallery;
   $gal->img = array();
   
-  $fp = @fopen(sgGetConfig("pathto_galleries")."$gal->id/metadata.csv","r");
+  $fp = @fopen($GLOBALS["sgConfig"]->pathto_galleries."$gal->id/metadata.csv","r");
   
   if($fp) {
     while($temp[] = fgetcsv($fp,4096));
@@ -46,7 +46,6 @@ function sgGetGallery($gallery, $galleryOnly = false) {
       $gal->desc
     ) = $temp[1];
     
-    if($galleryOnly) return $gal;
     
     for($i=0;$i<count($temp)-3;$i++)
       list(
@@ -71,7 +70,7 @@ function sgGetGallery($gallery, $galleryOnly = false) {
       ) = $temp[$i+2];
     
     return $gal;
-  } elseif($dir = sgGetListing(sgGetConfig("pathto_galleries")."$gal->id/", "jpegs")) {
+  } elseif($dir = sgGetListing($GLOBALS["sgConfig"]->pathto_galleries."$gal->id/", "jpegs")) {
     
     $temp = strtr($gal->id, "_", " ");
     if(strpos($temp, " - ")) list($gal->artist,$gal->name) = explode(" - ", $temp);
@@ -125,7 +124,7 @@ function sgGetGallery($gallery, $galleryOnly = false) {
 
 function sgPutGallery($gal) {
   
-  $fp = fopen(sgGetConfig("pathto_galleries").$gal->id."/metadata.csv","w");
+  $fp = fopen($GLOBALS["sgConfig"]->pathto_galleries.$gal->id."/metadata.csv","w");
   
   if(!$fp) return false;
 
@@ -171,7 +170,7 @@ function sgGetHits($gallery) {
 
   $hits->gal = $gallery;
 
-  $fp = @fopen(sgGetConfig("pathto_logs").strtr("$hits->gal",":/?\\","----").".log","r");
+  $fp = @fopen($GLOBALS["sgConfig"]->pathto_logs.strtr("$hits->gal",":/?\\","----").".log","r");
   
   if($fp) {
     while($temp[] = fgetcsv($fp,255));
@@ -202,7 +201,7 @@ function sgGetHits($gallery) {
 
 function sgPutHits($hits) {
 
-  $fp = fopen(sgGetConfig("pathto_logs").strtr("$hits->gal",":/?\\","----").".log","w");
+  $fp = fopen($GLOBALS["sgConfig"]->pathto_logs.strtr("$hits->gal",":/?\\","----").".log","w");
   if(!$fp) return false;
   
   fwrite($fp, ",".

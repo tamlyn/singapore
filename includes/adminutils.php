@@ -30,7 +30,7 @@ function sgLogin() {
 		for($i=1;$i < count($users);$i++) {
       if($_POST["user"] == $users[$i]->username && md5($_POST["pass"]) == $users[$i]->userpass){
         $_SESSION["user"] = $users[$i];
-        $_SESSION["user"]->check = md5(sgGetConfig("secret_string").$_SERVER["REMOTE_ADDR"]);
+        $_SESSION["user"]->check = md5($GLOBALS["sgConfig"]->secret_string.$_SERVER["REMOTE_ADDR"]);
 			  $_SESSION["user"]->ip = $_SERVER["REMOTE_ADDR"];
         $_SESSION["user"]->loginTime = time();
         return true;
@@ -43,7 +43,7 @@ function sgLogin() {
 
 function sgLogout() {
   //unset($GLOBALS['_SESSION']['user']);
-  $_SESSION["user"] = NULL;
+  $_SESSION["user"] = null;
 	return true;
 }
 
@@ -118,14 +118,14 @@ function sgNewGallery() {
 
 function sgAddGallery($gallery)
 {
-  $path = sgGetConfig("pathto_galleries").$gallery;
-  if(!file_exists($path) && mkdir($path, sgGetConfig("directory_mode"))) return true;
+  $path = $GLOBALS["sgConfig"]->pathto_galleries.$gallery;
+  if(!file_exists($path) && mkdir($path, $GLOBALS["sgConfig"]->directory_mode)) return true;
   return false;
 }
 
 function sgEditGallery($gallery)
 { 
-  $gal = sgGetGalleryInfo($gallery);
+  $gal = sgGetGallery($gallery);
   if(!$gal) {
     echo("<h1>gallery '$gallery' not found</h1>\n");
     sgShowIndex("",0);
@@ -149,10 +149,10 @@ function sgEditGallery($gallery)
     echo "No<br />thumbnail";
     break;
   case "__random__" :
-    echo "Random!";
+    echo "Random<br />image";
     break;
   default :
-    echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgThumbnail\" alt=\"Example image from gallery\" />";
+    echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgThumbnail\" alt=\"Example image from gallery\" />";
   }
   echo "<br />\n<a href=\"admin.php?action=changethumbnail&amp;gallery=$gal->id\">Change...</a>\n";
   echo "</div></td>\n</tr>\n";
@@ -218,7 +218,7 @@ function sgDeleteGallery($gallery)
   if(strpos($gallery,"../") !== false) return false;
   
   //remove the offending directory and all contained therein
-  return rmdir_all(sgGetConfig("pathto_galleries").$gallery);
+  return rmdir_all($GLOBALS["sgConfig"]->pathto_galleries.$gallery);
 }
 
 
@@ -235,6 +235,7 @@ function sgChangeThumbnail($gallery)
   
   echo "<p><select name=\"sgThumbName\">\n";
   echo "<option value=\"__none__\">None</option>\n";
+  echo "<option value=\"__random__\">Random</option>\n";
   foreach($gal->img as $img) echo "<option value=\"$img->filename\">$img->filename: $img->name by $img->artist</option>\n";
   echo "</select></p>\n";
   echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
@@ -293,7 +294,7 @@ function sgAddImage($gallery)
     //make sure file has a .jpeg extension
     if(!preg_match("/(\.jpeg)|(\.jpg)$/i",$image)) $image .= ".jpeg";
     
-    $path = sgGetConfig("pathto_galleries")."$gallery/$image";
+    $path = $GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image";
     
     if(file_exists($path) || !move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) 
       return false;
@@ -344,7 +345,7 @@ function sgEditImage($gallery, $image)
   echo "<input type=\"hidden\" name=\"sgPrevImage\" value=\"".(isset($img->prev[0])?$img->prev[0]->filename:"")."\" />\n";
   echo "<input type=\"hidden\" name=\"sgNextImage\" value=\"".(isset($img->next[0])?$img->next[0]->filename:"")."\" />\n";
   echo "<table class=\"formTable\">\n";
-  echo "<tr>\n  <td>Image:</td>\n  <td><div class=\"inputbox sgImageInput\"><a href=\"index.php?gallery=$gallery&amp;image=$img->filename\"><img src=\"thumb.php?gallery=$gallery&amp;image=$img->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"Thumbnail of currently selected image\" /></a></div></td>\n</tr>\n";
+  echo "<tr>\n  <td>Image:</td>\n  <td><div class=\"inputbox sgImageInput\"><a href=\"index.php?gallery=$gallery&amp;image=$img->filename\"><img src=\"thumb.php?gallery=$gallery&amp;image=$img->filename&amp;size=".$GLOBALS["sgConfig"]->main_thumb_size."\" class=\"sgThumbnail\" alt=\"Thumbnail of currently selected image\" /></a></div></td>\n</tr>\n";
   echo "<tr>\n  <td>Image name:</td>\n  <td><input type=\"text\" name=\"sgImageName\" value=\"".htmlentities($img->name)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Artist name:</td>\n  <td><input type=\"text\" name=\"sgArtistName\" value=\"".htmlentities($img->artist)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Artist email:</td>\n  <td><input type=\"text\" name=\"sgArtistEmail\" value=\"".htmlentities($img->email)."\" size=\"40\" /></td>\n</tr>\n";
@@ -423,8 +424,8 @@ function sgDeleteImage($gallery, $image)
   for($i=0;$i<count($gal->img);$i++)
     if($gal->img[$i]->filename == $image)
       array_splice($gal->img,$i,1);
-  if(file_exists(sgGetConfig("pathto_galleries")."$gallery/$image"))
-    return(unlink(sgGetConfig("pathto_galleries")."$gallery/$image") && sgPutGallery($gal));
+  if(file_exists($GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image"))
+    return(unlink($GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image") && sgPutGallery($gal));
   else return sgPutGallery($gal);
 }
 
@@ -438,7 +439,7 @@ function sgShowImageHits($gallery, $startat = 0)
   $gal = sgGetGallery($gallery);
   if(!$gal) {
     echo("<h1>gallery '$gallery' not found</h1>\n");
-    sgShowIndex(sgGetConfig("pathto_galleries"));
+    sgShowIndex($GLOBALS["sgConfig"]->pathto_galleries);
     return;
   }
   $hits = sgGetHits($gal->id);
@@ -460,19 +461,19 @@ function sgShowImageHits($gallery, $startat = 0)
   //container frame top (tab)
   echo $code->tab1;
   
-  echo "Showing ".($startat+1)."-".($startat+sgGetConfig("main_thumb_number")>count($gal->img)?count($gal->img):$startat+sgGetConfig("main_thumb_number"))." of ".count($gal->img)." | ";
+  echo "Showing ".($startat+1)."-".($startat+$GLOBALS["sgConfig"]->main_thumb_number>count($gal->img)?count($gal->img):$startat+$GLOBALS["sgConfig"]->main_thumb_number)." of ".count($gal->img)." | ";
   
-  if($startat>0) echo "<a href=\"admin.php?action=showimagehits&amp;gallery=$gal->id&amp;startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a> | ";
+  if($startat>0) echo "<a href=\"admin.php?action=showimagehits&amp;gallery=$gal->id&amp;startat=".($startat-$GLOBALS["sgConfig"]->main_thumb_number)."\">Previous</a> | ";
   echo "<a href=\"admin.php?action=showgalleryhits\" title=\"Back to galleries list\">Up</a>";
-  if(count($gal->img)>$startat+sgGetConfig("main_thumb_number")) echo " | <a href=\"admin.php?action=showimagehits&amp;gallery=$gal->id&amp;startat=".($startat+sgGetConfig("main_thumb_number"))."\">Next</a>";
+  if(count($gal->img)>$startat+$GLOBALS["sgConfig"]->main_thumb_number) echo " | <a href=\"admin.php?action=showimagehits&amp;gallery=$gal->id&amp;startat=".($startat+$GLOBALS["sgConfig"]->main_thumb_number)."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
   
-  $pathto_current_theme = sgGetConfig("pathto_themes").sgGetConfig("theme_name");
+  $pathto_current_theme = $GLOBALS["sgConfig"]->pathto_themes.$GLOBALS["sgConfig"]->theme_name;
   echo "<table class=\"sgList\">\n<tr><th>Image</th><th>Hits</th><th>Last hit</th><th>Graph</th></tr>\n";
   
-  for($i=$startat;$i<$startat+sgGetConfig("main_thumb_number") && $i<count($gal->img);$i++) {
+  for($i=$startat;$i<$startat+$GLOBALS["sgConfig"]->main_thumb_number && $i<count($gal->img);$i++) {
     if(!isset($gal->img[$i]->hits)) {
       $gal->img[$i]->hits->hits = 0;
       $gal->img[$i]->hits->lasthit = 0;
@@ -491,7 +492,7 @@ function sgShowImageHits($gallery, $startat = 0)
 
 function sgShowGalleryHits($gallery = "", $startat = 0)
 {
-  $dir = sgGetListing(sgGetConfig("pathto_galleries").$gallery);
+  $dir = sgGetListing($GLOBALS["sgConfig"]->pathto_galleries.$gallery);
   
   //get contaner xhtml
   $code = sgGetContainerCode();
@@ -501,10 +502,10 @@ function sgShowGalleryHits($gallery = "", $startat = 0)
   //container frame top (tab)
   echo $code->tab1;
   
-  echo "Showing ".($startat+1)."-".($startat+sgGetConfig("gallery_thumb_number")>count($dir->dirs)?count($dir->dirs):$startat+sgGetConfig("gallery_thumb_number"))." of ".count($dir->dirs);
+  echo "Showing ".($startat+1)."-".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number>count($dir->dirs)?count($dir->dirs):$startat+$GLOBALS["sgConfig"]->gallery_thumb_number)." of ".count($dir->dirs);
   
-  if($startat>0) echo " | <a href=\"?startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a>";
-  if(count($dir->dirs)>$startat+sgGetConfig("gallery_thumb_number")) echo " | <a href=\"?startat=".($startat+sgGetConfig("gallery_thumb_number"))."\">Next</a>";
+  if($startat>0) echo " | <a href=\"?startat=".($startat-$GLOBALS["sgConfig"]->main_thumb_number)."\">Previous</a>";
+  if(count($dir->dirs)>$startat+$GLOBALS["sgConfig"]->gallery_thumb_number) echo " | <a href=\"?startat=".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number)."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
@@ -515,10 +516,10 @@ function sgShowGalleryHits($gallery = "", $startat = 0)
     if($galhits[$i]->hits->hits > $max) $max = $galhits[$i]->hits->hits;
   }
   
-  $pathto_current_theme = sgGetConfig("pathto_themes").sgGetConfig("theme_name");
+  $pathto_current_theme = $GLOBALS["sgConfig"]->pathto_themes.$GLOBALS["sgConfig"]->theme_name;
   echo "<table class=\"sgList\">\n<tr><th>Gallery</th><th>Hits</th><th>Last hit</th><th></th></tr>\n";
   
-  for($i=$startat;$i<$startat+sgGetConfig("gallery_thumb_number") && $i<count($dir->dirs);$i++) {
+  for($i=$startat;$i<$startat+$GLOBALS["sgConfig"]->gallery_thumb_number && $i<count($dir->dirs);$i++) {
     echo "<tr class=\"sgRow".($i%2)."\"><td><a href=\"admin.php?action=showimagehits&amp;gallery=".$galhits[$i]->id."\">".$galhits[$i]->name."</a></td>";
     echo "<td align=\"right\">".($galhits[$i]->hits->hits==0?"0":$galhits[$i]->hits->hits)."</td>";
     echo "<td align=\"right\" title=\"".($galhits[$i]->hits->lasthit==0?"n/a":date("Y-m-d H:i:s",$galhits[$i]->hits->lasthit))."\">".($galhits[$i]->hits->lasthit==0?"n/a":date("D j H:i",$galhits[$i]->hits->lasthit))."</td>";
@@ -532,7 +533,7 @@ function sgShowGalleryHits($gallery = "", $startat = 0)
 
 function sgShowPurgeConfirmation()
 {
-  $dir = sgGetListing(sgGetConfig("pathto_cache"),"jpegs");
+  $dir = sgGetListing($GLOBALS["sgConfig"]->pathto_cache,"jpegs");
 
   echo "<h1>purge thumbnails</h1>\n";
   
@@ -547,7 +548,7 @@ function sgShowPurgeConfirmation()
 
 function sgPurgeCache()
 {
-  $dir = sgGetListing(sgGetConfig("pathto_cache"),"jpegs");
+  $dir = sgGetListing($GLOBALS["sgConfig"]->pathto_cache,"jpegs");
   
   $success = true;
   for($i=0;$i<count($dir->files);$i++) {

@@ -28,17 +28,24 @@ ini_set("arg_separator.output", "&amp;");
 session_name("sgAdmin");
 session_start();
 
+
+//require config class
+require_once "includes/class_configuration.php";
+//create config object
+$sgConfig = new sgConfiguration();
+
+
 //include required files
-require "includes/config.php";
 require "includes/adminutils.php";
 require "includes/frontend.php";
 require "includes/utils.php";
 require "includes/backend.php";
 
+
 $pageTitle = "singapore admin";
 
 //include header file
-include sgGetConfig("pathto_header");
+include $GLOBALS["sgConfig"]->pathto_header;
 
 //show admin toolbar (only if user is logged in)
 sgShowAdminBar();
@@ -97,10 +104,11 @@ if(sgIsLoggedIn()) {
         sgChangeThumbnail($_REQUEST["gallery"]);
         break;
       case "savethumbnail" :
-        if(sgSaveThumbnail($_REQUEST["gallery"], $_REQUEST["sgThumbName"])) 
-          echo "<h1>thumbnail changed</h1>\n";
-        else
-          echo "<h1>error changing thumbnail</h1>\n";
+        if($_REQUEST["confirm"]=="OK") 
+          if(sgSaveThumbnail($_REQUEST["gallery"], $_REQUEST["sgThumbName"])) 
+            echo "<h1>thumbnail changed</h1>\n";
+          else
+            echo "<h1>error changing thumbnail</h1>\n";
         sgEditGallery($_REQUEST["gallery"]);
         break;
       case "newimage" :
@@ -160,6 +168,6 @@ if(sgIsLoggedIn()) {
 }
 
 //include footer file
-include sgGetConfig("pathto_footer");
+include $GLOBALS["sgConfig"]->pathto_footer;
 
 ?>

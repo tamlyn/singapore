@@ -29,12 +29,12 @@ function showThumb($gallery, $image, $maxsize) {
   
   //if image is local (filename does not start with 'http://')
   //then prepend filename with path to current gallery
-  if(substr($image,0,7)!="http://") $imagePath = sgGetConfig("pathto_galleries")."$gallery/$image";
+  if(substr($image,0,7)!="http://") $imagePath = $GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image";
   else $imagePath = $image;
-  $thumbPath = sgGetConfig("pathto_cache").$maxsize.strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = $GLOBALS["sgConfig"]->pathto_cache.$maxsize.strtr("-$gallery-$image",":/?\\","----");
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
-  $thumbQuality = sgGetConfig("thumbnail_quality");
+  $thumbQuality = $GLOBALS["sgConfig"]->thumbnail_quality;
   
   if($imageModified<$thumbModified) { //if thumbnail is newer than image output cached thumbnail
     header("Last-Modified: ".gmdate("D, d M Y H:i:s",$thumbModified)." GMT");
@@ -55,7 +55,7 @@ function showThumb($gallery, $image, $maxsize) {
   }
 
   
-  switch(sgGetConfig("thumbnail_software")) {
+  switch($GLOBALS["sgConfig"]->thumbnail_software) {
   case "im" : //use ImageMagick
     
     exec("convert -geometry {$x}x{$y} -quality $thumbQuality \"".escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"');

@@ -92,8 +92,8 @@ function sgGetImage($gallery, $image) {
     if($gal->img[$i]->filename == $image) {
       $gal->img[$i]->prev = array();
       $gal->img[$i]->next = array();
-      for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i>$j) $gal->img[$i]->prev[$j] = $gal->img[$i-$j-1];
-      for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i<count($gal->img)-$j-1) $gal->img[$i]->next[$j] = $gal->img[$i+$j+1];
+      for($j=0;$j<$GLOBALS["sgConfig"]->preview_thumb_number;$j++) if($i>$j) $gal->img[$i]->prev[$j] = $gal->img[$i-$j-1];
+      for($j=0;$j<$GLOBALS["sgConfig"]->preview_thumb_number;$j++) if($i<count($gal->img)-$j-1) $gal->img[$i]->next[$j] = $gal->img[$i+$j+1];
       $gal->img[$i]->index = $i;
       $gal->img[$i]->galname = $gal->name;
       return $gal->img[$i];
@@ -119,7 +119,7 @@ function sgGetGalleryInfo($gallery){
 //included here because it is used on every page and
 //adminutils.php is not included on every page
 function sgIsLoggedIn() {
-  if(isset($_SESSION["user"]) && $_SESSION["user"]->check == md5(sgGetConfig("secret_string").$_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["user"]->loginTime < 1800)) {
+  if(isset($_SESSION["user"]) && $_SESSION["user"]->check == md5($GLOBALS["sgConfig"]->secret_string.$_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["user"]->loginTime < 1800)) {
 		$_SESSION["user"]->loginTime = time();
 	  return true;
   }

@@ -29,7 +29,7 @@
   without the express written permission of the copyright holder.<br />
   Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.3</a> | 
   <?php
-    if(sgGetConfig("show_execution_time")) {
+    if($GLOBALS["sgConfig"]->show_execution_time) {
       list($usec, $sec) = explode(" ",$scriptStartTime); 
       $scriptStartTime = (float)$usec + (float)$sec; 
       list($usec, $sec) = explode(" ",microtime()); 
