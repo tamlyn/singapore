@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.21 2004/05/13 01:20:30 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.22 2004/05/14 02:03:17 tamlyn Exp $
  */
  
 /**
@@ -597,9 +597,11 @@ class Singapore
     $middleY = round($imageHeight/2);
     
     $ret  = "<map name=\"sgNavMap\">\n";
-    $ret .= '<area href="'.$this->imageNextURL().'" alt="'.$this->i18n->_g("image|Next").'" title="'.$this->i18n->_g("image|Next").'" shape="poly" ';
+    if($this->imageHasNext()) $ret .= '<area href="'.$this->imageNextURL().'" alt="'.$this->i18n->_g("image|Next").'" title="'.$this->i18n->_g("image|Next").'" shape="poly" ';
+    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,$imageWidth,$imageHeight,$imageWidth,0,$middleX,$middleY\">\n";
-    $ret .= '<area href="'.$this->imagePrevURL().'" alt="'.$this->i18n->_g("image|Previous").'" title="'.$this->i18n->_g("image|Previous").'" shape="poly" ';
+    if($this->imageHasPrev()) $ret .= '<area href="'.$this->imagePrevURL().'" alt="'.$this->i18n->_g("image|Previous").'" title="'.$this->i18n->_g("image|Previous").'" shape="poly" ';
+    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,0,$imageHeight,$middleX,$middleY\">\n";
     $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,$imageWidth,0,$middleX,$middleY\">\n";
@@ -1007,10 +1009,13 @@ class Singapore
    * @uses imageThumbnailImage
    * @return string
    */
-  function imageThumbnailLinked()
+  function imageThumbnailLinked($index = null)
   {
-    $ret  = "<a href=\"".$this->formatURL($this->gallery->idEncoded, $this->image->filename)."\">";
-    $ret .= $this->imageThumbnailImage();
+    if($index === null) $img = $this->image;
+    else $img = $this->gallery->images[$index];
+    
+    $ret  = "<a href=\"".$this->formatURL($this->gallery->idEncoded, $img->filename)."\">";
+    $ret .= $this->imageThumbnailImage($index);
     $ret .= "</a>";
     return $ret;
   }
@@ -1018,25 +1023,28 @@ class Singapore
   /**
    * @return string
    */
-  function imageThumbnailImage()
+  function imageThumbnailImage($index = null)
   {
+    if($index === null) $img = $this->image;
+    else $img = $this->gallery->images[$index];
+    
     $ret  = '<img src="'.$this->thumbnailURL(
-                           $this->gallery->idEncoded, $this->image->filename,
+                           $this->gallery->idEncoded, $img->filename,
                            $this->config->thumb_width_album,
                            $this->config->thumb_height_album,
                            $this->config->thumb_force_size_album).'" ';
     $ret .= 'width="'.$this->thumbnailWidth(
-                           $this->imageWidth(), $this->imageHeight(),
+                           $this->imageWidth($index), $this->imageHeight($index),
                            $this->config->thumb_width_album,
                            $this->config->thumb_height_album,
                            $this->config->thumb_force_size_album).'" ';
     $ret .= 'height="'.$this->thumbnailHeight(
-                           $this->imageWidth(), $this->imageHeight(),
+                           $this->imageWidth($index), $this->imageHeight($index),
                            $this->config->thumb_width_album,
                            $this->config->thumb_height_album,
                            $this->config->thumb_force_size_album).'" ';
-    $ret .= 'alt="'.$this->imageName().$this->imageByArtist().'" ';
-    $ret .= 'title="'.$this->imageName().$this->imageByArtist().'" />';
+    $ret .= 'alt="'.$this->imageName($index).$this->imageByArtist($index).'" ';
+    $ret .= 'title="'.$this->imageName($index).$this->imageByArtist($index).'" />';
     
     return $ret;
   }
