@@ -4,7 +4,7 @@
 <div class="sgContainer">
   <div class="sgTab"><?php echo $sg->galleryTab()?></div>
   <div class="sgContent">
-    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+    <?php /* <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
     <input type="hidden" name="action" value="multiimage" />
     <input type="hidden" name="gallery" value="<?php echo $sg->galleryIdEncoded(); ?>" />
     <div class="sgGallery">
@@ -13,10 +13,10 @@
       <select name="sgMoveTo">
         <option value=""><?php echo $sg->i18n->_g("Select gallery..."); ?></option>
       </select>
-    </div>
+    </div> */ ?>
     <?php for($index = $sg->startat; $index < $sg->gallerySelectedImagesCount()+$sg->startat; $index++): ?> 
     <div class="sgThumbnail">
-      <input type="checkbox" class="sgImageCheckbox checkbox" name="sgImages[<?php echo urlencode($sg->gallery->images[$index]->filename) ?>]" />
+      <?php /* <input type="checkbox" class="sgImageCheckbox checkbox" name="sgImages[<?php echo urlencode($sg->gallery->images[$index]->filename) ?>]" /> */ ?>
       <table><tr><td>
         <?php echo $sg->imageThumbnailLinked($index) ?> 
       </td></tr></table>
@@ -24,7 +24,7 @@
     <?php endfor; ?>
     <div class="stretcher"></div>
   </div>
-  </form>
+  <?php /* </form> */ ?>
 </div>  
   
 <p>

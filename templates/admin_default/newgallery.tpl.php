@@ -7,7 +7,7 @@
 <table class="formTable">
   <tr>
     <td><?php echo $sg->i18n->_g("Identifier:") ?></td>
-    <td><input type="text" name="newgallery" value="<?php echo uniqid("") ?>" size="40" /></td>
+    <td><input type="text" name="newgallery" value="" size="40" /></td>
   </tr>
   <tr>
     <td></td>

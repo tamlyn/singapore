@@ -10,12 +10,12 @@
 
 
 //include header file
-include $sg->config->pathto_admin_template."header.tpl.php";
+include $sg->config->base_path.$sg->config->pathto_admin_template."header.tpl.php";
 
 //include selected file
-include $sg->config->pathto_admin_template.$includeFile.".tpl.php";
+include $sg->config->base_path.$sg->config->pathto_admin_template.$includeFile.".tpl.php";
 
 //include footer file
-include $sg->config->pathto_admin_template."footer.tpl.php";
+include $sg->config->base_path.$sg->config->pathto_admin_template."footer.tpl.php";
 
 ?>

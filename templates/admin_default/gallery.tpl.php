@@ -5,7 +5,7 @@
 <div class="sgContainer">
   <div class="sgTab"><?php echo $sg->galleryTab()?></div>
   <div class="sgContent">
-    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+    <?php /* <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
     <input type="hidden" name="action" value="multigallery" />
     <input type="hidden" name="gallery" value="<?php echo $sg->galleryIdEncoded(); ?>" />
     <div class="sgGallery">
@@ -15,11 +15,11 @@
         <option value=""><?php echo $sg->i18n->_g("Select gallery..."); ?></option>
       </select>
       <input type="submit" class="button" name="subaction" value="<?php echo $sg->i18n->_g("Re-index selected"); ?>" />
-    </div>
+    </div> */ ?>
     <?php for($index = $sg->startat; $index < $sg->gallerySelectedGalleriesCount()+$sg->startat; $index++): ?> 
     <div class="sgGallery"><table>
     <tr valign="top">
-      <td><input type="checkbox" class="checkbox" name="sgGalleries[<?php echo $sg->galleryIdEncoded($index); ?>]" /></td>
+      <?php /* <td><input type="checkbox" class="checkbox" name="sgGalleries[<?php echo $sg->galleryIdEncoded($index); ?>]" /></td> */ ?>
       <td class="sgGalleryThumbnail"><?php echo $sg->galleryThumbnailImage($index) ?></td>
       <td>
         <?php echo $sg->galleryName($index) ?> - <?php echo $sg->galleryContents($index) ?><br />
@@ -30,13 +30,14 @@
           echo '<a href="'.$sg->formatAdminURL("deletegallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Delete gallery")."</a> |\n";
           echo '<a href="'.$sg->formatAdminURL("newgallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|New subgallery")."</a> |\n";
           echo '<a href="'.$sg->formatAdminURL("reindex",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Re-index gallery")."</a> |\n";
+          //echo '<a href="'.$sg->formatAdminURL("newimage",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|New image")."</a> |\n";
           echo '<a href="'.$sg->formatAdminURL("changethumbnail",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Change thumbnail")."</a>\n";
         ?>
       </td>
     </tr>
     </table></div>
     <?php endfor; ?> 
-    </form>
+    <?php /* </form> */ ?>
   </div>
 </div>
   
