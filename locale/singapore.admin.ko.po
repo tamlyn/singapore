@@ -1,0 +1,407 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Young-Ho Cha <ganadist@mizi.com>, 2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2004-01-06 21:22+0000\n"
+"Last-Translator: Young-Ho Cha<ganadist@mizi.com>\n"
+"Language-Team: korean <ko@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=euc-kr\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../admin.php:43
+msgid "Welcome to singapore admin!"
+msgstr "Singapore 관리자 모드에 오신것을 환영합니다!"
+
+#: ../admin.php:46 ../admin.php:55 ../admin.php:64 ../admin.php:79
+#: ../admin.php:93 ../admin.php:104 ../admin.php:121 ../admin.php:139
+#: ../admin.php:153 ../admin.php:163 ../admin.php:188
+msgid "An error occurred:"
+msgstr "오류가 발생했습니다:"
+
+#: ../admin.php:52
+msgid "Thank you and goodbye!"
+msgstr "감사합니다. 안녕히!"
+
+#: ../admin.php:62
+msgid "Password saved"
+msgstr "열쇠글이 저장되었습니다"
+
+#: ../admin.php:76
+msgid "Gallery added"
+msgstr "갤러리가 더해졌습니다"
+
+#: ../admin.php:90
+msgid "Gallery info saved"
+msgstr "갤러리 정보가 저장되었습니다"
+
+#: ../admin.php:99 ../admin.php:117 ../admin.php:159 ../admin.php:184
+msgid "confirm|OK"
+msgstr "확인"
+
+#: ../admin.php:102
+msgid "Gallery deleted"
+msgstr "갤러리가 지워졌습니다"
+
+#: ../admin.php:107 ../admin.php:123 ../admin.php:165 ../admin.php:189
+msgid "confirm|Cancel"
+msgstr "취소"
+
+#: ../admin.php:110
+msgid "delete gallery"
+msgstr "갤러리 지우기"
+
+#: ../admin.php:111
+#, possible-c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and "
+"images it contains?"
+msgstr ""
+"갤러리 %s은(는) 비어있지 않습니다\n"
+"모든 하위 갤러리와 그 안에 포함된 그림을 완전히 지우겠습니까?"
+
+#: ../admin.php:119
+msgid "Thumbnail changed"
+msgstr "목록보기가 바뀌었습니다"
+
+#: ../admin.php:136
+msgid "Image added"
+msgstr "그림이 더해졌습니다"
+
+#: ../admin.php:150
+msgid "Image saved successfully"
+msgstr "그림이 저장되었습니다"
+
+#: ../admin.php:161
+msgid "Image deleted"
+msgstr "그림이 지워졌습니다"
+
+#: ../admin.php:168
+msgid "delete image"
+msgstr "그림 지우기"
+
+#: ../admin.php:169
+#, possible-c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "%2$s 갤러리의 그림 %1$s을(를) 정말로 지우겠습니까?"
+
+#: ../admin.php:186
+msgid "Thumbnail cache purged"
+msgstr "목록보기 캐시가 지워졌습니다"
+
+#: ../admin.php:192
+msgid "purge cached thumbnails"
+msgstr "캐시된 목록보기 지우기"
+
+#: ../admin.php:194
+#, possible-c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "모두 %s개의 캐시된 목록보기를 정말로 지우겠습니까?"
+
+#: ../includes/admin.class.php:178
+msgid "admin bar|Back"
+msgstr "뒤로"
+
+#: ../includes/admin.class.php:180
+msgid "admin bar|Admin"
+msgstr "관리자"
+
+#: ../includes/admin.class.php:181
+msgid "admin bar|Galleries"
+msgstr "갤러리"
+
+#: ../includes/admin.class.php:182
+msgid "admin bar|Log out"
+msgstr "로그아웃"
+
+#: ../includes/admin.class.php:184
+msgid "admin bar|Edit gallery"
+msgstr "갤러리 편집"
+
+#: ../includes/admin.class.php:185
+msgid "admin bar|Delete gallery"
+msgstr "갤러리 지우기"
+
+#: ../includes/admin.class.php:186
+msgid "admin bar|New subgallery"
+msgstr "하위 갤러리 만들기"
+
+#: ../includes/admin.class.php:188
+msgid "admin bar|Edit image"
+msgstr "그림 편집"
+
+#: ../includes/admin.class.php:189
+msgid "admin bar|Delete image"
+msgstr "그림 지우기"
+
+#: ../includes/admin.class.php:191
+msgid "admin bar|New image"
+msgstr "새 그림"
+
+#: ../includes/admin.class.php:215
+msgid "There was an error saving the new password."
+msgstr "열쇠글을 저장하는 데 오류가 생겼습니다."
+
+#: ../includes/admin.class.php:218
+msgid "New password must be between 6 and 16 characters long."
+msgstr "새 열쇠글은 6자에서 16자 길이여야 합니다."
+
+#: ../includes/admin.class.php:220
+msgid "The new passwords you entered do not match."
+msgstr "새 열쇠글이 서로 일치하지 않습니다."
+
+#: ../includes/admin.class.php:222
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr ""
+"현재 열쇠글이 데이터베이스에 있는 것과 일치하지 않습니다."
+
+#: ../includes/admin.class.php:225
+msgid "The username specified was not found in the database."
+msgstr "지정한 사용자 이름이 데이터베이스에 없습니다."
+
+#: ../includes/admin.class.php:261
+msgid "Username and/or password incorrect"
+msgstr "사용자 이름 또는 열쇠글이 틀립니다"
+
+#: ../includes/admin.class.php:264
+msgid "You must enter a username and password"
+msgstr "사용자 이름과 열쇠글을 입력하여야 합니다"
+
+#: ../includes/admin.class.php:289
+msgid "Gallery already exists"
+msgstr "그러한 갤러리가 이미 있습니다"
+
+#: ../includes/admin.class.php:296
+msgid "Could not create directory"
+msgstr "디렉토리를 만들 수 없습니다"
+
+#: ../includes/admin.class.php:327
+msgid "Could not save gallery info"
+msgstr "갤러리 정보를 저장할 수 없습니다"
+
+#: ../includes/admin.class.php:345
+msgid "Cannot delete the top level directory"
+msgstr "최상위 디렉토리를 지울 수 없습니다"
+
+#: ../includes/admin.class.php:386
+msgid "File already exists"
+msgstr "파일이 이미 있습니다"
+
+#: ../includes/admin.class.php:391
+msgid "Could not upload file"
+msgstr "파일을 올릴 수 없습니다"
+
+#: ../includes/admin.class.php:396
+msgid "Invalid location choice"
+msgstr "잘못된 위치 선택"
+
+#: ../includes/admin.class.php:415
+msgid "Could not add image to gallery"
+msgstr "갤러리에 그림을 더할 수 없습니다"
+
+#: ../includes/admin.class.php:448
+msgid "Could not save image information"
+msgstr "그림 정보를 저장할 수 없습니다"
+
+#: ../includes/admin.class.php:470
+msgid "Could not delete image"
+msgstr "그림을 지울 수 없습니다"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr "목록보기 선택"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "이 갤러리를 나타낼 그림의 파일이름을 선택하십시오."
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr "없음"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr "아무거나"
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr "갤러리 편집"
+
+#: ../templates/admin_default/editgallery.tpl.php:14
+msgid "Gallery thumbnail:"
+msgstr "갤러리 목록보기:"
+
+#: ../templates/admin_default/editgallery.tpl.php:18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr ""
+"아무거나\n"
+"목록보기"
+
+#: ../templates/admin_default/editgallery.tpl.php:23
+msgid "thumbnail|Change..."
+msgstr "바꾸기..."
+
+#: ../templates/admin_default/editgallery.tpl.php:27
+#: ../templates/admin_default/galleryhits.tpl.php:22
+msgid "Gallery name"
+msgstr "갤러리 이름"
+
+#: ../templates/admin_default/editgallery.tpl.php:31
+#: ../templates/admin_default/editimage.tpl.php:22
+msgid "Artist name"
+msgstr "작가 이름"
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr "그림 편집"
+
+#: ../templates/admin_default/editimage.tpl.php:14
+msgid "Image"
+msgstr "그림"
+
+#: ../templates/admin_default/editimage.tpl.php:18
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "Image name"
+msgstr "그림 이름"
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr "열쇠글 바꾸기"
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "6자에서 16자 사이의 새 열쇠글을 선택하십시오."
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr "현재 열쇠글:"
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr "새 열쇠글:"
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr "열쇠글 확인:"
+
+#: ../templates/admin_default/footer.tpl.php:3
+msgid "singapore|Powered by"
+msgstr "Powered by"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Graph"
+msgstr "방문 그래프"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Hits"
+msgstr "방문 회수"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Last hit"
+msgstr "최근 방문 날짜"
+
+#: ../templates/admin_default/header.tpl.php:39
+msgid "Admin message:"
+msgstr "관리자 메세지:"
+
+#: ../templates/admin_default/loggedout.tpl.php:1
+msgid "Return to galleries."
+msgstr "갤러리로 돌아가기."
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr "로그인"
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr ""
+"인증된 사용자만이 관리자 세견에 들어올 수 있습니다.\n"
+"관리자의 사용자 이름과 열쇠글을 아래에 입력하십시오."
+
+#: ../templates/admin_default/login.tpl.php:8
+msgid "Username:"
+msgstr "사용자 이름:"
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr "열쇠글:"
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr "작업을 선택하십시오:"
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr "갤러리와 그림 관리"
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr "갤러리 방문 통계 보기"
+
+#: ../templates/admin_default/menu.tpl.php:6
+msgid "Purge cached thumbnails"
+msgstr "캐시된 목록보기 비우기"
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr "열쇠글 바꾸기"
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "Log out of admin"
+msgstr "관리자 로그아웃"
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr "새 갤러리"
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:28
+msgid "Identifier:"
+msgstr "인식자:"
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr "새 그림"
+
+#: ../templates/admin_default/newimage.tpl.php:3
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
+msgstr ""
+"이 갤러리가 하위 갤러리를 포함하기 때문에 이 그림을 보여줄 수 없습니다."
+
+#: ../templates/admin_default/newimage.tpl.php:12
+msgid "Remote file"
+msgstr "원격 파일"
+
+#: ../templates/admin_default/newimage.tpl.php:16
+msgid "URL of image:"
+msgstr "그림의 URL:"
+
+#: ../templates/admin_default/newimage.tpl.php:20
+msgid "Local file"
+msgstr "로컬 파일"
+
+#: ../templates/admin_default/newimage.tpl.php:24
+msgid "Image file to upload:"
+msgstr "올려질 그림 파일:"
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Use filename of uploaded file."
+msgstr "올려진 파일의 이름을 씁니다."
+
+#: ../templates/admin_default/newimage.tpl.php:31
+msgid "Specify different filename:"
+msgstr "다른 파일이름을 지정합니다:"

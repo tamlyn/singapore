@@ -1,0 +1,172 @@
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2004-05-09 01:20+0800\n"
+"Last-Translator: \n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=big5\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../includes/singapore.class.php:323
+#, possible-c-format
+msgid "Page created in %s seconds"
+msgstr "構成頁面共花費%s秒"
+
+#: ../includes/singapore.class.php:340
+#, possible-c-format
+msgid "singapore|Powered by %s"
+msgstr "Powered by %s"
+
+#: ../includes/singapore.class.php:345
+msgid "All rights reserved."
+msgstr "保留所有權利."
+
+#: ../includes/singapore.class.php:350
+msgid "Images may not be reproduced in any form without the express written permission of the copyright holder."
+msgstr "沒有版權擁有者的書面聲明, 不得以任何形式複製圖片."
+
+#: ../includes/singapore.class.php:355
+msgid "Log in"
+msgstr "登入"
+
+#: ../includes/singapore.class.php:490
+msgid "crumb line|You are here:"
+msgstr "現在位置:"
+
+#: ../includes/singapore.class.php:530
+#: ../includes/singapore.class.php:559
+#: ../includes/singapore.class.php:603
+#: ../includes/singapore.class.php:613
+#, possible-c-format
+msgid "Sample image from gallery"
+msgstr "樣張"
+
+#: ../includes/singapore.class.php:607
+msgid ""
+"No\n"
+"thumbnail"
+msgstr ""
+"預覽圖\n"
+"不存在"
+
+#: ../includes/singapore.class.php:647
+#, possible-c-format
+msgid "Showing %s-%s of %s"
+msgstr "目前顯示 %s-%s, 共%s頁"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up"
+msgstr "上一層"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up one level"
+msgstr "回上一層"
+
+#: ../includes/singapore.class.php:683
+#: ../includes/singapore.class.php:752
+msgid "gallery|Previous"
+msgstr "前一個"
+
+#: ../includes/singapore.class.php:684
+msgid "gallery|First"
+msgstr "第一個"
+
+#: ../includes/singapore.class.php:687
+#: ../includes/singapore.class.php:740
+msgid "gallery|Next"
+msgstr "下一個"
+
+#: ../includes/singapore.class.php:688
+msgid "gallery|Last"
+msgstr "最後一個"
+
+#: ../includes/singapore.class.php:760
+#: ../includes/singapore.class.php:991
+#, possible-c-format
+msgid "artist name|by %s"
+msgstr "作者: %s"
+
+#: ../includes/singapore.class.php:836
+#: ../includes/singapore.class.php:838
+#: ../includes/singapore.class.php:1138
+#: ../includes/singapore.class.php:1140
+msgid "Email"
+msgstr "Email"
+
+#: ../includes/singapore.class.php:840
+#: ../includes/singapore.class.php:1146
+msgid "Description"
+msgstr "簡介"
+
+#: ../includes/singapore.class.php:842
+#: ../includes/singapore.class.php:844
+#: ../includes/singapore.class.php:1158
+#: ../includes/singapore.class.php:1160
+msgid "Copyright"
+msgstr "版權"
+
+#: ../includes/singapore.class.php:846
+#: ../includes/singapore.class.php:1162
+msgid "Viewed"
+msgstr "瀏覽次數"
+
+#: ../includes/singapore.class.php:846
+#: ../includes/singapore.class.php:1162
+#: ../includes/singapore.class.php:959
+#, possible-c-format
+msgid "Add a comment"
+msgstr "發表評論"
+
+#: ../includes/singapore.class.php:1068
+msgid "image|Previous"
+msgstr "上一張"
+
+#: ../includes/singapore.class.php:1079
+msgid "image|First"
+msgstr "第一張"
+
+#: ../includes/singapore.class.php:1096
+msgid "image|Thumbnails"
+msgstr "回預覽"
+
+#: ../includes/singapore.class.php:1107
+msgid "image|Next"
+msgstr "下一張"
+
+#: ../includes/singapore.class.php:1118
+msgid "image|Last"
+msgstr "最後一張"
+
+#: ../includes/singapore.class.php:1142
+msgid "Location"
+msgstr "地點"
+
+#: ../includes/singapore.class.php:1144
+msgid "Date"
+msgstr "日期"
+
+#: ../includes/singapore.class.php:1148
+msgid "Camera"
+msgstr "使用相機"
+
+#: ../includes/singapore.class.php:1150
+msgid "Lens"
+msgstr "鏡頭"
+
+#: ../includes/singapore.class.php:1152
+msgid "Film"
+msgstr "底片"
+
+#: ../includes/singapore.class.php:1154
+msgid "Darkroom manipulation"
+msgstr "暗房處理"
+
+#: ../includes/singapore.class.php:1156
+msgid "Digital manipulation"
+msgstr "數位後製"
+

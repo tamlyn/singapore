@@ -1,0 +1,179 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Young-Ho Cha <ganadist@mizi.com>, 2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2004-01-06 21:22+0000\n"
+"Last-Translator: Young-Ho Cha <ganadist@mizi.com>\n"
+"Language-Team: korean <ko@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=euc-kr\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../includes/singapore.class.php:323
+#, possible-c-format
+msgid "Page created in %s seconds"
+msgstr "%s초 만에 페이지가 만들어 졌습니다"
+
+#: ../includes/singapore.class.php:340
+#, possible-c-format
+msgid "singapore|Powered by %s"
+msgstr "Powered by %s"
+
+#: ../includes/singapore.class.php:345
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+#: ../includes/singapore.class.php:350
+msgid ""
+"Images may not be reproduced in any form without the express written "
+"permission of the copyright holder."
+msgstr ""
+"Images may not be reproduced in any form without the express written "
+"permission of the copyright holder."
+
+#: ../includes/singapore.class.php:355
+msgid "Log in"
+msgstr "로그인"
+
+#: ../includes/singapore.class.php:490
+msgid "crumb line|You are here:"
+msgstr "현재 위치:"
+
+#: ../includes/singapore.class.php:530
+#, possible-c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] "%s개 갤러리"
+
+#: ../includes/singapore.class.php:559
+#, possible-c-format
+msgid "%s image"
+msgid_plural "%s images"
+msgstr[0] "%s개 그림"
+
+#: ../includes/singapore.class.php:603 ../includes/singapore.class.php:613
+msgid "Sample image from gallery"
+msgstr "갤러리의 샘플 그림"
+
+#: ../includes/singapore.class.php:607
+msgid ""
+"No\n"
+"thumbnail"
+msgstr ""
+"목록보기\n"
+"없음"
+
+#: ../includes/singapore.class.php:647
+#, possible-c-format
+msgid "Showing %s-%s of %s"
+msgstr "전체 %3$s개 중 %1$s부터 %2$s 까지 보기"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up"
+msgstr "위로"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up one level"
+msgstr "한단계 위로"
+
+#: ../includes/singapore.class.php:683 ../includes/singapore.class.php:752
+msgid "gallery|Previous"
+msgstr "이전"
+
+#: ../includes/singapore.class.php:684
+msgid "gallery|First"
+msgstr "맨앞"
+
+#: ../includes/singapore.class.php:687 ../includes/singapore.class.php:740
+msgid "gallery|Next"
+msgstr "다음"
+
+#: ../includes/singapore.class.php:688
+msgid "gallery|Last"
+msgstr "갤러리|마지막"
+
+#: ../includes/singapore.class.php:760 ../includes/singapore.class.php:991
+#, possible-c-format
+msgid "artist name|by %s"
+msgstr "작가 이름|%s 순"
+
+#: ../includes/singapore.class.php:836 ../includes/singapore.class.php:838
+#: ../includes/singapore.class.php:1138 ../includes/singapore.class.php:1140
+msgid "Email"
+msgstr "메일"
+
+#: ../includes/singapore.class.php:840 ../includes/singapore.class.php:1146
+msgid "Description"
+msgstr "설명"
+
+#: ../includes/singapore.class.php:842 ../includes/singapore.class.php:844
+#: ../includes/singapore.class.php:1158 ../includes/singapore.class.php:1160
+msgid "Copyright"
+msgstr "저작권"
+
+#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
+msgid "Viewed"
+msgstr "방문회수"
+
+#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
+#, possible-c-format
+msgid "viewed|%s time"
+msgid_plural "viewed|%s times"
+msgstr[0] "%s 번째 보임"
+
+#: ../includes/singapore.class.php:959
+msgid "Add a comment"
+msgstr "설명 달기"
+
+#: ../includes/singapore.class.php:1068
+msgid "image|Previous"
+msgstr "이전"
+
+#: ../includes/singapore.class.php:1079
+msgid "image|First"
+msgstr "맨 앞"
+
+#: ../includes/singapore.class.php:1096
+msgid "image|Thumbnails"
+msgstr "목록보기"
+
+#: ../includes/singapore.class.php:1107
+msgid "image|Next"
+msgstr "다음"
+
+#: ../includes/singapore.class.php:1118
+msgid "image|Last"
+msgstr "마지막"
+
+#: ../includes/singapore.class.php:1142
+msgid "Location"
+msgstr "위치"
+
+#: ../includes/singapore.class.php:1144
+msgid "Date"
+msgstr "날짜"
+
+#: ../includes/singapore.class.php:1148
+msgid "Camera"
+msgstr "카메라"
+
+#: ../includes/singapore.class.php:1150
+msgid "Lens"
+msgstr "렌즈"
+
+#: ../includes/singapore.class.php:1152
+msgid "Film"
+msgstr "필름"
+
+#: ../includes/singapore.class.php:1154
+msgid "Darkroom manipulation"
+msgstr "암실 처리"
+
+#: ../includes/singapore.class.php:1156
+msgid "Digital manipulation"
+msgstr "디지털 처리"
