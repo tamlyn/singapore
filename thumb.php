@@ -29,7 +29,6 @@ $sgConfig = new sgConfiguration();
 showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
 
 function showThumb($gallery, $image, $maxsize) {
-  header("Content-type: image/jpeg");
   
   //check if image is remote (filename starts with 'http://')
   $isRemoteFile = substr($image,0,7)=="http://";
@@ -41,6 +40,18 @@ function showThumb($gallery, $image, $maxsize) {
   $thumbModified = @filemtime($thumbPath);
   $thumbQuality = $GLOBALS["sgConfig"]->thumbnail_quality;
   
+  list($imageWidth, $imageHeight, $imageType) = GetImageSize($imagePath);
+  
+  //send appropriate headers
+  switch($imageType) {
+    case 1 : header("Content-type: image/gif"); break;
+    case 2 : header("Content-type: image/jpeg"); break;
+    case 3 : header("Content-type: image/png"); break;
+    case 6 : header("Content-type: image/x-ms-bmp"); break;
+    case 7 : 
+    case 8 : header("Content-type: image/tiff"); break;
+  }
+  
   if($imageModified<$thumbModified) { //if thumbnail is newer than image output cached thumbnail
     header("Last-Modified: ".gmdate("D, d M Y H:i:s",$thumbModified)." GMT");
     readfile($thumbPath);
@@ -49,14 +60,13 @@ function showThumb($gallery, $image, $maxsize) {
   
   //thumbnail is out of date or doesn't exist so create new one
   
-  $imgSize = GetImageSize($imagePath);
 
-  if($imgSize[0]<$imgSize[1]){
-    $y = $maxsize;
-    $x = round($imgSize[0]/$imgSize[1] * $maxsize);
+  if($imageWidth < $imageHeight){
+    $thumbWidth = round($imageWidth/$imageHeight * $maxsize);
+    $thumbHeight = $maxsize;
   }else{
-    $x = $maxsize;
-    $y = round($imgSize[1]/$imgSize[0] * $maxsize);
+    $thumbWidth = $maxsize;
+    $thumbHeight = round($imageHeight/$imageWidth * $maxsize);
   }
 
   
@@ -73,33 +83,52 @@ function showThumb($gallery, $image, $maxsize) {
       $imagePath = $thumbPath;
     }
     
-    exec("convert -geometry {$x}x{$y} -quality $thumbQuality \"".escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"');
+    exec("convert -geometry {$thumbWidth}x{$thumbHeight} -quality $thumbQuality +profile \"*\" \"".escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"');
     readfile($thumbPath);
     
     break;
-  case "gd2" : //use GD 2.x 
-    
-    $image = ImageCreateFromJPEG($imagePath);
-    $thumb = ImageCreateTrueColor($x,$y);
-  
-    ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
-    
-    ImageJPEG($thumb,"",$thumbQuality);
-    ImageJPEG($thumb,$thumbPath,$thumbQuality);
-    ImageDestroy($image);
-    ImageDestroy($thumb);
-    
-    break;
+  case "gd2" :
   case "gd1" :
-  default : //use GD 1.6.x by default
+  default : //use GD by default
     
-    $image = ImageCreateFromJPEG($imagePath);
-    $thumb = ImageCreate($x,$y);
-  
-    ImageCopyResized($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
+    //read in image as appropriate type
+    switch($imageType) {
+      case 1 : $image = ImageCreateFromGIF($imagePath); break;
+      case 2 : $image = ImageCreateFromJPEG($imagePath); break;
+      case 3 : $image = ImageCreateFromPNG($imagePath); break;
+    }
     
-    ImageJPEG($thumb,"",$thumbQuality);
-    ImageJPEG($thumb,$thumbPath,$thumbQuality);
+    switch($GLOBALS["sgConfig"]->thumbnail_software) {
+    case "gd2" :
+      //create blank truecolor image
+      $thumb = ImageCreateTrueColor($thumbWidth,$thumbHeight);
+      //resize with resampling image
+      ImageCopyResampled($thumb,$image,0,0,0,0,$thumbWidth,$thumbHeight,$imageWidth,$imageHeight);
+    case "gd1" :
+    default :
+      //create blank 256 color image
+      $thumb = ImageCreate($thumbWidth,$thumbHeight);
+      //resize image
+      ImageCopyResized($thumb,$image,0,0,0,0,$thumbWidth,$thumbHeight,$imageWidth,$imageHeight);
+      break;
+    }
+    
+    //output image of appropriate type
+    switch($imageType) {
+      case 1 :
+        ImagePNG($thumb); 
+        ImagePNG($thumb,$thumbPath); 
+        break;
+      case 2 : 
+        ImageJPEG($thumb,"",$thumbQuality); 
+        ImageJPEG($thumb,$thumbPath,$thumbQuality); 
+        break;
+      case 3 :
+        ImagePNG($thumb); 
+        ImagePNG($thumb,$thumbPath); 
+        break;
+      
+    }
     ImageDestroy($image);
     ImageDestroy($thumb);
   }
