@@ -1,0 +1,413 @@
+# singapore vietnamese language file
+# Copyright (C) 2004 Free Software Foundation, Inc.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-02-21 19:31+0000\n"
+"PO-Revision-Date: 2004-02-21 19:31+0000\n"
+"Last-Translator: Nguyễn Đại Quý <NguyenDaiQuy@yahoo.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../admin.php:43
+msgid "Welcome to singapore admin!"
+msgstr "Xin chào đến với trình quản lý của singapore!"
+
+#: ../admin.php:46 ../admin.php:55 ../admin.php:64 ../admin.php:79
+#: ../admin.php:93 ../admin.php:104 ../admin.php:121 ../admin.php:139
+#: ../admin.php:153 ../admin.php:163 ../admin.php:188
+msgid "An error occurred:"
+msgstr "Có lỗi:"
+
+#: ../admin.php:52
+msgid "Thank you and goodbye!"
+msgstr "Cảm ơn và chào tạm biệt!"
+
+#: ../admin.php:62
+msgid "Password saved"
+msgstr "Mật mã đã được lưu"
+
+#: ../admin.php:76
+msgid "Gallery added"
+msgstr "Gallery đã được thêm"
+
+#: ../admin.php:90
+msgid "Gallery info saved"
+msgstr "Thông tin của gallery đã được mưu"
+
+#: ../admin.php:99 ../admin.php:117 ../admin.php:159 ../admin.php:184
+msgid "confirm|OK"
+msgstr "OK"
+
+#: ../admin.php:102
+msgid "Gallery deleted"
+msgstr "Gallery đã được xóa"
+
+#: ../admin.php:107 ../admin.php:123 ../admin.php:165 ../admin.php:189
+msgid "confirm|Cancel"
+msgstr "Hủy"
+
+#: ../admin.php:110
+msgid "delete gallery"
+msgstr "xóa gallery"
+
+#: ../admin.php:111
+#, possible-c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and "
+"images it contains?"
+msgstr ""
+"Gallery %s không phải là rỗng.\n"
+"Bạn có chắc chắn muốn xóa gallery đó cùng với tất cả các gallery con và "
+"các hình ảnh trong đó?"
+
+#: ../admin.php:119
+msgid "Thumbnail changed"
+msgstr "Thumbnail  đã được thay đổi"
+
+#: ../admin.php:136
+msgid "Image added"
+msgstr "Hình ảnh đã được thêm"
+
+#: ../admin.php:150
+msgid "Image saved successfully"
+msgstr "Hình ảnh đã được lưu thành công"
+
+#: ../admin.php:161
+msgid "Image deleted"
+msgstr "Hình ảnh đã được xóa"
+
+#: ../admin.php:168
+msgid "delete image"
+msgstr "xóa hình ảnh"
+
+#: ../admin.php:169
+#, possible-c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "Bạn có chắc chắn muốn xóa hình ảnh %s của gallery %s?"
+
+#: ../admin.php:186
+msgid "Thumbnail cache purged"
+msgstr "Các thumbnail cache đã được xóa"
+
+#: ../admin.php:192
+msgid "purge cached thumbnails"
+msgstr "Xóa cached thumbnails"
+
+#: ../admin.php:194
+#, possible-c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "Bạn có chắc chắn muốn xóa tất cả %s cached thumbnails?"
+
+#: ../includes/admin.class.php:178
+msgid "admin bar|Back"
+msgstr "Trở lại"
+
+#: ../includes/admin.class.php:180
+msgid "admin bar|Admin"
+msgstr "Quản trị"
+
+#: ../includes/admin.class.php:181
+msgid "admin bar|Galleries"
+msgstr "Gallery"
+
+#: ../includes/admin.class.php:182
+msgid "admin bar|Log out"
+msgstr "Thoát"
+
+#: ../includes/admin.class.php:184
+msgid "admin bar|Edit gallery"
+msgstr "Thay đổi gallery"
+
+#: ../includes/admin.class.php:185
+msgid "admin bar|Delete gallery"
+msgstr "Xóa gallery"
+
+#: ../includes/admin.class.php:186
+msgid "admin bar|New subgallery"
+msgstr "Thêm subgallery"
+
+#: ../includes/admin.class.php:188
+msgid "admin bar|Edit image"
+msgstr "Thay đổi hình ảnh"
+
+#: ../includes/admin.class.php:189
+msgid "admin bar|Delete image"
+msgstr "Xóa hình ảnh"
+
+#: ../includes/admin.class.php:191
+msgid "admin bar|New image"
+msgstr "Thêm hình ảnh mới"
+
+#: ../includes/admin.class.php:215
+msgid "There was an error saving the new password."
+msgstr "Có lỗi khi lưu mật mã mới"
+
+#: ../includes/admin.class.php:218
+msgid "New password must be between 6 and 16 characters long."
+msgstr "Mật mã phải có từ 6 đến 16 kí tự."
+
+#: ../includes/admin.class.php:220
+msgid "The new passwords you entered do not match."
+msgstr "Mật mã không trùng khớp"
+
+#: ../includes/admin.class.php:222
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr ""
+"Mật mã vào không trùng khớp với mật mã có trong cơ sở dữ liệu."
+
+#: ../includes/admin.class.php:225
+msgid "The username specified was not found in the database."
+msgstr "Tên đăng nhập không tìm thấy trong cơ sở dữ  liệu."
+
+#: ../includes/admin.class.php:261
+msgid "Username and/or password incorrect"
+msgstr "Tên đăng nhập và/hoặc mật mã  không hợp lệ"
+
+#: ../includes/admin.class.php:264
+msgid "You must enter a username and password"
+msgstr "Bạn phải nhập vào tên đăng nhập và mật mã"
+
+#: ../includes/admin.class.php:289
+msgid "Gallery already exists"
+msgstr "Gallery đã có"
+
+#: ../includes/admin.class.php:296
+msgid "Could not create directory"
+msgstr "Không thể tạo thư mục"
+
+#: ../includes/admin.class.php:327
+msgid "Could not save gallery info"
+msgstr "Không thể lưu các thông tin của gallery"
+
+#: ../includes/admin.class.php:345
+msgid "Cannot delete the top level directory"
+msgstr "Không thể xóa thư mục gốc"
+
+#: ../includes/admin.class.php:386
+msgid "File already exists"
+msgstr "File đã có"
+
+#: ../includes/admin.class.php:391
+msgid "Could not upload file"
+msgstr "Không thể upload file"
+
+#: ../includes/admin.class.php:396
+msgid "Invalid location choice"
+msgstr "Lựa chọn nơi chốn không hợp lệ"
+
+#: ../includes/admin.class.php:415
+msgid "Could not add image to gallery"
+msgstr "Không thể thêm hình ảnh vào gallery"
+
+#: ../includes/admin.class.php:448
+msgid "Could not save image information"
+msgstr "Không thể lưu các thông tin của hình ảnh"
+
+#: ../includes/admin.class.php:470
+msgid "Could not delete image"
+msgstr "Không thể xóa hình ảnh"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr "chọn thumbnail"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "Chọn tên file cho hành ảnh dùng để trình bày gallery"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr "Không dùng thumbnail"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr "thumbnail thay đổi ngẫu nhiên"
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr "Thay đổi gallery"
+
+#: ../templates/admin_default/editgallery.tpl.php:14
+msgid "Gallery thumbnail:"
+msgstr "Gallery thumbnail:"
+
+#: ../templates/admin_default/editgallery.tpl.php:18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr ""
+"thumbnail\n"
+"Ngẫu nhiên"
+
+#: ../templates/admin_default/editgallery.tpl.php:23
+msgid "thumbnail|Change..."
+msgstr "Thay đổi..."
+
+#: ../templates/admin_default/editgallery.tpl.php:27
+#: ../templates/admin_default/galleryhits.tpl.php:22
+msgid "Gallery name"
+msgstr "Tên gallery"
+
+#: ../templates/admin_default/editgallery.tpl.php:31
+#: ../templates/admin_default/editimage.tpl.php:22
+msgid "Artist name"
+msgstr "Tên tác giả"
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr "thay đổi hình ảnh"
+
+#: ../templates/admin_default/editimage.tpl.php:14
+msgid "Image"
+msgstr "Hình ảnh"
+
+#: ../templates/admin_default/editimage.tpl.php:18
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "Image name"
+msgstr "Tên hình ảnh"
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr "thay đổi mật mã"
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "Xin chọn mật mã có từ 6 đến 16 kí tự."
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr "Mật mã hiện tại:"
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr "Mật mã mới:"
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr "Xác nhận mật mã:"
+
+#: ../templates/admin_default/footer.tpl.php:3
+msgid "singapore|Powered by"
+msgstr "Powered by"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Graph"
+msgstr "Biểu đồ"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Hits"
+msgstr "Số lần truy cập"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Last hit"
+msgstr "Các truy cập sau cùng"
+
+#: ../templates/admin_default/header.tpl.php:39
+msgid "Admin message:"
+msgstr "Thông điệp cho Admin:"
+
+#: ../templates/admin_default/loggedout.tpl.php:1
+msgid "Return to galleries."
+msgstr "Trở về gallery."
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr "đăng nhập"
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr ""
+"Chỉ những người được phép mới có thể sử dụng mục Quản trị.\n"
+"Xin nhập vào tên đăng nhập và mật mã."
+
+#: ../templates/admin_default/login.tpl.php:8
+msgid "Username:"
+msgstr "Tên đăng nhập:"
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr "Mật mã:"
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr "Xin chọn một menu sau:"
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr "Quản lý gallery và hình ảnh"
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr "Xem các truy cập của hình ảnh"
+
+#: ../templates/admin_default/menu.tpl.php:6
+msgid "Purge cached thumbnails"
+msgstr "Xóa cache của thumbnail"
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr "Thay đổi mật mã"
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "Log out of admin"
+msgstr "Thoát ra khỏi admin"
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr "gallery mới"
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:28
+msgid "Identifier:"
+msgstr "Nhận dạng:"
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr "Thêm hình ảnh mới"
+
+#: ../templates/admin_default/newimage.tpl.php:3
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
+msgstr ""
+"Hình ảnh này sẽ không xem được vì gallery có subgallery."
+
+#: ../templates/admin_default/newimage.tpl.php:12
+msgid "Remote file"
+msgstr "File hình ảnh trên máy khác"
+
+#: ../templates/admin_default/newimage.tpl.php:16
+msgid "URL of image:"
+msgstr "URL của hình ảnh:"
+
+#: ../templates/admin_default/newimage.tpl.php:20
+msgid "Local file"
+msgstr "File trên máy hiện tại"
+
+#: ../templates/admin_default/newimage.tpl.php:24
+msgid "Image file to upload:"
+msgstr "Hình ảnh để tải lên:"
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Use filename of uploaded file."
+msgstr "Dùng tên file của hình ảnh sau khi tải lên."
+
+#: ../templates/admin_default/newimage.tpl.php:31
+msgid "Specify different filename:"
+msgstr "Chỉ định tên file khác:"
+
+msgid "Add image"
+msgstr "Thêm hình ảnh"
+
+msgid "Save Changes"
+msgstr "Lưu các thay đổi"

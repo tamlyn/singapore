@@ -1,0 +1,178 @@
+# singapore vietnamese language file
+# Copyright (C) 2004 Free Software Foundation, Inc.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-02-21 19:31+0000\n"
+"PO-Revision-Date: 2004-02-21 19:31+0000\n"
+"Last-Translator: Nguyễn Đại Quý <NguyenDaiQuy@yahoo.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../includes/singapore.class.php:323
+#, possible-c-format
+msgid "Page created in %s seconds"
+msgstr "Trang được tạo trong vòng %s giây"
+
+#: ../includes/singapore.class.php:340
+#, possible-c-format
+msgid "singapore|Powered by %s"
+msgstr "Powered by %s"
+
+#: ../includes/singapore.class.php:345
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+#: ../includes/singapore.class.php:350
+msgid ""
+"Images may not be reproduced in any form without the express written "
+"permission of the copyright holder."
+msgstr ""
+"Các hình ảnh không được sao chép dưới bất kì hình thức nào khi không có "
+"sự đồng ý bằng văn bản của tác giả."
+
+#: ../includes/singapore.class.php:355
+msgid "Log in"
+msgstr "Đăng nhập"
+
+#: ../includes/singapore.class.php:490
+msgid "crumb line|You are here:"
+msgstr "Mục hiện tại:"
+
+#: ../includes/singapore.class.php:530
+#, possible-c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] "%s gallery"
+
+#: ../includes/singapore.class.php:559
+#, possible-c-format
+msgid "%s image"
+msgid_plural "%s images"
+msgstr[0] "%s ảnh"
+
+#: ../includes/singapore.class.php:603 ../includes/singapore.class.php:613
+msgid "Sample image from gallery"
+msgstr "Ảnh mẫu từ gallery"
+
+#: ../includes/singapore.class.php:607
+msgid ""
+"No\n"
+"thumbnail"
+msgstr ""
+"Không có\n"
+"thumbnail"
+
+#: ../includes/singapore.class.php:647
+#, possible-c-format
+msgid "Showing %s-%s of %s"
+msgstr "Hiển thị %s-%s/%s"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up"
+msgstr "Lên trên"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up one level"
+msgstr "Lên một cấp"
+
+#: ../includes/singapore.class.php:683 ../includes/singapore.class.php:752
+msgid "gallery|Previous"
+msgstr "Trước"
+
+#: ../includes/singapore.class.php:684
+msgid "gallery|First"
+msgstr "Đầu tiên"
+
+#: ../includes/singapore.class.php:687 ../includes/singapore.class.php:740
+msgid "gallery|Next"
+msgstr "Kế"
+
+#: ../includes/singapore.class.php:688
+msgid "gallery|Last"
+msgstr "Cuối"
+
+#: ../includes/singapore.class.php:760 ../includes/singapore.class.php:991
+#, possible-c-format
+msgid "artist name|by %s"
+msgstr "Tác giả: %s"
+
+#: ../includes/singapore.class.php:836 ../includes/singapore.class.php:838
+#: ../includes/singapore.class.php:1138 ../includes/singapore.class.php:1140
+msgid "Email"
+msgstr "Email"
+
+#: ../includes/singapore.class.php:840 ../includes/singapore.class.php:1146
+msgid "Description"
+msgstr "Mô tả"
+
+#: ../includes/singapore.class.php:842 ../includes/singapore.class.php:844
+#: ../includes/singapore.class.php:1158 ../includes/singapore.class.php:1160
+msgid "Copyright"
+msgstr "Bản quyền"
+
+#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
+msgid "Viewed"
+msgstr "Được xem"
+
+#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
+#, possible-c-format
+msgid "viewed|%s time"
+msgid_plural "viewed|%s times"
+msgstr[0] "%s lần"
+
+#: ../includes/singapore.class.php:959
+msgid "Add a comment"
+msgstr "Thêm lời bình"
+
+#: ../includes/singapore.class.php:1068
+msgid "image|Previous"
+msgstr "Ảnh trước"
+
+#: ../includes/singapore.class.php:1079
+msgid "image|First"
+msgstr "Ảnh đầu tiên"
+
+#: ../includes/singapore.class.php:1096
+msgid "image|Thumbnails"
+msgstr "Thumbnail"
+
+#: ../includes/singapore.class.php:1107
+msgid "image|Next"
+msgstr "Ảnh kế"
+
+#: ../includes/singapore.class.php:1118
+msgid "image|Last"
+msgstr "Ảnh cuối"
+
+#: ../includes/singapore.class.php:1142
+msgid "Location"
+msgstr "Vị trí"
+
+#: ../includes/singapore.class.php:1144
+msgid "Date"
+msgstr "Ngày"
+
+#: ../includes/singapore.class.php:1148
+msgid "Camera"
+msgstr "Máy ảnh"
+
+#: ../includes/singapore.class.php:1150
+msgid "Lens"
+msgstr "Khẩu độ"
+
+#: ../includes/singapore.class.php:1152
+msgid "Film"
+msgstr "Film"
+
+#: ../includes/singapore.class.php:1154
+msgid "Darkroom manipulation"
+msgstr "Thao tác với buồng tối"
+
+#: ../includes/singapore.class.php:1156
+msgid "Digital manipulation"
+msgstr "Thao tác kĩ thuật số"
