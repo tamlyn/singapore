@@ -3,7 +3,7 @@
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *  utils.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
  *                                                                     *
- *  This file is part of singapore v0.9.4a                             *
+ *  This file is part of singapore v0.9.5                              *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *

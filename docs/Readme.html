@@ -11,7 +11,7 @@
 <body>
 
 
-<h1>singapore v0.9.4a- Readme</h1>
+<h1>singapore v0.9.5 - Readme</h1>
 
 <ul>
   <li><a href="#release">Release notes</a></li>
@@ -59,14 +59,16 @@ Singapore is free software released under the terms of the GNU GPL.</p>
 <p>You are also kindly requested not to modify or remove the following text in 
 <code>includes/footer.php</code> but this is not a requirement:</p>
 
-<p class="boxed">Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.4a</a></p>
+<p class="boxed">Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.5</a></p>
 
 
 <h2><a name="release">Release notes</a></h2>
 
-<p>Not much to shout about in this release. Fixed a few bugs (notably the GD2 
-bug), added a few config options and added some checks to test.php (notably an
-ImageMagick test). Work continues (in parallel) on the templating system.</p>
+<p>This release fixes the bizarre thumbnail colours when using GD2 (because v0.9.4a
+always used GD1 even when GD2 was selected!). When upgrading, don't forget to 
+purge your thumbnail cache so it can be re-generated using GD2 or ImageMagick. 
+Fixed some other bugs, added a few config options and added some checks to 
+test.php (notably an ImageMagick support test).</p>
 
 
 <h2><a name="install">Installation</a></h2>
@@ -193,17 +195,17 @@ your <strong>singapore</strong> admin password, chmod the adminusers.csv file ba
 o changed
 </p>
 
-<h3>0.9.5</h3>
+<h3>0.9.5 - 2003-05-31</h3>
 
 <p>
-* fixed GD2 support in thumb.php (v0.9.4a always used GD1)<br />
+* fixed GD2 support in thumb.php (0.9.4a always used GD1)<br />
 - removed secret string option<br />
 + added config options for admin session name (allows multiple installs on same server), 
   path to convert (ImageMagick), remove jpeg profile (ImageMagick), 
-  character encoding &amp; site name(page title)<br />
+  character encoding &amp; site name (page title)<br />
 o execution_timer off by default and default galleries per page set to 10<br />
 + thumb.php always uses fopen on remote files (now works on windows)<br />
-+ more checks in test.php including bugfix #743954 (upload_tmp_dir)
++ more checks in test.php including ImageMagick support and bugfix #743954 (upload_tmp_dir)
 </p>
 
 <h3>0.9.4a - 2003-05-16</h3>
@@ -301,7 +303,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/29 23:20:10 $</em></p>
+<p><em>$Date: 2003/05/31 15:03:27 $</em></p>
 
 </body>
 </html>
