@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: config.class.php,v 1.4 2004/02/02 16:31:36 tamlyn Exp $
+ * @version $Id: config.class.php,v 1.5 2004/09/06 16:30:23 tamlyn Exp $
  */
 
 /**
@@ -43,17 +43,7 @@ class sgConfig
     //import values into object scope
     foreach($ini_values as $key => $value) $this->$key = $value;
  
-    //set runtime values
-    $this->pathto_logs = $this->pathto_data_dir."logs/";
-    $this->pathto_cache = $this->pathto_data_dir."cache/";
-    $this->pathto_current_template = $this->pathto_templates.$this->template_name."/";
-    $this->pathto_admin_template = $this->pathto_templates.$this->admin_template_name."/";
-    
-    //convert octal strings to integers
-    if(isset($this->directory_mode) && is_string($this->directory_mode)) $this->directory_mode = octdec($this->directory_mode);
-    if(isset($this->umask) && is_string($this->umask)) $this->umask = octdec($this->umask);
-    
-		return true;
+    return true;
 	}
 }
 

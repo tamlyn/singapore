@@ -4,8 +4,16 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.26 2004/08/08 13:58:19 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.27 2004/09/06 16:30:23 tamlyn Exp $
  */
+
+//define constants for request variables
+define('SG_LANG', 'lang');
+define('SG_TEMPLATE', 'template');
+//define('SG_GALLERY', 'gallery');
+//define('SG_IMAGE', 'image');
+//define('SG_ACTION', 'action');
+//define('SG_STARTAT', 'startat');
  
 /**
  * Provides functions for handling galleries and images
@@ -21,7 +29,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.9CVS";
+  var $version = "0.9.10CVS";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -55,7 +63,7 @@ class Singapore
    */
   var $image;
   
-  
+  var $language = null;
   var $action = null;
   
   /**
@@ -97,11 +105,26 @@ class Singapore
     
     //load config from gallery ini file (gallery.ini) if present
     $this->config->loadConfig($this->config->pathto_galleries.$galleryId."/gallery.ini");
+    //set current template from request vars or config
+    $this->template = isset($_REQUEST[SG_TEMPLATE]) ? $_REQUEST[SG_TEMPLATE] : $this->config->default_template;
+    $this->config->pathto_current_template = $this->config->pathto_templates.$this->template.'/';
     //load config from template ini file (template.ini) if present
     $this->config->loadConfig($this->config->pathto_current_template."template.ini");
     
+    //set runtime values
+    $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
+    $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
+    $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
+    
+    //convert octal strings to integers
+    if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
+    if(isset($this->config->umask) && is_string($this->config->umask)) $this->config->umask = octdec($this->config->umask);
+    
+    
+    //set current language from request vars or config
+    $this->language = isset($_REQUEST[SG_LANG]) ? $_REQUEST[SG_LANG] : $this->config->default_language;
     //read the language file
-    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->language.".pmo");
+    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->language.".pmo");
     
     //set the UMASK
     umask($this->config->umask);
@@ -285,14 +308,23 @@ class Singapore
       if($startat) $ret .= ','.$startat;
       $ret .= '/';
       if($image)   $ret .= rawurlencode($image);
-      if($action)  $ret .= "?acton=".$action;
+      
+      $query = array();
+      if($action)  $query[] = "action=".$action;
+      if($this->language != $this->config->default_language) $query[] = SG_LANG.'='.$this->language;
+      if($this->template != $this->config->default_template) $query[] = SG_TEMPLATE.'='.$this->template;
+      
+      if(!empty($query))
+        $ret .= '?'.implode('&amp;', $query);
     } else {
       //format plain url
       $ret  = $this->config->base_url.$this->config->base_file;
       $ret .= "gallery=".$gallery;
       if($startat) $ret .= "&amp;startat=".$startat;
       if($image)   $ret .= "&amp;image=".rawurlencode($image);
-      if($action)  $ret .= "&amp;acton=".$action;
+      if($action)  $ret .= "&amp;action=".$action;
+      if($this->language != $this->config->default_language) $ret .= '&amp;'.SG_LANG.'='.$this->language;
+      if($this->template != $this->config->default_template) $ret .= '&amp;'.SG_TEMPLATE.'='.$this->template;
     }
     
     return $ret;
@@ -611,6 +643,73 @@ class Singapore
     return $ret;
   }
   
+  /**
+   * Generates the HTML code for the language select box
+   * @return string select box HTML code
+   */
+  function languageFlipper()
+  {
+    if(!$this->config->language_flipper) return "";
+    
+    $languageCache = $this->config->pathto_data_dir."languages.cache";
+    // Look for the language file
+    if(!file_exists($languageCache))
+      return "";
+    
+    // Open the file
+    $fp = @fopen($languageCache, "r");
+    if (!$fp) return "";
+    
+    // Read contents
+    $str = '';
+    while (!feof($fp)) $str .= fread($fp, 1024);
+    // Unserialize
+    $availableLanguages = @unserialize($str);
+    
+    $ret  = '<div class="sgLanguageFlipper">';
+    $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
+    //carry over current get vars
+    foreach($_GET as $var => $val)
+      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\">\n";
+    $ret .= '<select name="'.SG_LANG."\">\n";
+    $ret .= '  <option value="'.$this->config->default_language.'">'.$this->i18n->_g("Select language...")."</option>\n";
+    foreach($availableLanguages as $code => $name)
+      $ret .= '  <option value="'.$code.'">'.htmlentities($name)."</option>\n";
+    $ret .= "</select>\n";
+    $ret .= '<input type="submit" class="button" value="Go">';
+    $ret .= "</form></div>\n";
+    return $ret;
+  }
+  
+  /**
+   * Generates the HTML code for the language select box
+   * @return string select box HTML code
+   */
+  function templateFlipper()
+  {
+    if(!$this->config->template_flipper) return "";
+    
+    //get list of installed templates
+    $templates = $this->getListing($this->config->pathto_templates, "dirs");
+    
+    $ret  = '<div class="sgTemplateFlipper">';
+    $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
+    //carry over current get vars
+    foreach($_GET as $var => $val)
+      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\">\n";
+    $ret .= '<select name="'.SG_TEMPLATE."\">\n";
+    $ret .= '  <option value="'.$this->config->default_template.'">'.$this->i18n->_g("Select template...")."</option>\n";
+    foreach($templates->dirs as $name)
+      //do not list admin template(s)
+      if(strpos($name, "admin_")===false)
+        $ret .= '  <option value="'.$name.'">'.$name."</option>\n";
+    $ret .= "</select>\n";
+    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\">\n";
+    $ret .= "</form></div>\n";
+    return $ret;
+  }
+  
+  
   /////////////////////////////
   //////gallery functions//////
   /////////////////////////////
@@ -737,7 +836,7 @@ class Singapore
                                           $this->config->thumb_width_gallery,
                                           $this->config->thumb_height_gallery,
                                           $this->config->thumb_force_size_gallery);
-        $ret .= '" class="sgGallery" '; 
+        $ret .= '" class="sgGalleryThumb" '; 
         $ret .= 'alt="'.$this->i18n->_g("Sample image from gallery").'" />';
 
     }
@@ -913,6 +1012,17 @@ class Singapore
   }
   
   /**
+   * @return string the summary field of the gallery
+   */
+  function gallerySummary($index = null)
+  {
+    if($index===null)
+      return $this->gallery->summary;
+    else
+      return $this->gallery->galleries[$index]->summary;
+  }
+  
+/**
    * @return string the description of the gallery
    */
   function galleryDescription($index = null)
@@ -1270,33 +1380,46 @@ class Singapore
    */
   function image()
   {
-    $ret = "<img src=\"".$this->imageURL()."\" ";
+    $ret = '<img src="'.$this->imageURL().'" class="sgImage" ';
     if($this->imageWidth() && $this->imageHeight())
-      $ret .= "width=\"".$this->imageWidth()."\" height=\"".$this->imageHeight()."\" ";
+      $ret .= 'width="'.$this->imageWidth().'" height="'.$this->imageHeight().'" ';
     if($this->config->imagemap_navigation)
       $ret .= 'usemap="#sgNavMap" border="0" ';
-    $ret .= "alt=\"".$this->imageName().$this->imageByArtist()."\" />\n";
+    $ret .= 'alt="'.$this->imageName().$this->imageByArtist().'" />';
     return $ret;
   }
   
   /**
    * @return string the url of the current image
    */
-  function imageURL()
+  function imageURL($index = null)
   {
     if($this->config->full_image_resize)
-      return $this->thumbnailURL($this->gallery->idEncoded, $this->image->filename,
+      return $this->thumbnailURL($this->gallery->idEncoded, 
+                                 ($index===null) ? $this->image->filename : $this->gallery->images[$index]->filename,
                                  $this->config->thumb_width_image,
                                  $this->config->thumb_height_image,
                                  $this->config->thumb_force_size_image);
+    else 
+      return $this->imageRealURL($index);
+  }
+  
+  
+  /**
+   * @return string the url of the current image unresized
+   */
+  function imageRealURL($index = null)
+  {
+    $image = ($index===null) ? $this->image->filename : $this->gallery->images[$index]->filename;
     
     //check if image is local (filename does not start with 'http://')
-    if(substr($this->image->filename,0,7)!="http://") 
+    if(substr($image,0,7)!="http://") 
       return $this->config->base_url.$this->config->pathto_galleries.
-        $this->gallery->idEncoded."/".rawurlencode($this->image->filename);
+        $this->gallery->idEncoded."/".rawurlencode($image);
     else 
-      return $this->image->filename;
+      return $image;
   }
+  
   
   /**
    * @return string the html to display the preview thumbnails
@@ -1325,8 +1448,10 @@ class Singapore
                              $this->config->thumb_height_preview,
                              $this->config->thumb_force_size_preview).'" ';
       $ret .= 'alt="'.$this->imageName($i).$this->imageByArtist($i).'" ';
-      $ret .= 'title="'.$this->imageName($i).$this->imageByArtist($i).'" />';
-      $ret .= "</a>\n";
+      $ret .= 'title="'.$this->imageName($i).$this->imageByArtist($i).'" ';
+      if($i==$this->image->index) $ret .= 'class="sgPreviewThumbCurrent" ';
+      else $ret .= 'class="sgPreviewThumb" ';
+      $ret .= "/></a>\n";
     }
     
     return $ret;
@@ -1338,7 +1463,7 @@ class Singapore
   function imagePrevLink()
   {
     if($this->imageHasPrev())
-      return "<a href=\"".$this->imagePrevURL()."\" title=\"".$this->imageName($this->image->index-1)."\">".$this->i18n->_g("image|Previous")."</a> | \n";
+      return "<a href=\"".$this->imagePrevURL()."\" title=\"".$this->imageName($this->image->index-1)."\">".$this->i18n->_g("image|Previous")."</a> | ";
   }
 
   /**
@@ -1347,7 +1472,7 @@ class Singapore
   function imageFirstLink()
   {
     if($this->imageHasPrev())
-      return "<a href=\"".$this->imageFirstURL()."\" title=\"".$this->imageName(0)."\">".$this->i18n->_g("image|First")."</a> | \n";
+      return "<a href=\"".$this->imageFirstURL()."\" title=\"".$this->imageName(0)."\">".$this->i18n->_g("image|First")."</a> | ";
   }
 
   /**
@@ -1355,7 +1480,7 @@ class Singapore
    */
   function imageParentLink()
   {
-    return "<a href=\"".$this->imageParentURL()."\" title=\"".$this->galleryName()."\">".$this->i18n->_g("image|Thumbnails")."</a>\n";
+    return "<a href=\"".$this->imageParentURL()."\" title=\"".$this->galleryName()."\">".$this->i18n->_g("image|Thumbnails")."</a>";
   }
   
   /**
@@ -1364,7 +1489,7 @@ class Singapore
   function imageNextLink()
   {
     if($this->imageHasNext())
-      return " | <a href=\"".$this->imageNextURL()."\" title=\"".$this->imageName($this->image->index+1)."\">".$this->i18n->_g("image|Next")."</a>\n";
+      return " | <a href=\"".$this->imageNextURL()."\" title=\"".$this->imageName($this->image->index+1)."\">".$this->i18n->_g("image|Next")."</a>";
   }
   
   /**
@@ -1373,7 +1498,7 @@ class Singapore
   function imageLastLink()
   {
     if($this->imageHasNext())
-      return " | <a href=\"".$this->imageLastURL()."\" title=\"".$this->imageName($this->imageCount()-1)."\">".$this->i18n->_g("image|Last")."</a>\n";
+      return " | <a href=\"".$this->imageLastURL()."\" title=\"".$this->imageName($this->imageCount()-1)."\">".$this->i18n->_g("image|Last")."</a>";
   }
   
   function imageFirstURL()

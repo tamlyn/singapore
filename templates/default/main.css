@@ -9,11 +9,11 @@ body {
   background-color: #fff;
 }
 
-p, td, th, li {
+p, td, th, li, h4 {
   font: small sans-serif;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3 {
   color: #f60;
 }
 
@@ -83,6 +83,18 @@ a img {
 /* image or gallery artist subheader */
 .sgSubTitle {
   margin-top: 0;
+}
+
+/* image and artist name displayed beneath image */
+p.sgNameByArtist { }
+
+/* image and gallery details such as date, location, camera model, hits etc. */
+p.sgDetailsList { }
+
+/* language select box and template select box respectively */
+div.sgLanguageFlipper, div.sgTemplateFlipper {
+  float: right;
+  clear: right;
 }
 
 /* wraps the drop-shadow table to allow IE to center it */

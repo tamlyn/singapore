@@ -1,12 +1,12 @@
-<h1 class="sgTitle"><?php echo $sg->galleryName()?></h1>
-<p class="sgSubTitle"><?php echo $sg->galleryByArtist()?></p>
+<h2 class="sgTitle"><?php echo $sg->galleryName(); ?></hh2>
+<h4 class="sgSubTitle"><?php echo $sg->galleryByArtist(); ?></h4>
 
 <div class="sgShadow"><table class="sgShadow" cellspacing="0">
   <tr>
     <td><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template?>images/shadow-tabl.gif" alt="" /></td>
     <td class="tabm"><table class="sgShadowTab" cellspacing="0"><tr><td>
   
-    <?php echo $sg->galleryTab()?>
+    <?php echo $sg->galleryTab(); ?> 
   
     </td><td><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template?>images/shadow-tabr.gif" alt="" /></td></tr></table></td>
     <td class="tabr"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
@@ -19,23 +19,21 @@
   <tr>
     <td class="ml"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
-    
-    <?php for($index = $sg->startat; $index < $sg->gallerySelectedGalleriesCount()+$sg->startat; $index++): ?>
+    <?php for($index = $sg->startat; $index < $sg->gallerySelectedGalleriesCount()+$sg->startat; $index++): ?> 
     <div class="sgGallery"><table class="sgGallery">
     <tr valign="top">
       <td class="sgGalleryThumb">
-        <?php echo $sg->galleryThumbnailLinked($index) ?> 
+        <?php echo $sg->galleryThumbnailLinked($index); ?> 
       </td>
       <td>
-        <p><strong><a href="<?php echo $sg->galleryURL($index) ?>"><?php echo $sg->galleryName($index) ?></a></strong></p>
-        <p><?php echo $sg->galleryDescription($index) ?></p>
-        <p>[<?php echo $sg->galleryContents($index) ?>]</p>
+        <p><strong><a href="<?php echo $sg->galleryURL($index) ?>"><?php echo $sg->galleryName($index); ?></a></strong></p>
+        <p><?php echo $sg->gallerySummary($index); ?></p>
+        <p>[<?php echo $sg->galleryContents($index); ?>]</p>
       </td>
     </tr>
     </table>
     </div>
-    <?php endfor; ?>
-    
+    <?php endfor; ?> 
     </td>
     <td class="mr"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
   </tr>
@@ -47,8 +45,8 @@
 </table></div>
   
   
-<p>
+<p class="sgDetailsList">
 <?php foreach($sg->galleryDetailsArray() as $key => $value): ?>
-<strong><?php echo $key ?>:</strong> <?php echo $value ?><br />
+<strong><?php echo $key; ?>:</strong> <?php echo $value; ?><br />
 <?php endforeach; ?>
 </p>

@@ -28,7 +28,7 @@
       </td>
       <td>
         <p><strong><a href="<?php echo $sg->galleryURL($index) ?>"><?php echo $sg->galleryName($index) ?></a></strong></p>
-        <p><?php echo $sg->galleryDescription($index) ?></p>
+        <p><?php echo $sg->gallerySummary($index) ?></p>
         <p>[<?php echo $sg->galleryContents($index) ?>]</p>
       </td>
     </tr>

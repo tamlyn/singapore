@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.9 2004/08/08 14:03:46 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.10 2004/09/06 16:30:23 tamlyn Exp $
  */
 
 /**
@@ -41,7 +41,7 @@ class sgIO_csv {
   {
     $gal = new sgGallery($galleryId);
 
-    if($language == null) $language = $this->config->language;
+    if($language == null) $language = $this->config->default_language;
     
     //try to open language specific metadata
     $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$galleryId."/metadata.$language.csv","r");

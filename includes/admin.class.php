@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.15 2004/05/14 02:58:26 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.16 2004/09/06 16:30:21 tamlyn Exp $
  */
 
 /**
@@ -57,15 +57,30 @@ class sgAdmin extends Singapore
     
     //load config from default ini file (singapore.ini)
     $this->config = new sgConfig("singapore.ini");
+    //set runtime values
+    $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
+    $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
+    $this->config->pathto_current_template = $this->config->pathto_templates.$this->config->default_template."/";
+    $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
+    
     //load config from admin template ini file (admin.ini) if present
     $this->config->loadConfig($this->config->pathto_admin_template."admin.ini");
     
+    $this->template = isset($_REQUEST[SG_TEMPLATE]) ? $_REQUEST[SG_TEMPLATE] : $this->config->default_template;
+    
     //do not load gallery-specific ini files
 
+    //convert octal strings to integers
+    if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
+    if(isset($this->config->umask) && is_string($this->config->umask)) $this->config->umask = octdec($this->config->umask);
+    
+		
+    //set current language from request vars or config
+    $this->language = isset($_REQUEST[SG_LANG]) ? $_REQUEST[SG_LANG] : $this->config->default_language;
     //read the standard language file
-    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->language.".pmo");
+    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->default_language.".pmo");
     //read extra admin language file
-    $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin.".$this->config->language.".pmo");
+    $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin.".$this->config->default_language.".pmo");
 
     //create IO handler
     $this->io = new sgIO_csv($this->config);
@@ -437,8 +452,8 @@ class sgAdmin extends Singapore
       return false;
     }
     
-    //create new temp directory in system temp dir
-    while(!mkdir($tmpdir = $systmpdir."/".uniqid("sg"),$this->config->directory_mode));
+    //create new temp directory in system temp dir but stop after 100 attempts
+    while(!mkdir($tmpdir = $systmpdir."/".uniqid("sg"),$this->config->directory_mode) && $tries++<100);
     
     $archive = $_FILES["sgArchiveFile"]["tmp_name"];
   

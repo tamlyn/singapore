@@ -356,8 +356,8 @@ example. If you still can't work out what's wrong then just give up.</p>
   images.</dd>
 
 <dt>Album</dt>
-  <dd>an album is a special case of gallery in that it contains no subgalleries
-  and zero or more images.</dd>
+  <dd>an album is a special case of gallery in that it contains exactly zero
+  subgalleries and zero or more images.</dd>
 
 <dt>Image</dt>
   <dd>an image is contained within an album or a gallery.</dd>
@@ -383,7 +383,23 @@ example. If you still can't work out what's wrong then just give up.</p>
 o changed
 </pre>
 
-<h3>0.9.9a</h3>
+<h3>0.9.10</h3>
+
+<pre>
++ language and template are now user-selectable on-the-fly
+o tidied up css classes and annotated the default stylesheet
+* fixed security issue with back-references in arguments to thumb.php
+o changed language config option to default_language
+o changed template_name config option to default_template
+</pre>
+
+<h3>0.9.9b - 2004-08-08</h3>
+
+<pre>
+* fixed image size calculation (again)
+</pre>
+
+<h3>0.9.9a - 2004-06-11</h3>
 
 <pre>
 * fixed multi-page galleries bug in templates
@@ -392,7 +408,7 @@ o changed
 * possibly other things
 </pre>
 
-<h3>0.9.9</h3>
+<h3>0.9.9 - 2004-05-15</h3>
 
 <pre>
 + added multi-image upload using ZIP files
@@ -561,7 +577,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2004/08/08 14:11:05 $</em></p>
+<p><em>$Date: 2004/09/06 16:30:21 $</em></p>
 
 </body>
 </html>
