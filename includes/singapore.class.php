@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.23 2004/05/14 14:03:56 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.24 2004/05/23 17:16:35 tamlyn Exp $
  */
  
 /**
@@ -597,15 +597,15 @@ class Singapore
     $middleX = round($imageWidth/2);
     $middleY = round($imageHeight/2);
     
-    $ret  = "<map name=\"sgNavMap\">\n";
+    $ret  = "<map name=\"sgNavMap\" id=\"sgNavMap\">\n";
     if($this->imageHasNext()) $ret .= '<area href="'.$this->imageNextURL().'" alt="'.$this->i18n->_g("image|Next").'" title="'.$this->i18n->_g("image|Next").'" shape="poly" ';
     else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
-    $ret .= "coords=\"$middleX,$middleY,$imageWidth,$imageHeight,$imageWidth,0,$middleX,$middleY\">\n";
+    $ret .= "coords=\"$middleX,$middleY,$imageWidth,$imageHeight,$imageWidth,0,$middleX,$middleY\" />\n";
     if($this->imageHasPrev()) $ret .= '<area href="'.$this->imagePrevURL().'" alt="'.$this->i18n->_g("image|Previous").'" title="'.$this->i18n->_g("image|Previous").'" shape="poly" ';
     else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
-    $ret .= "coords=\"$middleX,$middleY,0,0,0,$imageHeight,$middleX,$middleY\">\n";
+    $ret .= "coords=\"$middleX,$middleY,0,0,0,$imageHeight,$middleX,$middleY\" />\n";
     $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
-    $ret .= "coords=\"$middleX,$middleY,0,0,$imageWidth,0,$middleX,$middleY\">\n";
+    $ret .= "coords=\"$middleX,$middleY,0,0,$imageWidth,0,$middleX,$middleY\" />\n";
     $ret .= '</map>';
     
     return $ret;
@@ -738,7 +738,7 @@ class Singapore
                                           $this->config->thumb_height_gallery,
                                           $this->config->thumb_force_size_gallery);
         $ret .= '" class="sgGallery" '; 
-        $ret .= '"alt="'.$this->i18n->_g("Sample image from gallery").'" />';
+        $ret .= 'alt="'.$this->i18n->_g("Sample image from gallery").'" />';
 
     }
     return $ret;
@@ -793,28 +793,28 @@ class Singapore
   }
   
   function navigationLinks() {
-    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->formatURL(".")."\">\n";
+    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->formatURL(".")."\" />\n";
     
     if($this->isImage()) {
-      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->imageParentURL()."\">\n";
+      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->imageParentURL()."\" />\n";
       if ($this->imageHasPrev()) {
-        $ret .= "<link rel=\"First\" title=\"".$this->imageName(0)."\" href=\"".$this->imageFirstURL()."\">\n";
-        $ret .= "<link rel=\"Prev\" title=\"".$this->imageName($this->image->index-1)."\" href=\"".$this->imagePrevURL()."\">\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->imageName(0)."\" href=\"".$this->imageFirstURL()."\" />\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$this->imageName($this->image->index-1)."\" href=\"".$this->imagePrevURL()."\" />\n";
       }
       if ($this->imageHasNext()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->imageNextURL()."\">\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->imageCount()-1)."\" href=\"".$this->imageLastURL()."\">\n";
+        $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->imageNextURL()."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->imageCount()-1)."\" href=\"".$this->imageLastURL()."\" />\n";
       }
     } else {
       if($this->gallery->id != ".")
-        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parentName."\" href=\"".$this->formatURL($this->gallery->parent)."\">\n";
+        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parentName."\" href=\"".$this->formatURL($this->gallery->parent)."\" />\n";
       if($this->galleryHasPrev()) {
-        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\">\n";
-        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->formatURL($this->gallery->idEncoded, null, 0)."\">\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\" />\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->formatURL($this->gallery->idEncoded, null, 0)."\" />\n";
       }
       if($this->galleryHasNext()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\">\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->formatURL($this->gallery->idEncoded, null, $this->lastPageIndex())."\">\n";
+        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->formatURL($this->gallery->idEncoded, null, $this->lastPageIndex())."\" />\n";
       } 
     }
     return $ret;
