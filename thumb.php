@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.23 2004/04/11 14:45:06 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.24 2004/04/23 17:28:28 tamlyn Exp $
  */
 
 //require config class
@@ -88,6 +88,7 @@ function showThumb($gallery, $image, $maxsize) {
     $cmd  = '"'.$config->pathto_convert.'"';
     $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
     if($imageType == 2) $cmd .= " -quality $thumbQuality";
+    if($config->progressive_thumbs) $cmd .= " -interlace Plane";
     if($config->remove_jpeg_profile) $cmd .= ' +profile "*"';
     $cmd .= ' '.escapeshellarg($imagePath).' '.escapeshellarg($thumbPath);
     
@@ -121,6 +122,9 @@ function showThumb($gallery, $image, $maxsize) {
       ImageCopyResized($thumb,$image,0,0,0,0,$thumbWidth,$thumbHeight,$imageWidth,$imageHeight);
       break;
     }
+    
+    //set image interlacing
+    ImageInterlace($thumb,$config->progressive_thumbs);
     
     //output image of appropriate type
     switch($imageType) {

@@ -1,0 +1,401 @@
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2004-04-13 11:50-0500\n"
+"Last-Translator: Bin Yuan <yuanbin at yuanbinzhaoxia dot com>\n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../admin.php:43
+msgid "Welcome to singapore admin!"
+msgstr "欢迎进入singapore管理界面！"
+
+#: ../admin.php:46 ../admin.php:55 ../admin.php:64 ../admin.php:79
+#: ../admin.php:93 ../admin.php:104 ../admin.php:121 ../admin.php:139
+#: ../admin.php:153 ../admin.php:163 ../admin.php:188
+msgid "An error occurred:"
+msgstr "发生一处错误："
+
+#: ../admin.php:52
+msgid "Thank you and goodbye!"
+msgstr "多谢使用下次再见！"
+
+#: ../admin.php:62
+msgid "Password saved"
+msgstr "口令保存成功"
+
+#: ../admin.php:76
+msgid "Gallery added"
+msgstr "添加相册成功"
+
+#: ../admin.php:90
+msgid "Gallery info saved"
+msgstr "相册信息保存成功"
+
+#: ../admin.php:99 ../admin.php:117 ../admin.php:159 ../admin.php:184
+msgid "confirm|OK"
+msgstr "确认"
+
+#: ../admin.php:102
+msgid "Gallery deleted"
+msgstr "相册删除成功"
+
+#: ../admin.php:107 ../admin.php:123 ../admin.php:165 ../admin.php:189
+msgid "confirm|Cancel"
+msgstr "取消"
+
+#: ../admin.php:110
+msgid "delete gallery"
+msgstr "删除相冊"
+
+#: ../admin.php:111
+#, possible-c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and images it contains?"
+msgstr ""
+"%s这个相册里面尚有内容。\n"
+"你确实想永久性删除这个相册及里面包含的所有子相册或者图片吗？"
+
+#: ../admin.php:119
+msgid "Thumbnail changed"
+msgstr "缩略图变更完成"
+
+#: ../admin.php:136
+msgid "Image added"
+msgstr "图片添加成功"
+
+#: ../admin.php:150
+msgid "Image saved successfully"
+msgstr "图片保存成功"
+
+#: ../admin.php:161
+msgid "Image deleted"
+msgstr "图片删除完成"
+
+#: ../admin.php:168
+msgid "delete image"
+msgstr "删除图片"
+
+#: ../admin.php:169
+#, possible-c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "你确实想永久性删除图片 %s 从相冊 %S 吗？"
+
+#: ../admin.php:186
+msgid "Thumbnail cache purged"
+msgstr "缩略图预存删除成功"
+
+#: ../admin.php:192
+msgid "purge cached thumbnails"
+msgstr "删除预存的缩略图"
+
+#: ../admin.php:194
+#, possible-c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "你确实想删除这%s张预存的缩略图吗？"
+
+#: ../includes/admin.class.php:178
+msgid "admin bar|Back"
+msgstr "返回"
+
+#: ../includes/admin.class.php:180
+msgid "admin bar|Admin"
+msgstr "管理菜单"
+
+#: ../includes/admin.class.php:181
+msgid "admin bar|Galleries"
+msgstr "相册列表"
+
+#: ../includes/admin.class.php:182
+msgid "admin bar|Log out"
+msgstr "退出"
+
+#: ../includes/admin.class.php:184
+msgid "admin bar|Edit gallery"
+msgstr "编辑相册信息"
+
+#: ../includes/admin.class.php:185
+msgid "admin bar|Delete gallery"
+msgstr "删除相册"
+
+#: ../includes/admin.class.php:186
+msgid "admin bar|New subgallery"
+msgstr "新建子相册"
+
+#: ../includes/admin.class.php:188
+msgid "admin bar|Edit image"
+msgstr "编辑图片信息"
+
+#: ../includes/admin.class.php:189
+msgid "admin bar|Delete image"
+msgstr "删除图片"
+
+#: ../includes/admin.class.php:191
+msgid "admin bar|New image"
+msgstr "新建图片"
+
+#: ../includes/admin.class.php:215
+msgid "There was an error saving the new password."
+msgstr "保存口令时产生错误。"
+
+#: ../includes/admin.class.php:218
+msgid "New password must be between 6 and 16 characters long."
+msgstr "新口令长度必需在6到16个字符之间。"
+
+#: ../includes/admin.class.php:220
+msgid "The new passwords you entered do not match."
+msgstr "两次输入的新口令不匹配。"
+
+#: ../includes/admin.class.php:222
+msgid "The current password you entered does not match the one in the database."
+msgstr "你输入的口令和数据库中的口令不匹配。"
+
+#: ../includes/admin.class.php:225
+msgid "The username specified was not found in the database."
+msgstr "没有在数据库中找到指定的用户名。"
+
+#: ../includes/admin.class.php:261
+msgid "Username and/or password incorrect"
+msgstr "用户名或口令错误"
+
+#: ../includes/admin.class.php:264
+msgid "You must enter a username and password"
+msgstr "你需要输入用户名和口令"
+
+#: ../includes/admin.class.php:289
+msgid "Gallery already exists"
+msgstr "相册已经存在"
+
+#: ../includes/admin.class.php:296
+msgid "Could not create directory"
+msgstr "无法建立目录"
+
+#: ../includes/admin.class.php:327
+msgid "Could not save gallery info"
+msgstr "无法保存相册信息"
+
+#: ../includes/admin.class.php:345
+msgid "Cannot delete the top level directory"
+msgstr "无法删除顶级目录"
+
+#: ../includes/admin.class.php:386
+msgid "File already exists"
+msgstr "文件已经存在"
+
+#: ../includes/admin.class.php:391
+msgid "Could not upload file"
+msgstr "无法上传文件"
+
+#: ../includes/admin.class.php:396
+msgid "Invalid location choice"
+msgstr "你选择的位置无效"
+
+#: ../includes/admin.class.php:415
+msgid "Could not add image to gallery"
+msgstr "无法将图片加入到相册中"
+
+#: ../includes/admin.class.php:448
+msgid "Could not save image information"
+msgstr "无法保存图片信息"
+
+#: ../includes/admin.class.php:470
+msgid "Could not delete image"
+msgstr "无法删除图片"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr "请选择缩略图"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "请选择代表本相册的图片。"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr "不使用缩略图"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr "随机选择"
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr "编辑相册属性"
+
+#: ../templates/admin_default/editgallery.tpl.php:14
+msgid "Gallery thumbnail:"
+msgstr "相册缩略图："
+
+#: ../templates/admin_default/editgallery.tpl.php:18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr ""
+"随机选择\n"
+"缩略图"
+
+#: ../templates/admin_default/editgallery.tpl.php:23
+msgid "thumbnail|Change..."
+msgstr "修改"
+
+#: ../templates/admin_default/editgallery.tpl.php:27
+#: ../templates/admin_default/galleryhits.tpl.php:22
+msgid "Gallery name"
+msgstr "相册名称"
+
+#: ../templates/admin_default/editgallery.tpl.php:31
+#: ../templates/admin_default/editimage.tpl.php:22
+msgid "Artist name"
+msgstr "作者姓名"
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr "编辑图片信息"
+
+#: ../templates/admin_default/editimage.tpl.php:14
+msgid "Image"
+msgstr "图片"
+
+#: ../templates/admin_default/editimage.tpl.php:18
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "Image name"
+msgstr "图片名称"
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr "修改口令"
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "新选择一个长度在6到16个字符之间的新口令。"
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr "当前口令："
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr "新口令："
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr "请再输入一次口令："
+
+#: ../templates/admin_default/footer.tpl.php:3
+msgid "singapore|Powered by"
+msgstr "本网站采用技术："
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Graph"
+msgstr "图示"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Hits"
+msgstr "点击数"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Last hit"
+msgstr "最后一次点击"
+
+#: ../templates/admin_default/header.tpl.php:39
+msgid "Admin message:"
+msgstr "管理员信息："
+
+#: ../templates/admin_default/loggedout.tpl.php:1
+msgid "Return to galleries."
+msgstr "返回相册列表"
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr "登录"
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr ""
+"只允许授权用户使用管理界面部分。\n"
+"请在下方输入用户名和口令。"
+
+#: ../templates/admin_default/login.tpl.php:8
+msgid "Username:"
+msgstr "用户名："
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr "口令："
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr "请选择："
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr "管理相册和图片"
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr "查看相册点击情况"
+
+#: ../templates/admin_default/menu.tpl.php:6
+msgid "Purge cached thumbnails"
+msgstr "删除预存的缩略图"
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr "更改口令"
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "Log out of admin"
+msgstr "从管理界面退出"
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr "创建一个新相册"
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:28
+msgid "Identifier:"
+msgstr "新相册目录名称："
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr "添加新图片"
+
+#: ../templates/admin_default/newimage.tpl.php:3
+msgid "This image will not be visible because this gallery contains subgalleries."
+msgstr "由于本相册包含子相册，所以这张图片将是不可见的。"
+
+#: ../templates/admin_default/newimage.tpl.php:12
+msgid "Remote file"
+msgstr "远程文件"
+
+#: ../templates/admin_default/newimage.tpl.php:16
+msgid "URL of image:"
+msgstr "图片的URL地址："
+
+#: ../templates/admin_default/newimage.tpl.php:20
+msgid "Local file"
+msgstr "本地文件"
+
+#: ../templates/admin_default/newimage.tpl.php:24
+msgid "Image file to upload:"
+msgstr "请选择待上传文件："
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Use filename of uploaded file."
+msgstr "使用上传文件的文件名。"
+
+#: ../templates/admin_default/newimage.tpl.php:31
+msgid "Specify different filename:"
+msgstr "自行指定文件名："
