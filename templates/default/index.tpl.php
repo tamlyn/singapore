@@ -9,21 +9,21 @@
  */
 
 //include header file
-include $sg->config->pathto_current_template."header.tpl.php";
+include $sg->config->base_path.$sg->config->pathto_current_template."header.tpl.php";
 
 switch($sg->action) {
 case "addcomment" :
-  include $sg->config->pathto_current_template."addcomment.tpl.php";
+  include $sg->config->base_path.$sg->config->pathto_current_template."addcomment.tpl.php";
 default :
   if($sg->isImage()) {
-    include $sg->config->pathto_current_template."image.tpl.php";
+    include $sg->config->base_path.$sg->config->pathto_current_template."image.tpl.php";
   } elseif($sg->isAlbum()) {
-    include $sg->config->pathto_current_template."album.tpl.php";
+    include $sg->config->base_path.$sg->config->pathto_current_template."album.tpl.php";
   } else {
-    include $sg->config->pathto_current_template."gallery.tpl.php";
+    include $sg->config->base_path.$sg->config->pathto_current_template."gallery.tpl.php";
   }
 }
 //include footer file
-include $sg->config->pathto_current_template."footer.tpl.php";
+include $sg->config->base_path.$sg->config->pathto_current_template."footer.tpl.php";
 
 ?>

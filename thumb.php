@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.22 2004/04/09 17:53:38 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.23 2004/04/11 14:45:06 tamlyn Exp $
  */
 
 //require config class

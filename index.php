@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: index.php,v 1.15 2004/02/02 16:31:35 tamlyn Exp $
+ * @version $Id: index.php,v 1.16 2004/04/11 14:45:06 tamlyn Exp $
  */
 
 //include main class
@@ -31,6 +31,6 @@ header("Content-type: text/html; charset=".$sg->character_set);
 
 
 //pass control over to template
-include $sg->config->pathto_current_template."index.tpl.php";
+include $sg->config->base_path.$sg->config->pathto_current_template."index.tpl.php";
 
 ?>

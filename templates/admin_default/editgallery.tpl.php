@@ -36,8 +36,16 @@
   <td><input type="text" name="sgArtistEmail" value="<?php echo $sg->gallery->email ?>" size="40" /></td>
 </tr>
 <tr>
+  <td><?php echo $sg->i18n->_g("Date") ?></td>
+  <td><input type="text" name="sgDate" value="<?php echo $sg->gallery->date ?>" size="40" /></td>
+</tr>
+<tr>
   <td><?php echo $sg->i18n->_g("Copyright") ?></td>
   <td><input type="text" name="sgCopyright" value="<?php echo $sg->gallery->copyright ?>" size="40" /></td>
+</tr>
+<tr>
+  <td><?php echo $sg->i18n->_g("Summary") ?></td>
+  <td><textarea name="sgSummary" cols="70" rows="3"><?php echo $sg->gallery->summary ?></textarea></td>
 </tr>
 <tr>
   <td><?php echo $sg->i18n->_g("Description") ?></td>

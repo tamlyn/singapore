@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: test.php,v 1.8 2004/04/09 17:53:38 tamlyn Exp $
+ * @version $Id: test.php,v 1.9 2004/04/11 14:45:06 tamlyn Exp $
  */
 
 if(isset($_REQUEST["phpinfo"])) {

@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.19 2004/04/09 17:53:44 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.20 2004/04/11 14:45:07 tamlyn Exp $
  */
  
 /**
@@ -89,9 +89,10 @@ class Singapore
     if(get_magic_quotes_gpc())
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
-    if(empty($galleryId)) $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
+    if(empty($galleryId)) 
+      $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
-    //load config from default ini file (singapore.ini)
+    //load config from current directory
     $this->config = new sgConfig("singapore.ini");
     
     //load config from gallery ini file (gallery.ini) if present
@@ -116,7 +117,7 @@ class Singapore
       $this->character_set = $this->i18n->languageStrings[0]["charset"];
     else
       $this->character_set = $this->config->default_charset;
-      
+    
     //temporary code
     if(isset($_REQUEST["action"])) $this->action = $_REQUEST["action"];
   }
@@ -264,7 +265,7 @@ class Singapore
   function encodeId($id)
   {
     $bits = explode("/",$id);
-    for($i=0;$i<count($bits);$i++)
+    for($i=1;$i<count($bits);$i++)
       $bits[$i] = rawurlencode($bits[$i]);
     //unset($bits[0]);
     return implode("/",$bits);
@@ -277,6 +278,16 @@ class Singapore
    */
   function formatURL($gallery, $image = null, $startat = null, $action = null)
   {
+    if($this->config->use_mod_rewrite) {
+      $ret  = $this->config->base_url.$gallery;
+      if($startat != null)
+        $ret .= ','.$startat;
+      $ret .= '/';
+      if($image != null)
+        $ret .= rawurlencode($image);
+      if($action != null)
+        $ret .= "?acton=".$action;
+    } else {
     $ret  = $this->config->base_url.$this->config->base_file;
     $ret .= "gallery=".$gallery;
     if($startat != null)
@@ -285,6 +296,8 @@ class Singapore
       $ret .= "&amp;image=".rawurlencode($image);
     if($action != null)
       $ret .= "&amp;acton=".$action;
+    }
+    
 
     return $ret;
   }
@@ -297,7 +310,7 @@ class Singapore
    */
   function thumbnailURL($gallery, $image, $size)
   {
-    $ret = $this->config->base_path;
+    $ret = $this->config->base_url;
     $ret .= "thumb.php";
     $ret .= "?gallery=".$gallery;
     $ret .= "&amp;image=".rawurlencode($image);
@@ -437,7 +450,7 @@ class Singapore
   
   function adminLink()
   {
-    return "<a href=\"admin.php\">".$this->i18n->_g("Log in")."</a>";
+    return '<a href="'.$this->config->base_url.'admin.php">'.$this->i18n->_g("Log in")."</a>";
   }
   
   /**
@@ -464,10 +477,8 @@ class Singapore
         //run on and get dirs too
       case "dirs" :
        while(false !== ($entry = readdir($dp)))
-          if(
-            is_dir($dir->path.$entry) && 
-            $entry{0} != '.'
-          ) $dir->dirs[] = $entry;
+          if(is_dir($dir->path.$entry) && $entry{0} != '.') 
+            $dir->dirs[] = $entry;
         sort($dir->dirs);
         break;
       case "all" :
@@ -675,7 +686,7 @@ class Singapore
 	}
 	
   /**
-   * @uses imageThumbnailImage
+   * @uses galleryThumbnailImage
    * @return string
    */
   function galleryThumbnailLinked($index = null)
@@ -702,28 +713,26 @@ class Singapore
     if($index === null) $gal = $this->gallery;
     else $gal = $this->gallery->galleries[$index];
     
+    $image = $gal->filename;
+    
     switch($gal->filename) {
-    case "__random__" :
-      if(count($gal->images)>0) {
-        srand(time());
-        $index = rand(0,count($gal->images)-1);
-        $ret  = "<img src=\"".$this->thumbnailURL($this->encodeId($gal->id),
-                                              $gal->images[$index]->filename,
-                                              $this->config->gallery_thumb_size);
-        $ret .="\" class=\"sgGallery\" ";
-        $ret .= "alt=\"".$this->i18n->_g("Sample image from gallery")."\" />";
-
+      case "__none__" :
+        $ret = nl2br($this->i18n->_g("No\nthumbnail"));
         break;
-      }
-    case "__none__" :
-      $ret = nl2br($this->i18n->_g("No\nthumbnail"));
-      break;
+      case "__random__" :
+        if(count($gal->images) == 0) {
+          $ret = nl2br($this->i18n->_g("No\nthumbnail"));
+          break;
+        }
+        //select random image then run on to next case
+        srand(time());
+        $image = $gal->images[rand(0,count($gal->images)-1)]->filename;
     default :
       $ret  = "<img src=\"".$this->thumbnailURL($this->encodeId($gal->id),
-                                            $gal->filename,
+                                              $image,
                                             $this->config->gallery_thumb_size);
-      $ret .= "\" class=\"sgGallery\""; 
-      $ret .= "alt=\"".$this->i18n->_g("Sample image from gallery")."\" />";
+        $ret .= '" class="sgGallery"'; 
+        $ret .= '"alt="'.$this->i18n->_g("Sample image from gallery").'" />';
 
     }
     return $ret;
@@ -1128,7 +1137,8 @@ class Singapore
     
     //check if image is local (filename does not start with 'http://')
     if(substr($this->image->filename,0,7)!="http://") 
-      return $this->config->pathto_galleries.$this->gallery->idEncoded."/".rawurlencode($this->image->filename);
+      return $this->config->base_url.$this->config->pathto_galleries.
+        $this->gallery->idEncoded."/".rawurlencode($this->image->filename);
     else 
       return $this->image->filename;
   }

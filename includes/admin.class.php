@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.12 2004/04/09 17:53:43 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.13 2004/04/11 14:45:07 tamlyn Exp $
  */
 
 /**
@@ -110,6 +110,17 @@ class sgAdmin extends Singapore
       $ret .= "&amp;startat=".$startat;
     
     return $ret;
+  }
+
+  /**
+   *
+   */
+  function findTempDirectory()
+  {
+    if(isset($_ENV["TMP"]) && is_writable($_ENV["TMP"])) return $_ENV["TMP"];
+    elseif(isset($_ENV["TEMP"]) && is_writable($_ENV["TEMP"])) return $_ENV["TEMP"];
+    elseif(is_writable("/tmp")) return "/tmp";
+    else return null;
   }
 
   /**
@@ -293,7 +304,9 @@ class sgAdmin extends Singapore
     $this->gallery->name = stripslashes($_REQUEST["sgGalleryName"]);
     $this->gallery->artist = stripslashes($_REQUEST["sgArtistName"]);
     $this->gallery->email = stripslashes($_REQUEST["sgArtistEmail"]);
+    $this->gallery->date = stripslashes($_REQUEST["sgDate"]);
     $this->gallery->copyright = stripslashes($_REQUEST["sgCopyright"]);
+    $this->gallery->summary = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgSummary"]));
     $this->gallery->desc = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgGalleryDesc"]));
     
     if($this->config->enable_clickable_urls) {
@@ -418,8 +431,14 @@ class sgAdmin extends Singapore
    */
   function addMultipleImages()
   {
-    //create temp directory
-    while(!mkdir($tmpdir = $_ENV["TMP"]."/".uniqid("sg")));
+    //find system temp directory
+    if(!($systmpdir=$this->findTempDirectory())) {
+     $this->lastError = $this->i18n->_g("Could not find temporary storage space"); 
+      return false;
+    }
+    
+    //create new temp directory in system temp dir
+    while(!mkdir($tmpdir = $systmpdir."/".uniqid("sg")));
     
     $archive = $_FILES["sgArchiveFile"]["tmp_name"];
   
