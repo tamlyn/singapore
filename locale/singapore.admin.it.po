@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: singapore 0.9.6\n"
-"POT-Creation-Date: 2003-12-28 17:34+0000\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
 "PO-Revision-Date: 2003-09-01 22:18+0100\n"
 "Last-Translator: Alessandro Zarri <azarri@hardwaretips.com>\n"
 "Language-Team: Italian <http://www.hardwaretips.com>\n"
@@ -216,6 +216,11 @@ msgstr "Impossibile eliminare la cartella principale"
 msgid "File already exists"
 msgstr "Il file esiste già"
 #
+# File: ../includes/admin.class.php, line: 391
+#, fuzzy
+msgid "Could not upload file"
+msgstr "Impossibile cancellare l'immagine"
+#
 # File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
 msgstr "Scelta percorso non valida"
@@ -271,6 +276,7 @@ msgid "thumbnail|Change..."
 msgstr "Modifica..."
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 27
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 #, fuzzy
 msgid "Gallery name"
 msgstr "La galleria esiste già"
@@ -289,6 +295,7 @@ msgid "Image"
 msgstr ""
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 18
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
 #, fuzzy
 msgid "Image name"
 msgstr "Data:"
@@ -317,6 +324,21 @@ msgstr "Conferma password:"
 # File: ../templates/admin_default/footer.tpl.php, line: 3
 msgid "singapore|Powered by"
 msgstr "Powered by"
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Graph"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Hits"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Last hit"
+msgstr ""
 #
 # File: ../templates/admin_default/header.tpl.php, line: 39
 msgid "Admin message:"
@@ -411,174 +433,3 @@ msgstr "Utilizza il nome del file trasmesso."
 # File: ../templates/admin_default/newimage.tpl.php, line: 31
 msgid "Specify different filename:"
 msgstr "Specifica un nome file differente:"
-#
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Gallery name:"
-#~ msgstr "Nome della galleria:"
-#
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Artist name:"
-#~ msgstr "Nome dell'autore:"
-#
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Artist email:"
-#~ msgstr "Email dell'autore:"
-#
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Copyright holder:"
-#~ msgstr "Detentore dei diritti d'autore:"
-#
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Description:"
-#~ msgstr "Descrizione:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Image:"
-#~ msgstr "Immagine:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Image name:"
-#~ msgstr "Nome dell'immagine:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Artist name:"
-#~ msgstr "Nome dell'artista:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Artist email:"
-#~ msgstr "Email dell'artista:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Location:"
-#~ msgstr "Località:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Date:"
-#~ msgstr "Data:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Copyright holder:"
-#~ msgstr "Detentore dei diritti d'autore:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Description:"
-#~ msgstr "Descrizione:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Camera info:"
-#~ msgstr "Fotocamera:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Lens info:"
-#~ msgstr "Lenti:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Film info:"
-#~ msgstr "Pellicola:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Darkroom manipulation:"
-#~ msgstr "Modifiche in camera oscura:"
-#
-#
-#
-#
-#
-#
-#~ msgid "image details|Digital manipulation:"
-#~ msgstr "Modifiche digitali:"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "gallery|Up"
-#~ msgstr "Livello superiore"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "gallery|Up one level"
-#~ msgstr "Su di un livello"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "crumb line|You are here:"
-#~ msgstr "Vi trovate qui:"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: singapore-0.9.7\n"
-"POT-Creation-Date: 2003-12-28 17:34+0000\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
 "PO-Revision-Date: 2003-11-01 14:13+0000\n"
 "Last-Translator: Piotr Szczepanski <me@piotr-szczepanski.org>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -211,6 +211,11 @@ msgstr "Nie mo¿na usun±æ katalogu g³ównego"
 msgid "File already exists"
 msgstr "Plik ju¿ istnieje"
 #
+# File: ../includes/admin.class.php, line: 391
+#, fuzzy
+msgid "Could not upload file"
+msgstr "Nie uda³o siê usun±æ obrazu"
+#
 # File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
 msgstr "Nieprawid³owy wybór po³o¿enia"
@@ -264,6 +269,7 @@ msgid "thumbnail|Change..."
 msgstr "Zmieñ..."
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 27
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 msgid "Gallery name"
 msgstr "Nazwa galerii"
 #
@@ -281,6 +287,7 @@ msgid "Image"
 msgstr "Obraz"
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 18
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
 msgid "Image name"
 msgstr "Nazwa obrazu"
 #
@@ -308,6 +315,21 @@ msgstr "Potwierd¼ has³o:"
 # File: ../templates/admin_default/footer.tpl.php, line: 3
 msgid "singapore|Powered by"
 msgstr "Galeria os³ugiwana przez"
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Graph"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Hits"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Last hit"
+msgstr ""
 #
 # File: ../templates/admin_default/header.tpl.php, line: 39
 msgid "Admin message:"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-12-28 17:34+0000\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,6 +191,10 @@ msgstr ""
 msgid "File already exists"
 msgstr ""
 
+#: ../includes/admin.class.php:391
+msgid "Could not upload file"
+msgstr ""
+
 #: ../includes/admin.class.php:396
 msgid "Invalid location choice"
 msgstr ""
@@ -242,6 +246,7 @@ msgid "thumbnail|Change..."
 msgstr ""
 
 #: ../templates/admin_default/editgallery.tpl.php:27
+#: ../templates/admin_default/galleryhits.tpl.php:22
 msgid "Gallery name"
 msgstr ""
 
@@ -259,6 +264,7 @@ msgid "Image"
 msgstr ""
 
 #: ../templates/admin_default/editimage.tpl.php:18
+#: ../templates/admin_default/imagehits.tpl.php:22
 msgid "Image name"
 msgstr ""
 
@@ -284,6 +290,21 @@ msgstr ""
 
 #: ../templates/admin_default/footer.tpl.php:3
 msgid "singapore|Powered by"
+msgstr ""
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Graph"
+msgstr ""
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Hits"
+msgstr ""
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Last hit"
 msgstr ""
 
 #: ../templates/admin_default/header.tpl.php:39

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-12-28 17:34+0000\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
 "PO-Revision-Date: 2003-08-18 11:37+0100\n"
 "Last-Translator: Jan Thorn <jan@j-thorn.dk>\n"
 "Language-Team: SWEDISH <LL@li.org>\n"
@@ -213,6 +213,11 @@ msgstr "Kunde inte att radera översta arkivet"
 msgid "File already exists"
 msgstr "Bilden finns redan"
 #
+# File: ../includes/admin.class.php, line: 391
+#, fuzzy
+msgid "Could not upload file"
+msgstr "Kunde inte radera bilden"
+#
 # File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
 msgstr "Ogiltigt val av plats"
@@ -266,6 +271,7 @@ msgid "thumbnail|Change..."
 msgstr "Ändra..."
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 27
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 #, fuzzy
 msgid "Gallery name"
 msgstr "Bildarkiv finns redan"
@@ -284,6 +290,7 @@ msgid "Image"
 msgstr ""
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 18
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
 #, fuzzy
 msgid "Image name"
 msgstr "Datum:"
@@ -311,6 +318,21 @@ msgstr "Bekräfta lösenord:"
 # File: ../templates/admin_default/footer.tpl.php, line: 3
 msgid "singapore|Powered by"
 msgstr "Skapat med"
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Graph"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Hits"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Last hit"
+msgstr ""
 #
 # File: ../templates/admin_default/header.tpl.php, line: 39
 msgid "Admin message:"
@@ -411,8 +433,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Gallery name:"
 #~ msgstr "Bildarkiv namn:"
+#
+#
 #
 #
 #
@@ -427,8 +453,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Artist email:"
 #~ msgstr "Artist e-mail:"
+#
+#
 #
 #
 #
@@ -443,8 +473,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Description:"
 #~ msgstr "Beskrivning:"
+#
+#
 #
 #
 #
@@ -459,8 +493,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Image name:"
 #~ msgstr "Bildens namn:"
+#
+#
 #
 #
 #
@@ -475,8 +513,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Artist email:"
 #~ msgstr "Artist e-mail:"
+#
+#
 #
 #
 #
@@ -491,8 +533,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Date:"
 #~ msgstr "Datum:"
+#
+#
 #
 #
 #
@@ -507,8 +553,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Description:"
 #~ msgstr "Beskrivning:"
+#
+#
 #
 #
 #
@@ -523,8 +573,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Lens info:"
 #~ msgstr "Lensinfo:"
+#
+#
 #
 #
 #
@@ -539,6 +593,8 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Darkroom manipulation:"
 #~ msgstr "Mörkrumamanipulering"
 #
@@ -547,8 +603,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Digital manipulation:"
 #~ msgstr "Digital manipulering"
+#
+#
 #
 #
 #
@@ -565,8 +625,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "gallery|Up one level"
 #~ msgstr "Upp en nivå"
+#
+#
 #
 #
 #

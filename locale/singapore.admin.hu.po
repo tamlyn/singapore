@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: singapore 0.9.7\n"
-"POT-Creation-Date: 2003-12-28 17:34+0000\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
 "PO-Revision-Date: 2003-10-26 19:00+1GMT\n"
 "Last-Translator: Attila Nagy <nagyattila@datatrans.hu>\n"
 "Language-Team: Hungarian <LL@li.org>\n"
@@ -210,6 +210,10 @@ msgstr "A legelsõbb szintû könyvtár nem törölhetõ"
 msgid "File already exists"
 msgstr "Már létezõ fájl"
 #
+# File: ../includes/admin.class.php, line: 391
+msgid "Could not upload file"
+msgstr "Fájl-feltöltési hiba"
+#
 # File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
 msgstr "Hibás helymeghatározás"
@@ -263,6 +267,7 @@ msgid "thumbnail|Change..."
 msgstr "Változtat..."
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 27
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 #, fuzzy
 msgid "Gallery name"
 msgstr "Galéria neve"
@@ -282,6 +287,7 @@ msgid "Image"
 msgstr "Kép"
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 18
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
 #, fuzzy
 msgid "Image name"
 msgstr "Kép neve"
@@ -309,6 +315,21 @@ msgstr "Jelszó megerõsítése:"
 # File: ../templates/admin_default/footer.tpl.php, line: 3
 msgid "singapore|Powered by"
 msgstr "Fejlesztve:"
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Graph"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Hits"
+msgstr ""
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Last hit"
+msgstr ""
 #
 # File: ../templates/admin_default/header.tpl.php, line: 39
 msgid "Admin message:"
@@ -403,134 +424,3 @@ msgstr "A feltöltött fájl nevének megtartása."
 # File: ../templates/admin_default/newimage.tpl.php, line: 31
 msgid "Specify different filename:"
 msgstr "Eltérõ fájlnév használata:"
-#
-#
-#
-#~ msgid "Could no upload file"
-#~ msgstr "Fájl-feltöltési hiba"
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Gallery name:"
-#~ msgstr "detalles de la galería|Nombre de la galería:"
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Artist name:"
-#~ msgstr "detalles de la galería|Nombre del artista:"
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Artist email:"
-#~ msgstr "detalles de la galería|Email del artista:"
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Copyright holder:"
-#~ msgstr "detalles de la galería|Dueño del copyright:"
-#
-#
-#
-#
-#
-#~ msgid "gallery details|Description:"
-#~ msgstr "detalles de la galería|Descripción:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Image:"
-#~ msgstr "detalles de la imagen|Imagen:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Image name:"
-#~ msgstr "detalles de la imagen|Nombre de la Imagen"
-#
-#
-#
-#
-#
-#~ msgid "image details|Artist name:"
-#~ msgstr "detalles de la imagen|Nombre del artista:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Artist email:"
-#~ msgstr "detalles de la imagen|Email del artista:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Location:"
-#~ msgstr "detalles de la imagen|Locación:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Date:"
-#~ msgstr "detalles de la imagen|Fecha:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Copyright holder:"
-#~ msgstr "detalles de la imagen|Dueño del copyright:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Description:"
-#~ msgstr "detalles de la imagen|Descripción:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Camera info:"
-#~ msgstr "detalles de la imagen|Información de la cámara:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Lens info:"
-#~ msgstr "detalles de la imagen|Información del lente:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Film info:"
-#~ msgstr "detalles de la imagen|Información de la película:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Darkroom manipulation:"
-#~ msgstr "detalles de la imagen|Manipulación en el cuarto obscuro:"
-#
-#
-#
-#
-#
-#~ msgid "image details|Digital manipulation:"
-#~ msgstr "detalles de la imagen|Manipulación digital:"
