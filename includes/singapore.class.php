@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.14 2004/02/02 16:36:04 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.15 2004/02/06 13:59:40 tamlyn Exp $
  */
  
 /**
@@ -250,6 +250,14 @@ class Singapore
       return array_map(array("Singapore","arraystripslashes"), $toStrip);
     else
       return stripslashes($toStrip);
+  }
+  
+  function formatEmail($email, $forceObfuscate = false)
+  {
+    if($this->config->obfuscate_email || $forceObfuscate)
+        return strtr($email,array("@" => ' <b>'.$this->i18n->_g("email|at").'</b> ', "." => ' <b>'.$this->i18n->_g("email|dot").'</b> '));
+      else
+        return "<a href=\"mailto:".$email."\">".$email."</a>";
   }
   
   /**
@@ -861,10 +869,7 @@ class Singapore
   {
     $ret = array();
     if(!empty($this->gallery->email))
-      if($this->config->obfuscate_email)
-        $ret[$this->i18n->_g("Email")] = strtr($this->gallery->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
-      else
-        $ret[$this->i18n->_g("Email")] = "<a href=\"mailto:".$this->gallery->email."\">".$this->gallery->email."</a>";
+        $ret[$this->i18n->_g("Email")] = $this->formatEmail($this->gallery->email);
     if(!empty($this->gallery->desc))
       $ret[$this->i18n->_g("Description")] = $this->gallery->desc;
     if(!empty($this->gallery->copyright))
@@ -1163,10 +1168,7 @@ class Singapore
   {
     $ret = array();
     if(!empty($this->image->email))
-      if($this->config->obfuscate_email)
-        $ret[$this->i18n->_g("Email")] = strtr($this->image->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
-      else
-        $ret[$this->i18n->_g("Email")] = "<a href=\"mailto:".$this->image->email."\">".$this->image->email."</a>";
+      $ret[$this->i18n->_g("Email")] = $this->formatEmail($this->image->email);
     if(!empty($this->image->location))
       $ret[$this->i18n->_g("Location")] = $this->image->location;
     if(!empty($this->image->date))
