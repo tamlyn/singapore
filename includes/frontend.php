@@ -77,13 +77,13 @@ function sgShowIndex($gallery, $startat)
     case "__random__" :
       srand(time());
       $index = rand(0,count($gal->img)-1);
-      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$index]->filename}&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgThumbnail\" alt=\"Example image from gallery\" />";
+      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$index]->filename}&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgThumbnail\" alt=\"Sample image from gallery\" />";
       break;
     default :
-      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgGallery\" alt=\"Example image from gallery\" />";
+      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgGallery\" alt=\"Sample image from gallery\" />";
     }
     echo "</a></td>\n";
-    echo "  <td><p><strong><a href=\"index.php?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n";
+    echo "  <td><p><strong><a href=\"index.php?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc<br />(".count($gal->img)." images)</p></td>\n";
     echo "</tr>\n";
     echo "</table></div>\n\n";
   }
@@ -104,7 +104,9 @@ function sgShowThumbnails($gallery, $startat)
   //get contaner xhtml
   $code = sgGetContainerCode();
   
-  echo "<h1>$gal->name</h1>\n";
+  //heading with gallery name and artist
+  echo "<h1 style=\"margin-bottom: 0;\">$gal->name</h1>\n";
+  if(!empty($gal->artist)) echo "<p style=\"margin-bottom: 40px; margin-top: 0;\">by $gal->artist</p>\n\n";
   
   //container frame top (tab)
   echo $code->tab1;
@@ -144,8 +146,15 @@ function sgShowThumbnails($gallery, $startat)
   //contaner frame bottom
   echo $code->bottom;
   
-  //log gallery hit
-  if($GLOBALS["sgConfig"]->track_views) sgLogView($gallery);
+  //image info as available
+  echo "<p>\n";
+  if($gal->email)    echo "<strong>Artist email:</strong> ".strtr($gal->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "))."<br />\n";
+  if($gal->desc)     echo "<strong>Description:</strong> $gal->desc<br />\n";
+  if($gal->copyright) echo "<strong>Copyright:</strong> $gal->copyright<br />\n";
+  elseif($gal->artist) echo "<strong>Copyright:</strong> $gal->artist<br />\n";
+  if($GLOBALS["sgConfig"]->track_views) $hits = sgLogView($gallery);
+  if($GLOBALS["sgConfig"]->show_views) echo "<strong>Viewed:</strong> $hits times<br />\n";
+  echo "</p>\n";
 }
 
 function sgShowImage($gallery, $image) 
