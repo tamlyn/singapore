@@ -142,7 +142,7 @@ function sgShowThumbnails($gallery, $startat)
     echo "    <img class=\"borderBL\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-bl.gif\" alt=\"\" />\n";
     echo "    <img class=\"borderBR\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-br.gif\" alt=\"\" />\n";
     echo "  </div>\n";
-    if($GLOBAL["sgConfig"]->show_image_name_in_thumbnail_view) echo "  {$gal->img[$i]->name}\n";
+    if($GLOBALS["sgConfig"]->show_image_name_in_thumbnail_view) echo "  {$gal->img[$i]->name}\n";
     echo "</div>\n\n";
   }
   
