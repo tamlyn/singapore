@@ -57,13 +57,13 @@ function sgShowIndex($gallery, $startat)
   
   echo "Showing ".($startat+1)."-".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number>count($dir->dirs)?count($dir->dirs):$startat+$GLOBALS["sgConfig"]->gallery_thumb_number)." of ".count($dir->dirs);
   
-  if($startat>0) echo " | <a href=\"index.php?startat=".($startat-$GLOBALS["sgConfig"]->main_thumb_number)."\">Previous</a>";
+  if($startat>0) echo " | <a href=\"index.php?startat=".($startat-$GLOBALS["sgConfig"]->gallery_thumb_number)."\">Previous</a>";
   if(count($dir->dirs)>$startat+$GLOBALS["sgConfig"]->gallery_thumb_number) echo " | <a href=\"index.php?startat=".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number)."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
   
-  for($i=0;$i<count($dir->dirs);$i++) {
+  for($i=$startat;$i<$startat+$GLOBALS["sgConfig"]->gallery_thumb_number && $i<count($dir->dirs);$i++) {
     $gal = sgGetGalleryInfo($dir->dirs[$i]);
     
     echo "<div class=\"sgGallery\"><table class=\"sgGallery\">\n";
@@ -83,7 +83,7 @@ function sgShowIndex($gallery, $startat)
       echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".$GLOBALS["sgConfig"]->gallery_thumb_size."\" class=\"sgGallery\" alt=\"Sample image from gallery\" />";
     }
     echo "</a></td>\n";
-    echo "  <td><p><strong><a href=\"index.php?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc<br />(".count($gal->img)." images)</p></td>\n";
+    echo "  <td><p><strong><a href=\"index.php?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc<br />[".count($gal->img)." images]</p></td>\n";
     echo "</tr>\n";
     echo "</table></div>\n\n";
   }
@@ -140,6 +140,7 @@ function sgShowThumbnails($gallery, $startat)
     echo "    <img class=\"borderBL\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-bl.gif\" alt=\"\" />\n";
     echo "    <img class=\"borderBR\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-br.gif\" alt=\"\" />\n";
     echo "  </div>\n";
+    echo $gal->img[$i]->name;
     echo "</div>\n\n";
   }
   

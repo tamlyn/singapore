@@ -504,8 +504,8 @@ function sgShowGalleryHits($gallery = "", $startat = 0)
   
   echo "Showing ".($startat+1)."-".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number>count($dir->dirs)?count($dir->dirs):$startat+$GLOBALS["sgConfig"]->gallery_thumb_number)." of ".count($dir->dirs);
   
-  if($startat>0) echo " | <a href=\"?startat=".($startat-$GLOBALS["sgConfig"]->main_thumb_number)."\">Previous</a>";
-  if(count($dir->dirs)>$startat+$GLOBALS["sgConfig"]->gallery_thumb_number) echo " | <a href=\"?startat=".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number)."\">Next</a>";
+  if($startat>0) echo " | <a href=\"?action=showgalleryhits&amp;gallery=$gallery&amp;startat=".($startat-$GLOBALS["sgConfig"]->gallery_thumb_number)."\">Previous</a>";
+  if(count($dir->dirs)>$startat+$GLOBALS["sgConfig"]->gallery_thumb_number) echo " | <a href=\"?action=showgalleryhits&amp;gallery=$gallery&amp;startat=".($startat+$GLOBALS["sgConfig"]->gallery_thumb_number)."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
