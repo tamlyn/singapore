@@ -24,23 +24,23 @@
 </div></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("gallery details|Gallery name:") ?></td>
+  <td><?php echo $sg->_g("Gallery name") ?></td>
   <td><input type="text" name="sgGalleryName" value="<?php echo $sg->gallery->name ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("gallery details|Artist name:") ?></td>
+  <td><?php echo $sg->_g("Artist name") ?></td>
   <td><input type="text" name="sgArtistName" value="<?php echo $sg->gallery->artist ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("gallery details|Artist email:") ?></td>
+  <td><?php echo $sg->_g("Email") ?></td>
   <td><input type="text" name="sgArtistEmail" value="<?php echo $sg->gallery->email ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("gallery details|Copyright holder:") ?></td>
+  <td><?php echo $sg->_g("Copyright") ?></td>
   <td><input type="text" name="sgCopyright" value="<?php echo $sg->gallery->copyright ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("gallery details|Description:") ?></td>
+  <td><?php echo $sg->_g("Description") ?></td>
   <td><textarea name="sgGalleryDesc" cols="70" rows="8"><?php echo str_replace("<br />","\n",$sg->gallery->desc) ?></textarea></td>
 </tr>
 <tr>

@@ -11,55 +11,55 @@
 <input type="hidden" name="sgCategories" value="<?php echo $sg->image->categories ?>" />
 <table class="formTable">
 <tr>
-  <td><?php echo $sg->__g("image details|Image:") ?></td>
+  <td><?php echo $sg->_g("Image") ?></td>
   <td><div class="inputbox sgImageInput"><?php echo $sg->imageThumbnailImage() ?></div></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Image name:") ?></td>
+  <td><?php echo $sg->_g("Image name") ?></td>
   <td><input type="text" name="sgImageName" value="<?php echo $sg->image->name ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Artist name:") ?></td>
+  <td><?php echo $sg->_g("Artist name") ?></td>
   <td><input type="text" name="sgArtistName" value="<?php echo $sg->image->artist ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Artist email:") ?></td>
+  <td><?php echo $sg->_g("Email") ?></td>
   <td><input type="text" name="sgArtistEmail" value="<?php echo $sg->image->email ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Location:") ?></td>
+  <td><?php echo $sg->_g("Location") ?></td>
   <td><input type="text" name="sgLocation" value="<?php echo $sg->image->location ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Date:") ?></td>
+  <td><?php echo $sg->_g("Date") ?></td>
   <td><input type="text" name="sgDate" value="<?php echo $sg->image->date ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Copyright holder:") ?></td>
+  <td><?php echo $sg->_g("Copyright") ?></td>
   <td><input type="text" name="sgCopyright" value="<?php echo $sg->image->copyright ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Description:") ?></td>
+  <td><?php echo $sg->_g("Description") ?></td>
   <td><textarea name="sgImageDesc" cols="70" rows="8"><?php echo str_replace("<br />","\n",$sg->image->desc) ?></textarea></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Camera info:") ?></td>
+  <td><?php echo $sg->_g("Camera") ?></td>
   <td><input type="text" name="sgField01" value="<?php echo $sg->image->camera ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Lens info:") ?></td>
+  <td><?php echo $sg->_g("Lens") ?></td>
   <td><input type="text" name="sgField02" value="<?php echo $sg->image->lens ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Film info:") ?></td>
+  <td><?php echo $sg->_g("Film") ?></td>
   <td><input type="text" name="sgField03" value="<?php echo $sg->image->film ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Darkroom manipulation:") ?></td>
+  <td><?php echo $sg->_g("Darkroom manipulation") ?></td>
   <td><input type="text" name="sgField04" value="<?php echo $sg->image->darkroom ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->__g("image details|Digital manipulation:") ?></td>
+  <td><?php echo $sg->_g("Digital manipulation") ?></td>
   <td><input type="text" name="sgField05" value="<?php echo $sg->image->digital ?>" size="40" /></td>
 </tr>
 <tr>
