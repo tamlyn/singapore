@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: localecache.php,v 1.2 2004/10/07 22:50:11 tamlyn Exp $
+ * @version $Id: localecache.php,v 1.3 2004/10/14 02:02:19 tamlyn Exp $
  */
 
 //require config class
@@ -59,13 +59,13 @@ function saveCache($availableLanguages, $output)
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>langage cache updater</title>
+<title>language cache updater</title>
 <link rel="stylesheet" type="text/css" href="tools.css" />
 </head>
 
 <body>
 
-<h1>langage cache updater</h1>
+<h1>language cache updater</h1>
 
 <p><?php 
   $files = parseDirectory($OUTPUTPATH, 'pmo');
@@ -76,6 +76,9 @@ function saveCache($availableLanguages, $output)
     $availableLanguages[$matches[1]] = $i18n->languageStrings[0]['language'];
     echo "Added $matches[1] => ".$i18n->languageStrings[0]['language']." to available languages.<br />\n";
   }
+  
+  //add english which has no translation files
+  $availableLanguages["en"] = "English";
   
   ksort($availableLanguages);
   if(saveCache($availableLanguages, $OUTPUTFILE))
