@@ -100,6 +100,7 @@ function doSetup()
   
 }
 
+//output functions
 function setupHeader($var)
 {
   echo "\n</p>\n\n<h2>{$var}...</h2>\n\n<p>\n";

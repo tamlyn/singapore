@@ -64,26 +64,17 @@ Singapore is free software released under the terms of the GNU GPL.</p>
 
 <h2><a name="release">Release notes</a></h2>
 
-<p>The only added feature in this release is support for thumbnail generation of 
-image types other than JPEG. Mainly a stop-gap bugfix release. We are currently 
-completely rewriting the html-generating code to be template driven (skinnable).
-This wasn't planned to happen until after version 1.0 but we probably won't see
-that for a while so, hey, why not do it now?</p>
+<p>Not much to shout about in this release. Fixed a few bugs (notably the GD2 
+bug), added a few config options and added some checks to test.php (notably an
+ImageMagick test). Work continues (in parallel) on the templating system.</p>
 
 
 <h2><a name="install">Installation</a></h2>
 
-<p><strong>singapore</strong> should work 'out of the box' but there are many 
-things that can be done to customize it to your needs. Here are some:</p>
-
-<p>Things you MUST do:</p>
-<ul>
+<ol>
   <li>Extract all the files in the archive, conserving the directory hierarchy, 
   to a directory accessible by your web server.</li>
-</ul>
 
-<p>Things you SHOULD do:</p>
-<ul class="things">
   <li>Run <code>test.php</code> to see if your server is capable of running 
   <strong>singapore</strong>.</li>
   
@@ -97,9 +88,6 @@ things that can be done to customize it to your needs. Here are some:</p>
 
   <li>Run <code>setup.php</code> to create the necessary directories.</li>
   
-  <li>Add some galleries and images into the <code>galleries/</code> directory 
-  <a href="#managing">More info</a>.</li>
-  
   <li>Delete <code>setup.php</code> to prevent any unauthorised users from 
   <a href="#uninstall">uninstalling</a> <strong>singapore</strong>.</li>
 
@@ -107,6 +95,13 @@ things that can be done to customize it to your needs. Here are some:</p>
   <code>admin</code> and the default password is <code>password</code>.<br />
   <span class="note">NOTE: a future release will allow multiple admin users with 
   different passwords.</span></li>
+  
+  <li>Add some galleries and images into the <code>galleries/</code> directory 
+  <a href="#managing">More info</a>.</li>
+</ol>
+
+<p>Optional but recommended:</p>
+<ul>
   
   <li>Have a browse through <code>data/singapore.ini</code> and look at the 
   available options. Each option has comments explaining its function. For most 
@@ -116,28 +111,26 @@ things that can be done to customize it to your needs. Here are some:</p>
   <li>If your PHP installation uses GD version 2 or later or you have access to 
   <a href="http://www.imagemagick.org">ImageMagick</a> then you can get much 
   nicer generated thumbnails by changing the option in <code>data/singapore.ini</code>.</li>
-</ul>
-
-<p>Things you MIGHT do:</p>
-<ul>
+  
   <li>Edit <code>includes/header.php</code> and <code>includes/footer.php</code>
   or use your own custom header and/or footer files by editing the paths in 
   <code>data/singapore.ini</code>.</li>
 
-  <li>Change the <em>secret string</em> value in <code>includes/class_configuration.php</code>.
-  This is not essential but it makes it harder for someone to fake an admin 
-  session thereby gaining unauthorised access to your galleries.</li>
-  
   <li>Make custom "themes" using CSS. <a href="Development.html#themeing">More info</a>.</li>
 </ul>
 
 <h2><a name="uninstall">Uninstallation</a></h2>
 
 <p>Server generated content will be owned by the web server and it therefore may 
-not be possible to delete these files via ftp. You can use the 
-<a href="../setup.php?setdown">setdown</a> function provided to remove the cache 
-and logs. Please run this script before removing any other files.Use the admin 
-interface to remove server generated galleries and images.</p>
+not be possible to delete these files via ftp. You can use the setdown function 
+provided to remove the cache and logs. Use the admin interface to remove server 
+generated galleries and images. Please run this script before removing any other 
+files. </p>
+
+<ul>
+  <li><a href="../setup.php?setdown">Setdown</a> - CAUTION: this will delete all 
+  your logs and cached thumbnails.</li>
+</ul>
 
 <h2><a name="managing">Managing your galleries</a></h2>
 
@@ -189,7 +182,7 @@ directories. There may be a better way to make your files writable by your
 server but this is something you must take up with your server administrator.</p>
 
 <p>One thing you can do to moderately increase security is: once you have changed 
-your singapore admin password, chmod the adminusers.csv file back to 755.</p>
+your <strong>singapore</strong> admin password, chmod the adminusers.csv file back to 755.</p>
 
 <h2><a name="history">Version history</a></h2>
 
@@ -198,6 +191,19 @@ your singapore admin password, chmod the adminusers.csv file back to 755.</p>
 - removed<br />
 * fixed<br />
 o changed
+</p>
+
+<h3>0.9.5</h3>
+
+<p>
+* fixed GD2 support in thumb.php (v0.9.4a always used GD1)<br />
+- removed secret string option<br />
++ added config options for admin session name (allows multiple installs on same server), 
+  path to convert (ImageMagick), remove jpeg profile (ImageMagick), 
+  character encoding &amp; site name(page title)<br />
+o execution_timer off by default and default galleries per page set to 10<br />
++ thumb.php always uses fopen on remote files (now works on windows)<br />
++ more checks in test.php including bugfix #743954 (upload_tmp_dir)
 </p>
 
 <h3>0.9.4a - 2003-05-16</h3>
@@ -295,7 +301,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/16 01:34:04 $</em></p>
+<p><em>$Date: 2003/05/29 23:20:10 $</em></p>
 
 </body>
 </html>

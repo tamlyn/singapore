@@ -124,8 +124,8 @@ function sgGetGalleryInfo($gallery){
 //included here because it is used on every page and
 //adminutils.php is not included on every page
 function sgIsLoggedIn() {
-  if(isset($_SESSION["user"]) && $_SESSION["user"]->check == md5($GLOBALS["sgConfig"]->secret_string.$_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["user"]->loginTime < 1800)) {
-		$_SESSION["user"]->loginTime = time();
+  if(isset($_SESSION["sgUser"]) && $_SESSION["sgUser"]->check == md5($_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["sgUser"]->loginTime < 1800)) {
+		$_SESSION["sgUser"]->loginTime = time();
 	  return true;
   }
   return false;

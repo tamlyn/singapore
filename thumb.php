@@ -46,7 +46,7 @@ function showThumb($gallery, $image, $maxsize) {
   
   //send appropriate headers
   switch($imageType) {
-    case 1 : $GLOBALS["sgConfig"]->thumbnail_software=="im"?header("Content-type: image/gif"):header("Content-type: image/png"); break;
+    case 1 : $GLOBALS["sgConfig"]->thumbnail_software=="gd2"?header("Content-type: image/png"):header("Content-type: image/gif"); break;
     case 3 : header("Content-type: image/png"); break;
     case 6 : header("Content-type: image/x-ms-bmp"); break;
     case 7 : 
@@ -55,7 +55,7 @@ function showThumb($gallery, $image, $maxsize) {
     default: header("Content-type: image/jpeg"); break;
   }
   
-  //if thumbnail is newer than image then output cached thumbnail
+  //if thumbnail is newer than image then output cached thumbnail and exit
   if($imageModified<$thumbModified) { 
     header("Last-Modified: ".gmdate("D, d M Y H:i:s",$thumbModified)." GMT");
     readfile($thumbPath);
@@ -88,15 +88,19 @@ function showThumb($gallery, $image, $maxsize) {
   
   switch($GLOBALS["sgConfig"]->thumbnail_software) {
   case "im" : //use ImageMagick  
+    $cmd  = $GLOBALS["sgConfig"]->pathto_convert;
+    $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
+    if($imageType == 2) $cmd .= " -quality $thumbQuality";
+    if($GLOBALS["sgConfig"]->remove_jpeg_profile) $cmd .= " +profile \"*\"";
+    $cmd .= ' "'.escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"';
     
-    exec("convert -geometry {$thumbWidth}x{$thumbHeight} -quality $thumbQuality +profile \"*\" \"".escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"');
+    exec($cmd);
     readfile($thumbPath);
     
     break;
   case "gd2" :
   case "gd1" :
   default : //use GD by default
-    
     //read in image as appropriate type
     switch($imageType) {
       case 1 : $image = ImageCreateFromGIF($imagePath); break;
@@ -125,9 +129,6 @@ function showThumb($gallery, $image, $maxsize) {
     switch($imageType) {
       case 1 :
         //GIF images are output as PNG
-        ImagePNG($thumb); 
-        ImagePNG($thumb,$thumbPath); 
-        break;
       case 3 :
         ImagePNG($thumb); 
         ImagePNG($thumb,$thumbPath); 

@@ -19,10 +19,12 @@
  *  along with this; if not, write to the Free Software Foundation,    *
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+ 
+//this line must be present in any custom headers if you 
+//want to display the script execution timer
 $scriptStartTime = microtime();
 
-if(empty($pageTitle)) $pageTitle = "singapore";
+if(empty($pageTitle)) $pageTitle = $sgConfig->site_name;
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -31,7 +33,6 @@ if(empty($pageTitle)) $pageTitle = "singapore";
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title><?php echo $pageTitle ?></title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS["sgConfig"]->pathto_current_theme ?>main.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS["sgConfig"]->pathto_extra_css ?>" />
 <!-- 
@@ -42,7 +43,7 @@ if(empty($pageTitle)) $pageTitle = "singapore";
 
 <body>
 
-<div id="header"><img src="<?php echo $GLOBALS["sgConfig"]->pathto_current_theme ?>header.gif" alt="singapore" /></div>
+<div id="header"><img src="<?php echo $GLOBALS["sgConfig"]->pathto_current_theme ?>header.gif" alt="<?php echo $sgConfig->site_name ?>" /></div>
 
 <!-- start of generated content -->
 

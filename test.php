@@ -30,36 +30,42 @@ function doTests()
     return false;
   }
   
+  $success = true;
+  
   setupHeader("Testing PHP configuration");
   //setupMessage("If any of these tests fail, you may be able to change the configuration ".
   //             "directive (specified in brackets) either in php.ini or by adding ".
   //             "<code>ini_set(\"<b>directive_name</b>, 1)</code> to <code>includes/header.php</code>");
 
   if(!ini_get("safe_mode")) setupMessage("Safe mode disabled");
-  else setupError("PHP is running in 'safe mode' (<code>safe_mode</code>). Singapore <b>should</b> still function correctly but safe mode operation is not supported");
+  else $success &= setupError("PHP is running in 'safe mode' (<code>safe_mode</code>). Singapore should still function correctly but safe mode operation is not supported");
   
-  if(is_writable(ini_get("session.save_path")) && ini_get("session.save_handler")=="files") setupMessage("Session save path correctly specified");
-  else setupError("Session save path does not exist or is not writable (<code>session.save_path</code>). Singapore will function but you will not be able to use the admin interface");
+  $session_save_path = ini_get("session.save_path");
+  if(!empty($session_save_path) && is_writable($session_save_path) || ini_get("session.save_handler")!="files") setupMessage("Session save path seems to be correctly specified");
+  else $success &= setupError("Session save path does not exist or is not writable (<code>session.save_path</code>). Singapore will function but you may not be able to use the admin interface");
 
   if(ini_get("session.use_trans_sid")) setupMessage("Transparent session id support enabled");
   else setupMessage("Transparent session id support disabled (<code>use_trans_sid</code>). Singapore will function but will <b>require</b> cookies for the admin interface to function");
 
   if(ini_get("file_uploads")) setupMessage("File uploading enabled");
-  else setupError("File uploading disabled (<code>file_uploads</code>). Singapore will function but you will not be able to upload images via the admin interface");
+  else $success &= setupError("File uploading disabled (<code>file_uploads</code>). Singapore will function but you will not be able to upload images via the admin interface");
 
-  if(is_writable(ini_get("upload_tmp_dir"))) setupMessage("Upload directory correctly specified");
-  else setupError("Upload directory directory does not exist or is not writable (<code>upload_tmp_dir</code>). Singapore will function but you will not be able to upload images via the admin interface");
+  $upload_tmp_dir = ini_get("upload_tmp_dir");
+  if(empty($upload_tmp_dir) || is_writable($upload_tmp_dir)) setupMessage("Upload temp directory seems to be correctly specified");
+  else $success &= setupError("Upload directory directory does not exist or is not writable (<code>upload_tmp_dir</code>). Singapore will function but you may not be able to upload images via the admin interface");
+  
+  setupMessage("Maximum upload size is ".floor(ini_get("upload_max_filesize")/1024)."KB. You will not be able to upload files larger than this via the admin interface");
   
   if(ini_get("allow_url_fopen")) setupMessage("Remote file handling enabled");
-  else setupError("Remote file handling disabled (<code>allow_url_fopen</code>). Singapore will function but you will not be able to generate thumbnails for remotely hosted files");
+  else $success &= setupError("Remote file handling disabled (<code>allow_url_fopen</code>). Singapore will function but you will not be able to generate thumbnails for remotely hosted files");
   
   
   
 
-  setupHeader("Searching for config file");
+  setupHeader("Testing for config file");
   
   if(file_exists("data/singapore.ini")) setupMessage("Config file found at data/singapore.ini");
-  else setupMessage("Config file not found - must be in data/singapore.ini");
+  else $success &= setupError("Config file not found - must be in data/singapore.ini");
   
   setupHeader("Testing for GD");
   //get phpinfo data
@@ -73,20 +79,28 @@ function doTests()
   $phpinfo = stristr($phpinfo,"gd version");
   $phpinfo = stristr($phpinfo,"version");
   
-  if(!$phpinfo) setupMessage("GD not found. You may be able to use ImageMagick instead");
+  if(!$phpinfo) $success &= setupError("GD not found. You may be able to use ImageMagick instead");
   else {
-    setupMessage("Found GD");
     //extract text version and number version
     $gd_version_text = substr($phpinfo,0,strpos($phpinfo,"\n"));
     $gd_version_number = substr($gd_version_text,0,strpos($gd_version_text,"."));
     $gd_version_number = substr($gd_version_number, strlen($gd_version_number)-1);
-    setupMessage("GD version appears to be $gd_version_text\n");
-    setupMessage("This means singapore ".($gd_version_number=="1"?"cannot":"can").
-      " use the higher quality thumbnail generation functions of GD 2");
+    setupMessage("Found GD: $gd_version_text");
+    if($gd_version_number=="1") setupMessage("This version of GD produces very poor quality thumbnails and use of ImageMagick is greatly preferred");
+    elseif($gd_version_number=="2") setupMessage("To take advantage of GD2's higher quality thumbnails change the <code>thumbnail_software</code> option in singapore.ini to \"gd2\"");
   }
   
-    
-  return true;
+  setupHeader("Testing for ImageMagick");
+  
+  $foundIM = exec("convert");
+  $whereIM = exec("whereis convert");
+  if($foundIM) {
+    if($whereIM) setupMessage("Found ImageMagick at $whereIM");
+    else setupMessage("Found ImageMagick");
+    setupMessage("To take advantage of ImageMagick's higher quality thumbnails change the <code>thumbnail_software</code> option in singapore.ini to \"im\"");
+  } else $success &= setupError("ImageMagick not found but that doesn't mean it's not there. Alternatively you may be able to install it yourself (even without shell access to the server)");
+  
+  return $success;
 }
 
 
@@ -99,11 +113,13 @@ function setupHeader($var)
 function setupMessage($var)
 {
   echo "{$var}.<br />\n";
+  return true;
 }
 
 function setupError($var)
 {
   echo "<font color=\"#ff0000\">{$var}</font>.<br />\n";
+  return false;
 }
 
 
@@ -124,10 +140,10 @@ function setupError($var)
 
 <body>
 
-<h1>testing singapore</h1>
+<h1>Testing singapore</h1>
 
 <p>This script will try to find out if your server is capable of running singapore. 
-No changes are made at this time
+No changes are made at this time.
 
 <?php 
 //if file is parsed by php then this block will never be executed
@@ -146,7 +162,7 @@ if(false) {
     setupMessage("All tests completed successfully. <a href=\"setup.php\">Proceed to setup</a>.");
   } else {
     setupHeader("Oops");
-    setupError("There was a problem. Please fix it and run this script again.");
+    setupError("One or more problems were encountered. You may want to fix them before <a href=\"setup.php\">proceeding to setup</a>.");
   }
 
 ?>

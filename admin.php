@@ -21,19 +21,20 @@
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
  
 
-//set session arg separator to be xml compliant
-ini_set("arg_separator.output", "&amp;");
-
-//start session
-session_name("sgAdmin");
-session_start();
-
-
 //require config class
 require_once "includes/class_configuration.php";
 //create config object
 $sgConfig = new sgConfiguration();
 
+//set session arg separator to be xml compliant
+ini_set("arg_separator.output", "&amp;");
+
+//start session
+session_name($sgConfig->session_name);
+session_start();
+
+//send content-type and character encoding header
+header("Content-type: text/html; charset=".$sgConfig->default_charset);
 
 //include required files
 require "includes/adminutils.php";
@@ -42,7 +43,7 @@ require "includes/utils.php";
 require "includes/backend.php";
 
 
-$pageTitle = "singapore admin";
+$pageTitle = $sgConfig->site_name." admin";
 
 //include header file
 include $GLOBALS["sgConfig"]->pathto_header;

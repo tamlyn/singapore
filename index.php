@@ -20,21 +20,24 @@
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-//only start session if session is already registered
-if(isset($_REQUEST["sgAdmin"])) {
-  //set session arg separator to be xml compliant
-  ini_set("arg_separator.output", "&amp;");
-  
-  //start session
-  session_name("sgAdmin");
-  session_start();
-}
-
 //require config class
 require_once "includes/class_configuration.php";
 //create config object
 $sgConfig = new sgConfiguration();
 
+
+//only start session if session is already registered
+if(isset($_REQUEST[$sgConfig->session_name])) {
+  //set session arg separator to be xml compliant
+  ini_set("arg_separator.output", "&amp;");
+  
+  //start session
+  session_name($sgConfig->session_name);
+  session_start();
+}
+
+//send content-type and character encoding header
+header("Content-type: text/html; charset=".$sgConfig->default_charset);
 
 //include required files
 require_once "includes/frontend.php";

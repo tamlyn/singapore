@@ -29,10 +29,10 @@ function sgLogin() {
 	  $users = sgGetUsers();
 		for($i=1;$i < count($users);$i++) {
       if($_POST["user"] == $users[$i]->username && md5($_POST["pass"]) == $users[$i]->userpass){
-        $_SESSION["user"] = $users[$i];
-        $_SESSION["user"]->check = md5($GLOBALS["sgConfig"]->secret_string.$_SERVER["REMOTE_ADDR"]);
-			  $_SESSION["user"]->ip = $_SERVER["REMOTE_ADDR"];
-        $_SESSION["user"]->loginTime = time();
+        $_SESSION["sgUser"] = $users[$i];
+        $_SESSION["sgUser"]->check = md5($_SERVER["REMOTE_ADDR"]);
+			  $_SESSION["sgUser"]->ip = $_SERVER["REMOTE_ADDR"];
+        $_SESSION["sgUser"]->loginTime = time();
         return true;
 			}
 		}
@@ -42,8 +42,7 @@ function sgLogin() {
 }
 
 function sgLogout() {
-  //unset($GLOBALS['_SESSION']['user']);
-  $_SESSION["user"] = null;
+  $_SESSION["sgUser"] = null;
 	return true;
 }
 
@@ -64,7 +63,7 @@ function sgEditPass()
 {
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"savepass\" />\n";
-  echo "<input type=\"hidden\" name=\"user\" value=\"{$_SESSION['user']->username}\" />\n";
+  echo "<input type=\"hidden\" name=\"user\" value=\"{$_SESSION['sgUser']->username}\" />\n";
   echo "<table>\n";
   echo "<tr>\n  <td>Current password:</td>\n  <td><input type=\"password\" name=\"sgOldPass\" size=\"23\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>New password:</td>\n  <td><input type=\"password\" name=\"sgNewPass1\" size=\"23\" /></td>\n</tr>\n";
