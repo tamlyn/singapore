@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.9 2003/12/14 14:39:18 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.10 2003/12/15 00:42:21 tamlyn Exp $
  */
  
 /**
@@ -202,8 +202,9 @@ class Singapore
     }
     //if image not found then add it
     if($i == count($this->gallery->hits->images)) {
+      $this->gallery->hits->images[$i] = new stdClass;
       $this->gallery->hits->images[$i]->filename = $this->image->filename;
-      $numhits = $this->gallery->hits->images[$i]->hits = 1;
+      $this->gallery->hits->images[$i]->hits = $numhits = 1;
       $this->gallery->hits->images[$i]->lasthit = time();
     }
     
@@ -344,6 +345,7 @@ class Singapore
    */
   function getListing($wd, $type = "dirs")
   {
+    $dir = new stdClass;
     $dir->path = $wd;
     $dir->files = array();
     $dir->dirs = array();
@@ -426,18 +428,25 @@ class Singapore
    */
   function crumbLineArray()
   {
-    $galleries = explode("/",$this->gallery->id);
+    $crumb[0] = new stdClass;
     $crumb[0]->id = ".";
     $crumb[0]->path = ".";
     $crumb[0]->name = $this->config->gallery_name;
     
+    if(!isset($this->gallery->id))
+      return $crumb;
+    
+    $galleries = explode("/",$this->gallery->id);
+    
     for($i=1;$i<count($galleries);$i++) {
+      $crumb[$i] = new stdClass;
       $crumb[$i]->id = $galleries[$i];
       $crumb[$i]->path = $crumb[$i-1]->path."/".rawurlencode($galleries[$i]);
       $crumb[$i]->name = $galleries[$i];
     }
     
     if($this->isImage()) {
+      $crumb[$i] = new stdClass;
       $crumb[$i]->id = "";
       $crumb[$i]->path = "";
       $crumb[$i]->name = $this->image->name;

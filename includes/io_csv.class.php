@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.3 2003/12/14 14:39:18 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.4 2003/12/15 00:42:21 tamlyn Exp $
  */
 
 /**
@@ -203,6 +203,7 @@ class sgIO_csv {
       if(isset($dir->files[0])) $gallery->filename = $dir->files[0];
       
       for($i=0;$i<count($dir->files);$i++) {
+        $gallery->images[$i] = new sgImage;
         $gallery->images[$i]->filename = $dir->files[$i];
         //trim off file extension and replace underscores with spaces
         $temp = strtr(substr($gallery->images[$i]->filename, 0, strrpos($gallery->images[$i]->filename,".")-strlen($gallery->images[$i]->filename)), "_", " ");
@@ -281,6 +282,8 @@ class sgIO_csv {
       fclose($fp);
     } else $temp = array();
     
+    $hits = new stdClass;
+    
     if(isset($temp[0]))
       list(
         ,
@@ -292,13 +295,16 @@ class sgIO_csv {
       $hits->lasthit = 0;
     }
     
+    $hits->images = array();
     
-    for($i=0;$i<count($temp)-2;$i++)
+    for($i=0;$i<count($temp)-2;$i++) {
+      $hits->images[$i] = new stdClass;
       list(
         $hits->images[$i]->filename,
         $hits->images[$i]->hits,
         $hits->images[$i]->lasthit
       ) = $temp[$i+1];
+    }
     
     return $hits;
   }
@@ -326,8 +332,10 @@ class sgIO_csv {
   
   function getUsers() {
     $fp = fopen($this->config->pathto_data_dir."adminusers.csv","r");
-    for($i=0;$entry = fgetcsv($fp,1000,",");$i++) 
+    for($i=0;$entry = fgetcsv($fp,1000,",");$i++) {
+      $users[$i] = new stdClass;
       list($users[$i]->username,$users[$i]->userpass,$users[$i]->permissions,$users[$i]->fullname,$users[$i]->description,$users[$i]->stats) = $entry;
+    }
     fclose($fp);
     return $users;
   }

@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.5 2003/12/14 14:39:18 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.6 2003/12/15 00:42:21 tamlyn Exp $
  */
 
 /**
@@ -155,7 +155,7 @@ class sgAdmin extends Singapore
       for($j=0;$j<count($hits->images);$j++)
         if($hits->images[$j]->filename == $this->gallery->images[$i]->filename)
           $this->gallery->images[$i]->hits = $hits->images[$j];
-      if($this->gallery->images[$i]->hits->hits > $max) $max = $this->gallery->images[$i]->hits->hits;
+      if(isset($this->gallery->images[$i]->hits->hits) && $this->gallery->images[$i]->hits->hits > $max) $max = $this->gallery->images[$i]->hits->hits;
     }
     $this->gallery->maxhits = $max;
   }
