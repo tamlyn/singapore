@@ -26,9 +26,45 @@ require_once "includes/class_configuration.php";
 $sgConfig = new sgConfiguration();
 
 
+function doSetdown()
+{
+  $success = true;
+  
+  setupHeader("Removing directories");
+  
+  if(is_writable($GLOBALS["sgConfig"]->pathto_data_dir)) {
+    setupMessage("Data directory is writable");
+    if(file_exists($GLOBALS["sgConfig"]->pathto_cache))
+      if(is_writable($GLOBALS["sgConfig"]->pathto_cache))
+        if(rmdir_all($GLOBALS["sgConfig"]->pathto_cache)) 
+          setupMessage("Cache directory deleted");
+        else
+          $success = setupError("Error deleting cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
+      else
+        $success = setupError("Cache is not writable so cannot delete it");
+    else
+      setupMessage("Cache directory not found at ".$GLOBALS["sgConfig"]->pathto_cache);
+    
+    if(file_exists($GLOBALS["sgConfig"]->pathto_logs))
+      if(is_writable($GLOBALS["sgConfig"]->pathto_logs))
+        if(rmdir_all($GLOBALS["sgConfig"]->pathto_logs)) 
+          setupMessage("Logs directory deleted");
+        else
+          $success = setupError("Error deleting logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
+      else
+        $success = setupError("Logs is not writable so cannot delete it");
+    else
+      setupMessage("Logs directory not found at ".$GLOBALS["sgConfig"]->pathto_logs);
+  } else
+    $success = setupError("Data directory (".$GLOBALS["sgConfig"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
+      
+  return $success;
+  
+}
+
 function doSetup()
 {
- 
+  $success = true;
   setupHeader("Creating directories");
   
   if(is_writable($GLOBALS["sgConfig"]->pathto_data_dir)) {
@@ -37,30 +73,30 @@ function doSetup()
       if(is_writable($GLOBALS["sgConfig"]->pathto_cache))
         setupMessage("Cache directory already exists at ".$GLOBALS["sgConfig"]->pathto_cache." and is writable");
       else
-        setupError("Cache directory already exists at ".$GLOBALS["sgConfig"]->pathto_cache." but is not writable. Please CHMOD to 777");
+        $success = setupError("Cache directory already exists at ".$GLOBALS["sgConfig"]->pathto_cache." but is not writable. Please CHMOD to 777");
     else
       if(mkdir($GLOBALS["sgConfig"]->pathto_cache, 0755)) 
         setupMessage("Created cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
       else
-        setupError("Could not create cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
+        $success = setupError("Could not create cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
     if($GLOBALS["sgConfig"]->track_views)
       if(file_exists($GLOBALS["sgConfig"]->pathto_logs))
         if(is_writable($GLOBALS["sgConfig"]->pathto_logs))
           setupMessage("Logs directory already exists at ".$GLOBALS["sgConfig"]->pathto_logs." and is writable");
         else
-          setupError("Logs directory already exists at ".$GLOBALS["sgConfig"]->pathto_logs." but is not writable. Please CHMOD to 777");
+          $success = setupError("Logs directory already exists at ".$GLOBALS["sgConfig"]->pathto_logs." but is not writable. Please CHMOD to 777");
       else
         if(mkdir($GLOBALS["sgConfig"]->pathto_logs, 0755)) 
           setupMessage("Created logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
         else
-          setupError("Could not create logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
+          $success = setupError("Could not create logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
     else
       setupMessage("View logging disabled. Logs directory not created");
   }
   else
-    setupError("Data directory (".$GLOBALS["sgConfig"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
+    $success = setupError("Data directory (".$GLOBALS["sgConfig"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
 
-  return true;
+  return $success;
   
 }
 
@@ -72,13 +108,30 @@ function setupHeader($var)
 function setupMessage($var)
 {
   echo "{$var}.<br />\n";
+  return true;
 }
 
 function setupError($var)
 {
   echo "<font color=\"#ff0000\">{$var}</font>.<br />\n";
+  return false;
 }
 
+//this function recursively deletes all subdirectories and 
+//files in specified directory. USE WITH EXTREME CAUTION!! 
+function rmdir_all($wd)
+{
+  if(!$dp = opendir($wd)) return false;
+  $success = true;
+  while(false !== ($entry = readdir($dp))) {
+    if($entry == "." || $entry == "..") continue;
+    if(is_dir("$wd/$entry")) $success &= rmdir_all("$wd/$entry");
+    else $success &= unlink("$wd/$entry");
+  }
+  closedir($dp);
+  $success &= rmdir($wd);
+  return $success;
+}
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -97,20 +150,31 @@ function setupError($var)
 
 <body>
 
-<h1>singapore setup</h1>
-
-<p>This script will try to setup singapore to run on your server.
-
 <?php 
 
-  if(doSetup()) {
-    setupHeader("OK");
-    setupMessage("All operations completed successfully. <a href=\"index.php\">Proceed to singapore</a>.");
+  if($_SERVER["QUERY_STRING"]=="setdown") {
+    echo "<h1>singapore setdown</h1>\n";
+    echo "<p>This script will try to remove directories and files created during setup.";
+    
+    if(doSetdown()) {
+      setupHeader("OK");
+      setupMessage("All operations completed successfully.");
+    } else {
+      setupHeader("Oops");
+      setupError("There was a problem.");
+    }
   } else {
-    setupHeader("Oops");
-    setupError("There was a problem. Please fix it and run this script again.");
+    echo "<h1>singapore setup</h1>\n";
+    echo "<p>This script will try to setup singapore to run on your server.";
+
+    if(doSetup()) {
+      setupHeader("OK");
+      setupMessage("All operations completed successfully. <a href=\"index.php\">Proceed to singapore</a>.");
+    } else {
+      setupHeader("Oops");
+      setupError("There was a problem. Please fix it and run this script again.");
+    }
   }
-  
 ?>
 </p>
 
