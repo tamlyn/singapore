@@ -21,6 +21,7 @@
   <li><a href="#managing">Gallery management</a></li>
   <li><a href="#iifn">Info in filename</a></li>
   <li><a href="#permissions">Help with file permissions</a></li>
+  <li><a href="#adminpermissions">The deal with admin permissions</a></li>
   <li><a href="#override">Overriding settings</a></li>
   <li><a href="#hiding">Hiding galleries</a></li>
   <li><a href="#nomenclature">Naming of parts</a></li>
@@ -242,6 +243,44 @@ directories. There may be a better way to make your files writable by your
 server but this is something you must take up with your server administrator.</p>
 
 
+<h2><a name="adminpermissions">The deal with admin permissions</a></h2>
+
+<p>First thing to point out is that singapore admin permissions are not related 
+to unix/windows filesystem permissions. If you get a "permission denied" message
+from php about a certain file, that's the filesystem permissions discussed in a
+<a href="#permissions">separate section</a>. For the purposes of this section an 
+'object' is anything that can have admin permissions associated with it; i.e. an 
+image or a gallery.</p>
+
+<p>There are two types of users: administrators and users. Administrators can do 
+everything and are not bound by permission settings. Only administrators may 
+create and edit users and change ownership of objects. Ownership is set at the 
+time of creation of the object to the user creating the object. The owner of an 
+object may do anything to it except change the owner. Only the owner or an 
+administrator may alter the permissions of an object.</p>
+
+<p>There are four kinds of action that may be either allowed or disallowed: 
+read, edit, add and delete. Read permissions are currently meaningless. Edit 
+permissions allow a user to edit (i.e. change) aspects of the object. Add 
+permissions allow a user to add sub objects (i.e. images and subgalleries) and
+are therefore meaningless when applied to images. Finally Delete permissions 
+allow a user to delete the object concerned (and any sub objects).</p>
+
+<p>These four permissions come in two flavours: group and world. World 
+permissions apply to all users so if, for example, a gallery has the world add 
+permission set then any user can add objects to it. The groups system is 
+slightly less intuitive but very powerful. A user may belong to any number of 
+groups. These groups are simply alphanumeric names separated by spaces. An 
+object may also belong to any number of groups. If a user belongs to at least 
+one group to which the object concerned also belongs then the group permissions 
+are considered. For example a user has this for their groups field "team23 
+photographers friends" and an image belongs to the following groups "friends 
+family" and has the group delete permission set then that user may delete the 
+object since both belong to the group 'friends'.</p>
+
+<p>Permissions are NOT inherited from parent objects.</p>
+
+
 <h2><a name="override">Overriding settings</a></h2>
 
 <p>All configuration options may be overridden on a per-gallery and/or 
@@ -373,7 +412,6 @@ example. If you still can't work out what's wrong then just give up.</p>
   
 </dl>
 
-
 <h2><a name="history">Version history</a></h2>
 
 <pre>Key to symbols:
@@ -386,9 +424,11 @@ o changed
 <h3>0.9.10</h3>
 
 <pre>
++ implemented full multi-user support with permissions
 + reindex metadata feature in admin for importing ftp'd images
 + language and template are now user-selectable on-the-fly
 + summary field now used instead of description field
+o introduced new streamlined admin template with quicklinks
 o tidied up css classes and annotated the default stylesheet
 * fixed security issue with back-references in arguments to thumb.php
 o made thumb.php reject files with extensions not in recognised_extensions
@@ -580,7 +620,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2004/09/12 21:39:02 $</em></p>
+<p><em>$Date: 2004/09/13 11:51:12 $</em></p>
 
 </body>
 </html>
