@@ -54,15 +54,19 @@ themes for it.</p>
 <pre>
   .                       top level - can be located anywhere on server
   admin.php               handles all admin operations
-  convertdb.php           used to convert singapore databases between versions
   index.php               the main gallery script
+  Readme.txt              brief readme file
+  setup.php               attempts to create directories for the script
+  test.php                tests various server configuration values
   thumb.php               used to generate and serve on-the-fly image thumbnails
-  cache/                  used to cache thumbnails - must be writeable by server
+  data/                   all data except galleries & images (must be writable)
+  data/adminusers.csv     CSV database of authorised admin users
+  data/singapore.ini      user modifiable configuration settings
+  docs/                   documentation
   galleries/              stores galleries, gallery info and images
                           each gallery is in it's own subdirectory
-  images/                 images used by singapore
-  includes/               PHP scripts
-  includes/adminusers.csv CSV database of authorised admin users
+  images/                 generic images used by singapore
+  includes/               PHP includes
   includes/adminutils.php admin functions
   includes/backend.php    includes appropriate backend file (fileio or mysqlio)
   includes/config.php     configuration information (user editable)
@@ -72,7 +76,6 @@ themes for it.</p>
   includes/header.php     default page header
   includes/mysqlio.php    IO functions used in MySQL IO mode (not implemented)
   includes/utils.php      other functions
-  logs/                   images access logs (buggy)
   themes/                 style sheets and images to customise appearance 
 </pre>
   
@@ -182,7 +185,7 @@ your own) much greater creative control can be achieved. This, however, is
 considered skinning, not themeing, and is not officially supported in this 
 version of <strong>singapore</strong>.</p>
 
-<p><em>$Date: 2003/05/12 01:23:07 $</em></p>
+<p><em>$Date: 2003/05/13 00:37:53 $</em></p>
 
 </body>
 </html>
