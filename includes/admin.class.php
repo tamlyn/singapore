@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.13 2004/04/11 14:45:07 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.14 2004/04/11 16:14:00 tamlyn Exp $
  */
 
 /**
@@ -432,13 +432,13 @@ class sgAdmin extends Singapore
   function addMultipleImages()
   {
     //find system temp directory
-    if(!($systmpdir=$this->findTempDirectory())) {
-     $this->lastError = $this->i18n->_g("Could not find temporary storage space"); 
+    if(!($systmpdir = $this->findTempDirectory())) {
+      $this->lastError = $this->i18n->_g("Could not find temporary storage space"); 
       return false;
     }
     
     //create new temp directory in system temp dir
-    while(!mkdir($tmpdir = $systmpdir."/".uniqid("sg")));
+    while(!mkdir($tmpdir = $systmpdir."/".uniqid("sg"),$this->config->directory_mode));
     
     $archive = $_FILES["sgArchiveFile"]["tmp_name"];
   
@@ -451,14 +451,11 @@ class sgAdmin extends Singapore
     $cmd  = escapeshellcmd($this->config->pathto_unzip);
     $cmd .= ' -d '.escapeshellarg(realpath($tmpdir));
     $cmd .= ' '.escapeshellarg(realpath($archive));
-    
+    echo $cmd;
     if(!exec($cmd)) {
       $this->lastError = $this->i18n->_g("Could not decompress archive"); 
       return false;
     }
-    
-    //remove archive file
-    unlink($archive);
     
     //start processing archive contents
     $wd = $tmpdir;
