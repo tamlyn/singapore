@@ -1,0 +1,2 @@
+username,md5(pass),permission flags,"full name","descriptive text","statistics?"
+admin,5f4dcc3b5aa765d61d8327deb882cf99,777,"Administrator","Default administrator account",""

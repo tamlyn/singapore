@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>sg - Readme</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<style>
+body {
+  color: #000;
+  background-color: #fff;
+  font: small sans-serif;
+}
+
+p, pre {
+  margin-left: 4em;
+  margin-right: 2em;
+}
+
+code {
+  color: #006;
+}
+
+h1 {
+  margin-left: 0.5em;
+}
+
+h2 {
+  margin-left: 1em;
+}
+
+h3, h4 {
+  margin-left: 2em;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Readme</h1>
+
+<p><strong>sg</strong> - Copyright &copy;2003  Tamlyn Rhodes &lt;tam@zenology.org&gt;</p>
+
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+<p>sg is still very much in development but for people who know their way around
+PHP, HTML and CSS it could be useful.</p>
+
+
+<h2>Installation</h2>
+
+<p>Extract all the files to a directory accessible by your web server and make 
+sure that the <code>cache/</code> directory is writeable.</p>
+
+<p>You may want to edit <code>includes/config.php</code> but the default values
+should work in most cases. An important thing to note is that there must be at least 
+one gallery in the <code>galleries/</code> directory for the script not to fall 
+over.</p>
+
+<h2>Package content descriptions</h2>
+
+<pre>
+  .                       top level - can be located anywhere on server
+  admin.php               handles all admin operations
+  index.php               the main gallery script
+  thumb.php               used to generate and serve on-the-fly image thumbnails
+  cache/                  used to cache thumbnails - must be writeable by server
+  galleries/              stores galleries, gallery info and images
+                          each gallery is in it's own subdirectory
+  images/                 images used by sg
+  includes/               PHP scripts
+  includes/adminusers.csv CSV database of authorised admin users in file io mode
+  includes/adminutils.php admin functions
+  includes/backend.php    includes appropriate backend file (fileio or mysqlio)
+  includes/config.php     some configuration information (user editable)
+  includes/fileio.php     IO functions used in file IO mode
+  includes/mysqlio.php    IO functions used in MySQL IO mode (not implemented)
+  includes/frontend.php   XHTML output functions
+  includes/utils.php      other functions
+  logs/                   images access logs (buggy)
+  styles/                 gallery specific CSS files
+</pre>
+  
+<h2>Info in file name</h2>
+
+<p>If sg doesn't find a metadata file in a gallery (see below) it will try to 
+extract some sensible information from the image file and directory names as 
+follows:</p>
+
+<p>Underscores (_) are converted to spaces. If a filename or directory name 
+contains the sequence '<code>_-_</code>' (underscore hyphen underscore) or 
+'<code> - </code>' (space hyphen space) then the name will be split on this
+separator. The first half will be interpreted as the artist name and the second 
+half will be interpreted as the gallery or image name depending on context. The 
+file extension is discarded by removing the last 4 characters.</p>
+
+<p>For example <code>Holiday_Snaps/Tamlyn_Rhodes_-_Pretty_picture_of_Sunset.jpg</code>
+will be translated into an image called "Pretty picture of Sunset" by "Tamlyn 
+Rhodes" in a gallery called "Holiday Snaps".</p>
+
+<h2>Database format</h2>
+
+<p>If you choose to use metadata files (recommended) then each gallery must 
+contain a CSV (comma separated values) file called metadata.csv
+containing the information about images in the gallery and the gallery itself. 
+CSV files can be edited manually (in a text editor such as Notepad) 
+or using a spreadsheet application (such as MS Excel). Care must be taken when using 
+Excel to save using commas as the separator character and not tabs or semi-colons.</p>
+
+<p>The first line of each file stores human-readable descriptions of the field 
+and is ignored by sg. The second line stores information about this gallery:</p>
+
+<pre>
+  field 0
+     the filename of the image used to represet the gallery in the gallery list
+  field 1
+     gallery flags (not used)
+  field 2
+     (not used)
+  field 3
+     the name of the gallery
+  field 4
+     (not used)
+  field 5
+     short description of the gallery
+  field 6 onwards
+     (not used)
+</pre>
+
+<p>Each of the following lines (2 - ...) represents an image in the gallery. 
+The format is as follows:</p>
+
+<pre>
+  field 0
+     the filename of the image
+  field 1
+     image flags (not used)
+  field 2
+     artist name
+  field 3
+     image name
+  field 4
+     location that the image was taken/made/represents (optional)
+  field 5
+     description of the image (optional)
+  field 6
+     date taken/made (optional)
+  field 7
+     make and model of camera used (optional)
+  field 8
+     make and model of lens used (optional) 
+  field 9
+     make and type of film used (optional)
+</pre>
+
+<h2>Version history</h2>
+
+<p> Key to symbols:<br />
++ added<br />
+- removed<br />
+* fixed<br />
+o changed
+</p>
+
+<h3>0.9 - 2003-03-30</h3>
+
+<p>
++ admin section (allows editing image and gallery info)<br />
++ nicer gallery list layout<br />
++ filename parser for if no metadata file found<br />
+o split into separate include files for io operations, ui generation etc<br />
+* fixed some css issues<br />
++ lots of other little things
+</p>
+
+<h3>0.0 (unnumbered version) - 2003-03-29</h3>
+
+<p>
+o first release under GPL<br />
++ everything
+</p>
+
+<p><em>This file last modified: 2003-03-31</em></p>
+
+</body>
+</html>

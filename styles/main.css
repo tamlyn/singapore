@@ -1,0 +1,202 @@
+body {
+  margin: 0 0 1em 0;
+}
+
+a img {
+  border: 0;
+}
+
+table.formTable input, table.formTable textarea {
+  width: 500px;
+}
+
+div.sgAdminBar {
+  background-color: #f0f0f0;
+  border: 1px solid #000;
+  margin: 10px;
+  padding: 5px;
+  font-size: x-small;
+}
+
+div.sgAdminBar a:link, div.sgAdminBar a:visited, div.sgAdminBar a:active {
+  color: #000;
+  font: x-small Verdana;
+  position: relative;
+  left: 1px;
+  top: 1px;
+  border: 1px solid #f0f0f0;
+  text-decoration: none;
+  padding: 2px;
+}
+
+div.sgAdminBar a:hover {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  border: 1px solid #000;
+  color: #000;
+  background-color: #fff;
+}
+
+div.sgShadow {
+  text-align: center;
+  padding: 1em;
+}
+
+table.sgShadow {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.sgShadow, table.sgShadowTab {
+  background-color: #f0f0f0;
+  padding: 0;
+  text-align: left;
+}
+
+table.sgShadowTab {
+  margin: 0;
+}
+
+table.sgShadow td {
+  padding: 0;
+  margin: 0;
+  font-size: 75%;
+}
+
+table.sgShadow td.tabm, table.sgShadow td.tabr {
+  background-color: #fff;
+}
+
+table.sgShadow td.tl {
+  background-image: url('../images/shadow-tl.gif');
+}
+
+table.sgShadow td.tm {
+  background-image: url('../images/shadow-tm.gif');
+}
+
+table.sgShadow td.tr {
+  background-image: url('../images/shadow-tr.gif');
+}
+
+table.sgShadow td.ml {
+  background-image: url('../images/shadow-ml.gif');
+}
+
+table.sgShadow td.mm {
+  padding: 10px;
+}
+
+table.sgShadow td.mr {
+  background-image: url('../images/shadow-mr.gif');
+}
+
+table.sgShadow td.bl {
+  background-image: url('../images/shadow-bl.gif');
+}
+
+table.sgShadow td.bm {
+  background-image: url('../images/shadow-bm.gif');
+}
+
+td.br {
+  background-image: url('../images/shadow-br.gif');
+}
+
+div.sgGallery {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #555;
+  background-color: #fff;
+}
+
+td.sgGallery {
+  width: 100px;
+  text-align: center;
+}
+
+img.sgGallery {
+  border: 1px solid #000;
+}
+
+img.sgImage {
+  border: 1px solid #000;
+}
+
+div.sgNavBar, p.sgNavBar {
+  text-align: center;
+  float: right;
+}
+
+
+div.sgThumbnail {
+  width:  120px;
+  height: 120px;
+  margin: 10px 5px 10px 5px;
+  float: left;
+	padding: 0px;
+  text-align: center;
+}
+
+div.sgThumbnail table {
+  width:  116px;
+  height: 116px;
+  margin: 0px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sgThumbnailContent {
+	margin: 0px;
+	padding: 0px;
+  background: #fff;
+	border: 1px solid #ccc;
+}
+
+.roundedCornerSpacer {
+    margin: 0px; padding: 0px; border: 0px;
+    clear: both;
+    font-size: 1px; line-height: 1px;
+}
+.borderTL, .borderTR, .borderBL, .borderBR {
+    width: 5px; height: 5px;
+    padding: 0px; border: 0px;
+    z-index: 99;
+}
+.borderTL, .borderBL { float: left; clear: both; }
+.borderTR, .borderBR { float: right; clear: right; }
+.borderTL { margin: -1px 0px 0px -1px; }
+.borderTR { margin: -1px -1px 0px 0px; }
+.borderBL { margin: -5px 0px 0px 0px; }
+.borderBR { margin: -5px 0px 0px 0px; }
+/* IE5-5.5/win needs the border scooted to the left or right by an
+additional 3px! Why? */
+.borderTL {
+    margin-left: -4px;
+    ma\rgin-left: -1px;
+}
+html>body .borderTL {
+    margin-left: -1px;
+}
+.borderTR {
+    margin-right: -4px;
+    ma\rgin-right: -1px;
+}
+html>body .borderTR {
+    margin-right: -1px;
+}
+.borderBL {
+    margin-left: -3px;
+    ma\rgin-left: 0px;
+}
+html>body .borderBL {
+    margin-left: 0px;
+}
+.borderBR {
+    margin-right: -3px;
+    ma\rgin-right: 0px;
+}
+html>body .borderBR {
+    margin-right: 0px;
+} 
