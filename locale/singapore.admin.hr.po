@@ -1,0 +1,641 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2004-11-22 07:57+0000\n"
+"PO-Revision-Date: 2004-11-22 13:20+0001\n"
+"Last-Translator: GORAN SKULAR <GORAN.SKULAR_REMOVE@REMOVE_SLSOLUCIJE.HR>\n"
+"Language-Team: Croatian (Hrvatski) <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
+
+#: ../admin.php:41 ../admin.php:55 ../admin.php:87 ../admin.php:104
+#: ../admin.php:125 ../admin.php:143 ../admin.php:162 ../admin.php:170
+#: ../admin.php:177 ../admin.php:185 ../admin.php:192 ../admin.php:199
+#: ../admin.php:220 ../admin.php:234 ../admin.php:242 ../admin.php:249
+#: ../admin.php:260 ../admin.php:280 ../admin.php:290 ../admin.php:303
+#: ../admin.php:315 ../admin.php:328 ../admin.php:340 ../admin.php:352
+#: ../admin.php:384
+msgid "You do not have permission to perform this operation."
+msgstr "Nemate pravo pokrenuti operaciju"
+
+#: ../admin.php:45
+msgid "Gallery added"
+msgstr "Galerija dodana"
+
+#: ../admin.php:48 ../admin.php:66 ../admin.php:75 ../admin.php:93
+#: ../admin.php:111 ../admin.php:131 ../admin.php:149 ../admin.php:209
+#: ../admin.php:254 ../admin.php:266 ../admin.php:296 ../admin.php:309
+#: ../admin.php:321 ../admin.php:334 ../admin.php:346 ../admin.php:358
+#: ../admin.php:389
+msgid "An error occurred:"
+msgstr "Greška"
+
+#: ../admin.php:63
+msgid "Image added"
+msgstr "Slika dodana"
+
+#: ../admin.php:72
+msgid "Archive contents added"
+msgstr "Dodan sadržaj arhive"
+
+#: ../admin.php:89 ../admin.php:106 ../admin.php:127 ../admin.php:145
+#: ../admin.php:262 ../templates/admin_default/changethumbnail.tpl.php:19
+#: ../templates/admin_default/confirm.tpl.php:9
+msgid "confirm|OK"
+msgstr "OK"
+
+#: ../admin.php:91
+msgid "Thumbnail changed"
+msgstr "Ikona promjenjena"
+
+#: ../admin.php:95 ../admin.php:114 ../admin.php:133 ../admin.php:151
+#: ../admin.php:268 ../templates/admin_default/changethumbnail.tpl.php:20
+#: ../templates/admin_default/confirm.tpl.php:10
+msgid "confirm|Cancel"
+msgstr "Odustani"
+
+#: ../admin.php:109
+msgid "Gallery deleted"
+msgstr "Galerija obrisana"
+
+#: ../admin.php:117
+msgid "delete gallery"
+msgstr "obriši galeriju"
+
+#: ../admin.php:118
+#, possible-c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and "
+"images it contains?"
+msgstr "Galerija %s nije prazna.\n Da li ste sigurni da želite nepovratno obrisati cijeli sadržaj - podgalerije i slike"
+
+#: ../admin.php:129
+msgid "Image deleted"
+msgstr "Slika obrisana"
+
+#: ../admin.php:136
+msgid "delete image"
+msgstr "obriši sliku"
+
+#: ../admin.php:137
+#, possible-c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "Da li ste sigurni da želite nepovratno obrisati sliku %s iz galerije %s?"
+
+#: ../admin.php:147
+msgid "User deleted"
+msgstr "Korisnik obrisan"
+
+#: ../admin.php:154
+msgid "delete user"
+msgstr "obriši korisnika"
+
+#: ../admin.php:155
+#, possible-c-format
+msgid "Are you sure you want to permanently delete user %s?"
+msgstr "Da li ste sigurni da želite nepovratno obrisati korisnika %s"
+
+#: ../admin.php:206
+msgid "Welcome to singapore admin!"
+msgstr "Dobrodošli u administratorsko su?elje galerije!"
+
+#: ../admin.php:215
+msgid "Thank you and goodbye!"
+msgstr "Hvala i lijep pozdrav!"
+
+#: ../admin.php:264
+msgid "Thumbnail cache purged"
+msgstr "Obrisan cache ikona"
+
+#: ../admin.php:271
+msgid "purge cached thumbnails"
+msgstr "obriši ikone u cache-u"
+
+#: ../admin.php:273
+#, possible-c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "Da li ste sigurni da želite obrisati cache-irane ikone?"
+
+#: ../admin.php:283
+#, possible-c-format
+msgid "Gallery re-indexed. %s images added."
+msgstr "Galerija je reindeksirana. %s slika dodano."
+
+#: ../admin.php:293
+msgid "Gallery info saved"
+msgstr "Informacije o galeriji su snimljene"
+
+#: ../admin.php:306
+msgid "Image info saved"
+msgstr "Informacije slike su snimljene"
+
+#: ../admin.php:318
+msgid "Password saved"
+msgstr "Lozinka snimljena"
+
+#: ../admin.php:331
+msgid "Permissions saved"
+msgstr "Dozvole snimljene"
+
+#: ../admin.php:343 ../admin.php:355 ../admin.php:387
+msgid "User info saved"
+msgstr "Korisni?ke informacije snimljene"
+
+#: ../includes/admin.class.php:206
+msgid "admin bar|Back"
+msgstr "Nazad"
+
+#: ../includes/admin.class.php:208
+msgid "admin bar|Admin"
+msgstr "Administrator"
+
+#: ../includes/admin.class.php:209
+msgid "admin bar|Galleries"
+msgstr "Galerije"
+
+#: ../includes/admin.class.php:210
+msgid "admin bar|Log out"
+msgstr "Odjava sa sustava"
+
+#: ../includes/admin.class.php:212
+#: ../templates/admin_default/gallery.tpl.php:28
+msgid "admin bar|Edit gallery"
+msgstr "Uredi galeriju"
+
+#: ../includes/admin.class.php:213
+#: ../templates/admin_default/gallery.tpl.php:29
+msgid "admin bar|Edit permissions"
+msgstr "Uredi dozvole"
+
+#: ../includes/admin.class.php:214
+#: ../templates/admin_default/gallery.tpl.php:30
+msgid "admin bar|Delete gallery"
+msgstr "Obriši galeriju"
+
+#: ../includes/admin.class.php:215
+#: ../templates/admin_default/gallery.tpl.php:31
+msgid "admin bar|New subgallery"
+msgstr "Nova podgalerija"
+
+#: ../includes/admin.class.php:216
+#: ../templates/admin_default/gallery.tpl.php:32
+msgid "admin bar|Re-index gallery"
+msgstr "Reindeksiraj galeriju"
+
+#: ../includes/admin.class.php:218
+msgid "admin bar|Edit image"
+msgstr "Uredi sliku"
+
+#: ../includes/admin.class.php:219
+msgid "admin bar|Delete image"
+msgstr "Obriši sliku"
+
+#: ../includes/admin.class.php:221
+msgid "admin bar|New image"
+msgstr "Nova slika"
+
+#: ../includes/admin.class.php:245 ../includes/admin.class.php:440
+#: ../includes/admin.class.php:469 ../includes/admin.class.php:497
+#: ../includes/admin.class.php:517
+msgid "Could not save user info"
+msgstr "Nemogu?nost pohrane korisni?kih informacija"
+
+#: ../includes/admin.class.php:248
+msgid "New password must be between 6 and 16 characters long."
+msgstr "Nova lozinka mora biti duga izmežu 6 i 16 znakova."
+
+#: ../includes/admin.class.php:250
+msgid "The new passwords you entered do not match."
+msgstr "Nove lozinke koje ste upisali se ne poklapaju."
+
+#: ../includes/admin.class.php:252
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr "Upisana lozinka se ne poklapa sa lozinkom iz baze."
+
+#: ../includes/admin.class.php:255
+msgid "The username specified was not found in the database."
+msgstr "Upisano korisni?ko ime ne postoji u bazi."
+
+#: ../includes/admin.class.php:285
+msgid "Your account has been suspended"
+msgstr "Vaš korisni?ki ra?un je privremeno onemogu?en"
+
+#: ../includes/admin.class.php:296
+msgid "Username and/or password incorrect"
+msgstr "Korisni?ko ime/ili lozinka pogrešno"
+
+#: ../includes/admin.class.php:299
+msgid "You must enter a username and password"
+msgstr "Morate upisati korisni?ko ime i lozinku"
+
+#: ../includes/admin.class.php:373 ../includes/admin.class.php:557
+#: ../includes/admin.class.php:595 ../includes/admin.class.php:625
+msgid "Could not save gallery info"
+msgstr "Nemogu?nost pohrane informacija o galeriji"
+
+#: ../includes/admin.class.php:431
+msgid "Username already exists"
+msgstr "Korisni?ko ime ve? postoji"
+
+#: ../includes/admin.class.php:455
+msgid "Cannot delete built in accounts"
+msgstr "Nemogu?nost brisanja ugra?enih korisni?kih imena"
+
+#: ../includes/admin.class.php:473 ../includes/admin.class.php:500
+#: ../includes/admin.class.php:520
+msgid "Username not recognised"
+msgstr "Korisni?ko ime nije prepoznato"
+
+#: ../includes/admin.class.php:573
+msgid "Gallery already exists"
+msgstr "Galerija ve? postoji"
+
+#: ../includes/admin.class.php:578
+msgid "Could not create directory"
+msgstr "Nemogu?nost kreiranja mape (direktorija)"
+
+#: ../includes/admin.class.php:646
+msgid "Cannot delete the top level directory"
+msgstr "Nemogu?nost brisanja vršne mape (direktorija)"
+
+#: ../includes/admin.class.php:701 ../includes/admin.class.php:797
+#: ../includes/admin.class.php:829
+msgid "File already exists"
+msgstr "Datoteka ve? postoji"
+
+#: ../includes/admin.class.php:706 ../includes/admin.class.php:750
+msgid "Could not upload file"
+msgstr "Nemogu?nost preuzimanja datoteke (upload-a)"
+
+#: ../includes/admin.class.php:726
+msgid "Could not add image to gallery"
+msgstr "Nemogu?nost dodavanja slike u galeriju"
+
+#: ../includes/admin.class.php:740
+msgid "Could not find temporary storage space"
+msgstr "Nema prostora za privremenu pohranu"
+
+#: ../includes/admin.class.php:760
+msgid "Could not decompress archive"
+msgstr "Nemogu?nost dekompresije arhive"
+
+#: ../includes/admin.class.php:849
+msgid "Some archive contents could not be added"
+msgstr "Neki od sadržaja iz arhive se ne može dodati"
+
+#: ../includes/admin.class.php:879
+msgid "Could not save image information"
+msgstr "Nemogu?nost pohrane informacija o slici"
+
+#: ../includes/admin.class.php:905
+msgid "Could not delete image"
+msgstr "Nemogu?nost brisanja slike"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr "odaberi ikonu"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "Odaberi ime datoteke od slike koja ?e prezentirati galeriju"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr "Nijedan"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr "Slu?ajan"
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr "uredi galeriju"
+
+#: ../templates/admin_default/editgallery.tpl.php:11
+msgid "Thumbnail"
+msgstr "Ikona"
+
+#: ../templates/admin_default/editgallery.tpl.php:15
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr "Slu?ajna\n ikona"
+
+#: ../templates/admin_default/editgallery.tpl.php:20
+msgid "thumbnail|Change..."
+msgstr "Promjeni..."
+
+#: ../templates/admin_default/editgallery.tpl.php:24
+#: ../templates/admin_default/galleryhits.tpl.php:7
+msgid "Gallery name"
+msgstr "Ime galerije"
+
+#: ../templates/admin_default/editgallery.tpl.php:28
+#: ../templates/admin_default/editimage.tpl.php:19
+msgid "Artist name"
+msgstr "Ime umjetnika"
+
+#: ../templates/admin_default/editgallery.tpl.php:44
+msgid "Summary"
+msgstr "Sažetak"
+
+#: ../templates/admin_default/editgallery.tpl.php:53
+#: ../templates/admin_default/editimage.tpl.php:64
+#: ../templates/admin_default/editpass.tpl.php:22
+#: ../templates/admin_default/editpermissions.tpl.php:45
+#: ../templates/admin_default/editprofile.tpl.php:24
+#: ../templates/admin_default/edituser.tpl.php:31
+msgid "Save Changes"
+msgstr "Snimi promjene"
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr "uredi sliku"
+
+#: ../templates/admin_default/editimage.tpl.php:11
+msgid "Image"
+msgstr "Slika"
+
+#: ../templates/admin_default/editimage.tpl.php:15
+#: ../templates/admin_default/imagehits.tpl.php:7
+msgid "Image name"
+msgstr "Ime slike"
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr "promjeni lozinku"
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "Molimo odaberite novu lozinku duljine izme?u 6 i 16 znakova."
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr "Sadašnja lozinka:"
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr "Nova lozinka:"
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr "Potvrda nove lozinke:"
+
+#: ../templates/admin_default/editpermissions.tpl.php:1
+msgid "edit permissions"
+msgstr "uredi dozvole"
+
+#: ../templates/admin_default/editpermissions.tpl.php:13
+msgid "Owner"
+msgstr "Vlasnik"
+
+#: ../templates/admin_default/editpermissions.tpl.php:22
+#: ../templates/admin_default/edituser.tpl.php:21
+msgid "Groups"
+msgstr "Grupe"
+
+#: ../templates/admin_default/editpermissions.tpl.php:26
+msgid "Group permissions"
+msgstr "Dozvole grupe"
+
+#: ../templates/admin_default/editpermissions.tpl.php:28
+#: ../templates/admin_default/editpermissions.tpl.php:37
+msgid "permissions|Read"
+msgstr "?itanje"
+
+#: ../templates/admin_default/editpermissions.tpl.php:29
+#: ../templates/admin_default/editpermissions.tpl.php:38
+msgid "permissions|Edit"
+msgstr "Ure?ivanje"
+
+#: ../templates/admin_default/editpermissions.tpl.php:30
+#: ../templates/admin_default/editpermissions.tpl.php:39
+msgid "permissions|Add"
+msgstr "Dodavanje"
+
+#: ../templates/admin_default/editpermissions.tpl.php:31
+#: ../templates/admin_default/editpermissions.tpl.php:40
+msgid "permissions|Delete"
+msgstr "Brisanje"
+
+#: ../templates/admin_default/editpermissions.tpl.php:35
+msgid "World permissions"
+msgstr "Javne dozvole"
+
+#: ../templates/admin_default/editprofile.tpl.php:1
+msgid "my profile"
+msgstr "moj profil"
+
+#: ../templates/admin_default/editprofile.tpl.php:8
+#: ../templates/admin_default/edituser.tpl.php:15
+msgid "Username"
+msgstr "Korisni?ko ime"
+
+#: ../templates/admin_default/editprofile.tpl.php:16
+#: ../templates/admin_default/edituser.tpl.php:23
+msgid "Full name"
+msgstr "Ime i prezime"
+
+#: ../templates/admin_default/edituser.tpl.php:1
+#: ../templates/admin_default/manageusers.tpl.php:1
+msgid "user management"
+msgstr "ure?ivanje korisnika"
+
+#: ../templates/admin_default/edituser.tpl.php:17
+msgid "Type"
+msgstr "Tip"
+
+#: ../templates/admin_default/edituser.tpl.php:18
+msgid "Administrator"
+msgstr "Administrator"
+
+#: ../templates/admin_default/edituser.tpl.php:19
+msgid "User"
+msgstr "Korisnik"
+
+#: ../templates/admin_default/edituser.tpl.php:26
+msgid "Password"
+msgstr "Lozinka"
+
+#: ../templates/admin_default/gallery.tpl.php:27
+msgid "admin bar|View gallery"
+msgstr "Pregled galerije"
+
+#: ../templates/admin_default/gallery.tpl.php:34
+msgid "admin bar|Change thumbnail"
+msgstr "Promjeni ikonu"
+
+#: ../templates/admin_default/galleryhits.tpl.php:7
+#: ../templates/admin_default/imagehits.tpl.php:7
+msgid "hits table|Graph"
+msgstr "Graf"
+
+#: ../templates/admin_default/galleryhits.tpl.php:7
+#: ../templates/admin_default/imagehits.tpl.php:7
+msgid "hits table|Hits"
+msgstr "Zahtjevi"
+
+#: ../templates/admin_default/galleryhits.tpl.php:7
+#: ../templates/admin_default/imagehits.tpl.php:7
+msgid "hits table|Last hit"
+msgstr "Zadnji zahtjev"
+
+#: ../templates/admin_default/header.tpl.php:39
+msgid "Admin message:"
+msgstr "Poruka administratora:"
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr "prijava u sustav"
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid "Please enter your admin username and password below."
+msgstr "Unesite vaše administratorko korisni?ko ime i lozinku"
+
+#: ../templates/admin_default/login.tpl.php:8
+#: ../templates/admin_default/manageusers.tpl.php:10
+#: ../templates/admin_default/manageusers.tpl.php:30
+msgid "Username:"
+msgstr "Korisni?ko ime:"
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr "Lozinka:"
+
+#: ../templates/admin_default/login.tpl.php:19
+msgid "If you do not have a username then you may log in as a guest."
+msgstr "Ako nemate korisni?ko ime, možete se prijaviti kao gost (guest)"
+
+#: ../templates/admin_default/login.tpl.php:20
+msgid "Log in as guest"
+msgstr "Prijava kao gost (guest)"
+
+#: ../templates/admin_default/manageusers.tpl.php:3
+msgid "You must be an administrator to access this area."
+msgstr "Morate biti administrator za pristup sadržaju"
+
+#: ../templates/admin_default/manageusers.tpl.php:17
+msgid "Email:"
+msgstr "Email:"
+
+#: ../templates/admin_default/manageusers.tpl.php:18
+msgid "Full name:"
+msgstr "Ime i prezime:"
+
+#: ../templates/admin_default/manageusers.tpl.php:19
+msgid "edit"
+msgstr "uredi"
+
+#: ../templates/admin_default/manageusers.tpl.php:20
+msgid "delete"
+msgstr "obriši"
+
+#: ../templates/admin_default/manageusers.tpl.php:21
+msgid "suspend"
+msgstr "privremeno onemogu?i"
+
+#: ../templates/admin_default/manageusers.tpl.php:21
+msgid "unsuspend"
+msgstr "omogu?i"
+
+#: ../templates/admin_default/manageusers.tpl.php:28
+msgid "create new user"
+msgstr "kreiranje novog korisnika"
+
+#: ../templates/admin_default/manageusers.tpl.php:33
+#: ../templates/admin_default/newgallery.tpl.php:14
+#: ../templates/admin_default/newimage.tpl.php:48
+msgid "Create"
+msgstr "Kreiraj"
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr "Odaberite opciju:"
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr "Ure?ivanje galerija i slika"
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr "Pregled zahtjeva"
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr "Promjena lozinke"
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "My profile"
+msgstr "Moj profil"
+
+#: ../templates/admin_default/menu.tpl.php:11
+msgid "Manage users"
+msgstr "Ure?ivanje korisnika"
+
+#: ../templates/admin_default/menu.tpl.php:12
+msgid "Purge cached thumbnails"
+msgstr "Obriši cache-irane ikone"
+
+#: ../templates/admin_default/menu.tpl.php:14
+msgid "Log out of admin"
+msgstr "Odjava administratora"
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr "nova galerija"
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:22
+msgid "Identifier:"
+msgstr "Identifikacijska oznaka"
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr "nova slika"
+
+#: ../templates/admin_default/newimage.tpl.php:3
+msgid ""
+"This image will not be visible because this gallery is not an album: it "
+"contains child galleries."
+msgstr "Slika ne?e biti vidljiva jer ova galerija sadrži podgalerije."
+
+#: ../templates/admin_default/newimage.tpl.php:13
+msgid "Upload single file"
+msgstr "Prijenos jedne datoteke"
+
+#: ../templates/admin_default/newimage.tpl.php:17
+msgid "Image file to upload:"
+msgstr "Slika za transfer:"
+
+#: ../templates/admin_default/newimage.tpl.php:24
+msgid "Use filename of uploaded file."
+msgstr "Koristi ime transferirane datoteke."
+
+#: ../templates/admin_default/newimage.tpl.php:25
+msgid "Specify different filename:"
+msgstr "Promjena imena datoteke"
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Upload multiple files"
+msgstr "Prijenos više datoteka"
+
+#: ../templates/admin_default/newimage.tpl.php:34
+msgid "ZIP file to upload:"
+msgstr "ZIP arhiva za prijenos:"
+
+#: ../templates/admin_default/newimage.tpl.php:39
+msgid "Add remote file"
+msgstr "Dodaj datoteku sa drugog poslužitelja"
+
+#: ../templates/admin_default/newimage.tpl.php:43
+msgid "URL of image:"
+msgstr "URL slike:"
