@@ -7,6 +7,6 @@
   <p>
     <?php echo $sg->_g("Username:") ?> <input type="text" name="sgUsername" />
     <?php echo $sg->_g("Password:") ?> <input type="password" name="sgPassword" />
-    <input type="submit" class="button" value="<?php echo $sg->__g('log in|Go') ?>" />
+    <input type="submit" class="button" value="<?php echo $sg->_g('log in|Go') ?>" />
   </p>
 </form>

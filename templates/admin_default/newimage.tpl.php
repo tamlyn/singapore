@@ -1,6 +1,7 @@
 <h1><?php echo $sg->_g("new image") ?></h1>
 
-  
+<?php if($sg->galleryHasSubGalleries()) echo "<p>".$sg->_g("This image will not be visible because this gallery contains subgalleries.")."</p>"; ?>
+
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data" method="post">
 <input type="hidden" name="action" value="addimage" />
 <input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities ?>" />

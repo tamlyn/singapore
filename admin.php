@@ -10,7 +10,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.17 2003/09/09 17:10:36 tamlyn Exp $
+ * @version $Id: admin.php,v 1.18 2003/11/17 02:12:50 tamlyn Exp $
  * @version 0.9.6
  */
 
@@ -97,7 +97,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "deletegallery" :
       $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
         if($sg->deleteGallery()) {
           $sg->selectGallery(rawurldecode($sg->gallery->parent));
           $adminMessage = $sg->_g("Gallery deleted");
@@ -105,7 +105,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
           $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
         }
         $includeFile = "view";
-      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|Cancel")) {
         $includeFile = "view";
       } else {
         $confirmTitle = $sg->_g("delete gallery");
@@ -115,13 +115,13 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "changethumbnail" :
       $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK")) {
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|OK")) {
         if($sg->saveGalleryThumbnail())
           $adminMessage = $sg->_g("Thumbnail changed");
         else
           $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
         $includeFile = "editgallery";
-      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|Cancel")) {
         $includeFile = "editgallery";
       } else {
         $includeFile = "changethumbnail";
@@ -157,13 +157,13 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "deleteimage" :
       $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK")) {
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|OK")) {
         if($sg->deleteImage())
           $adminMessage = $sg->_g("Image deleted");
         else
           $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
         $includeFile = "view";
-      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|Cancel")) {
         $includeFile = "view";
       } else {
         $confirmTitle = $sg->_g("delete image");
@@ -182,12 +182,12 @@ if($sg->isLoggedIn() || $sg->action == "login")
       $includeFile = "imagehits";
       break;
     case "purgecache" :
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK")) {
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|OK")) {
         if($sg->purgeCache())
           $adminMessage = $sg->_g("Thumbnail cache purged");
         else
           $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
-      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->_g("confirm|Cancel")) {
         $includeFile = "menu";
       } else {
         $confirmTitle = $sg->_g("purge cached thumbnails");
