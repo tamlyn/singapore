@@ -1,4 +1,4 @@
-<h1><?php echo $sg->_g("edit gallery") ?></h1>
+<h1><?php echo $sg->i18n->_g("edit gallery") ?></h1>
   
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <input type="hidden" name="action" value="savegallery" />
@@ -11,41 +11,41 @@
   
 <table class="formTable">
 <tr>
-  <td><?php echo $sg->_g("Gallery thumbnail:") ?></td>
+  <td><?php echo $sg->i18n->_g("Gallery thumbnail:") ?></td>
   <td><div class="inputbox sgImageInput">
   <?php 
     if($sg->gallery->filename == "__random__")
-      echo nl2br($sg->_g("Random\nthumbnail"));
+      echo nl2br($sg->i18n->_g("Random\nthumbnail"));
     else
       echo $sg->galleryThumbnailImage(); 
   ?>
   <br />
-  <a href="admin.php?action=changethumbnail&amp;gallery=<?php echo $sg->gallery->idEncoded ?>"><?php echo $sg->_g("thumbnail|Change...") ?></a>
+  <a href="admin.php?action=changethumbnail&amp;gallery=<?php echo $sg->gallery->idEncoded ?>"><?php echo $sg->i18n->_g("thumbnail|Change...") ?></a>
 </div></td>
 </tr>
 <tr>
-  <td><?php echo $sg->_g("Gallery name") ?></td>
+  <td><?php echo $sg->i18n->_g("Gallery name") ?></td>
   <td><input type="text" name="sgGalleryName" value="<?php echo $sg->gallery->name ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->_g("Artist name") ?></td>
+  <td><?php echo $sg->i18n->_g("Artist name") ?></td>
   <td><input type="text" name="sgArtistName" value="<?php echo $sg->gallery->artist ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->_g("Email") ?></td>
+  <td><?php echo $sg->i18n->_g("Email") ?></td>
   <td><input type="text" name="sgArtistEmail" value="<?php echo $sg->gallery->email ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->_g("Copyright") ?></td>
+  <td><?php echo $sg->i18n->_g("Copyright") ?></td>
   <td><input type="text" name="sgCopyright" value="<?php echo $sg->gallery->copyright ?>" size="40" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->_g("Description") ?></td>
+  <td><?php echo $sg->i18n->_g("Description") ?></td>
   <td><textarea name="sgGalleryDesc" cols="70" rows="8"><?php echo $sg->galleryDescriptionStripped() ?></textarea></td>
 </tr>
 <tr>
   <td></td>
-  <td><input type="submit" class="button" value="<?php echo $sg->_g("Save Changes") ?>" /></td>
+  <td><input type="submit" class="button" value="<?php echo $sg->i18n->_g("Save Changes") ?>" /></td>
 </tr>
 </table>
   

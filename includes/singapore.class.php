@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.12 2004/01/06 23:01:48 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.13 2004/01/13 03:07:44 tamlyn Exp $
  */
  
 /**
@@ -21,7 +21,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.8CVS";
+  var $version = "0.9.9CVS";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -35,6 +35,12 @@ class Singapore
    * @var sgIO_csv
    */
   var $io;
+  
+  /**
+   * instance of a {@link Translator}
+   * @var Translator
+   */
+  var $i18n;
   
   /**
    * instance of a {@link sgGallery} representing the current gallery
@@ -70,6 +76,7 @@ class Singapore
   function Singapore($basePath = "")
   {
     //import class definitions
+    require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/config.class.php";
@@ -82,13 +89,7 @@ class Singapore
     if(get_magic_quotes_gpc())
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
-    $galleryId = !empty($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
-    
-    //try to validate gallery id
-    if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
-    
-    //detect back-references to avoid file-system walking
-    if(strpos($galleryId,"../")!==false) $galleryId = ".";
+    if(empty($galleryId)) $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
     //load config from default ini file (singapore.ini)
     $this->config = new sgConfig("singapore.ini");
@@ -98,9 +99,47 @@ class Singapore
     //load config from template ini file (template.ini) if present
     $this->config->loadConfig($this->config->pathto_current_template."template.ini");
     
-    //fetch the gallery and image info
+    //read the language file
+    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->language.".pmo");
+    
+    //create IO handler
     $this->io = new sgIO_csv($this->config);
+    
+    //load gallery and image info
+    $this->selectGallery($galleryId);
+    
+    //set character set
+    if(!empty($this->i18n->languageStrings[0]["charset"]))
+      $this->character_set = $this->i18n->languageStrings[0]["charset"];
+    else
+      $this->character_set = $this->config->default_charset;
+      
+    //temporary code
+    if(isset($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+  }
+  
+  /**
+   * Load gallery and image info
+   * @param string the id of the gallery to load (optional)
+   */
+  function selectGallery($galleryId = "")
+  {
+    if(empty($galleryId)) $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
+    
+    //try to validate gallery id
+    if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
+    
+    //detect back-references to avoid file-system walking
+    if(strpos($galleryId,"../")!==false) $galleryId = ".";
+    
+    //fetch the gallery and image info
     $this->gallery = $this->io->getGallery($galleryId);
+    
+    //check if gallery was successfully fetched
+    if($this->gallery == null) {
+      $this->gallery = new sgGallery($galleryId);
+      $this->gallery->name = $this->i18n->_g("Gallery not found '%s'",$image);
+    }
     
     //sort galleries and images
     $GLOBALS["temp"]["gallery_sort_order"] = $this->config->gallery_sort_order;
@@ -108,23 +147,7 @@ class Singapore
     if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","gallerySort"));
     if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
     
-    //read the language file
-    $this->readLanguageFile($this->config->language);
-    
     $this->startat = isset($_REQUEST["startat"]) ? $_REQUEST["startat"] : 0;
-    
-    //set page title
-    $this->pageTitle = $this->config->gallery_name;
-    
-    //do the logging stuff and select the image (if any)
-    if(empty($_REQUEST["image"])) {
-      if($this->config->track_views) $hits = $this->logGalleryView();
-      if($this->config->show_views) $this->gallery->hits = $hits;
-    } else {
-      $this->selectImage($_REQUEST["image"]);
-      if($this->config->track_views) $hits = $this->logImageView();
-      if($this->config->show_views) $this->image->hits = $hits;
-    }
     
     //encode the gallery name
     $bits = explode("/",$this->gallery->id);
@@ -132,20 +155,53 @@ class Singapore
       $bits[$i] = rawurlencode($bits[$i]);
     $this->gallery->idEncoded = implode("/",$bits);
     
+    $this->gallery->idEntities = htmlspecialchars($this->gallery->id);
+    
     //find the parent
     $this->gallery->parent = substr($this->gallery->idEncoded, 0, strrpos($this->gallery->idEncoded, "/"));
     $this->gallery->parentName = urldecode(substr($this->gallery->parent,strrpos($this->gallery->parent,"/")+1));
     if($this->gallery->parentName == "")
       $this->gallery->parentName = $this->config->gallery_name;
     
-    //set character set
-    if(!empty($this->languageStrings[0]["charset"]))
-      $this->character_set = $this->languageStrings[0]["charset"];
-    else
-      $this->character_set = $this->config->default_charset;
-      
-    //temporary code
-    if(isset($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+    //do the logging stuff and select the image (if any)
+    if(empty($_REQUEST["image"])) {
+      if($this->config->track_views) $hits = $this->logGalleryView();
+      if($this->config->show_views) $this->gallery->hits = $hits;
+      //set page title
+      $this->pageTitle = $this->gallery->name;
+    } else {
+      $this->selectImage($_REQUEST["image"]);
+      if($this->config->track_views) $hits = $this->logImageView();
+      if($this->config->show_views) $this->image->hits = $hits;
+      //set page title
+      $this->pageTitle = $this->image->name;
+    }
+    
+  }
+  
+  /**
+   * Selects an image from the current gallery
+   * @param mixed either the filename of the image to select or the integer 
+   *  index of its position in the images array
+   * @return boolean true on success; false otherwise
+   */
+  function selectImage($image) 
+  {
+    if(is_string($image)) {
+      foreach($this->gallery->images as $index => $img)
+        if($img->filename == $image) {
+          $this->image =& $this->gallery->images[$index];
+          $this->image->index = $index;
+          return true;
+        }
+    } elseif(is_int($image) && $image >= 0 && $image < count($this->gallery->images)) {
+      $this->image =& $this->gallery->images[$image];
+      $this->image->index = $image;
+      return true;
+    }
+    $this->image = new sgImage();
+    $this->image->name = $this->i18n->_g("Image not found '%s'",$image);
+    return false;
   }
   
   /**
@@ -254,32 +310,6 @@ class Singapore
   }
 
   /**
-   * Selects an image from the current gallery
-   * @param mixed either the filename of the image to select or the integer 
-   *  index of its position in the images array
-   * @return boolean true on success; false otherwise
-   */
-  function selectImage($image) 
-  {
-    if(is_string($image)) {
-      foreach($this->gallery->images as $index => $img)
-        if($img->filename == $image) {
-          $this->image =& $this->gallery->images[$index];
-          $this->image->index = $index;
-          return true;
-        }
-    } elseif(is_int($image) && $image >= 0 && $image < count($this->gallery->images)) {
-      $this->image =& $this->gallery->images[$image];
-      $this->image->index = $image;
-      return true;
-    }
-    $this->image = new sgImage();
-    $this->image->name = "Image not found '$image'";
-    return false;
-  }
-  
-  
-  /**
    * @return bool true if this is an image page; false otherwise
    */
   function isImage()
@@ -320,7 +350,7 @@ class Singapore
   function scriptExecTimeText()
   {
     if($this->config->show_execution_time)
-      return $this->_g("Page created in %s seconds",$this->scriptExecTime());
+      return $this->i18n->_g("Page created in %s seconds",$this->scriptExecTime());
     else
       return "";
   }
@@ -337,22 +367,22 @@ class Singapore
   
   function poweredByVersion()
   {
-    return $this->_g("singapore|Powered by %s",$this->versionLink());
+    return $this->i18n->_g("singapore|Powered by %s",$this->versionLink());
   }
   
   function allRightsReserved()
   {
-    return $this->_g("All rights reserved.");
+    return $this->i18n->_g("All rights reserved.");
   }
   
   function copyrightMessage()
   {
-    return $this->_g("Images may not be reproduced in any form without the express written permission of the copyright holder.");
+    return $this->i18n->_g("Images may not be reproduced in any form without the express written permission of the copyright holder.");
   }
   
   function adminLink()
   {
-    return "<a href=\"admin.php\">".$this->_g("Log in")."</a>";
+    return "<a href=\"admin.php\">".$this->i18n->_g("Log in")."</a>";
   }
   
   /**
@@ -487,7 +517,7 @@ class Singapore
   
   function crumbLine()
   {
-    return $this->_g("crumb line|You are here:")." ".$this->crumbLineText();
+    return $this->i18n->_g("crumb line|You are here:")." ".$this->crumbLineText();
   }
   
   /////////////////////////////
@@ -527,7 +557,7 @@ class Singapore
    */
   function galleryCountText($index = null)
   {
-    return $this->_ng("%s gallery", "%s galleries", $this->galleryCount($index));
+    return $this->i18n->_ng("%s gallery", "%s galleries", $this->galleryCount($index));
   }
   
   /**
@@ -556,7 +586,7 @@ class Singapore
    */
   function imageCountText($index = null)
   {
-    return $this->_ng("%s image", "%s images", $this->imageCount($index));
+    return $this->i18n->_ng("%s image", "%s images", $this->imageCount($index));
   }
   
   /**
@@ -600,17 +630,17 @@ class Singapore
         $ret  = "<img src=\"thumb.php?gallery=".urlencode($gal->id);
         $ret .= "&amp;image=".urlencode($gal->images[$index]->filename);
         $ret .= "&amp;size=".$this->config->gallery_thumb_size."\" class=\"sgGallery\" ";
-        $ret .= "alt=\"".$this->_g("Sample image from gallery")."\" />";
+        $ret .= "alt=\"".$this->i18n->_g("Sample image from gallery")."\" />";
         break;
       }
     case "__none__" :
-      $ret = nl2br($this->_g("No\nthumbnail"));
+      $ret = nl2br($this->i18n->_g("No\nthumbnail"));
       break;
     default :
       $ret  = "<img src=\"thumb.php?gallery=".urlencode($gal->id);
       $ret .= "&amp;image=".urlencode($gal->filename);
       $ret .= "&amp;size=".$this->config->gallery_thumb_size."\" class=\"sgGallery\""; 
-      $ret .= "alt=\"".$this->_g("Sample image from gallery")."\" />";
+      $ret .= "alt=\"".$this->i18n->_g("Sample image from gallery")."\" />";
     }
     return $ret;
   }
@@ -644,7 +674,7 @@ class Singapore
     else
       $last = $this->startat+$perPage;
     
-    return $this->_g("Showing %s-%s of %s",($this->startat+1),$last,$total);
+    return $this->i18n->_g("Showing %s-%s of %s",($this->startat+1),$last,$total);
   }
   
   /**
@@ -656,7 +686,7 @@ class Singapore
     if($this->galleryHasPrev()) 
       $ret .= $this->galleryPrevLink()." ";
     if($this->gallery->id != ".") 
-      $ret .= "<a href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\" title=\"".$this->_g("gallery|Up one level")."\">".$this->_g("gallery|Up")."</a>";
+      $ret .= "<a href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
     if($this->galleryHasNext()) 
       $ret .= " ".$this->galleryNextLink();
         
@@ -680,12 +710,12 @@ class Singapore
       if($this->gallery->id != ".")
         $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parentName."\" href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\">\n";
       if($this->galleryHasPrev()) {
-        $ret .= "<link rel=\"Prev\" title=\"".$this->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\">\n";
-        $ret .= "<link rel=\"First\" title=\"".$this->_g("gallery|First")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=0\">\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\">\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=0\">\n";
       }
       if($this->galleryHasNext()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\">\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->_g("gallery|Last")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".$this->lastPageIndex()."\">\n";
+        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\">\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".$this->lastPageIndex()."\">\n";
       } 
     }
     return $ret;
@@ -737,7 +767,7 @@ class Singapore
   }
   
   function galleryNextLink() {
-    return "<a href=\"".$this->galleryNextURL()."\">".$this->_g("gallery|Next")."</a>";
+    return "<a href=\"".$this->galleryNextURL()."\">".$this->i18n->_g("gallery|Next")."</a>";
   }
   
   /**
@@ -749,7 +779,7 @@ class Singapore
   }
   
   function galleryPrevLink() {
-    return "<a href=\"".$this->galleryPrevURL()."\">".$this->_g("gallery|Previous")."</a>";
+    return "<a href=\"".$this->galleryPrevURL()."\">".$this->i18n->_g("gallery|Previous")."</a>";
   }
   
   /**
@@ -757,7 +787,7 @@ class Singapore
    */
   function galleryByArtist()
   {
-    if(!empty($this->gallery->artist)) return " ".$this->_g("artist name|by %s",$this->gallery->artist);
+    if(!empty($this->gallery->artist)) return " ".$this->i18n->_g("artist name|by %s",$this->gallery->artist);
     else return "";
   }
   
@@ -833,17 +863,17 @@ class Singapore
     $ret = array();
     if(!empty($this->gallery->email))
       if($this->config->obfuscate_email)
-        $ret[$this->_g("Email")] = strtr($this->gallery->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
+        $ret[$this->i18n->_g("Email")] = strtr($this->gallery->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
       else
-        $ret[$this->_g("Email")] = "<a href=\"mailto:".$this->gallery->email."\">".$this->gallery->email."</a>";
+        $ret[$this->i18n->_g("Email")] = "<a href=\"mailto:".$this->gallery->email."\">".$this->gallery->email."</a>";
     if(!empty($this->gallery->desc))
-      $ret[$this->_g("Description")] = $this->gallery->desc;
+      $ret[$this->i18n->_g("Description")] = $this->gallery->desc;
     if(!empty($this->gallery->copyright))
-      $ret[$this->_g("Copyright")] = $this->gallery->copyright;
+      $ret[$this->i18n->_g("Copyright")] = $this->gallery->copyright;
     elseif(!empty($this->gallery->artist))
-      $ret[$this->_g("Copyright")] = $this->gallery->artist;
-    if(!empty($this->gallery->hits))
-      $ret[$this->_g("Viewed")] = $this->_ng("viewed|%s time", "viewed|%s times",$this->gallery->hits);
+      $ret[$this->i18n->_g("Copyright")] = $this->gallery->artist;
+    if($this->config->show_views && !empty($this->gallery->hits))
+      $ret[$this->i18n->_g("Viewed")] = $this->i18n->_ng("viewed|%s time", "viewed|%s times",$this->gallery->hits);
     
     return $ret;
   }
@@ -956,7 +986,7 @@ class Singapore
    */
   function imageCommentLink()
   {
-    return "<a href=\"".$this->config->base_url."action=addcomment&amp;gallery=".$this->gallery->idEncoded."&amp;image=".rawurlencode($this->image->filename)."\">".$this->_g("Add a comment")."</a>";
+    return "<a href=\"".$this->config->base_url."action=addcomment&amp;gallery=".$this->gallery->idEncoded."&amp;image=".rawurlencode($this->image->filename)."\">".$this->i18n->_g("Add a comment")."</a>";
   }
   
   /**
@@ -988,7 +1018,7 @@ class Singapore
    */
   function imageByArtist($index = null)
   {
-    if($this->imageArtist($index)!="") return " ".$this->_g("artist name|by %s",$this->imageArtist($index));
+    if($this->imageArtist($index)!="") return " ".$this->i18n->_g("artist name|by %s",$this->imageArtist($index));
     else return "";
   }
   
@@ -1065,7 +1095,7 @@ class Singapore
   {
     if($this->imageHasPrev())
       return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             urlencode($this->gallery->images[$this->image->index-1]->filename)."\" title=\"".$this->imageName($this->image->index-1)."\">".$this->_g("image|Previous")."</a> | \n";
+             urlencode($this->gallery->images[$this->image->index-1]->filename)."\" title=\"".$this->imageName($this->image->index-1)."\">".$this->i18n->_g("image|Previous")."</a> | \n";
   }
 
   /**
@@ -1076,7 +1106,7 @@ class Singapore
   {
     if($this->imageHasPrev())
       return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             urlencode($this->gallery->images[0]->filename)."\" title=\"".$this->imageName(0)."\">".$this->_g("image|First")."</a> | \n";
+             urlencode($this->gallery->images[0]->filename)."\" title=\"".$this->imageName(0)."\">".$this->i18n->_g("image|First")."</a> | \n";
   }
 
   /**
@@ -1093,7 +1123,7 @@ class Singapore
   function imageParentLink()
   {
     return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".
-           (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number)."\" title=\"".$this->galleryName()."\">".$this->_g("image|Thumbnails")."</a>\n";
+           (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number)."\" title=\"".$this->galleryName()."\">".$this->i18n->_g("image|Thumbnails")."</a>\n";
   }
   
   /**
@@ -1104,7 +1134,7 @@ class Singapore
   {
     if($this->imageHasNext())
       return " | <a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             urlencode($this->gallery->images[$this->image->index+1]->filename)."\" title=\"".$this->imageName($this->image->index+1)."\">".$this->_g("image|Next")."</a>\n";
+             urlencode($this->gallery->images[$this->image->index+1]->filename)."\" title=\"".$this->imageName($this->image->index+1)."\">".$this->i18n->_g("image|Next")."</a>\n";
   }
   
   /**
@@ -1115,7 +1145,7 @@ class Singapore
   {
     if($this->imageHasNext())
       return " | <a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             urlencode($this->gallery->images[$this->imageCount()-1]->filename)."\" title=\"".$this->imageName($this->imageCount()-1)."\">".$this->_g("image|Last")."</a>\n";
+             urlencode($this->gallery->images[$this->imageCount()-1]->filename)."\" title=\"".$this->imageName($this->imageCount()-1)."\">".$this->i18n->_g("image|Last")."</a>\n";
   }
   
   /**
@@ -1135,171 +1165,35 @@ class Singapore
     $ret = array();
     if(!empty($this->image->email))
       if($this->config->obfuscate_email)
-        $ret[$this->_g("Email")] = strtr($this->image->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
+        $ret[$this->i18n->_g("Email")] = strtr($this->image->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
       else
-        $ret[$this->_g("Email")] = "<a href=\"mailto:".$this->image->email."\">".$this->image->email."</a>";
+        $ret[$this->i18n->_g("Email")] = "<a href=\"mailto:".$this->image->email."\">".$this->image->email."</a>";
     if(!empty($this->image->location))
-      $ret[$this->_g("Location")] = $this->image->location;
+      $ret[$this->i18n->_g("Location")] = $this->image->location;
     if(!empty($this->image->date))
-      $ret[$this->_g("Date")] = $this->image->date;
+      $ret[$this->i18n->_g("Date")] = $this->image->date;
     if(!empty($this->image->desc))
-      $ret[$this->_g("Description")] = $this->image->desc;
+      $ret[$this->i18n->_g("Description")] = $this->image->desc;
     if(!empty($this->image->camera))
-      $ret[$this->_g("Camera")] = $this->image->camera;
+      $ret[$this->i18n->_g("Camera")] = $this->image->camera;
     if(!empty($this->image->lens))
-      $ret[$this->_g("Lens")] = $this->image->lens;
+      $ret[$this->i18n->_g("Lens")] = $this->image->lens;
     if(!empty($this->image->film))
-      $ret[$this->_g("Film")] = $this->image->film;
+      $ret[$this->i18n->_g("Film")] = $this->image->film;
     if(!empty($this->image->darkroom))
-      $ret[$this->_g("Darkroom manipulation")] = $this->image->darkroom;
+      $ret[$this->i18n->_g("Darkroom manipulation")] = $this->image->darkroom;
     if(!empty($this->image->digital))
-      $ret[$this->_g("Digital manipulation")] = $this->image->digital;
+      $ret[$this->i18n->_g("Digital manipulation")] = $this->image->digital;
     if(!empty($this->image->copyright))
-      $ret[$this->_g("Copyright")] = $this->image->copyright;
+      $ret[$this->i18n->_g("Copyright")] = $this->image->copyright;
     elseif(!empty($this->image->artist))
-      $ret[$this->_g("Copyright")] = $this->image->artist;
-    if(!empty($this->image->hits))
-      $ret[$this->_g("Viewed")] = $this->_ng("viewed|%s time", "viewed|%s times",$this->image->hits);
+      $ret[$this->i18n->_g("Copyright")] = $this->image->artist;
+    if($this->config->show_views && !empty($this->image->hits))
+      $ret[$this->i18n->_g("Viewed")] = $this->i18n->_ng("viewed|%s time", "viewed|%s times",$this->image->hits);
     
     return $ret;
   }
 
-  
-  //////////////////////////////
-  //////language functions//////
-  //////////////////////////////
-  
-  
-  /**
-   * Reads a language file and saves the strings in an array.
-   * Note that the language code is used in the filename for the
-   * datafile, and is case sensitive.
-   *
-   * @author   Joel Sjögren <joel dot sjogren at nonea dot se>
-   * @param    string    $lang       language code
-   * @return   bool                  sucess
-   */
-  function readLanguageFile ($lang)
-  {
-      // Set the array to empty if it doesn't exists
-      if (empty($this->languageStrings)) $this->languageStrings = array();
-      
-      // check if locale directory exists
-      if (!is_dir($this->config->pathto_locale)) 
-        return false; // Directory doesn't exist, return unsuccessful
-      
-      // Look for the language file (case sensitive)
-      $d = dir($this->config->pathto_locale);
-      $languageFile = false;
-      while (($file = $d->read()) !== false) {
-        if ($file == "singapore.$lang.pmo")
-          $languageFile = $d->path . DIRECTORY_SEPARATOR . $file;
-      }
-      // Couldn't find a matching file
-      if (!$languageFile) return false;
-      
-      // Open the file
-      $fp = @fopen($languageFile, "r");
-      if (!@$fp) return false;
-      
-      // Read contents
-      $str = '';
-      while (!feof($fp)) $str .= fread($fp, 1024);
-      // Unserialize
-      $newStrings = unserialize($str);
-      
-      //Append new strings to current languageStrings array
-      $this->languageStrings = array_merge($this->languageStrings, $newStrings);
-      
-      // Return successful
-      return (bool) $newStrings;
-  }
-  
-  /**
-   * Returns a translated string, or the same if no language is chosen.
-   * You can pass more arguments to use for replacement within the
-   * string - just like sprintf(). It also removes anything before 
-   * the first | in the text to translate. This is used to distinguish 
-   * strings with different meanings, but with the same spelling.
-   * Examples:
-   * _g("Text");
-   * _g("Use a %s to drink %s", _g("glass"), "water");
-   *
-   * @author   Joel Sjögren <joel dot sjogren at nonea dot se>
-   * @param    string    $text       text to translate
-   * @return   string                translated string
-   */
-  function _g ($text)
-  {
-      // String exists and is not empty?
-      if (!empty($this->languageStrings[$text])) {
-          $text = $this->languageStrings[$text];
-      } else {
-        $text = preg_replace("/^[^\|]*\|/", "", $text);
-      }
-      
-      // More arguments were passed? sprintf() them...
-      if (func_num_args() > 1) {
-          $args = func_get_args();
-          array_shift($args);
-          //preg_match_all("/%((\d+\\\$)|.)/", str_replace("%%", "", $text), $m);
-          //while (count($args) < count($m[0])) $args[] = '';
-          $text = vsprintf($text, $args);
-      }
-      return $text;
-  }
-  
-  /**
-   * Plural form of _g().
-   *
-   * @param    string    $msgid1     singular form of text to translate
-   * @param    string    $msgid2     plural form of text to translate
-   * @param    string    $n          number
-   * @return   string                translated string
-   */
-  function _ng ($msgid1, $msgid2, $n)
-  {
-      //calculate which plural to use
-      if(!empty($this->languageStrings[0]["plural"]))
-        eval($this->languageStrings[0]["plural"]);
-      else 
-        $plural = $n==1?0:1;
-      
-      // String exists and is not empty?
-      if (!empty($this->languageStrings[$msgid1][$plural])) {
-        $text = $this->languageStrings[$msgid1][$plural];
-      } else {
-        $text = preg_replace("/^[^\|]*\|/", "", ($n == 1 ? $msgid1 : $msgid2));
-      }
-      
-      if (func_num_args() > 3) {
-          $args = func_get_args();
-          array_shift($args);
-          array_shift($args);
-          return vsprintf($text, $args);
-      }
-      
-      return sprintf($text, $n);
-  }
-  
-  /**
-   * Returns a translated string, like {@link _g()}, but removes anything 
-   * before the |
-   * This is used to separate strings with different meanings,
-   * but with the same spelling.
-   *
-   * @author   Joel Sjögren <joel dot sjogren at nonea dot se>
-   * @param    string    $text       text to translate
-   * @return   string                translated string
-   */
-  function __g ($text)
-  {
-      // Call _g()
-      $args = func_get_args();
-      $text = call_user_func_array(array(&$this,"_g"), $args);
-      // Remove leading |
-      return preg_replace("/^[^\|]+\|/", "", $text);
-  }
   
 }
 

@@ -14,7 +14,7 @@
 <body>
 
 <div id="crumb">
-<?php echo $sg->_g("crumb line|You are here:") ?> <?php echo $sg->crumbLineText() ?>
+<?php echo $sg->i18n->_g("crumb line|You are here:") ?> <?php echo $sg->crumbLineText() ?>
 </div>
 
 <div id="header"><img src="<?php echo $sg->config->pathto_admin_template ?>images/header.gif" alt="<?php echo $sg->config->gallery_name ?>" /></div>
@@ -36,7 +36,7 @@
 <?php if(isset($adminMessage)): ?>
 <div id="sgAdminMessages">
   <?php 
-    echo $sg->_g("Admin message:");
+    echo $sg->i18n->_g("Admin message:");
     echo "<br />\n&nbsp;&nbsp;";
     echo $adminMessage; 
   ?>

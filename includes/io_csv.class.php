@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.5 2003/12/28 19:27:05 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.6 2004/01/13 03:07:44 tamlyn Exp $
  */
 
 /**
@@ -123,8 +123,7 @@ class sgIO_csv {
       }
     } else {
       //selected gallery does not exist
-      $gal->name = "Gallery not found '$galleryId'";
-      return $gal;
+      return null;
     }
     
     $dir = Singapore::getListing($this->config->pathto_galleries.$gal->id."/", "dirs");

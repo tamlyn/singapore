@@ -19,7 +19,7 @@
     <td class="ml"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
     <table class="sgList">
-      <tr><th><?php echo $sg->_g("Gallery name") ?></th><th><?php echo $sg->_g("hits table|Hits") ?></th><th><?php echo $sg->_g("hits table|Last hit") ?></th><th><?php echo $sg->_g("hits table|Graph") ?></th></tr>
+      <tr><th><?php echo $sg->i18n->_g("Gallery name") ?></th><th><?php echo $sg->i18n->_g("hits table|Hits") ?></th><th><?php echo $sg->i18n->_g("hits table|Last hit") ?></th><th><?php echo $sg->i18n->_g("hits table|Graph") ?></th></tr>
       <?php foreach($sg->galleryGalleriesArray() as $index => $gal): ?>
       <tr>
         <tr class="sgRow<?php echo $index%2 ?>"><td><a href="admin.php?action=<?php echo $sg->isGallery($index) ? "showimagehits": "showgalleryhits" ?>&amp;gallery=<?php echo rawurlencode($gal->id) ?>"><?php echo $gal->name ?></a></td>

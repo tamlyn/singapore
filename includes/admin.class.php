@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.9 2004/01/06 23:01:48 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.10 2004/01/13 03:07:44 tamlyn Exp $
  */
 
 /**
@@ -31,6 +31,7 @@ class sgAdmin extends Singapore
   function sgAdmin($basePath = "")
   {
     //import class definitions
+    require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/config.class.php";
@@ -50,6 +51,8 @@ class sgAdmin extends Singapore
       $_FILES   = array_map(array("Singapore","arraystripslashes"), $_FILES);
     }
     
+    if(empty($galleryId)) $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
+    
     //load config from default ini file (singapore.ini)
     $this->config = new sgConfig("singapore.ini");
     //load config from admin template ini file (admin.ini) if present
@@ -58,18 +61,18 @@ class sgAdmin extends Singapore
     //do not load gallery-specific ini files
 
     //read the standard language file
-    $this->readLanguageFile($this->config->language);
+    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->language.".pmo");
     //read extra admin language file
-    $this->readLanguageFile("admin.".$this->config->language);
-
-    //set character set
-    if(!empty($this->languageStrings[0]["charset"]))
-      $this->character_set = $this->languageStrings[0]["charset"];
-    else
-      $this->character_set = $this->config->default_charset;
+    $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin".$this->config->language.".pmo");
 
     //create IO handler
     $this->io = new sgIO_csv($this->config);
+    
+    //set character set
+    if(!empty($this->i18n->languageStrings[0]["charset"]))
+      $this->character_set = $this->i18n->languageStrings[0]["charset"];
+    else
+      $this->character_set = $this->config->default_charset;
     
     //set action to perform
     if(empty($_REQUEST["action"])) $this->action = "menu";
@@ -85,49 +88,6 @@ class sgAdmin extends Singapore
   function getLastError()
   {
     return $this->lastError;
-  }
-  
-  /**
-   * Loads gallery details and sets values similar to that of 
-   * {@link Singapore::Singapore()}
-   * 
-   * @param string the id of the gallery to load (optional)
-   */
-  function selectGallery($galleryId = "")
-  {
-    if(empty($galleryId))
-      $galleryId = !empty($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
-    
-    //try to validate gallery id
-    if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
-    
-    //detect back-references to avoid file-system walking
-    if(strpos($galleryId,"../")!==false) $galleryId = ".";
-    
-    //fetch the gallery and image info
-    $this->gallery = $this->io->getGallery($galleryId);
-    
-    //sort galleries and images
-    $GLOBALS["temp"]["gallery_sort_order"] = $this->config->gallery_sort_order;
-    $GLOBALS["temp"]["image_sort_order"] = $this->config->image_sort_order;
-    if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","gallerySort"));
-    if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
-    
-    $this->startat = isset($_REQUEST["startat"]) ? $_REQUEST["startat"] : 0;
-    
-    //encode the gallery name
-    $bits = explode("/",$this->gallery->id);
-    for($i=0;$i<count($bits);$i++)
-      $bits[$i] = rawurlencode($bits[$i]);
-    $this->gallery->idEncoded = implode("/",$bits);
-    
-    $this->gallery->idEntities = htmlspecialchars($this->gallery->id);
-    
-    //find the parent
-    $this->gallery->parent = substr($this->gallery->idEncoded, 0, strrpos($this->gallery->idEncoded, "/"));
-    
-    if(isset($_REQUEST['image']))
-      $this->selectImage($_REQUEST["image"]);
   }
   
   /**
@@ -163,7 +123,7 @@ class sgAdmin extends Singapore
   function galleryHitsTab()
   {
     $showing = $this->galleryTabShowing();
-    if($this->gallery->id != ".") $links = "<a href=\"admin.php?action=showgalleryhits&amp;gallery=".$this->gallery->parent."\" title=\"".$this->__g("gallery|Up one level")."\">".$this->__g("gallery|Up")."</a>";
+    if($this->gallery->id != ".") $links = "<a href=\"admin.php?action=showgalleryhits&amp;gallery=".$this->gallery->parent."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
     if(empty($links)) return $showing;
     else return $showing." | ".$links;
   }
@@ -175,20 +135,20 @@ class sgAdmin extends Singapore
    */
   function adminLinksArray()
   {
-    if(!$this->isLoggedIn()) return array(0 => array($this->__g("admin bar|Back") => "."));
+    if(!$this->isLoggedIn()) return array(0 => array($this->i18n->_g("admin bar|Back") => "."));
     
-    $ret[0][$this->__g("admin bar|Admin")] = "admin.php";
-    $ret[0][$this->__g("admin bar|Galleries")] = "admin.php?action=view".(isset($this->gallery) ? "&amp;gallery=".$this->gallery->idEncoded : "");
-    $ret[0][$this->__g("admin bar|Log out")] = "admin.php?action=logout";
+    $ret[0][$this->i18n->_g("admin bar|Admin")] = "admin.php";
+    $ret[0][$this->i18n->_g("admin bar|Galleries")] = "admin.php?action=view".(isset($this->gallery) ? "&amp;gallery=".$this->gallery->idEncoded : "");
+    $ret[0][$this->i18n->_g("admin bar|Log out")] = "admin.php?action=logout";
     if(isset($this->gallery)) {
-      $ret[1][$this->__g("admin bar|Edit gallery")] = "admin.php?action=editgallery&amp;gallery=".$this->gallery->idEncoded;
-      $ret[1][$this->__g("admin bar|Delete gallery")] = "admin.php?action=deletegallery&amp;gallery=".$this->gallery->idEncoded;
-      $ret[1][$this->__g("admin bar|New subgallery")] = "admin.php?action=newgallery&amp;gallery=".$this->gallery->idEncoded;
+      $ret[1][$this->i18n->_g("admin bar|Edit gallery")] = "admin.php?action=editgallery&amp;gallery=".$this->gallery->idEncoded;
+      $ret[1][$this->i18n->_g("admin bar|Delete gallery")] = "admin.php?action=deletegallery&amp;gallery=".$this->gallery->idEncoded;
+      $ret[1][$this->i18n->_g("admin bar|New subgallery")] = "admin.php?action=newgallery&amp;gallery=".$this->gallery->idEncoded;
       if($this->isImage()) {
-        $ret[2][$this->__g("admin bar|Edit image")] = "admin.php?action=editimage&amp;gallery=".$this->gallery->idEncoded."&amp;image=".$this->image->filename;
-        $ret[2][$this->__g("admin bar|Delete image")] = "admin.php?action=deleteimage&amp;gallery=".$this->gallery->idEncoded."&amp;image=".$this->image->filename;
+        $ret[2][$this->i18n->_g("admin bar|Edit image")] = "admin.php?action=editimage&amp;gallery=".$this->gallery->idEncoded."&amp;image=".$this->image->filename;
+        $ret[2][$this->i18n->_g("admin bar|Delete image")] = "admin.php?action=deleteimage&amp;gallery=".$this->gallery->idEncoded."&amp;image=".$this->image->filename;
       }
-      $ret[2][$this->__g("admin bar|New image")] = "admin.php?action=newimage&amp;gallery=".$this->gallery->idEncoded;
+      $ret[2][$this->i18n->_g("admin bar|New image")] = "admin.php?action=newimage&amp;gallery=".$this->gallery->idEncoded;
     }
     return $ret;
   }
@@ -212,17 +172,17 @@ class sgAdmin extends Singapore
             if(strlen($_POST["sgNewPass1"]) >= 6 && strlen($_POST["sgNewPass1"]) <= 16) { 
               $users[$i]->userpass = md5($_POST["sgNewPass1"]);
               if($this->io->putUsers($users)) return true;
-              else $this->lastError = $this->_g("There was an error saving the new password.");
+              else $this->lastError = $this->i18n->_g("There was an error saving the new password.");
             }
             else 
-              $this->lastError = $this->_g("New password must be between 6 and 16 characters long.");
+              $this->lastError = $this->i18n->_g("New password must be between 6 and 16 characters long.");
           else 
-            $this->lastError = $this->_g("The new passwords you entered do not match.");
+            $this->lastError = $this->i18n->_g("The new passwords you entered do not match.");
         else 
-          $this->lastError = $this->_g("The current password you entered does not match the one in the database.");
+          $this->lastError = $this->i18n->_g("The current password you entered does not match the one in the database.");
   		}
     
-    if(!$found) $this->lastError = $this->_g("The username specified was not found in the database.");
+    if(!$found) $this->lastError = $this->i18n->_g("The username specified was not found in the database.");
     
     //some sort of error occurred so:
     return false;
@@ -258,10 +218,10 @@ class sgAdmin extends Singapore
           return true;
   			}
   		$this->logout();
-      $this->lastError = $this->_g("Username and/or password incorrect");
+      $this->lastError = $this->i18n->_g("Username and/or password incorrect");
       return false;
   	}
-    $this->lastError = $this->_g("You must enter a username and password");
+    $this->lastError = $this->i18n->_g("You must enter a username and password");
     return false;
   }
   
@@ -286,14 +246,14 @@ class sgAdmin extends Singapore
     $path = $this->config->pathto_galleries.$this->gallery->id."/".$_REQUEST["newgallery"];
     
     if(file_exists($path)) {
-      $this->lastError = $this->_g("Gallery already exists");
+      $this->lastError = $this->i18n->_g("Gallery already exists");
       return false;
     }
     
     if(mkdir($path, $this->config->directory_mode))
       return true;
     
-    $this->lastError = $this->_g("Could not create directory");
+    $this->lastError = $this->i18n->_g("Could not create directory");
     return false;
   }
   
@@ -324,7 +284,7 @@ class sgAdmin extends Singapore
     if($this->io->putGallery($this->gallery))
       return true;
       
-    $this->lastError = $this->_g("Could not save gallery info");
+    $this->lastError = $this->i18n->_g("Could not save gallery info");
     return false;
   }
   
@@ -342,7 +302,7 @@ class sgAdmin extends Singapore
     
     //check that the gallery to delete is not the top level directory
     if(realpath($this->config->pathto_galleries.$_REQUEST['gallery']) == realpath($this->config->pathto_galleries)) {
-      $this->lastError = $this->_g("Cannot delete the top level directory");
+      $this->lastError = $this->i18n->_g("Cannot delete the top level directory");
       return false;
     }
     
@@ -378,22 +338,22 @@ class sgAdmin extends Singapore
       else $image = $_REQUEST["sgFileName"];
       
       //make sure file has a recognised extension
-      if(!preg_match("/(jpe?g)|(png)|(gif)|(tiff?)|(bmp)$/i",$image)) $image .= ".jpeg";
+      if(!preg_match("/\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff)$/i",$image)) $image .= ".jpeg";
       
       $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
       
       if(file_exists($path)) {
-        $this->lastError = $this->_g("File already exists"); 
+        $this->lastError = $this->i18n->_g("File already exists"); 
         return false;
       }
       
       if(!move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) {
-        $this->lastError = $this->_g("Could not upload file"); 
+        $this->lastError = $this->i18n->_g("Could not upload file"); 
         return false;
       }
       
     } else {
-      $this->lastError = $this->_g("Invalid location choice");
+      $this->lastError = $this->i18n->_g("Invalid location choice");
       return false;
     }
     
@@ -412,7 +372,7 @@ class sgAdmin extends Singapore
       return true;
     }
     
-    $this->lastError = $this->_g("Could not add image to gallery");
+    $this->lastError = $this->i18n->_g("Could not add image to gallery");
     @unlink($path);
     return false;
   }
@@ -445,7 +405,7 @@ class sgAdmin extends Singapore
     
     if($this->io->putGallery($this->gallery)) return true;
     
-    $this->lastError = $this->_g("Could not save image information");
+    $this->lastError = $this->i18n->_g("Could not save image information");
     return false;    
   }
   
@@ -467,7 +427,7 @@ class sgAdmin extends Singapore
       $this->image = null;
       return true;
     } else {
-      $this->lastError = $this->_g("Could not delete image");
+      $this->lastError = $this->i18n->_g("Could not delete image");
       return false;
     }
   }
