@@ -2,7 +2,7 @@
   
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <input type="hidden" name="action" value="changethumbnail" />
-<input type="hidden" name="gallery" value="<?php echo htmlentities($sg->gallery->id) ?>" />
+<input type="hidden" name="gallery" value="<?php echo htmlspecialchars($sg->gallery->id) ?>" />
 <p><?php echo $sg->_g("Choose the filename of the image used to represent this gallery.") ?></p>
   
 <p><select name="sgThumbName">
