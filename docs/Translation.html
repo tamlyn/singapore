@@ -14,6 +14,7 @@
 <ul>
   <li><a href="#intro">Introduction</a></li>
   <li><a href="#requirements">Requirements</a></li>
+  <li><a href="#update">Updating a translation</a></li>
   <li><a href="#new">Starting a new translation</a></li>
   <li><a href="#header">Filling in the header section</a></li>
   <li><a href="#plurals">Plural forms</a></li>
@@ -21,10 +22,6 @@
   <li><a href="Readme.html">General readme</a></li>
   <li><a href="Development.html">Developer documentation</a></li>
 </ul>
-
-<p class="note">NOTE: This is draft documentation and is likely to be unclear
-and/or incomplete. Please do not hesitate to contact a member of the team for
-clarification or help on any aspect of translation.</p>
 
 
 <h2><a name="intro">Introduction</a></h2>
@@ -46,8 +43,10 @@ strings or going the whole way and translating the admin strings too.</p>
 
 <p>It is a good idea for all translators and potential translators to join the 
 <a href="http://lists.sourceforge.net/lists/listinfo/singapore-devel">development 
-mailing list</a>. Use this and the 
-<a href="https://sourceforge.net/forum/forum.php?forum_id=301872">internationalization forum</a>
+mailing list</a>. Use this, the 
+<a href="https://sourceforge.net/forum/forum.php?forum_id=301872">internationalisation forum</a>
+and the 
+<a href="http://sourceforge.net/tracker/?atid=611769&group_id=77687">translations tracker</a>
 to interact with other translators and developers.</p>
 
 <h2><a name="requirements">Requirements</a></h2>
@@ -64,7 +63,28 @@ are in your PATH or in the <code>tools/</code> directory itself then you do not
 need to edit anything.</p>
 
 
+<h2><a name="update">Updating a translation</a></h2>
+
+<p>Each singapore release requires the language files to be updated slightly. 
+First make sure you have the latest available translation (the 
+<a href="http://sourceforge.net/tracker/?atid=611769&group_id=77687">translations tracker</a>
+is a good place to check for this). Now you need to merge in the new untranslated 
+strings and remove the obsolete ones. Place the old PO file in the locale 
+directory of an installation of the latest version of singapore and use the 
+<a href="../tools/merge.php">merge</a> script provided.</p>
+
+<p>Now proceed translating the strings as normal and attach the updated PO file
+to the tracker appropriate tracker item making sure to state which version of
+singapore it is for.</p>
+
+
 <h2><a name="new">Starting a new translation</a></h2>
+
+<p>The very first thing to do is submit a tracker item on the 
+<a href="http://sourceforge.net/tracker/?atid=611769&group_id=77687">translations tracker</a>
+to inform people of your intentions so that two or more people do not needlessly 
+spend time translating the same files for the same language. Once you have 
+completed your translations you can attach the files to the tracker item.</p>
 
 <p>All language files are kept in a single directory (<code>locale/</code> by
 default). They are named as follows:</p>
@@ -84,7 +104,7 @@ default). They are named as follows:</p>
   translated admin strings as compiled PHP serialized object</li>
 </ul>
 
-<p>where <code><em>LANG</em></code> represents the ISO639 langauge code of the chosen 
+<p>where <code><em>LANG</em></code> represents the ISO639 language code of the chosen 
 language (e.g. <code>de</code> for German, <code>en</code> for English, 
 <code>en-gb</code> for English (United Kingdom)). A more comprehensive list of 
 language codes may be found here: 
@@ -121,8 +141,15 @@ header</a>. You may do this at any stage of the translation.</p>
   You must correctly specify the <a href="#plurals">Plural-forms</a> header field
   in order to make use of plural forms. If you are using a PO editor then it 
   should take care of organising the plurals for you. If not then you must put 
-  each plural in its own msgstr[x] where x is a number between 0 (inclusive) and 
-  the nplurals number you specified in the header.</li>
+  each plural in its own <code>msgstr[<em>x</em>]</code> where x is a number 
+  between 0 (inclusive) and the nplurals number you specified in the header.</li>
+
+  <li>Using a text-editor<br />
+  When translating an entry you must leave the English language strings 
+  (those on lines starting <code>msgid</code>) untouched and insert the 
+  translated strings between the double-quotes on the following lines (those 
+  starting <code>msgstr</code> or <code>msgstr[<em>x</em>]</code> in the case of
+  plurals).</li>
 </ol>
 
 <p>Once you have translated all the strings and filled in the header, you need 
@@ -131,6 +158,42 @@ singapore. Do this using the <a href="../tools/compile.php">compile</a> script
 provided in the <code>tools/</code> directory of the singapore distribution.</p>
 
 <p>And that's it!</p>
+
+<p>Now go and attach your translated PO file(s) to the tracker item you created 
+before starting the translation so that everyone else can make use of it.</p>
+
+<h2>Examples</h2>
+
+<p>The following string
+<pre class="boxed">
+# File: ../includes/singapore.class.php, line: 247
+#, c-format
+msgid "Page created in %s seconds"
+msgstr ""
+</pre>
+when translated into French becomes
+<pre class="boxed">
+# File: ../includes/singapore.class.php, line: 247
+#, c-format
+msgid "Page created in %s seconds"
+msgstr "Page créée en %s secondes"
+</pre>
+
+and the following string
+<pre class="boxed">
+# File: ../includes/admin.class.php, line: 173
+msgid "admin bar|Edit image"
+msgstr ""
+</pre>
+when translated into Italian becomes
+<pre class="boxed">
+# File: ../includes/admin.class.php, line: 173
+msgid "admin bar|Edit image"
+msgstr "Modifica l'immagine"
+
+</pre>
+
+</p>
 
 <h2><a name="header">Filling in the header section</a></h2>
 
@@ -423,7 +486,7 @@ the value of <code>nplurals</code>.</p>
 </ul>
 
 
-<p><em>$Date: 2003/09/09 17:10:36 $</em></p>
+<p><em>$Date: 2003/12/15 01:50:01 $</em></p>
 
 </body>
 </html>

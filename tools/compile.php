@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: compile.php,v 1.2 2003/09/09 17:10:37 tamlyn Exp $
+ * @version $Id: compile.php,v 1.3 2003/12/15 01:50:02 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -167,7 +167,7 @@ function parsePO ($input, $output)
     $strings[0]["plural"] = $pluralString;
     
     // Open data file for writing
-    $fp = @fopen($output, "w") or die("Couldn't open file ({$output}).\n");
+    $fp = @fopen($output, "wb") or die("Couldn't open file ({$output}).\n");
     fwrite($fp, serialize($strings));
     fclose($fp);
 
