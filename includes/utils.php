@@ -49,7 +49,10 @@ function sgGetListing($wd, $type = ""){
           strpos(strtolower($entry),".jpg") ||
           strpos(strtolower($entry),".jpeg")||
           strpos(strtolower($entry),".png") ||
-          strpos(strtolower($entry),".gif")
+          strpos(strtolower($entry),".gif") ||
+          strpos(strtolower($entry),".bmp") ||
+          strpos(strtolower($entry),".tif") ||
+          strpos(strtolower($entry),".tiff")
         ) $dir->files[] = $entry;
       sort($dir->files);
       break;

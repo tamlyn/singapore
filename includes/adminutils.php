@@ -292,7 +292,7 @@ function sgAddImage($gallery)
     else $image = $_REQUEST["sgFileName"];
     
     //make sure file has a recognised extension
-    if(!preg_match("/(\.jpeg)|(\.jpg)|(\.png)|(\.gif)$/i",$image)) $image .= ".jpeg";
+    if(!preg_match("/(\.jpeg)|(\.jpg)|(\.png)|(\.gif)|(\.tiff)|(\.tif)|(\.bmp)$/i",$image)) $image .= ".jpeg";
     
     $path = $GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image";
     
