@@ -1,7 +1,7 @@
 <?php 
 
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\ 
- *  mysqlio.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>      *
+ *  footer.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>       *
  *                                                                     *
  *  This file is part of singapore v0.9.2                              *
  *                                                                     *
@@ -20,27 +20,26 @@
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-//mysqlio version of backend functions - use mysql database
-
-function sgGetGallery($gallery, $galleryOnly = false) {
-  $mp = mysql_connect(sgGetConfig("mysql_host"),sgGetConfig("mysql_user"),sgGetConfig("mysql_pass"));
-}
-
-function sgPutGallery($gal) {
-  echo "MySQL IO functions not implemented";
-}
-
-function sgLogView($gallery, $image = "") {
-  echo "MySQL IO functions not implemented";
-}
-
-function sgGetUsers() {
-  echo "MySQL IO functions not implemented";
-}
-
-function sgPutUsers($users) {
-  echo "MySQL IO functions not implemented";
-}
-
-
 ?>
+<!-- end of generated content -->
+
+<div id="footer"><p>
+  All rights reserved. Images may not be reproduced in any form
+  without the express written permission of the copyright holder.<br />
+  Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.2</a> | 
+  <?php
+    if(sgGetConfig("show_execution_time")) {
+      list($usec, $sec) = explode(" ",$scriptStartTime); 
+      $scriptStartTime = (float)$usec + (float)$sec; 
+      list($usec, $sec) = explode(" ",microtime()); 
+      $scriptEndTime = (float)$usec + (float)$sec; 
+    
+      $scriptExecTime = floor(($scriptEndTime - $scriptStartTime)*1000);
+      echo "Execution time {$scriptExecTime}ms | ";
+    } 
+  ?>
+  <a href="admin.php">admin</a>.
+</p></div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>sg - Readme</title>
+<title>singapore - Readme</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <style>
 body {
@@ -14,6 +14,11 @@ body {
 
 p, pre {
   margin-left: 4em;
+  margin-right: 2em;
+}
+
+li {
+  margin-left: 5em;
   margin-right: 2em;
 }
 
@@ -32,142 +37,238 @@ h2 {
 h3, h4 {
   margin-left: 2em;
 }
+
+.note {
+  color: #d00;
+}
 </style>
 </head>
 
 <body>
 
-<h1>Readme</h1>
-
-<p><strong>sg</strong> - Copyright &copy;2003  Tamlyn Rhodes &lt;tam@zenology.org&gt;</p>
-
-<p>This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.</p>
-
-<p>This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.</p>
-
-<p>sg is still very much in development but for people who know their way around
-PHP, HTML and CSS it could be useful.</p>
 
 
-<h2>Installation</h2>
+<h1>singapore v0.9.2 - Readme</h1>
 
-<p>Extract all the files to a directory accessible by your web server and make 
-sure that the <code>cache/</code> directory is writeable.</p>
+<ul>
+  <li><a href="#release">Release notes</a></li>
+  <li><a href="#history">Changes</a></li>
+  <li><a href="#license">License information</a></li>
+  <li><a href="#install">Installation</a></li>
+  <li><a href="#managing">Gallery management</a></li>
+  <li><a href="#iifn">Info in filename</a></li>
+  <li><a href="#features">Proposed features for future versions</a></li>
+  <li><a href="#history">Version history</a></li>
+  <li><a href="Development.html">Developer documentation</a></li>
+</ul>
 
-<p>You may want to edit <code>includes/config.php</code> but the default values
-should work in most cases. An important thing to note is that there must be at least 
-one gallery in the <code>galleries/</code> directory for the script not to fall 
-over.</p>
-
-<h2>Package content descriptions</h2>
+<h2><a name="license">Licensing information</a></h2>
 
 <pre>
-  .                       top level - can be located anywhere on server
-  admin.php               handles all admin operations
-  index.php               the main gallery script
-  thumb.php               used to generate and serve on-the-fly image thumbnails
-  cache/                  used to cache thumbnails - must be writeable by server
-  galleries/              stores galleries, gallery info and images
-                          each gallery is in it's own subdirectory
-  images/                 images used by sg
-  includes/               PHP scripts
-  includes/adminusers.csv CSV database of authorised admin users in file io mode
-  includes/adminutils.php admin functions
-  includes/backend.php    includes appropriate backend file (fileio or mysqlio)
-  includes/config.php     some configuration information (user editable)
-  includes/fileio.php     IO functions used in file IO mode
-  includes/mysqlio.php    IO functions used in MySQL IO mode (not implemented)
-  includes/frontend.php   XHTML output functions
-  includes/utils.php      other functions
-  logs/                   images access logs (buggy)
-  styles/                 gallery specific CSS files
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+ *  <a href="http://singapore.sourceforge.net/">singapore</a> - Copyright 2003 Tamlyn Rhodes &lt;<a href="mailto:tam@zenology.org">tam@zenology.org</a>&gt;        *
+ *                                                                     *
+ *  singapore is free software; you can redistribute it and/or modify  *
+ *  it under the terms of the <a href="License.txt">GNU General Public License</a> as published  *
+ *  by the Free Software Foundation; either version 2 of the License,  *
+ *  or (at your option) any later version.                             *
+ *                                                                     *
+ *  singapore is distributed in the hope that it will be useful,       *
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty        *
+ *  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.            *
+ *  See the GNU General Public License for more details.               *
+ *                                                                     *
+ *  You should have received a copy of the GNU General Public License  *
+ *  along with this; if not, write to the Free Software Foundation,    *
+ *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
+ \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 </pre>
-  
-<h2>Info in file name</h2>
 
-<p>If sg doesn't find a metadata file in a gallery (see below) it will try to 
+
+<h2><a name="release">Release notes</a></h2>
+
+<p>I have been abroad and hence separated from my computer since the beginning 
+of April which has given me plenty of time to design future features and how to 
+implement them. This version, then, contains a lot of restructuring and so 
+<strong>v0.9.1 DATABASES ARE NOT COMPATIBLE WITH v0.9 DATABASES</strong> and 
+must be converted using the convertdb.php script provided. Hopefully, due to 
+the restructuring in this release, future releases will be entirely backwards 
+compatible.</p>
+
+<h2><a name="install">Installation</a></h2>
+
+<p><strong>singapore</strong> should work 'out of the box' but there are many 
+things that can be done to customise it to your needs. Here are some:</p>
+
+<p>Things you MUST do:</p>
+<ul>
+  <li>Extract all the files in the archive, conserving the directory hierarchy, 
+  to a directory accessible by your web server.</li>
+</ul>
+
+<p>Things you SHOULD do:</p>
+<ul>
+  <li>Add some galleries and images into the <code>galleries/</code> directory 
+  (and remove the example ones provided). <a href="#managing">More info</a>.<br />
+  <span class="note">NOTE: A future release will allow all gallery creation and 
+  management via the web interface but this is not yet implemented.</span></li>
+
+  <li>Set file permissions. This part is dependant on your operating system and 
+  web server setup and can seem quite daunting to a beginner. Your best bet, if 
+  you need help, is to contact your server administrator. If you are the 
+  administrator and still need help then RTFM! Here is the list of files and 
+  directories that need to be writeable by the web server:
+  <ul>
+    <li><code>cache/</code></li>
+    <li><code>galleries/</code> and all subdirectories and files</li>
+    <li><code>includes/adminusers.csv</code></li>
+  </ul>  
+  <span class="note">NOTE: There must be at least one gallery in <code>galleries/</code> or the script 
+  will fall over. This will be fixed in a future release.</span>
+  </li>
+
+  <li>Log into the admin section and change the password. The username is 
+  <code>admin</code> and the default password is <code>password</code>. <br /><span class="note">NOTE: 
+  a future release will allow multiple admin users with different passwords.</span></li>
+</ul>
+
+<p>Things you MIGHT do:</p>
+<ul>
+  <li>Edit the values in <code>includes/config.php</code>. The file is commented
+  and should be self-explanatory but for most purposes the default values will 
+  be fine.</li>
+  
+  <li>Edit <code>includes/header.php</code> and <code>includes/footer.php</code>
+  or use your own custom header and/or footer files by editing the paths in 
+  <code>includes/config.php</code>.</li>
+
+  <li>Make custom "themes" using CSS. <a href="#themes">More info</a>.</li>
+</ul>
+
+
+<h2><a name="managing">Managing your galleries</a></h2>
+
+<p class="note">NOTE: In a future release all gallery management functionality 
+will be provided via the web interface but in the meantime an alternative method is
+required.</p>
+
+<p>If using the <a href="#iifn">info in file name</a> system then all management can be done 
+directly on the files using, for example, an ftp client. To create new galleries
+simply create a new subdirectory of <code>galleries/</code>. To add, move or delete 
+images in a gallery simply add, move or delete the image files in the 
+appropriate directory.</p>
+
+<p>If using metadata files (recommended) then more care is needed. Currently the best way to 
+make galleries is to create a subdirectory of <code>galleries/</code> for each gallery and 
+populate it with images. Then log-in to admin, navigate to the new gallery and 
+click on "Edit current gallery" or "Edit current image" on the Admin bar. You can the enter as much or 
+as little information about each image and gallery as you want and it will be saved into a 
+CSV file. Note, however, that this method does not yet allow 
+addition or removal of images once the gallery has been created. If you feel up to the task of 
+editing the metadata files manually (not as difficult as it sounds) then you may 
+manipulate your gallery however you want. See  
+the <a href="#dbformat">database format description</a>.
+
+<h2><a name="iifn">Info in file name</a></h2>
+
+<p>If <strong>singapore</strong> doesn't find a metadata file in a gallery it will try to 
 extract some sensible information from the image file and directory names as 
 follows:</p>
 
-<p>Underscores (_) are converted to spaces. If a filename or directory name 
+<p>Underscores (_) are converted to spaces and the file extension is discarded 
+by removing the last 4 characters. If a filename or directory name 
 contains the sequence '<code>_-_</code>' (underscore hyphen underscore) or 
 '<code> - </code>' (space hyphen space) then the name will be split on this
 separator. The first half will be interpreted as the artist name and the second 
-half will be interpreted as the gallery or image name depending on context. The 
-file extension is discarded by removing the last 4 characters.</p>
+half will be interpreted as the gallery or image name depending on context. If
+a separator is not found then the file or directory name is interpreted as the
+image or gallery name, respectively.</p>
 
 <p>For example <code>Holiday_Snaps/Tamlyn_Rhodes_-_Pretty_picture_of_Sunset.jpg</code>
 will be translated into an image called "Pretty picture of Sunset" by "Tamlyn 
 Rhodes" in a gallery called "Holiday Snaps".</p>
 
-<h2>Database format</h2>
+<h2><a name="themeing">Making your own themes</a></h2>
 
-<p>If you choose to use metadata files (recommended) then each gallery must 
-contain a CSV (comma separated values) file called metadata.csv
-containing the information about images in the gallery and the gallery itself. 
-CSV files can be edited manually (in a text editor such as Notepad) 
-or using a spreadsheet application (such as MS Excel). Care must be taken when using 
-Excel to save using commas as the separator character and not tabs or semi-colons.</p>
+<p></p>
 
-<p>The first line of each file stores human-readable descriptions of the field 
-and is ignored by sg. The second line stores information about this gallery:</p>
 
-<pre>
-  field 0
-     the filename of the image used to represet the gallery in the gallery list
-  field 1
-     gallery flags (not used)
-  field 2
-     (not used)
-  field 3
-     the name of the gallery
-  field 4
-     (not used)
-  field 5
-     short description of the gallery
-  field 6 onwards
-     (not used)
-</pre>
+<h2><a name="planned">Features planned for future releases</a></h2>
 
-<p>Each of the following lines (2 - ...) represents an image in the gallery. 
-The format is as follows:</p>
+<p>If you particularly want to see one of these features sooner then
+email me or add it to the SourceForge <em>Feature Requests</em> tracker.</p>
 
-<pre>
-  field 0
-     the filename of the image
-  field 1
-     image flags (not used)
-  field 2
-     artist name
-  field 3
-     image name
-  field 4
-     location that the image was taken/made/represents (optional)
-  field 5
-     description of the image (optional)
-  field 6
-     date taken/made (optional)
-  field 7
-     make and model of camera used (optional)
-  field 8
-     make and model of lens used (optional) 
-  field 9
-     make and type of film used (optional)
-</pre>
+<p>Planned before v1.0</p>
+<ul>
+  <li>Web admin can add, delete and rename images and galleries</li>
+  <li>Support for unlimited depth of sub-galleries</li>
+  <li>Gallery list builds only visible galleries (speed improvement)
+  and displays number of images/galleries in each gallery</li>
+  <li>PHPDoc all functions (for developers)</li>
+  <li>Improve navigation in admin mode</li>
+  <li>Alternate gallery views (small thumbnails, large thumbnails, details list etc.)</li>
+  <li>Image and gallery viewing statistics</li>
+</ul>
 
-<h2>Version history</h2>
+<p>Planned after v1.0</p>
+<ul>
+  <li>MySQL database support</li>
+  <li>User accounts with privileges for individual gallery management</li>
+  <li>Web based script configuration</li>
+  <li>Support for image manipulation software other than GD</li>
+</ul>
+
+<p>Proposed for v2.0</p>
+<ul>
+  <li>Proper support for skins and plugins</li>
+  <li>Complete rewrite of code into php classes (improved modularity)</li>
+  <li>Custom thumbnail creation and management online</li>
+  <li>Possibility of integration into content management systems such as Nuke</li>
+</ul>
+
+
+<h2><a name="history">Version history</a></h2>
 
 <p> Key to symbols:<br />
 + added<br />
 - removed<br />
 * fixed<br />
 o changed
+</p>
+
+<h3>0.9.2 - 2003-04-27</h3>
+
+<p>
+* fixed non-expiration of admin sessions in some cases<br />
++ added purge cached thumbnails option<br />
++ new 'XP' theme<br />
+* fixed hit logging functions<br />
++ added image hit log viewing in admin mode<br />
++ images link back to correct page of gallery<br />
+o optimised config.php<br />
+</p>
+
+<h3>0.9.1 - 2003-04-22</h3>
+
+<p>
+o changed database format<br />
++ added visible database fields for artist email, darkroom manipulation and
+  digital manipulation<br />
++ added invisible (control) database fields for thumbnail, owner, groups and categories<br />
+o put header and footer code into separate files<br />
++ implemented limited themeing support<br />
++ added config options for custom paths to cache, galleries, logs, themes, 
+  header, footer and custom css<br />
+o improved navigation in admin mode<br />
++ added optional script execution timer<br />
+* fixed proliferation of newlines in 'desc' field<br />
+* fixed wrongly escaped characters when saving info<br />
+</p>
+
+<h3>0.9a - 2003-04-13</h3>
+
+<p>
++ added much better documentation
 </p>
 
 <h3>0.9 - 2003-03-30</h3>
@@ -187,8 +288,6 @@ o split into separate include files for io operations, ui generation etc<br />
 o first release under GPL<br />
 + everything
 </p>
-
-<p><em>This file last modified: 2003-03-31</em></p>
 
 </body>
 </html>

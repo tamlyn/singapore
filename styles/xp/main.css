@@ -1,9 +1,28 @@
-body {
-  margin: 0 0 1em 0;
+#header {
+  
+}
+
+#footer {
+  text-align: center; 
 }
 
 a img {
   border: 0;
+}
+
+table.sgList {
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+tr.sgRow0 {
+  background-color: #ece9d8;
+  margin: 1px;
+}
+
+tr.sgRow1 {
+  background-color: #f6f4ea;
+  margin: 1px;
 }
 
 table.formTable input, table.formTable textarea {
@@ -11,7 +30,7 @@ table.formTable input, table.formTable textarea {
 }
 
 div.sgAdminBar {
-  background-color: #f0f0f0;
+  background-color: #ece9d8;
   border: 1px solid #000;
   margin: 10px;
   padding: 5px;
@@ -24,7 +43,7 @@ div.sgAdminBar a:link, div.sgAdminBar a:visited, div.sgAdminBar a:active {
   position: relative;
   left: 1px;
   top: 1px;
-  border: 1px solid #f0f0f0;
+  border: 1px solid #ece9d8;
   text-decoration: none;
   padding: 2px;
 }
@@ -49,40 +68,50 @@ table.sgShadow {
 }
 
 table.sgShadow, table.sgShadowTab {
-  background-color: #f0f0f0;
-  /*background: #f0f0f0 url('../images/osx-bg.gif')*/
+  background-color: #ece9d8;
+  /*background: #f0f0f0 url('images/osx-bg.gif')*/
   padding: 0;
   text-align: left;
 }
 
 table.sgShadowTab {
   margin: 0;
+  color: #fff;
+  font: bold;
+  background: url('images/shadow-tabm.gif');
+}
+
+table.sgShadowTab a:link, table.sgShadowTab a:visited {
+  color: #fff;
 }
 
 table.sgShadow td {
   padding: 0;
   margin: 0;
-  font-size: 75%;
 }
 
 table.sgShadow td.tabm, table.sgShadow td.tabr {
   background-color: #fff;
 }
 
+table.sgShadowTab td.tabm {
+  margin-right: 4px;
+}
+
 table.sgShadow td.tl {
-  background-image: url('../images/shadow-tl.gif');
+  background-image: url('images/shadow-tl.gif');
 }
 
 table.sgShadow td.tm {
-  background-image: url('../images/shadow-tm.gif');
+  background-image: url('images/shadow-tm.gif');
 }
 
 table.sgShadow td.tr {
-  background-image: url('../images/shadow-tr.gif');
+  background-image: url('images/shadow-tr.gif');
 }
 
 table.sgShadow td.ml {
-  background-image: url('../images/shadow-ml.gif');
+  background-image: url('images/shadow-ml.gif');
 }
 
 table.sgShadow td.mm {
@@ -90,25 +119,25 @@ table.sgShadow td.mm {
 }
 
 table.sgShadow td.mr {
-  background-image: url('../images/shadow-mr.gif');
+  background-image: url('images/shadow-mr.gif');
 }
 
 table.sgShadow td.bl {
-  background-image: url('../images/shadow-bl.gif');
+  background-image: url('images/shadow-bl.gif');
 }
 
 table.sgShadow td.bm {
-  background-image: url('../images/shadow-bm.gif');
+  background-image: url('images/shadow-bm.gif');
 }
 
 td.br {
-  background-image: url('../images/shadow-br.gif');
+  background-image: url('images/shadow-br.gif');
 }
 
 div.sgGallery {
   margin: 5px;
   padding: 5px;
-  border: 1px solid #555;
+  border: 1px solid #ccc;
   background-color: #fff;
 }
 

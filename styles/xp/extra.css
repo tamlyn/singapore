@@ -5,20 +5,20 @@ body {
   background-color: #fff;
 }
 
-#header {
-  
-}
-
-#footer {
-  text-align: center; 
+p, td, th, li {
+  font: x-small sans-serif;
 }
 
 h1, h2, h3, h4 {
-  color: #f60;
+  color: #0054e3;
+}
+
+h1 {
+  font-size: large;
 }
 
 a:link, a:visited {
-  color: #09f;
+  color: #0064fa;
   text-decoration: underline;
 }
 
@@ -27,14 +27,14 @@ a:hover {
 }
 
 input, textarea, select {
-  border: 1px solid #f60;
+  border: 1px solid #0054e3;
   color: #000;
-  background-color: #fff;
+  background-color: #ece9d8;
 }
 
 input.button {
   font-weight: bold;
   border: 1px outset #fff;
   color: #fff;
-  background-color: #f60;
+  background-color: #0054e3;
 }

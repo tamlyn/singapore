@@ -3,7 +3,7 @@
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *  thumb.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
  *                                                                     *
- *  This file is part of singapore v0.9                                *
+ *  This file is part of singapore v0.9.2                              *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *
@@ -20,8 +20,6 @@
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-
 require "includes/config.php";
 
 showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
@@ -31,10 +29,10 @@ function showThumb($gallery, $image, $maxsize) {
   
   //if image is local (filename does not start with 'http://')
   //then prepend filename with path to current gallery
-  if(substr($img->filename,0,7)!="http://") $imagePath = sgGetConfig("gallery_root")."$gallery/$image";
+  if(substr($img->filename,0,7)!="http://") $imagePath = sgGetConfig("pathto_galleries")."$gallery/$image";
   else $imagePath = $image;
-  $thumbPath = sgGetConfig("thumbnail_cache").$maxsize.strtr("-$gallery-",":/?\\","----").$image;
-  $imageModified = filemtime($imagePath);
+  $thumbPath = sgGetConfig("pathto_cache").$maxsize.strtr("-$gallery-$image",":/?\\","----");
+  $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
   
   if($imageModified<$thumbModified) { //if thumbnail is newer than image output cached thumbnail

@@ -1,3 +1,3 @@
-filename,flags,artist name,image name,image location,image description,date taken,camera info,lens info,film info
-example.jpg,1,,Metadata Example Gallery,,This gallery illustrates the use of metadata files.,,,,
-example.jpg,1,Tamlyn Rhodes,The Beautiful Sky,,Not very inspirational but...,,Nikon CoolPix
+filename,thumbnail,owner,group(s),permissions,catergories,image name,artist name,artist email,copyright,image description,image location,date taken,camera info,lens info,film info,darkroom manipulation,digital manipulation
+example.jpg,,,,,,"Metadata Example Gallery","","","","This gallery illustrates the use of metadata files."
+example.jpg,,,,,,"The Beautiful Sky","Tamlyn Rhodes","","","Not very inspirational but...","","","Nikon CoolPix","","","",""

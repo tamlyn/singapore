@@ -3,7 +3,7 @@
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *  admin.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
  *                                                                     *
- *  This file is part of singapore v0.9                                *
+ *  This file is part of singapore v0.9.2                              *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *
@@ -35,79 +35,80 @@ require "includes/frontend.php";
 require "includes/utils.php";
 require "includes/backend.php";
 
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+//include header file
+include sgGetConfig("pathto_header");
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>singapore admin</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" type="text/css" href="styles/main.css" />
-<link rel="stylesheet" type="text/css" href="styles/<?php echo sgGetConfig("skin_name") ?>.css" />
-</head>
-
-<body>
-
-<div id="header"><img src="images/<?php echo sgGetConfig("skin_name") ?>-header.gif" alt="singapore" /></div>
-
-<?php 
-
-if(isset($_REQUEST["action"])) {
-  switch($_REQUEST["action"]) {
-    case "login" :
-      if(sgLogin()) sgShowAdminOptions();
-      else {
-        echo "<h1>login error</h1>\n";
-        echo "<p>Sorry, unrecognised username or password.</p>\n";
-        sgLoginForm();
-      }
-      break;
-    case "logout" :
-      sgLogout();
-      echo "<h1>admin</h1>\n";
-      echo "<p>Successfully logged out. <a href=\"index.php\">Return to galleries</a>.</p>\n";
-      break;
-    case "editpass" :
-      echo "<h1>change password</h1>\n";
-      echo "<p>Please choose a new password between 6 and 16 characters in length.</p>\n";
-      sgEditPass();
-      break;
-    case "savepass" :
-      echo "<h1>change password</h1>\n";
-      sgSavePass();
-      break;
-    case "newgallery" :
-      sgEditGallery("");
-      break;
-    case "editgallery" :
-      sgEditGallery($_REQUEST["gallery"]);
-      break;
-    case "savegallery" :
-      sgSaveGallery($_REQUEST["gallery"]);
-      break;
-    case "newimage" :
-      sgEditImage($_REQUEST["gallery"],"");
-      break;
-    case "editimage" :
-      sgEditImage($_REQUEST["gallery"],$_REQUEST["image"]);
-      break;
-    case "saveimage" :
-      sgSaveImage($_REQUEST["gallery"],$_REQUEST["image"]);
-      break;
+if(sgIsLoggedIn()) {
+  if(isset($_REQUEST["action"])) {
+    switch($_REQUEST["action"]) {
+      case "login" :
+        if(sgLogin()) sgShowAdminOptions();
+        else {
+          echo "<h1>login error</h1>\n";
+          echo "<p>Sorry, unrecognised username or password.</p>\n";
+          sgLoginForm();
+        }
+        break;
+      case "logout" :
+        sgLogout();
+        echo "<h1>logged out</h1>\n";
+        echo "<p><a href=\"index.php\">Return to galleries</a>.</p>\n";
+        break;
+      case "editpass" :
+        echo "<h1>change password</h1>\n";
+        echo "<p>Please choose a new password between 6 and 16 characters in length.</p>\n";
+        sgEditPass();
+        break;
+      case "savepass" :
+        echo "<h1>change password</h1>\n";
+        sgSavePass();
+        break;
+      case "newgallery" :
+        sgEditGallery("");
+        break;
+      case "editgallery" :
+        sgEditGallery($_REQUEST["gallery"]);
+        break;
+      case "savegallery" :
+        sgSaveGallery($_REQUEST["gallery"]);
+        break;
+      case "newimage" :
+        sgEditImage($_REQUEST["gallery"],"");
+        break;
+      case "editimage" :
+        sgEditImage($_REQUEST["gallery"],$_REQUEST["image"]);
+        break;
+      case "saveimage" :
+        sgSaveImage($_REQUEST["gallery"],$_REQUEST["image"]);
+        break;
+      case "showgalleryhits" :
+        sgShowGalleryHits($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
+        break;
+      case "showimagehits" :
+        sgShowImageHits($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
+        break;
+      case "confirmpurge" :
+        sgShowPurgeConfirmation();
+        break;
+      case "dopurge" :
+        if($_REQUEST["confirm"]=="OK") sgPurgeCache();
+        else sgShowAdminOptions();
+        break;
+    }
+  } else sgShowAdminOptions();
+} elseif(isset($_REQUEST["action"]) && $_REQUEST["action"]=="login") {
+  if(sgLogin()) sgShowAdminOptions();
+  else {
+    echo "<h1>login error</h1>\n";
+    echo "<p>Sorry, unrecognised username or password.</p>\n";
+    sgLoginForm();
   }
-} elseif(sgIsLoggedIn()) {
-  sgShowAdminOptions();
 } else {
   echo "<h1>admin login</h1>\n";
   sgLoginForm();
 }
+
+//include footer file
+include sgGetConfig("pathto_footer");
+
 ?>
-
-<div id="footer"><p>
-  Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9</a> | 
-  <a href="admin.php">admin</a>.
-</p></div>
-
-</body>
-</html>

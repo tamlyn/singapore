@@ -3,7 +3,7 @@
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\ 
  *  frontend.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>     *
  *                                                                     *
- *  This file is part of singapore v0.9                                *
+ *  This file is part of singapore v0.9.2                              *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *
@@ -43,13 +43,13 @@ function sgShowIndex($path, $startat)
   //container frame middle (tab)
   echo $code->tab2;
   
-  foreach($dir->dirs as $gallery){
-    $gal = sgGetGalleryInfo($gallery);
+  for($i=0;$i<count($dir->dirs);$i++) {
+    $gal = sgGetGalleryInfo($dir->dirs[$i]);
     
     echo("<div class=\"sgGallery\"><table class=\"sgGallery\">\n");
     echo("<tr valign=\"top\">\n");
-    echo("  <td class=\"sgGallery\"><a href=\"?gallery=$gallery\"><img src=\"thumb.php?gallery=$gallery&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" /></a></td>\n");
-    echo("  <td><p><strong><a href=\"?gallery=$gallery\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n");
+    echo("  <td class=\"sgGallery\"><a href=\"?gallery=$gal->id\"><img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" /></a></td>\n");
+    echo("  <td><p><strong><a href=\"?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n");
     echo("</tr>\n");
     echo("</table></div>");
   }
@@ -63,7 +63,7 @@ function sgShowThumbnails($gallery, $startat)
   $gal = sgGetGallery($gallery);
   if(!$gal) {
     echo("<h1>gallery '$gallery' not found</h1>\n");
-    sgShowIndex(sgGetConfig("gallery_root"));
+    sgShowIndex(sgGetConfig("pathto_galleries"));
     return;
   }
   
@@ -80,18 +80,20 @@ function sgShowThumbnails($gallery, $startat)
   
   echo "Showing ".($startat+1)."-".($startat+sgGetConfig("main_thumb_number")>count($gal->img)?count($gal->img):$startat+sgGetConfig("main_thumb_number"))." of ".count($gal->img)." | ";
   
-  if($startat>0) echo "<a href=\"?gallery=$gallery&amp;startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a> | ";
+  if($startat>0) echo "<a href=\"?gallery=$gal->id&amp;startat=".($startat-sgGetConfig("main_thumb_number"))."\">Previous</a> | ";
   echo "<a href=\"?\" title=\"Back to galleries list\">Up</a>";
-  if(count($gal->img)>$startat+sgGetConfig("main_thumb_number")) echo " | <a href=\"?gallery=$gallery&amp;startat=".($startat+sgGetConfig("main_thumb_number"))."\">Next</a>";
+  if(count($gal->img)>$startat+sgGetConfig("main_thumb_number")) echo " | <a href=\"?gallery=$gal->id&amp;startat=".($startat+sgGetConfig("main_thumb_number"))."\">Next</a>";
   
   //container frame middle (tab)
   echo $code->tab2;
   
+  $pathto_currenttheme = sgGetConfig("pathto_themes").sgGetConfig("theme_name");
+  
   for($i=$startat;$i<$startat+sgGetConfig("main_thumb_number") && $i<count($gal->img);$i++) {
     echo "<div class=\"sgThumbnail\">\n";
     echo "    <div class=\"sgThumbnailContent\">\n";
-    echo "        <img class=\"borderTL\" src=\"images/slide-tl.gif\" alt=\"\" />\n";
-    echo "        <img class=\"borderTR\" src=\"images/slide-tr.gif\" alt=\"\" />";
+    echo "        <img class=\"borderTL\" src=\"$pathto_currenttheme/images/slide-tl.gif\" alt=\"\" />\n";
+    echo "        <img class=\"borderTR\" src=\"$pathto_currenttheme/images/slide-tr.gif\" alt=\"\" />";
     
     echo "<table><tr><td>";
     echo "<a href=\"?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">";
@@ -104,8 +106,8 @@ function sgShowThumbnails($gallery, $startat)
     echo "        <div class=\"roundedCornerSpacer\">&nbsp;</div>\n";
     echo "    </div>\n";
     echo "    <div class=\"bottomCorners\">\n";
-    echo "        <img class=\"borderBL\" src=\"images/slide-bl.gif\" alt=\"\" />\n";
-    echo "        <img class=\"borderBR\" src=\"images/slide-br.gif\" alt=\"\" />\n";
+    echo "        <img class=\"borderBL\" src=\"$pathto_currenttheme/images/slide-bl.gif\" alt=\"\" />\n";
+    echo "        <img class=\"borderBR\" src=\"$pathto_currenttheme/images/slide-br.gif\" alt=\"\" />\n";
     echo "    </div>\n";
     echo "</div>";
   }
@@ -129,8 +131,8 @@ function sgShowImage($gallery, $image)
   sgShowAdminBar("image", $gallery, $image);
   
   //log image hit
-  if(sgGetConfig("track_views")) sgLogView($gallery, $image);
-  
+  //if(sgGetConfig("track_views")) sgLogView($gallery,$image);
+
   //top navigation bar and preview thumbnails
   echo "<div class=\"sgNavBar\"><p>\n";
   for($i=count($img->prev)-1;$i>=0;$i--)
@@ -144,7 +146,7 @@ function sgShowImage($gallery, $image)
          "</a>\n";
   echo "<br />\n";
   if($img->prev[0]) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
-  echo "<a href=\"?gallery=$gallery\">Thumbnails</a>\n";
+  echo "<a href=\"?gallery=$gallery&amp;startat=".(floor($img->index/20)*20)."\">Thumbnails</a>\n";
   if($img->next[0]) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
   
@@ -158,7 +160,7 @@ function sgShowImage($gallery, $image)
   echo "      <img src=\"";
   //if image is local (filename does not start with 'http://')
   //then prepend filename with path to current gallery
-  if(substr($img->filename,0,7)!="http://") echo sgGetConfig("gallery_root")."$gallery/";
+  if(substr($img->filename,0,7)!="http://") echo sgGetConfig("pathto_galleries")."$gallery/";
   echo "$img->filename\" alt=\"$img->name";
   if(!empty($img->artist)) echo " by $img->artist";
   echo "\" />\n";
@@ -180,15 +182,18 @@ function sgShowImage($gallery, $image)
   
   //image info as available
   echo "<p>\n";
+  if($img->email)    echo "<strong>Artist email:</strong> ".strtr($img->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "))."<br />\n";
   if($img->location) echo "<strong>Location:</strong> $img->location<br />\n";
-  if($img->desc) echo "<strong>Description:</strong> $img->desc<br />\n";
-  if($img->date) echo "<strong>Date:</strong> $img->date<br />\n";
-  if($img->camera) echo "<strong>Camera:</strong> $img->camera<br />\n";
-  if($img->lens) echo "<strong>Lens:</strong> $img->lens<br />\n";
-  //if($img->film) echo "<strong>Film:</strong> $img->film\n";
-  //if(1) echo "<strong>Viewed:</strong> ".sgLogView($gallery,$image)." times<br />\n";
+  if($img->date)     echo "<strong>Date:</strong> $img->date<br />\n";
+  if($img->desc)     echo "<strong>Description:</strong> $img->desc<br />\n";
+  if($img->camera)   echo "<strong>Camera:</strong> $img->camera<br />\n";
+  if($img->lens)     echo "<strong>Lens:</strong> $img->lens<br />\n";
+  if($img->film)     echo "<strong>Film:</strong> $img->film<br />\n";
+  if($img->darkroom) echo "<strong>Darkroom manipulation:</strong> $img->darkroom<br />\n";
+  if($img->digital)  echo "<strong>Digital manipulation:</strong> $img->digital<br />\n";
   if($img->copyright) echo "<strong>Copyright:</strong> $img->copyright<br />\n";
   elseif($img->artist) echo "<strong>Copyright:</strong> $img->artist<br />\n";
+  if(sgGetConfig("show_views")) echo "<strong>Viewed:</strong> ".sgLogView($gallery,$image)." times<br />\n";
   echo "</p>\n";
 }
 
@@ -202,31 +207,31 @@ function sgGetContainerCode()
   $code->tab1 = 
   "<div class=\"sgShadow\"><table class=\"sgShadow\" cellspacing=\"0\">\n".
   "  <tr>\n".
-  "    <td><img src=\"images/shadow-tabl.gif\" alt=\"\" /></td>\n".
+  "    <td><img src=\"".sgGetConfig("pathto_themes").sgGetConfig("theme_name")."/images/shadow-tabl.gif\" alt=\"\" /></td>\n".
   "    <td class=\"tabm\"><table class=\"sgShadowTab\" cellspacing=\"0\"><tr><td>";
   
   $code->tab2 = 
-  "</td><td><img src=\"images/shadow-tabr.gif\" alt=\"\" /></td></tr></table></td>\n".
+  "</td><td><img src=\"".sgGetConfig("pathto_themes").sgGetConfig("theme_name")."/images/shadow-tabr.gif\" alt=\"\" /></td></tr></table></td>\n".
   "    <td class=\"tabr\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "  </tr>\n".
   "  <tr>\n".
-  "    <td class=\"\"><img src=\"images/blank.gif\" width=\"16\" height=\"16\" alt=\"\" /></td>\n".
-  "    <td class=\"\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
+  "    <td class=\"tl\"><img src=\"images/blank.gif\" width=\"16\" height=\"16\" alt=\"\" /></td>\n".
+  "    <td class=\"tm\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "    <td class=\"tr\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "  </tr>\n".
   "  <tr>\n".
-  "    <td class=\"\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
+  "    <td class=\"ml\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "    <td class=\"mm\">\n\n";
   
   $code->top = 
   "<div class=\"sgShadow\"><table class=\"sgShadow\" cellspacing=\"0\">\n".
   "  <tr>\n".
-  "    <td class=\"\"><img src=\"images/blank.gif\" width=\"16\" height=\"16\" alt=\"\" /></td>\n".
-  "    <td class=\"\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
+  "    <td class=\"tl\"><img src=\"images/blank.gif\" width=\"16\" height=\"16\" alt=\"\" /></td>\n".
+  "    <td class=\"tm\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "    <td class=\"tr\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "  </tr>\n".
   "  <tr>\n".
-  "    <td class=\"\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
+  "    <td class=\"ml\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "    <td class=\"mm\">\n\n";
   
   $code->bottom = 
@@ -253,15 +258,16 @@ function sgShowAdminBar($context, $gallery = "", $image = "")
   
   switch($context){
   case "index" :
-    echo "<a href=\"admin.php?action=newgallery\">Add new gallery</a>\n";
+    echo "<a href=\"admin.php?action=newgallery\">New gallery</a>\n";
     break;
   case "gallery" :
-    echo "<a href=\"admin.php?action=editgallery&amp;gallery=$gallery\">Edit current gallery</a>\n";
-    echo "<a href=\"admin.php?action=newimage&amp;gallery=$gallery\">Add new image</a>\n";
+    echo "<a href=\"admin.php?action=editgallery&amp;gallery=$gallery\">Edit gallery</a>\n";
+    echo "<a href=\"admin.php?action=newimage&amp;gallery=$gallery\">New image</a>\n";
     break;
   case "image" :
-    echo "<a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$image\">Edit current image</a>\n";
-    echo "<a href=\"admin.php?action=newimage&amp;gallery=$gallery\">Add new image</a>\n";
+    //echo "<a href=\"admin.php?action=editgallery&amp;gallery=$gallery\">Edit gallery</a>\n";
+    echo "<a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$image\">Edit image</a>\n";
+    echo "<a href=\"admin.php?action=newimage&amp;gallery=$gallery\">New image</a>\n";
     break;
   }
   

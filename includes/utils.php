@@ -3,7 +3,7 @@
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *  utils.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
  *                                                                     *
- *  This file is part of singapore v0.9                                *
+ *  This file is part of singapore v0.9.2                              *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *
@@ -23,13 +23,43 @@
 
 //utility functions - produce no output on stdout
 
-function sgGetListing($wd){
-  $dp = opendir($wd);
-  while($entry = readdir($dp))
-    if(is_dir($wd.$entry) && $entry != "." && $entry != "..") $dir->dirs[] = $entry;
-  closedir($dp);
+function sgGetListing($wd, $type = ""){
   $dir->path = $wd;
-  sort($dir->dirs);
+  $dp = opendir($wd);
+  switch($type) {
+    case "" :
+    case "dirs" :
+      while($entry = readdir($dp))
+        if(
+          is_dir($wd.$entry) && 
+          $entry != "." && 
+          $entry != ".." && 
+          $entry != "CVS" //used in development to ignore CVS directories
+        ) $dir->dirs[] = $entry;
+      if($dir->dirs!=null) sort($dir->dirs);
+      break;
+    case "jpegs" :
+      while($entry = readdir($dp))
+        if(
+          strpos(strtolower($entry),".jpg") || 
+          strpos(strtolower($entry),".jpeg")
+        ) $dir->files[] = $entry;
+      if($dir->files!=null) sort($dir->files);
+      break;
+    case "all" :
+      while($entry = readdir($dp))
+        if(is_dir($wd.$entry)) $dir->dirs[] = $entry;
+        else $dir->files[] = $entry;
+      if($dir->dirs!=null) sort($dir->dirs);
+      if($dir->files!=null) sort($dir->files);
+      break;
+    default :
+      while($entry = readdir($dp))
+        if(strpos(strtolower($entry),$type)) 
+          $dir->files[] = $entry;
+      if($dir->files!=null) sort($dir->files);
+  }
+  closedir($dp);
   return $dir;
 }
 
@@ -40,8 +70,7 @@ function sgGetImage($gallery, $image) {
     if($gal->img[$i]->filename == $image) {
       for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i>$j) $gal->img[$i]->prev[$j] = $gal->img[$i-$j-1];
       for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i<count($gal->img)-$j-1) $gal->img[$i]->next[$j] = $gal->img[$i+$j+1];
-      //$gal->img[$i]->gal = $gal;
-      //unset($gal->img[$i]->gal->img);
+      $gal->img[$i]->index = $i;
       return $gal->img[$i];
     }
   return null;
@@ -54,19 +83,50 @@ function sgPutImage($gallery, $img) {
     if($gal->img[$i]->filename == $img->filename) 
       $gal->img[$i] = $img;
       
-  sgPutGallery($gal);
+  return sgPutGallery($gal);
 }
 
 function sgGetGalleryInfo($gallery){
   return sgGetGallery($gallery, true);
 }
 
+//this function really belongs in adminutils.php but is
+//included here because it is used on every page and
+//adminutils.php is not included on every page
 function sgIsLoggedIn() {
-  if($_SESSION["user"]->check == md5("That girl understood, man. Phew! She fell in love with me, man. $_SERVER[REMOTE_ADDR]") && (time() - $_SESSION["user"]->loginTime < 1800)) {
+  if($_SESSION["user"]->check == md5(sgGetConfig("secret_string").$_SERVER[REMOTE_ADDR]) && (time() - $_SESSION["user"]->loginTime < 1800)) {
 		$_SESSION["user"]->loginTime = time();
 	  return true;
   }
   return false;
+}
+
+function sgLogView($gallery, $image = "") {
+  $hits = sgGetHits($gallery);
+  
+  if(empty($image)) $selected = &$hits; //$selected represents gallery
+  else {
+    //search selected for image in existing log
+    for($i=0;$i<count($hits->img);$i++) 
+      if($hits->img[$i]->filename == $image) {
+        $selected = &$hits->img[$i]; //$selected represents selected image 
+        break;
+      }
+    //if image not found then add it
+    if($i == count($hits->img)) {
+      $hits->img[$i]->filename = $image;
+      $selected = &$hits->img[$i]; //$selected represents new image
+    }
+  }
+  
+  $selected->hits++; //increase hit count by one
+  $selected->lasthit = time(); //log time of last hit
+  
+  //save modified hits data
+  sgPutHits($hits);
+
+  //return number of hits
+  return $selected->hits;
 }
 
 
