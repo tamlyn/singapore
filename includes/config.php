@@ -53,7 +53,7 @@ function sgGetConfig($var) {
        //path to themes
        
     case "pathto_cache":          return "cache/";
-       //path to thumbnail cache (must be writeable by web server)
+       //path to thumbnail cache (must be writable by web server)
        
     case "pathto_galleries":      return "galleries/";
        //path to galleries (must be accessible via local file system)

@@ -452,7 +452,7 @@ function sgShowImageHits($gallery, $startat = 0)
         if($hits->img[$i]->filename == $gal->img[$j]->filename) $gal->img[$j]->hits = $hits->img[$i];
     }
   
-  //get contaner xhtml
+  //get container xhtml
   $code = sgGetContainerCode();
   
   echo "<h1>$gal->name statistics</h1>\n";
