@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.3 2003/10/25 00:23:30 tamlyn Exp $
+ * @version $Id: extract.php,v 1.4 2003/11/01 14:26:47 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -106,7 +106,7 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   fclose($fp);
   
   // Call gettext
-  $res = shell_exec("{$GETTEXT_EXTRACT} --debug --keyword=_g --keyword=_ng:1,2 --keyword=__g -C -F --output=\"" . $adminPot . "\" --files-from=\"" . $temp . "\"");
+  $res = shell_exec("{$GETTEXT_EXTRACT} --debug --keyword=_g --keyword=_ng:1,2 --keyword=__g -C -F -x \"" . $standardPot . "\" --output=\"" . $adminPot . "\" --files-from=\"" . $temp . "\"");
   if (trim($res)) die("Something seemed to go wrong with gettext:\n" . $res . "\n");
   else echo "Admin strings extracted to $adminPot<br />";
   
