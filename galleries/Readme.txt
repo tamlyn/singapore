@@ -1,0 +1,1 @@
+This directory is used to store galleries and images. It must be writable (CHMOD 777).
