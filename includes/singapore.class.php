@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.3 2003/10/18 00:58:08 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.4 2003/10/25 00:22:44 tamlyn Exp $
  */
  
 /**
@@ -54,13 +54,13 @@ class Singapore
   /**
    * Constructor
    */
-  function Singapore()
+  function Singapore($basePath = "")
   {
     //import class definitions
-    require_once "includes/gallery.class.php";
-    require_once "includes/image.class.php";
-    require_once "includes/config.class.php";
-    require_once "includes/io_csv.class.php";
+    require_once $basePath."includes/gallery.class.php";
+    require_once $basePath."includes/image.class.php";
+    require_once $basePath."includes/config.class.php";
+    require_once $basePath."includes/io_csv.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
@@ -466,11 +466,20 @@ class Singapore
   /**
    * @return string the number of images in the specified gallery
    */
-  function imageCountText($index)
+  function imageCountText($index = null)
   {
     return $this->_ng("%s image", "%s images", $this->imageCount($index));
   }
   
+  /**
+   * @param   int     the number of times the object has been viewed
+   * @return  string  text with number of times viewed
+   */
+  function viewedTimesText ($num)
+  {
+    return $this->_ng("viewed|%s time", "viewed|%s times", $num);
+  }
+
   /**
    * @param int the index of the sub gallery to check (optional)
    * @return boolean true if the specified gallery (or the current gallery 
@@ -935,9 +944,9 @@ class Singapore
       else
         $ret[$this->_g("Email")] = "<a href=\"mailto:".$this->image->email."\">".$this->image->email."</a>";
     if(!empty($this->image->location))
-      $ret[$this->_g("Location")]->value = $this->image->location;
+      $ret[$this->_g("Location")] = $this->image->location;
     if(!empty($this->image->date))
-      $ret[$this->_g("Location")] = $this->image->date;
+      $ret[$this->_g("Date")] = $this->image->date;
     if(!empty($this->image->desc))
       $ret[$this->_g("Description")] = $this->image->desc;
     if(!empty($this->image->camera))
@@ -947,7 +956,7 @@ class Singapore
     if(!empty($this->image->film))
       $ret[$this->_g("Film")] = $this->image->film;
     if(!empty($this->image->darkroom))
-      $ret[$this->_g("Darkroom manipulation")]->value = $this->image->darkroom;
+      $ret[$this->_g("Darkroom manipulation")] = $this->image->darkroom;
     if(!empty($this->image->digital))
       $ret[$this->_g("Digital manipulation")] = $this->image->digital;
     if(!empty($this->image->copyright))
