@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.15 2004/02/06 13:59:40 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.16 2004/02/19 19:31:57 tamlyn Exp $
  */
  
 /**
@@ -701,28 +701,28 @@ class Singapore
   }
   
   function navigationLinks() {
-    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->config->base_url."gallery=.\">\n";
+    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->config->base_url."gallery=.\" />\n";
     
     if($this->isImage()) {
-      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."\">\n";
+      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."\" />\n";
       if ($this->imageHasPrev()) {
-        $ret .= "<link rel=\"Prev\" title=\"".$this->imageName($this->image->index-1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->image->index-1]->filename)."\">\n";
-        $ret .= "<link rel=\"First\" title=\"".$this->imageName(0)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[0]->filename)."\">\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$this->imageName($this->image->index-1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->image->index-1]->filename)."\" />\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->imageName(0)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[0]->filename)."\" />\n";
       }
       if ($this->imageHasNext()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->image->index+1]->filename)."\">\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->imageCount()-1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->imageCount()-1]->filename)."\">\n";
+        $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->image->index+1]->filename)."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->imageCount()-1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->imageCount()-1]->filename)."\" />\n";
       }
     } else {
       if($this->gallery->id != ".")
-        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parentName."\" href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\">\n";
+        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parentName."\" href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\" />\n";
       if($this->galleryHasPrev()) {
-        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\">\n";
-        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=0\">\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\" />\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=0\" />\n";
       }
       if($this->galleryHasNext()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\">\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".$this->lastPageIndex()."\">\n";
+        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".$this->lastPageIndex()."\" />\n";
       } 
     }
     return $ret;
