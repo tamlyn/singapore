@@ -83,13 +83,12 @@ function sgGetGallery($gallery, $galleryOnly = false) {
     $gal->filename = isset($dir->files[0])?$dir->files[0]:"__none__";
     $gal->owner = "__nobody__";
     $gal->groups = "__nogroup__";
-    $gal->permissions = 4096;
+    $gal->permissions = 4095;
     $gal->categories = "";
     $gal->email = "";
     $gal->copyright = "";
     $gal->desc = "";
     
-    if($galleryOnly) return $gal;
     
     for($i=0;$i<count($dir->files);$i++) {
       $gal->img[$i]->filename = $dir->files[$i];
@@ -106,7 +105,7 @@ function sgGetGallery($gallery, $galleryOnly = false) {
       $gal->img[$i]->thumbnail = "";
       $gal->img[$i]->owner = "__nobody__";
       $gal->img[$i]->groups = "__nogroup__";
-      $gal->img[$i]->permissions = 4096;
+      $gal->img[$i]->permissions = 4095;
       $gal->img[$i]->categories = "";
       
       $gal->img[$i]->email = $gal->img[$i]->copyright = $gal->img[$i]->desc =
