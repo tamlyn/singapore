@@ -156,6 +156,25 @@ things that can be done to customise it to your needs. Here are some:</p>
   <code>includes/config.php</code>.</li>
 
   <li>Make custom "themes" using CSS. <a href="#themes">More info</a>.</li>
+  
+  <li>If your PHP installation uses GD version 2.0.1 or later then you can get 
+  nicer generated thumbnails by changing two lines of code in <code>thumb.php</code>. 
+  Edit lines 61-65 from the following:
+<pre class="boxed">$thumb = ImageCreate($x,$y);
+<b>//</b>$thumb = ImageCreateTrueColor($x,$y);
+
+ImageCopyResized($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
+<b>//</b>ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);</pre>
+
+To the following:
+
+<pre class="boxed"><b>//</b>$thumb = ImageCreate($x,$y);
+$thumb = ImageCreateTrueColor($x,$y);
+    
+<b>//</b>ImageCopyResized($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
+ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);</pre>
+
+  </li>
 </ul>
 
 
@@ -212,6 +231,13 @@ Rhodes" in a gallery called "Holiday Snaps".</p>
 o changed
 </p>
 
+<h3>0.9.3</h3>
+
+<p>
++ added config option for generated thumbnail JPEG quality<br />
+* handles extended characters in gallery ansd image names (thanks Piotr)<br />
+</p>
+
 <h3>0.9.2 - 2003-04-27</h3>
 
 <p>
@@ -266,7 +292,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/04/29 17:43:47 $</em></p>
+<p><em>$Date: 2003/05/02 17:08:42 $</em></p>
 
 </body>
 </html>
