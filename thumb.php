@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.27 2004/05/15 01:48:16 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.28 2004/06/11 17:59:10 tamlyn Exp $
  */
 
 //require config class
@@ -19,7 +19,7 @@ if(get_magic_quotes_gpc())
 else
   showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["width"], $_REQUEST["height"], isset($_REQUEST["force"]));
 
-function showThumb($gallery, $image, $width, $height, $forceAspect) {
+function showThumb($gallery, $image, $width, $height, $forceSize) {
   //create config object
   $config = new sgConfig();
 
@@ -29,7 +29,7 @@ function showThumb($gallery, $image, $width, $height, $forceAspect) {
   if($isRemoteFile) $imagePath = $image;
   else $imagePath = $config->pathto_galleries."$gallery/$image";
   
-  $thumbPath = $config->pathto_cache.$width."x".$height.($forceAspect?"f":"").strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = $config->pathto_cache.$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
   
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
@@ -59,7 +59,7 @@ function showThumb($gallery, $image, $width, $height, $forceAspect) {
   
   
   //if aspect ratio is to be constrained set crop size
-  if($forceAspect) {
+  if($forceSize) {
     $newAspect = $width/$height;
     $oldAspect = $imageWidth/$imageHeight;
     if($newAspect > $oldAspect) {
@@ -109,7 +109,7 @@ function showThumb($gallery, $image, $width, $height, $forceAspect) {
   switch($config->thumbnail_software) {
   case "im" : //use ImageMagick  
     $cmd  = '"'.$config->pathto_convert.'"';
-    if($forceAspect) $cmd .= " -crop {$cropWidth}x{$cropHeight}+$cropX+$cropY";
+    if($forceSize) $cmd .= " -crop {$cropWidth}x{$cropHeight}+$cropX+$cropY";
     $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
     if($imageType == 2) $cmd .= " -quality $thumbQuality";
     if($config->progressive_thumbs) $cmd .= " -interlace Plane";
