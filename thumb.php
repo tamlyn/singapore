@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.19 2003/12/14 14:39:16 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.20 2004/01/09 20:58:46 tamlyn Exp $
  */
 
 //require config class
@@ -88,7 +88,7 @@ function showThumb($gallery, $image, $maxsize) {
     $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
     if($imageType == 2) $cmd .= " -quality $thumbQuality";
     if($config->remove_jpeg_profile) $cmd .= ' +profile "*"';
-    $cmd .= ' "'.escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"';
+    $cmd .= ' '.escapeshellarg($imagePath).' '.escapeshellarg($thumbPath);
     
     exec($cmd);
     readfile($thumbPath);
