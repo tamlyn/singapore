@@ -12,10 +12,7 @@ a img {
 
 table.sgList {
   background-color: #fff;
-}
-
-table.sgList td {
-  margin: 5px;
+  border: 1px solid #ccc;
 }
 
 tr.sgRow0 {
@@ -28,8 +25,22 @@ tr.sgRow1 {
   margin: 1px;
 }
 
-table.formTable input, table.formTable textarea {
+table.formTable input, table.formTable textarea, table.formTable .inputbox {
   width: 500px;
+}
+
+table.formTable td {
+  vertical-align: top;
+}
+
+table.formTable input.radio {
+  width: 20px;
+  height: 20px;
+}
+
+.sgImageInput {
+  text-align: center;
+  padding: 2px;
 }
 
 div.sgAdminBar {

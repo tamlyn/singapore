@@ -22,9 +22,9 @@
 
 //display functions - produce XHTML output 
 
-function sgShowIndex($path, $startat)
+function sgShowIndex($gallery, $startat)
 {
-  $dir = sgGetListing($path);
+  $dir = sgGetListing(sgGetConfig("pathto_galleries").$gallery);
   
   //get contaner xhtml
   $code = sgGetContainerCode();
@@ -51,7 +51,7 @@ function sgShowIndex($path, $startat)
     echo("  <td class=\"sgGallery\"><a href=\"?gallery=$gal->id\"><img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" /></a></td>\n");
     echo("  <td><p><strong><a href=\"?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n");
     echo("</tr>\n");
-    echo("</table></div>");
+    echo("</table></div>\n\n");
   }
   
   //container frame bottom
@@ -63,7 +63,7 @@ function sgShowThumbnails($gallery, $startat)
   $gal = sgGetGallery($gallery);
   if(!$gal) {
     echo("<h1>gallery '$gallery' not found</h1>\n");
-    sgShowIndex(sgGetConfig("pathto_galleries"));
+    sgShowIndex("",0);
     return;
   }
   
@@ -91,25 +91,25 @@ function sgShowThumbnails($gallery, $startat)
   
   for($i=$startat;$i<$startat+sgGetConfig("main_thumb_number") && $i<count($gal->img);$i++) {
     echo "<div class=\"sgThumbnail\">\n";
-    echo "    <div class=\"sgThumbnailContent\">\n";
-    echo "        <img class=\"borderTL\" src=\"$pathto_currenttheme/images/slide-tl.gif\" alt=\"\" />\n";
-    echo "        <img class=\"borderTR\" src=\"$pathto_currenttheme/images/slide-tr.gif\" alt=\"\" />";
+    echo "  <div class=\"sgThumbnailContent\">\n";
+    echo "    <img class=\"borderTL\" src=\"$pathto_currenttheme/images/slide-tl.gif\" alt=\"\" />\n";
+    echo "    <img class=\"borderTR\" src=\"$pathto_currenttheme/images/slide-tr.gif\" alt=\"\" />\n";
     
-    echo "<table><tr><td>";
-    echo "<a href=\"?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">";
-    echo "<img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}&amp;size=";
+    echo "    <table><tr><td>\n";
+    echo "      <a href=\"?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">\n";
+    echo "        <img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}&amp;size=";
     echo sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"{$gal->img[$i]->name}";
     if(!empty($gal->img[$i]->artist)) echo " by {$gal->img[$i]->artist}";
-    echo "\" /></a> ";
-    echo "</td></tr></table>\n";
+    echo "\" />\n      </a>\n";
+    echo "    </td></tr></table>\n";
     
-    echo "        <div class=\"roundedCornerSpacer\">&nbsp;</div>\n";
-    echo "    </div>\n";
-    echo "    <div class=\"bottomCorners\">\n";
-    echo "        <img class=\"borderBL\" src=\"$pathto_currenttheme/images/slide-bl.gif\" alt=\"\" />\n";
-    echo "        <img class=\"borderBR\" src=\"$pathto_currenttheme/images/slide-br.gif\" alt=\"\" />\n";
-    echo "    </div>\n";
-    echo "</div>";
+    echo "    <div class=\"roundedCornerSpacer\">&nbsp;</div>\n";
+    echo "  </div>\n";
+    echo "  <div class=\"bottomCorners\">\n";
+    echo "    <img class=\"borderBL\" src=\"$pathto_currenttheme/images/slide-bl.gif\" alt=\"\" />\n";
+    echo "    <img class=\"borderBR\" src=\"$pathto_currenttheme/images/slide-br.gif\" alt=\"\" />\n";
+    echo "  </div>\n";
+    echo "</div>\n\n";
   }
   
   //contaner frame bottom
@@ -123,6 +123,11 @@ function sgShowImage($gallery, $image)
 {
   //get image object
   $img = sgGetImage($gallery, $image);
+  if(!$img) {
+    echo("<h1>image '$image' not found</h1>\n");
+    sgShowThumbnails($gallery,0);
+    return;
+  }
   
   //get contaner xhtml
   $code = sgGetContainerCode();
@@ -195,13 +200,9 @@ function sgShowImage($gallery, $image)
   if($img->digital)  echo "<strong>Digital manipulation:</strong> $img->digital<br />\n";
   if($img->copyright) echo "<strong>Copyright:</strong> $img->copyright<br />\n";
   elseif($img->artist) echo "<strong>Copyright:</strong> $img->artist<br />\n";
-  if(sgGetConfig("show_views")) echo "<strong>Viewed:</strong> ".sgLogView($gallery,$image)." times<br />\n";
+  if(sgGetConfig("track_views")) $hits = sgLogView($gallery,$image);
+  if(sgGetConfig("show_views")) echo "<strong>Viewed:</strong> $hits times<br />\n";
   echo "</p>\n";
-}
-
-function sgShowAdmin()
-{
-  
 }
 
 function sgGetContainerCode()

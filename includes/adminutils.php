@@ -55,19 +55,41 @@ function sgLoginForm() {
   echo "  Password: <input type=\"password\" name=\"pass\" />\n";
   echo "  <input type=\"submit\" class=\"button\" value=\" Go \" />\n";
   echo "</p>\n";
-  echo "</form>";
+  echo "</form>\n";
 } 
 
-function sgEditGallery($gallery = "")
+function sgNewGallery() {
+  echo "<h1>new gallery</h1>\n";
+  
+  echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"addgallery\" />\n";
+  
+  echo "<table class=\"formTable\">\n";
+  echo "<tr>\n  <td>Identifier:</td>\n  <td><input type=\"text\" name=\"gallery\" value=\"".md5(uniqid(rand(),1))."\" size=\"40\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Create\" /></td>\n</tr>\n";
+  echo "</table>\n";
+  
+  echo "</form>\n";
+
+}
+
+function sgAddGallery($gallery)
+{
+  $path = sgGetConfig("pathto_galleries").$gallery;
+  if(!file_exists($path) && mkdir($path, sgGetConfig("directory_mode"))) return true;
+  return false;
+}
+
+function sgEditGallery($gallery)
 { 
-  if(empty($gallery)) { echo "<p>The web interface cannot add galleries yet. See <a href=\"Readme.html#managing\">Readme</a>.</p>"; return; }
-  
   $gal = sgGetGalleryInfo($gallery);
+  if(!$gal) {
+    echo("<h1>gallery '$gallery' not found</h1>\n");
+    sgShowIndex(sgGetConfig("pathto_galleries"),0);
+    return;
+  }
   
-  echo "<p style=\"float:right\"><a href=\"index.php?gallery=$gallery\">";
-  echo "<img src=\"thumb.php?gallery=$gallery&amp;image=$gal->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"Sample image from gallery\" />";
-  echo "</a></p> ";
-  echo "<h1>edit gallery: $gal->name</h1>\n";
+  echo "<h1>edit gallery</h1>\n";
   
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"savegallery\" />\n";
@@ -76,7 +98,12 @@ function sgEditGallery($gallery = "")
   echo "<input type=\"hidden\" name=\"sgGroups\" value=\"$img->groups\" />\n";
   echo "<input type=\"hidden\" name=\"sgPermissions\" value=\"$img->permissions\" />\n";
   echo "<input type=\"hidden\" name=\"sgCategories\" value=\"$img->categories\" />\n";
+  
   echo "<table class=\"formTable\">\n";
+  echo "<tr>\n  <td>Gallery thumbnail:</td>\n  <td><div class=\"inputbox sgImageInput\">";
+  if($gal->filename) echo "<a href=\"index.php?gallery=$gallery\"><img src=\"thumb.php?gallery=$gallery&amp;image=$gal->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"Sample image from gallery\" /></a>";
+  else echo "none";
+  echo "</div></td>\n</tr>\n";
   echo "<tr>\n  <td>Gallery name:</td>\n  <td><input type=\"text\" name=\"sgGalleryName\" value=\"".htmlentities($gal->name)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Artist name:</td>\n  <td><input type=\"text\" name=\"sgArtistName\" value=\"".htmlentities($gal->artist)."\" size=\"40\" />*</td>\n</tr>\n";
   echo "<tr>\n  <td>Artist email:</td>\n  <td><input type=\"text\" name=\"sgArtistEmail\" value=\"".htmlentities($gal->email)."\" size=\"40\" />*</td>\n</tr>\n";
@@ -84,8 +111,9 @@ function sgEditGallery($gallery = "")
   echo "<tr>\n  <td valign=\"top\">Description:</td>\n  <td><textarea name=\"sgGalleryDesc\" cols=\"70\" rows=\"8\">".str_replace("<br />","\n",htmlentities($gal->desc))."</textarea></td>\n</tr>\n";
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
   echo "</table>\n";
+  
   echo "<p>Note: fields marked * are stored in the database but are not currently used.</p>";
-  echo "</form>";
+  echo "</form>\n";
 }
 
 function sgSaveGallery($gallery)
@@ -110,23 +138,67 @@ function sgSaveGallery($gallery)
   echo 
   "<ul>\n".
   "  <li><a href=\"index.php?gallery=$gallery\">View gallery</a></li>\n".
-  "  <li><a href=\"admin.php?action=editgallery\">New gallery</a></li>\n".
+  "  <li><a href=\"admin.php?action=newgallery\">New gallery</a></li>\n".
   //"  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgNextImage]\">Edit next image</a></li>\n".
   //"  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgPrevImage]\">Edit previous image</a></li>\n".
   "</ul>\n";
 }
 
-function sgEditImage($gallery, $image = "")
+function sgNewImage($gallery) {
+  echo "<h1>new image</h1>\n";
+  
+  echo "<form action=\"$_SERVER[PHP_SELF]\" enctype=\"multipart/form-data\" method=\"post\">\n";
+  echo "<input type=\"hidden\" name=\"gallery\" value=\"$gallery\" />\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"addimage\" />\n";
+  
+  echo "<table class=\"formTable\">\n";
+  echo "<tr>\n  <td>Identifier:</td>\n  <td>\n    <input type=\"radio\" class=\"radio\" name=\"sgNameChoice\" value=\"same\" checked=\"true\"> Use filename of uploaded file.<br />\n";
+  echo "    <input type=\"radio\" class=\"radio\" name=\"sgNameChoice\" value=\"new\"> Specify different filename:<br />\n    <input type=\"text\" name=\"sgFileName\" value=\"".md5(uniqid(rand(),1)).".jpeg\" size=\"40\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td>Image file to upload:</td>\n  <td><input type=\"file\" name=\"sgImageFile\" value=\"\" size=\"40\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Create\" /></td>\n</tr>\n";
+  echo "</table>\n";
+  
+  echo "</form>\n";
+
+}
+
+function sgAddImage($gallery)
+{
+  $gal = sgGetGallery($gallery);
+  if(!$gal) return false;
+  
+  //set filename as requested
+  if($_REQUEST["sgNameChoice"] == "same") $image = $_FILES["sgImageFile"]["name"];
+  else $image = $_REQUEST["sgFileName"];
+  
+  //make sure file has a .jpeg extension
+  if(!preg_match("/(\.jpeg)|(\.jpg)$/i",$image)) $image .= ".jpeg";
+  
+  $path = sgGetConfig("pathto_galleries")."$gallery/$image";
+  
+  if(file_exists($path) || !move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) 
+    return false;
+  
+  $index = count($gal->img);
+  
+  $gal->img[$index]->filename = $image;
+  $gal->img[$index]->name = $image;
+  
+  sgPutGallery($gal);
+  
+  return $image;
+}
+
+function sgEditImage($gallery, $image)
 { 
-  if(empty($image)) { echo "<p>The web interface cannot add images yet. See <a href=\"Readme.html#managing\">Readme</a>.</p>"; return; }
-  
   $img = sgGetImage($gallery, $image);
+  if(!$img) {
+    echo("<h1>image '$image' not found</h1>\n");
+    sgShowThumbnails($gallery,0);
+    return;
+  }
   
-  echo "<p style=\"float:right\"><a href=\"index.php?gallery=$gallery&amp;image=$img->filename\">";
-  echo "<img src=\"thumb.php?gallery=$gallery&amp;image=$img->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"$img->name by $img->artist\" />";
-  echo "</a></p> ";
-      
-  echo "<h1>edit image: $img->name</h1>\n";
+  echo "<h1>edit image</h1>\n";
   
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"saveimage\" />\n";
@@ -140,6 +212,7 @@ function sgEditImage($gallery, $image = "")
   echo "<input type=\"hidden\" name=\"sgNextImage\" value=\"{$img->next[0]->filename}\" />\n";
   echo "<input type=\"hidden\" name=\"sgPrevImage\" value=\"{$img->prev[0]->filename}\" />\n";
   echo "<table class=\"formTable\">\n";
+  echo "<tr>\n  <td>Image:</td>\n  <td><div class=\"inputbox sgImageInput\"><a href=\"index.php?gallery=$gallery&amp;image=$img->filename\"><img src=\"thumb.php?gallery=$gallery&amp;image=$img->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"Thumbnail of currently selected image\" /></a></div></td>\n</tr>\n";
   echo "<tr>\n  <td>Image name:</td>\n  <td><input type=\"text\" name=\"sgImageName\" value=\"".htmlentities($img->name)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Artist name:</td>\n  <td><input type=\"text\" name=\"sgArtistName\" value=\"".htmlentities($img->artist)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Artist email:</td>\n  <td><input type=\"text\" name=\"sgArtistEmail\" value=\"".htmlentities($img->email)."\" size=\"40\" /></td>\n</tr>\n";
@@ -154,7 +227,7 @@ function sgEditImage($gallery, $image = "")
   echo "<tr>\n  <td>Digital manipulation:</td>\n  <td><input type=\"text\" name=\"sgDigital\" value=\"".htmlentities($img->digital)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
   echo "</table>\n";
-  echo "</form>";
+  echo "</form>\n";
 }
 
 function sgSaveImage($gallery, $image)
@@ -183,7 +256,7 @@ function sgSaveImage($gallery, $image)
   echo 
   "<ul>\n".
   "  <li><a href=\"index.php?gallery=$gallery&amp;image=$image\">View image</a></li>\n".
-  "  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery\">New image</a></li>\n".
+  "  <li><a href=\"admin.php?action=newimage&amp;gallery=$gallery\">New image</a></li>\n".
   "  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgNextImage]\">Edit next image</a></li>\n".
   "  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgPrevImage]\">Edit previous image</a></li>\n".
   "  <li><a href=\"index.php?gallery=$gallery\">View gallery</a></li>\n".
@@ -202,7 +275,7 @@ function sgShowAdminOptions()
   echo "  <li><a href=\"admin.php?action=confirmpurge\">Purge cached thumbnails</a></li>\n";
   echo "  <li><a href=\"admin.php?action=editpass\">Change password</a></li>\n";
   echo "  <li><a href=\"admin.php?action=logout\">Logout</a></li>\n";
-  echo "</ul>";
+  echo "</ul>\n";
 }
 
 function sgEditPass()
@@ -216,7 +289,7 @@ function sgEditPass()
   echo "<tr>\n  <td>Confirm password:</td>\n  <td><input type=\"password\" name=\"sgNewPass2\" size=\"23\" /></td>\n</tr>\n";
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
   echo "</table>\n";
-  echo "</form>";
+  echo "</form>\n";
 }
 
 function sgSavePass()
@@ -231,8 +304,8 @@ function sgSavePass()
         if($_POST["sgNewPass1"]==$_POST["sgNewPass2"])
           if(strlen($_POST["sgNewPass1"]) >= 6 && strlen($_POST["sgNewPass1"]) <= 16) { 
             $users[$i]->userpass = md5($_POST["sgNewPass1"]);
-            sgPutUsers($users);
-            echo "<h1>password changed</h1>\n<p><a href=\"admin.php\">Admin options</a></p>";
+            if(sgPutUsers($users)) echo "<h1>password changed</h1>\n<p><a href=\"admin.php\">Admin options</a>.</p>";
+            else echo "<h1>password error</h1>\n<p>There was an error saving the new password. Password not changed. <a href=\"admin.php\">Admin options</a>.</p>";
           } else { echo "<h1>password error</h1>\n<p>New password must be between 6 and 16 characters long.</p>"; sgEditPass(); }
         else { echo "<h1>password error</h1>\n<p>The new passwords you entered do not match.</p>"; sgEditPass(); }
       else { echo "<h1>password error</h1>\n<p>The current password you entered does not match the one in the database.</p>"; sgEditPass(); }
@@ -339,7 +412,7 @@ function sgShowGalleryHits($gallery = "", $startat = 0)
 
 function sgShowPurgeConfirmation()
 {
-  $dir = sgGetListing(sgGetConfig("pathto_cache"),"all");
+  $dir = sgGetListing(sgGetConfig("pathto_cache"),"jpegs");
 
   echo "<h1>purge thumbnails</h1>\n";
   
@@ -354,7 +427,7 @@ function sgShowPurgeConfirmation()
 
 function sgPurgeCache()
 {
-  $dir = sgGetListing(sgGetConfig("pathto_cache"),"all");
+  $dir = sgGetListing(sgGetConfig("pathto_cache"),"jpegs");
   
   $success = true;
   
@@ -364,7 +437,7 @@ function sgPurgeCache()
   
   if($success) echo "<h1>thumbnails purged</h1>\n";
 
-  echo "<p><a href=\"admin.php\">Admin options</a></p>";
+  echo "<p><a href=\"admin.php\">Admin options</a></p>\n";
 }
 
 

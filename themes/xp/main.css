@@ -25,8 +25,22 @@ tr.sgRow1 {
   margin: 1px;
 }
 
-table.formTable input, table.formTable textarea {
+table.formTable input, table.formTable textarea, table.formTable .inputbox {
   width: 500px;
+}
+
+table.formTable td {
+  vertical-align: top;
+}
+
+table.formTable input.radio {
+  width: 20px;
+  height: 20px;
+}
+
+.sgImageInput {
+  text-align: center;
+  padding: 2px;
 }
 
 div.sgAdminBar {
@@ -78,7 +92,7 @@ table.sgShadow, table.sgShadowTab {
 table.sgShadowTab {
   margin: 0;
   color: #fff;
-  background: url('images/shadow-tabm.gif');
+  background: #0054e3 url('images/shadow-tabm.gif');
 }
 
 table.sgShadowTab a:link, table.sgShadowTab a:visited {

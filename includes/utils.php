@@ -25,7 +25,10 @@
 
 function sgGetListing($wd, $type = ""){
   $dir->path = $wd;
-  $dp = opendir($wd);
+  $dp = @opendir($wd);
+  
+  if(!$dp) return false;
+  
   switch($type) {
     case "" :
     case "dirs" :
@@ -73,7 +76,7 @@ function sgGetImage($gallery, $image) {
       $gal->img[$i]->index = $i;
       return $gal->img[$i];
     }
-  return null;
+  return false;
 }
 
 function sgPutImage($gallery, $img) {

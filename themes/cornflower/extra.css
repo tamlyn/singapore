@@ -26,9 +26,14 @@ a:hover {
   text-decoration: none;
 }
 
-input, textarea, select {
+input, textarea, select, .inputbox {
   border: 1px solid #f60;
   color: #000;
+  background-color: #fff;
+}
+
+input.radio {
+  border: none;
   background-color: #fff;
 }
 

@@ -63,7 +63,12 @@ if(sgIsLoggedIn()) {
         sgSavePass();
         break;
       case "newgallery" :
-        sgEditGallery("");
+        sgNewGallery();
+        break;
+      case "addgallery" :
+        if(sgAddGallery($_REQUEST["gallery"])) sgEditGallery($_REQUEST["gallery"]);
+        else echo "<h1>error creating gallery</h1>\n <p>Gallery could not be created. ".
+                  "It may already exist or you may not have permission to create a gallery here.</p>";
         break;
       case "editgallery" :
         sgEditGallery($_REQUEST["gallery"]);
@@ -72,7 +77,12 @@ if(sgIsLoggedIn()) {
         sgSaveGallery($_REQUEST["gallery"]);
         break;
       case "newimage" :
-        sgEditImage($_REQUEST["gallery"],"");
+        sgNewImage($_REQUEST["gallery"]);
+        break;
+      case "addimage" :
+        if($image = sgAddImage($_REQUEST["gallery"])) sgEditImage($_REQUEST["gallery"], $image);
+        else echo "<h1>error adding image</h1>\n <p>Image could not be added. ".
+                  "It may already exist or you may not have permission to add an image here.</p>";
         break;
       case "editimage" :
         sgEditImage($_REQUEST["gallery"],$_REQUEST["image"]);

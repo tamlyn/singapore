@@ -3,7 +3,7 @@
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *  config.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>       *
  *                                                                     *
- *  This file is part of singapore v0.9.2                              *
+ *  This file is part of singapore v0.9.3                              *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *
@@ -73,7 +73,7 @@ function sgGetConfig($var) {
     case "track_views" :          return true;
        //whether to enable image view counting
 
-    case "show_views" :          return true;
+    case "show_views" :           return true;
        //whether to display image view counting
 
     case "show_execution_time" :  return true;
@@ -95,8 +95,16 @@ function sgGetConfig($var) {
     case "thumbnail_quality" :    return 50;
        //the JPEG quality of generated thumbnails
        //100 is the best quality; 0 is the lowest
+       
+    case "directory_mode" :       return 0777;
+       //the permissions to set on directories
+       //(i.e. galleries) created by the script
+       
+    case "file_mode" :            return 0666;
+       //the permissions to set on files (i.e. images, metadata 
+       //files, thumbnails and logs) created by the script
   }
   return null;
 }
 
- ?>
+?>

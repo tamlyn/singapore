@@ -197,9 +197,9 @@ click on "Edit current gallery" or "Edit current image" on the Admin bar. You ca
 as little information about each image and gallery as you want and it will be saved into a 
 CSV file. Note, however, that this method does not yet allow 
 addition or removal of images once the gallery has been created. If you feel up to the task of 
-editing the metadata files manually (not as difficult as it sounds) then you may 
-manipulate your gallery however you want. See  
-the <a href="#dbformat">database format description</a>.
+editing the metadata files manually (not as difficult as it sounds - use Excel or equivalent) 
+then you may manipulate your gallery however you want. See  
+the <a href="Development.html#csvformat">database format description</a>.
 
 <h2><a name="iifn">Info in file name</a></h2>
 
@@ -208,9 +208,9 @@ extract some sensible information from the image file and directory names as
 follows:</p>
 
 <p>Underscores (_) are converted to spaces and the file extension is discarded 
-by removing the last 4 characters. If a filename or directory name 
-contains the sequence '<code>_-_</code>' (underscore hyphen underscore) or 
-'<code> - </code>' (space hyphen space) then the name will be split on this
+by removing all characters after the last . (dot) in the filename. If a filename or 
+directory name contains the sequence '<code>_-_</code>' (underscore hyphen underscore) 
+or '<code> - </code>' (space hyphen space) then the name will be split on this
 separator. The first half will be interpreted as the artist name and the second 
 half will be interpreted as the gallery or image name depending on context. If
 a separator is not found then the file or directory name is interpreted as the
@@ -236,7 +236,9 @@ o changed
 <p>
 + added config option for generated thumbnail JPEG quality<br />
 * handles extended characters in gallery ansd image names<br />
-* fixed 'images link back to correct page of gallery'
+* fixed 'images link back to correct page of gallery'<br />
++ added directory_mode and file_mode options<br />
+* track_views and show_views now work indepentantly<br />
 </p>
 
 <h3>0.9.2 - 2003-04-27</h3>
@@ -293,7 +295,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/06 15:57:15 $</em></p>
+<p><em>$Date: 2003/05/07 21:26:08 $</em></p>
 
 </body>
 </html>

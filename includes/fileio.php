@@ -70,8 +70,7 @@ function sgGetGallery($gallery, $galleryOnly = false) {
       ) = $temp[$i+2];
     
     return $gal;
-  } else {
-    $dir = sgGetListing(sgGetConfig("pathto_galleries")."$gal->id/", "jpegs");
+  } elseif($dir = sgGetListing(sgGetConfig("pathto_galleries")."$gal->id/", "jpegs")) {
     for($i=0;$i<count($dir->files);$i++) $gal->img[$i]->filename = $dir->files[$i];
     
     $temp = strtr($gal->id, "_", " ");
@@ -92,51 +91,52 @@ function sgGetGallery($gallery, $galleryOnly = false) {
     
     //sort($gal->img);
     return $gal;
-  }
+  } else 
+      return false;
 }
 
 function sgPutGallery($gal) {
   
   $fp = fopen(sgGetConfig("pathto_galleries").$gal->id."/metadata.csv","w");
   
-  if($fp) {
-    fwrite($fp,"filename,thumbnail,owner,group(s),permissions,catergories,image name,artist name,artist email,copyright,image description,image location,date taken,camera info,lens info,film info,darkroom manipulation,digital manipulation");
-    fwrite($fp,"\n".
-    $gal->filename.",,".
-    $gal->owner.",".
-    $gal->groups.",".
-    $gal->permissions.",".
-    $gal->categories.",\"".
-    str_replace("\"","\"\"",$gal->name)."\",\"".
-    str_replace("\"","\"\"",$gal->artist)."\",\"".
-    str_replace("\"","\"\"",$gal->email)."\",\"".
-    str_replace("\"","\"\"",$gal->copyright)."\",\"".
-    str_replace("\"","\"\"",$gal->desc)."\"");
-    
-    for($i=0;$i<count($gal->img);$i++)
-      fwrite($fp,"\n".
-      $gal->img[$i]->filename.",".
-      $gal->img[$i]->thumbnail.",".
-      $gal->img[$i]->owner.",".
-      $gal->img[$i]->groups.",".
-      $gal->img[$i]->permissions.",".
-      $gal->img[$i]->categories.",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->name)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->artist)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->email)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->copyright)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->desc)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->location)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->date)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->camera)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->lens)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->film)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->darkroom)."\",\"".
-      str_replace("\"","\"\"",$gal->img[$i]->digital)."\"");
-    fclose($fp);
-    return true;
-  } else return false;
+  if(!$fp) return false;
+
+  fwrite($fp,"filename,thumbnail,owner,group(s),permissions,catergories,image name,artist name,artist email,copyright,image description,image location,date taken,camera info,lens info,film info,darkroom manipulation,digital manipulation");
+  fwrite($fp,"\n".
+  $gal->filename.",,".
+  $gal->owner.",".
+  $gal->groups.",".
+  $gal->permissions.",".
+  $gal->categories.",\"".
+  str_replace("\"","\"\"",$gal->name)."\",\"".
+  str_replace("\"","\"\"",$gal->artist)."\",\"".
+  str_replace("\"","\"\"",$gal->email)."\",\"".
+  str_replace("\"","\"\"",$gal->copyright)."\",\"".
+  str_replace("\"","\"\"",$gal->desc)."\"");
   
+  for($i=0;$i<count($gal->img);$i++)
+    fwrite($fp,"\n".
+    $gal->img[$i]->filename.",".
+    $gal->img[$i]->thumbnail.",".
+    $gal->img[$i]->owner.",".
+    $gal->img[$i]->groups.",".
+    $gal->img[$i]->permissions.",".
+    $gal->img[$i]->categories.",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->name)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->artist)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->email)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->copyright)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->desc)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->location)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->date)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->camera)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->lens)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->film)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->darkroom)."\",\"".
+    str_replace("\"","\"\"",$gal->img[$i]->digital)."\"");
+  fclose($fp);
+
+  return true;
 }
 
 function sgGetHits($gallery) {

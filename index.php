@@ -41,10 +41,7 @@ include sgGetConfig("pathto_header");
 
 if(isset($_REQUEST["image"])) sgShowImage($_REQUEST["gallery"],$_REQUEST["image"]);
 elseif(isset($_REQUEST["gallery"])) sgShowThumbnails($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
-else {
-  //echo("<h1>singapore</h1>\n");
-  sgShowIndex(sgGetConfig("pathto_galleries"),isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
-}
+else sgShowIndex(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
 
 //include footer file
 include sgGetConfig("pathto_footer");
