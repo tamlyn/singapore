@@ -23,14 +23,18 @@
 //mysqlio version of backend functions - use mysql database
 
 function sgGetGallery($gallery, $galleryOnly = false) {
-  $mp = mysql_connect(sgGetConfig("mysql_host"),sgGetConfig("mysql_user"),sgGetConfig("mysql_pass"));
+  echo "MySQL IO functions not implemented";
 }
 
 function sgPutGallery($gal) {
   echo "MySQL IO functions not implemented";
 }
 
-function sgLogView($gallery, $image = "") {
+function sgGetHits($gallery) {
+  echo "MySQL IO functions not implemented";
+}
+
+function sgPutHits($hits) {
   echo "MySQL IO functions not implemented";
 }
 
