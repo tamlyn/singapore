@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: test.php,v 1.10 2004/05/13 01:14:48 tamlyn Exp $
+ * @version $Id: test.php,v 1.11 2004/10/19 21:50:28 tamlyn Exp $
  */
 
 if(isset($_REQUEST["phpinfo"])) {
@@ -81,8 +81,7 @@ function doTests()
     $gd_version_number = substr($gd_version_text,0,strpos($gd_version_text,"."));
     $gd_version_number = substr($gd_version_number, strlen($gd_version_number)-1);
     setupMessage("Found GD: $gd_version_text");
-    if($gd_version_number=="1") setupMessage("This version of GD produces very poor quality thumbnails and use of ImageMagick is greatly preferred");
-    elseif($gd_version_number=="2") setupMessage("To take advantage of GD2's higher quality thumbnails change the <code>thumbnail_software</code> option in singapore.ini to \"gd2\"");
+    if($gd_version_number=="1") setupMessage("Please edit config file to use GD1 instead of the default GD2. GD1 produces very poor quality thumbnails so please use GD2 or ImageMagick if available");
   }
   
   setupHeader("Testing for ImageMagick");
@@ -126,7 +125,7 @@ function setupError($var)
 <head>
 <title>testing singapore</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" type="text/css" href="templates/default/main.css" />
+<link rel="stylesheet" type="text/css" href="docs/docstyle.css" />
 </head>
 
 <body>

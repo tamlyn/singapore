@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: setup.php,v 1.10 2004/09/28 00:51:38 tamlyn Exp $
+ * @version $Id: setup.php,v 1.11 2004/10/19 21:50:28 tamlyn Exp $
  */
 
 //require config class
@@ -20,38 +20,8 @@ $config->pathto_cache = $config->pathto_data_dir."cache/";
 
 function doSetdown()
 {
-  $success = true;
-  
-  setupHeader("Removing directories");
-  
-  if(is_writable($GLOBALS["config"]->pathto_data_dir)) {
-    setupMessage("Data directory is writable");
-    if(file_exists($GLOBALS["config"]->pathto_cache))
-      if(is_writable($GLOBALS["config"]->pathto_cache))
-        if(rmdir_all($GLOBALS["config"]->pathto_cache)) 
-          setupMessage("Cache directory deleted");
-        else
-          $success = setupError("Error deleting cache directory at ".$GLOBALS["config"]->pathto_cache);
-      else
-        $success = setupError("Cache is not writable so cannot delete it");
-    else
-      setupMessage("Cache directory not found at ".$GLOBALS["config"]->pathto_cache);
-    
-    if(file_exists($GLOBALS["config"]->pathto_logs))
-      if(is_writable($GLOBALS["config"]->pathto_logs))
-        if(rmdir_all($GLOBALS["config"]->pathto_logs)) 
-          setupMessage("Logs directory deleted");
-        else
-          $success = setupError("Error deleting logs directory at ".$GLOBALS["config"]->pathto_logs);
-      else
-        $success = setupError("Logs is not writable so cannot delete it");
-    else
-      setupMessage("Logs directory not found at ".$GLOBALS["config"]->pathto_logs);
-  } else
-    $success = setupError("Data directory (".$GLOBALS["config"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
-      
-  return $success;
-  
+  echo "The setdown function has been depreciated in favour of the <a href=\"tools/cleanup.php\">cleanup script</a>.";
+  return true;
 }
 
 function doSetup()
@@ -134,7 +104,7 @@ function rmdir_all($wd)
 <head>
 <title>singapore setup</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" type="text/css" href="templates/default/main.css" />
+<link rel="stylesheet" type="text/css" href="docs/docstyle.css" />
 </head>
 
 <body>

@@ -256,7 +256,9 @@ object since both belong to the group 'friends'.</p>
 <p class="note">NOTE: read permissions are not currently enforced, a future 
 version will prevent anyone from seeing objects that do not have sufficient read 
 permissions. Note also that there is no mechanism to set image permissions this 
-will be ammended in a later release.</p>
+will be amended in a later release. Finally, since there is no database 
+concurrency handling, odd things might happen if two users are making changes 
+to the same gallery or image simultaneously.</p>
 
 
 <h2><a name="users">Managing users</a></h2>
@@ -539,7 +541,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2004/10/15 18:53:36 $</em></p>
+<p><em>$Date: 2004/10/19 21:50:19 $</em></p>
 
 </body>
 </html>

@@ -9,16 +9,31 @@ p, td, th, li, dd, dt {
   font: small sans-serif;
 }
 
-h1, h2 {
+h1, h2, h3, h4{
   color: #f60;
 }
 
-h3, h4 {
-  color: #666;
+h1, h2 {
+  font-size: medium;
+  border-bottom: 1px solid #ccc;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
-h1 {
-  font-size: large;
+code, pre {
+  color: #444;
+}
+
+p, td, th, li, dt, h3, h4, pre {
+  margin-left: 2em;
+}
+
+dd {
+  margin-left: 3em;
+}
+
+dt {
+  margin-top: 0.5em;
 }
 
 a:link {
@@ -57,19 +72,11 @@ ul.things > li {
   margin-top: 0.75em;
 }
 
-code, pre {
-  color: #444;
-}
-
-dt {
-  margin-top: 0.5em;
-}
-
 .note {
   color: #d00;
 }
 
-.boxed {
+.boxed, .note {
   border: 1px dashed #ccc;
   padding: 0.5em;
 }
