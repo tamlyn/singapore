@@ -27,7 +27,7 @@
         <?php echo $sg->galleryThumbnailLinked($index+$sg->startat) ?>
       </td>
       <td>
-        <p><strong><a href="<?php echo $sg->galleryURL($index) ?>"><?php echo $gal->name ?></a></strong></p>
+        <p><strong><a href="<?php echo $sg->galleryURL($index+$sg->startat) ?>"><?php echo $gal->name ?></a></strong></p>
         <p><?php echo $gal->desc ?></p>
         <p>[<?php echo $sg->galleryContents($index+$sg->startat) ?>]</p>
       </td>
