@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.31 2004/09/11 16:15:22 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.32 2004/12/01 06:29:33 tamlyn Exp $
  */
 
 //require config class
@@ -20,19 +20,21 @@ else
   showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["width"], $_REQUEST["height"], isset($_REQUEST["force"]));
 
 function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
-  //security check: exit if back-references found
-  if(strpos($gallery.$image,'/../') !== false)
-    die("Suspected security threat");
-  
-  //check if image is remote (filename starts with 'http://')
-  $isRemoteFile = substr($image,0,7)=="http://";
-  
   //create config object
   $config = new sgConfig();
 
+  //check if image is remote (filename starts with 'http://')
+  $isRemoteFile = substr($image,0,7)=="http://";
+  
+  //security check: make sure requested file is in galleries directory
+  $galPath = realpath($config->pathto_galleries);
+  $imgPath = realpath($config->pathto_galleries.$gallery."/".$image);
+  if(substr($imgPath,0,strlen($galPath)) != $galPath && !$isRemoteFile)
+    die("Requested image is outside allowed directory");
+  
   //security check: make sure $image has a valid extension
   if(!$isRemoteFile && !preg_match("/.+\.(".$config->recognised_extensions.")$/i",$image))
-    die("Specified file is not an image file");
+    die("Specified file is not a recognised image file");
 
   if($isRemoteFile) $imagePath = $image;
   else $imagePath = $config->pathto_galleries."$gallery/$image";
