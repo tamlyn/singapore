@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.26 2004/10/20 01:53:15 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.27 2004/10/26 04:32:36 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -49,7 +49,6 @@ class sgAdmin extends Singapore
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/user.class.php";
     require_once $basePath."includes/config.class.php";
-    require_once $basePath."includes/io_csv.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
@@ -71,6 +70,7 @@ class sgAdmin extends Singapore
     
     //load config from default ini file (singapore.ini)
     $this->config = new sgConfig("singapore.ini");
+    $this->config->loadConfig("secret.ini.php");
     //set runtime values
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
     $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
@@ -96,8 +96,10 @@ class sgAdmin extends Singapore
     //read extra admin language file
     $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin.".$this->config->default_language.".pmo");
 
-    //create IO handler
-    $this->io = new sgIO_csv($this->config);
+    //include IO handler class and create instance
+    require_once $basePath."includes/io_".$this->config->io_handler.".class.php";
+    $ioClassName = "sgIO_".$this->config->io_handler;
+    $this->io = new $ioClassName($this->config);
     
     //set character set
     if(!empty($this->i18n->languageStrings[0]["charset"]))
@@ -709,7 +711,7 @@ class sgAdmin extends Singapore
     
     $img->filename = $image;
     $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
-    list($img->width, $img->height) = GetImageSize($path);
+    list($img->width, $img->height, $img->type) = GetImageSize($path);
     $img->owner = $_SESSION["sgUser"]->username;
     
     $this->gallery->images[count($this->gallery->images)] = $img;
@@ -801,7 +803,7 @@ class sgAdmin extends Singapore
       
       $img->filename = $image;
       $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
-      list($img->width, $img->height) = GetImageSize($path);
+      list($img->width, $img->height, $img->type) = GetImageSize($path);
       $img->owner = $_SESSION["sgUser"]->username;
       
       $this->gallery->images[count($this->gallery->images)] = $img;

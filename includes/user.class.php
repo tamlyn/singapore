@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: user.class.php,v 1.1 2004/09/15 14:55:34 tamlyn Exp $
+ * @version $Id: user.class.php,v 1.2 2004/10/26 04:32:36 tamlyn Exp $
  */
 
 /**
@@ -31,28 +31,28 @@ class sgUser
   var $userpass = "5f4dcc3b5aa765d61d8327deb882cf99";
   
   /**
-   * Space-separated list of groups of which the user is a member
-   * @var string
-   */
-  var $groups = "";
-  
-  /**
    * Bit-field of permissions
    * @var int
    */
   var $permissions = 0;
   
   /**
-   * The name or title of the image
+   * Space-separated list of groups of which the user is a member
    * @var string
    */
-  var $fullname = "";
+  var $groups = "";
   
   /**
    * Email address of user
    * @var string
    */
   var $email = "";
+  
+  /**
+   * The name or title of the image
+   * @var string
+   */
+  var $fullname = "";
   
   /**
    *Description of user account

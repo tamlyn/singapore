@@ -6,8 +6,8 @@
 
 [MySQL]
 ;
-; settings relevant to the PEAR::DB backend. 
-; You may ignore these if you are using the CSV or iifn backends.
+; settings relevant to the MySQL backend. 
+; You may ignore these if you are not using this backend.
 ;
 
 mysql_user = 
@@ -16,7 +16,7 @@ mysql_pass =
 [PEAR::DB]
 ;
 ; settings relevant to the PEAR::DB backend. 
-; You may ignore these if you are using the CSV or iifn backends.
+; You may ignore these if you are not using this backend.
 ;
 
 

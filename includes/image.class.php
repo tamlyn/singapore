@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.5 2004/02/02 16:31:36 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.6 2004/10/26 04:32:36 tamlyn Exp $
  */
 
 /**
@@ -36,13 +36,13 @@ class sgImage
    * Space-separated list of groups to which the image belongs (not used)
    * @var string
    */
-  var $groups = "__nogroup__";
+  var $groups = "";
   
   /**
    * Bit-field of permissions (not used)
    * @var int
    */
-  var $permissions = 4095;
+  var $permissions = 0;
   
   /**
    * Space-separated list of categories to which the image belongs (not used)
@@ -92,6 +92,12 @@ class sgImage
    */
   var $height = 0;
   
+  /**
+   * Image file format flag as returned by GetImageSize()
+   * @var int
+   */
+  var $type;
+  
   
     
   /**
@@ -106,7 +112,8 @@ class sgImage
   var $digital = "";
   
   //non-db fields
-  var $hits = null;
+  var $hits = 0;
+  var $lasthit = 0;
   
   /**
    * Position of image within ->images[] array

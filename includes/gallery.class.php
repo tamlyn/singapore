@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.6 2004/09/13 05:15:09 tamlyn Exp $
+ * @version $Id: gallery.class.php,v 1.7 2004/10/26 04:32:36 tamlyn Exp $
  */
 
 /**
@@ -112,12 +112,9 @@ class sgGallery
    */
   var $galleries = array();
   
-  /**
-   * Used to store the number of hits or views
-   * @var int|null
-   */
-  
-  var $hits = null;
+  //non-db fields
+  var $hits = 0;
+  var $lasthit = 0;
   
   function sgGallery($id)
   {

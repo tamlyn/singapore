@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.33 2004/10/15 17:24:47 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.34 2004/10/26 04:32:36 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -71,12 +71,12 @@ class Singapore
   function Singapore($basePath = "")
   {
     //import class definitions
+    //io handler class included once config is loaded
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/user.class.php";
     require_once $basePath."includes/config.class.php";
-    require_once $basePath."includes/io_csv.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
@@ -87,6 +87,7 @@ class Singapore
     
     //load config from singapore root directory
     $this->config = new sgConfig($basePath."singapore.ini");
+    $this->config->loadConfig("secret.ini.php");
     
     //if instantiated remotely...
     if(!empty($basePath)) {
@@ -140,8 +141,10 @@ class Singapore
     //set the UMASK
     umask($this->config->umask);
     
-    //create IO handler
-    $this->io = new sgIO_csv($this->config);
+    //include IO handler class and create instance
+    require_once $basePath."includes/io_".$this->config->io_handler.".class.php";
+    $ioClassName = "sgIO_".$this->config->io_handler;
+    $this->io = new $ioClassName($this->config);
     
     //load gallery and image info
     $this->selectGallery($galleryId);
