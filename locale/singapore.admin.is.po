@@ -6,13 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: singapore.admin.is\n"
 "POT-Creation-Date: 2004-09-27 08:35+0100\n"
-"PO-Revision-Date: 2004-06-07 21:57+0000\n"
-"Last-Translator: Stefan Freyr Stefansson <stefan@freyr.org>\n"
+"PO-Revision-Date: 2004-10-04 00:28-0000\n"
+"Last-Translator: Stefán Freyr Stefánsson <stefan@ru.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
+
 #
 # File: ../admin.php, line: 41
 # File: ../admin.php, line: 55
@@ -38,11 +39,13 @@ msgstr ""
 # File: ../admin.php, line: 333
 # File: ../admin.php, line: 365
 msgid "You do not have permission to perform this operation."
-msgstr ""
+msgstr "Þú hefur ekki réttindi til að framkvæma þess aðgerð."
+
 #
 # File: ../admin.php, line: 45
 msgid "Gallery added"
 msgstr "Myndasafni bætt við"
+
 #
 # File: ../admin.php, line: 48
 # File: ../admin.php, line: 66
@@ -62,14 +65,17 @@ msgstr "Myndasafni bætt við"
 # File: ../admin.php, line: 370
 msgid "An error occurred:"
 msgstr "Villa kom upp:"
+
 #
 # File: ../admin.php, line: 63
 msgid "Image added"
 msgstr "Mynd var bætt við"
+
 #
 # File: ../admin.php, line: 72
 msgid "Archive contents added"
-msgstr ""
+msgstr "Innihaldi safnskráar hefur verið bætt við"
+
 #
 # File: ../admin.php, line: 89
 # File: ../admin.php, line: 106
@@ -78,10 +84,12 @@ msgstr ""
 # File: ../admin.php, line: 255
 msgid "confirm|OK"
 msgstr "Í lagi"
+
 #
 # File: ../admin.php, line: 91
 msgid "Thumbnail changed"
 msgstr "Smámynd breytt"
+
 #
 # File: ../admin.php, line: 95
 # File: ../admin.php, line: 114
@@ -90,300 +98,344 @@ msgstr "Smámynd breytt"
 # File: ../admin.php, line: 261
 msgid "confirm|Cancel"
 msgstr "Hætta við"
+
 #
 # File: ../admin.php, line: 109
 msgid "Gallery deleted"
 msgstr "Myndasafni eytt"
+
 #
 # File: ../admin.php, line: 117
 msgid "delete gallery"
 msgstr "eyða myndasafni"
+
 #
 # File: ../admin.php, line: 118
 #, c-format
 msgid ""
 "Gallery %s is not empty.\n"
-"Are you sure you want to irretrievably delete it and all subgalleries and "
-"images it contains?"
+"Are you sure you want to irretrievably delete it and all subgalleries and images it contains?"
 msgstr ""
 "Myndasafnið '%s' er ekki tómt.\n"
-"Ertu viss um að þú viljir eyða því og öllum undir-myndasöfnum og myndum sem "
-"það inniheldur?"
+"Ertu viss um að þú viljir eyða því og öllum undir-myndasöfnum og myndum sem það inniheldur?"
+
 #
 # File: ../admin.php, line: 129
 msgid "Image deleted"
 msgstr "Mynd eytt"
+
 #
 # File: ../admin.php, line: 136
 msgid "delete image"
 msgstr "eyða mynd"
+
 #
 # File: ../admin.php, line: 137
 #, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
-msgstr ""
-"Ertu viss um að þú viljir eyða myndinni '%s' úr myndasafninu '%s' fyrir "
-"fullt og allt?"
+msgstr "Ertu viss um að þú viljir eyða myndinni '%s' úr myndasafninu '%s' fyrir fullt og allt?"
+
 #
 # File: ../admin.php, line: 147
-#, fuzzy
 msgid "User deleted"
-msgstr "Myndasafni eytt"
+msgstr "Notanda eytt"
+
 #
 # File: ../admin.php, line: 154
-#, fuzzy
 msgid "delete user"
-msgstr "eyða myndasafni"
+msgstr "eyða notanda"
+
 #
 # File: ../admin.php, line: 155
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to permanently delete user %s?"
-msgstr ""
-"Ertu viss um að þú viljir eyða myndinni '%s' úr myndasafninu '%s' fyrir "
-"fullt og allt?"
+msgstr "Ertu viss um að þú viljir eyða notandanum %s fyrir fullt og allt?"
+
 #
 # File: ../admin.php, line: 199
 msgid "Welcome to singapore admin!"
 msgstr "Velkomin(n) í kerfisstjórnun Singapore!"
+
 #
 # File: ../admin.php, line: 208
 msgid "Thank you and goodbye!"
 msgstr "Takk fyrir og bleble!"
+
 #
 # File: ../admin.php, line: 257
 msgid "Thumbnail cache purged"
 msgstr "Flýtiminni fyrir smámyndir var eytt"
+
 #
 # File: ../admin.php, line: 264
 msgid "purge cached thumbnails"
 msgstr "eyða flýtiminni fyrir smámyndir"
+
 #
 # File: ../admin.php, line: 266
 #, c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr "Ertu viss um að þú viljir eyða öllum %s flýtivistuðu smámyndunum?"
+
 #
 # File: ../admin.php, line: 276
 #, c-format
 msgid "Gallery re-indexed. %s images added."
-msgstr ""
+msgstr "Vísar myndasafns hafa verið endurbyggðir. %s myndum var bætt við."
+
 #
 # File: ../admin.php, line: 286
 msgid "Gallery info saved"
 msgstr "Upplýsingar um myndasafn vistaðar"
+
 #
 # File: ../admin.php, line: 299
 msgid "Image saved successfully"
 msgstr "Vistun á mynd tókst"
+
 #
 # File: ../admin.php, line: 311
 msgid "Password saved"
 msgstr "Lykilorð vistað"
+
 #
 # File: ../admin.php, line: 324
-#, fuzzy
 msgid "Permissions saved"
-msgstr "Lykilorð vistað"
+msgstr "Heimildir vistaðar"
+
 #
 # File: ../admin.php, line: 336
 # File: ../admin.php, line: 368
-#, fuzzy
 msgid "User info saved"
-msgstr "Upplýsingar um myndasafn vistaðar"
+msgstr "Upplýsingar um notanda vistaðar"
+
 #
 # File: ../includes/admin.class.php, line: 202
 msgid "admin bar|Back"
 msgstr "Til baka"
+
 #
 # File: ../includes/admin.class.php, line: 204
 msgid "admin bar|Admin"
 msgstr "Kerfisstjóri"
+
 #
 # File: ../includes/admin.class.php, line: 205
 msgid "admin bar|Galleries"
 msgstr "Myndasöfn"
+
 #
 # File: ../includes/admin.class.php, line: 206
 msgid "admin bar|Log out"
 msgstr "Útskrá"
+
 #
 # File: ../includes/admin.class.php, line: 208
 # File: ../templates/admin_default/gallery.tpl.php, line: 28
 msgid "admin bar|Edit gallery"
 msgstr "Breyta myndasafni"
+
 #
 # File: ../includes/admin.class.php, line: 209
 # File: ../templates/admin_default/gallery.tpl.php, line: 29
-#, fuzzy
 msgid "admin bar|Edit permissions"
-msgstr "Breyta myndasafni"
+msgstr "Breyta heimildum"
+
 #
 # File: ../includes/admin.class.php, line: 210
 # File: ../templates/admin_default/gallery.tpl.php, line: 30
 msgid "admin bar|Delete gallery"
 msgstr "Eyða myndasafni"
+
 #
 # File: ../includes/admin.class.php, line: 211
 # File: ../templates/admin_default/gallery.tpl.php, line: 31
 msgid "admin bar|New subgallery"
 msgstr "Nýtt undir-myndasafn"
+
 #
 # File: ../includes/admin.class.php, line: 212
 # File: ../templates/admin_default/gallery.tpl.php, line: 32
-#, fuzzy
 msgid "admin bar|Re-index gallery"
-msgstr "Eyða myndasafni"
+msgstr "Endurvísa myndasafn"
+
 #
 # File: ../includes/admin.class.php, line: 214
 msgid "admin bar|Edit image"
 msgstr "Breyta mynd"
+
 #
 # File: ../includes/admin.class.php, line: 215
 msgid "admin bar|Delete image"
 msgstr "Eyða mynd"
+
 #
 # File: ../includes/admin.class.php, line: 217
 msgid "admin bar|New image"
 msgstr "Ný mynd"
+
 #
 # File: ../includes/admin.class.php, line: 241
 # File: ../includes/admin.class.php, line: 436
 # File: ../includes/admin.class.php, line: 465
 # File: ../includes/admin.class.php, line: 493
 # File: ../includes/admin.class.php, line: 513
-#, fuzzy
 msgid "Could not save user info"
-msgstr "Gat ekki vistað upplýsingar um myndasafn"
+msgstr "Gat ekki vistað upplýsingar um notanda"
+
 #
 # File: ../includes/admin.class.php, line: 244
 msgid "New password must be between 6 and 16 characters long."
 msgstr "Nýja lykilorðið verður að vera á milli 6 og 16 stafa langt."
+
 #
 # File: ../includes/admin.class.php, line: 246
 msgid "The new passwords you entered do not match."
 msgstr "Nýju lykilorðin sem þú slóst inn stemma ekki."
+
 #
 # File: ../includes/admin.class.php, line: 248
-msgid ""
-"The current password you entered does not match the one in the database."
-msgstr ""
-"Lykilorðið sem þú slóst inn stemmir ekki við það sem geymt er í gagnagrunni."
+msgid "The current password you entered does not match the one in the database."
+msgstr "Lykilorðið sem þú slóst inn stemmir ekki við það sem geymt er í gagnagrunni."
+
 #
 # File: ../includes/admin.class.php, line: 251
 msgid "The username specified was not found in the database."
 msgstr "Notandanafnið sem slegið var inn fannst ekki í gagnagrunni."
+
 #
 # File: ../includes/admin.class.php, line: 281
 msgid "Your account has been suspended"
-msgstr ""
+msgstr "Aðgangsreikningi þínum hefur verið lokað"
+
 #
 # File: ../includes/admin.class.php, line: 292
 msgid "Username and/or password incorrect"
 msgstr "Notandanafn og/eða lykilorð ekki rétt"
+
 #
 # File: ../includes/admin.class.php, line: 295
 msgid "You must enter a username and password"
 msgstr "Þú verður að slá inn notandanafn og lykilorð"
+
 #
 # File: ../includes/admin.class.php, line: 369
 # File: ../includes/admin.class.php, line: 553
 # File: ../includes/admin.class.php, line: 605
 msgid "Could not save gallery info"
 msgstr "Gat ekki vistað upplýsingar um myndasafn"
+
 #
 # File: ../includes/admin.class.php, line: 427
-#, fuzzy
 msgid "Username already exists"
-msgstr "Skrá er til fyrir"
+msgstr "Notandanafn er til fyrir"
+
 #
 # File: ../includes/admin.class.php, line: 451
 msgid "Cannot delete built in accounts"
-msgstr ""
+msgstr "Get ekki eytt innbyggðum aðgangsreikningum"
+
 #
 # File: ../includes/admin.class.php, line: 469
 # File: ../includes/admin.class.php, line: 496
 # File: ../includes/admin.class.php, line: 516
 msgid "Username not recognised"
-msgstr ""
+msgstr "Notandanafn óþekkt"
+
 #
 # File: ../includes/admin.class.php, line: 568
 msgid "Gallery already exists"
 msgstr "Myndasafn er þegar til"
+
 #
 # File: ../includes/admin.class.php, line: 575
 msgid "Could not create directory"
 msgstr "Gat ekki búið til skráarsafn"
+
 #
 # File: ../includes/admin.class.php, line: 626
 msgid "Cannot delete the top level directory"
 msgstr "Gat ekki eytt rótarskráarsafni"
+
 #
 # File: ../includes/admin.class.php, line: 681
 # File: ../includes/admin.class.php, line: 777
 # File: ../includes/admin.class.php, line: 809
 msgid "File already exists"
 msgstr "Skrá er til fyrir"
+
 #
 # File: ../includes/admin.class.php, line: 686
 # File: ../includes/admin.class.php, line: 730
 msgid "Could not upload file"
 msgstr "Gat ekki sent skrá"
+
 #
 # File: ../includes/admin.class.php, line: 706
 msgid "Could not add image to gallery"
 msgstr "Gat ekki bætt mynd við myndasafn"
+
 #
 # File: ../includes/admin.class.php, line: 720
 msgid "Could not find temporary storage space"
-msgstr ""
+msgstr "Fann ekki tímabundið geymslusvæði"
+
 #
 # File: ../includes/admin.class.php, line: 740
-#, fuzzy
 msgid "Could not decompress archive"
-msgstr "Gat ekki eytt mynd"
+msgstr "Gat ekki afþjappað safnskrá"
+
 #
 # File: ../includes/admin.class.php, line: 829
 msgid "Some archive contents could not be added"
-msgstr ""
+msgstr "Sumum hlutum safnskráarinnar var ekki hægt að bæta við"
+
 #
 # File: ../includes/admin.class.php, line: 859
 msgid "Could not save image information"
 msgstr "Gat ekki vistað upplýsingar um mynd"
+
 #
 # File: ../includes/admin.class.php, line: 885
 msgid "Could not delete image"
 msgstr "Gat ekki eytt mynd"
+
 #
 # File: ../templates/admin_default/album.tpl.php, line: 14
 # File: ../templates/admin_default/gallery.tpl.php, line: 15
-#, fuzzy
 msgid "Select gallery..."
-msgstr "eyða myndasafni"
+msgstr "Veldu myndasafn..."
+
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 1
 msgid "choose thumbnail"
 msgstr "veldu smámynd"
+
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 6
 msgid "Choose the filename of the image used to represent this gallery."
 msgstr "Veldu skráarnafn myndarinnar sem á að standa fyrir þetta myndasafn."
+
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 9
 msgid "thumbnail|None"
 msgstr "Engin"
+
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 10
 msgid "thumbnail|Random"
 msgstr "Handahófskennd"
+
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 1
 msgid "edit gallery"
 msgstr "breyta myndasafni"
+
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 11
-#, fuzzy
 msgid "Thumbnail"
-msgstr "Engin"
+msgstr "Smámynd"
+
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 15
 msgid ""
@@ -392,325 +444,355 @@ msgid ""
 msgstr ""
 "Smámynd af\n"
 "handahófi"
+
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 20
 msgid "thumbnail|Change..."
 msgstr "Breyta..."
+
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 24
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 7
 msgid "Gallery name"
 msgstr "Nafn myndasafns"
+
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 28
 # File: ../templates/admin_default/editimage.tpl.php, line: 19
 msgid "Artist name"
 msgstr "Nafn listamanns"
+
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 44
 msgid "Summary"
-msgstr ""
+msgstr "Samantekt"
+
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 1
 msgid "edit image"
 msgstr "breyta mynd"
+
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 11
 msgid "Image"
 msgstr "Mynd"
+
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 15
 # File: ../templates/admin_default/imagehits.tpl.php, line: 7
 msgid "Image name"
 msgstr "Nafn myndar"
+
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 1
 msgid "change password"
 msgstr "breyta lykilorði"
+
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 2
 msgid "Please choose a new password between 6 and 16 characters in length."
 msgstr "Vinsamlega veldu nýtt lykilorð sem er á milli 6 og 16 stafa langt."
+
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 9
 msgid "Current password:"
 msgstr "Núverandi lykilorð:"
+
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 13
 msgid "New password:"
 msgstr "Nýtt lykilorð:"
+
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 17
 msgid "Confirm password:"
 msgstr "Staðfestu lykilorð:"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 1
 msgid "edit permissions"
-msgstr ""
+msgstr "breyta heimildum"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 13
 msgid "Owner"
-msgstr ""
+msgstr "Eigandi"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 22
 # File: ../templates/admin_default/edituser.tpl.php, line: 21
 msgid "Groups"
-msgstr ""
+msgstr "Hópar"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 26
 msgid "Group permissions"
-msgstr ""
+msgstr "Heimildir hópa"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 28
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 37
 msgid "permissions|Read"
-msgstr ""
+msgstr "Lesa"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 29
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 38
 msgid "permissions|Edit"
-msgstr ""
+msgstr "Breyta"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 30
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 39
 msgid "permissions|Add"
-msgstr ""
+msgstr "Bæta við"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 31
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 40
 msgid "permissions|Delete"
-msgstr ""
+msgstr "Eyða"
+
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 35
+#, fuzzy
 msgid "World permissions"
-msgstr ""
+msgstr "Heims-heimildir"
+
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 1
 # File: ../templates/admin_default/manageusers.tpl.php, line: 1
 msgid "user management"
-msgstr ""
+msgstr "notendastjórnun"
+
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 15
-#, fuzzy
 msgid "Username"
-msgstr "Notandanafn:"
+msgstr "Notandanafn"
+
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 17
 msgid "Type"
-msgstr ""
+msgstr "Tegund"
+
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 18
 msgid "Administrator"
-msgstr ""
+msgstr "Umsjónarmaður"
+
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 19
-#, fuzzy
 msgid "User"
-msgstr "Notandanafn:"
+msgstr "Notandi"
+
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 23
-#, fuzzy
 msgid "Full name"
-msgstr "Nafn myndasafns"
+msgstr "Fullt nafn"
+
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 26
-#, fuzzy
 msgid "Password"
-msgstr "Lykilorð:"
+msgstr "Lykilorð"
+
 #
 # File: ../templates/admin_default/gallery.tpl.php, line: 27
-#, fuzzy
 msgid "admin bar|View gallery"
-msgstr "Nýtt undir-myndasafn"
+msgstr "Skoða myndasafn"
+
 #
 # File: ../templates/admin_default/gallery.tpl.php, line: 33
-#, fuzzy
 msgid "admin bar|Change thumbnail"
-msgstr "Nýtt undir-myndasafn"
+msgstr "Breyta smámynd"
+
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 7
 # File: ../templates/admin_default/imagehits.tpl.php, line: 7
 msgid "hits table|Graph"
 msgstr "Graf"
+
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 7
 # File: ../templates/admin_default/imagehits.tpl.php, line: 7
 msgid "hits table|Hits"
 msgstr "Heimsóknir"
+
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 7
 # File: ../templates/admin_default/imagehits.tpl.php, line: 7
 msgid "hits table|Last hit"
 msgstr "Síðasta heimsókn"
+
 #
 # File: ../templates/admin_default/header.tpl.php, line: 39
 msgid "Admin message:"
 msgstr "Skilaboð frá kerfisstjóra:"
+
 #
 # File: ../templates/admin_default/login.tpl.php, line: 1
 msgid "log in"
 msgstr "innskrá"
+
 #
 # File: ../templates/admin_default/login.tpl.php, line: 3
-#, fuzzy
 msgid "Please enter your admin username and password below."
-msgstr "Þú verður að slá inn notandanafn og lykilorð"
+msgstr "Vinsamlega sláðu inn notandanafn og lykilorð hér að neðan."
+
 #
 # File: ../templates/admin_default/login.tpl.php, line: 8
 # File: ../templates/admin_default/manageusers.tpl.php, line: 10
 # File: ../templates/admin_default/manageusers.tpl.php, line: 30
 msgid "Username:"
 msgstr "Notandanafn:"
+
 #
 # File: ../templates/admin_default/login.tpl.php, line: 9
 msgid "Password:"
 msgstr "Lykilorð:"
+
 #
 # File: ../templates/admin_default/login.tpl.php, line: 19
 msgid "If you do not have a username then you may log in as a guest."
-msgstr ""
+msgstr "Ef þú hefur ekki notandanafn getur þú skráð þig inn sem gestur."
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 3
 msgid "You must be an administrator to access this area."
-msgstr ""
+msgstr "Þú verður að vera umsjónarmaður til að komast inn á þetta svæði."
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 17
 msgid "Email:"
-msgstr ""
+msgstr "Tölvupóstfang:"
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 18
-#, fuzzy
 msgid "Full name:"
-msgstr "Nafn myndasafns"
+msgstr "Fullt nafn:"
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 19
 msgid "edit"
-msgstr ""
+msgstr "breyta"
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 20
-#, fuzzy
 msgid "delete"
-msgstr "eyða mynd"
+msgstr "eyða"
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 21
 msgid "suspend"
-msgstr ""
+msgstr "loka"
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 21
 msgid "unsuspend"
-msgstr ""
+msgstr "opna"
+
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 28
 msgid "create new user"
-msgstr ""
+msgstr "búa til nýjan notanda"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 1
 msgid "Please choose an option:"
 msgstr "Vinsamlega veldu valkost:"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 4
 msgid "Manage galleries and images"
 msgstr "Umsjón mynda og myndasafna"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 5
 msgid "View gallery hits"
 msgstr "Skoða heimsóknir í myndasöfn"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 7
 msgid "Change password"
 msgstr "Breyta lykilorði"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 8
 msgid "My profile"
-msgstr ""
+msgstr "Mínar stillingar"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 11
 msgid "Manage users"
-msgstr ""
+msgstr "Sýsla með notendur"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 12
 msgid "Purge cached thumbnails"
 msgstr "Eyða flýtivistuðum smámyndum"
+
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 14
 msgid "Log out of admin"
 msgstr "Útskrá kerfisstjóra"
+
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 1
 msgid "new gallery"
 msgstr "nýtt myndasafn"
+
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 9
 # File: ../templates/admin_default/newimage.tpl.php, line: 22
 msgid "Identifier:"
 msgstr "Einkenni:"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 1
 msgid "new image"
 msgstr "ný mynd"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 3
-msgid ""
-"This image will not be visible because this gallery contains subgalleries."
-msgstr ""
-"Þessi mynd mun ekki verða sýnileg þar eð þetta myndasafn inniheldur undir-"
-"myndasöfn."
+msgid "This image will not be visible because this gallery contains subgalleries."
+msgstr "Þessi mynd mun ekki verða sýnileg þar eð þetta myndasafn inniheldur undir-myndasöfn."
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 13
 msgid "Upload single file"
-msgstr ""
+msgstr "Hlaða upp einni skrá"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 17
 msgid "Image file to upload:"
 msgstr "Myndaskrá sem á að hlaða upp:"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 24
 msgid "Use filename of uploaded file."
 msgstr "Nota skráarnafn upphlaðinnar skrár."
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 25
 msgid "Specify different filename:"
 msgstr "Tilgreina annað skráarnafn:"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 30
 msgid "Upload multiple files"
-msgstr ""
+msgstr "Hlaða upp mörgum skrám"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 34
-#, fuzzy
 msgid "ZIP file to upload:"
-msgstr "Myndaskrá sem á að hlaða upp:"
+msgstr "Safnskrá (ZIP) sem hlaða á upp:"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 39
-#, fuzzy
 msgid "Add remote file"
-msgstr "Fjarstödd skrá"
+msgstr "Bæta við fjarstaddri skrá"
+
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 43
 msgid "URL of image:"
 msgstr "URL myndar"
-#
-#~ msgid "There was an error saving the new password."
-#~ msgstr "Villa kom upp við vistun á lykilorði."
-#
-#~ msgid "Invalid location choice"
-#~ msgstr "Ólögleg staðsetning"
-#
-#~ msgid "Gallery thumbnail:"
-#~ msgstr "Smámynd myndasafns:"
-#
-#~ msgid "singapore|Powered by"
-#~ msgstr "Keyrt af"
-#
-#~ msgid "Return to galleries."
-#~ msgstr "Fara aftur í myndasöfn."
-#
-#~ msgid ""
-#~ "Only authorised users are allowed into the admin section.\n"
-#~ "Please enter your admin username and password below."
-#~ msgstr ""
-#~ "Einungis auðkenndir notendur hafa aðgang að kerfisstjóraham.\n"
-#~ "Vinsamlega sláðu inn notandanafn og lykilorð kerfisstjóra hér að neðan."
-#
-#~ msgid "Local file"
-#~ msgstr "Staðvær skrá"
+
