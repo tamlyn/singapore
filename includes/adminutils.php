@@ -144,8 +144,16 @@ function sgEditGallery($gallery)
   
   echo "<table class=\"formTable\">\n";
   echo "<tr>\n  <td>Gallery thumbnail:</td>\n  <td><div class=\"inputbox sgImageInput\">";
-  if($gal->filename) echo "<a href=\"index.php?gallery=$gallery\"><img src=\"thumb.php?gallery=$gallery&amp;image=$gal->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"Sample image from gallery\" /></a>";
-  else echo "none";
+  switch($gal->filename) {
+  case "__none__" :
+    echo "No<br />thumbnail<br />selected";
+    break;
+  case "__random__" :
+    echo "Random!";
+    break;
+  default :
+    echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" />";
+  }
   echo "</div></td>\n</tr>\n";
   echo "<tr>\n  <td>Gallery name:</td>\n  <td><input type=\"text\" name=\"sgGalleryName\" value=\"".htmlentities($gal->name)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Artist name:</td>\n  <td><input type=\"text\" name=\"sgArtistName\" value=\"".htmlentities($gal->artist)."\" size=\"40\" />*</td>\n</tr>\n";
@@ -155,7 +163,7 @@ function sgEditGallery($gallery)
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
   echo "</table>\n";
   
-  echo "<p>Note: fields marked * are stored in the database but are not currently used.</p>";
+  echo "<p>Note: fields marked * are stored in the database but are not currently displayed.</p>";
   echo "</form>\n";
 }
 

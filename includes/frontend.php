@@ -26,24 +26,24 @@ function sgShowAdminBar()
 {
   if(!sgIsLoggedIn()) return;
   
-  echo "<div class=\"sgAdminBar\">";
-  echo "<a href=\"admin.php\">Admin options</a>\n";
-  echo "<a href=\"admin.php?action=logout\">Logout</a>\n";
-  echo "<a href=\"index.php\">View galleries</a>\n";
+  echo "<div class=\"sgAdminBar\">\n";
+  echo "  <a href=\"admin.php\">Admin options</a>\n";
+  echo "  <a href=\"admin.php?action=logout\">Logout</a>\n";
+  echo "  <a href=\"index.php\">View galleries</a>\n";
   
-  if(isset($_REQUEST["image"]) && !(isset($_REQUEST["action"]) && $_REQUEST["action"]=="deleteimage-confirmed")) {
-    echo "<a href=\"admin.php?action=editimage&amp;gallery=$_REQUEST[gallery]&amp;image=$_REQUEST[image]\">Edit image</a>\n";
-    echo "<a href=\"admin.php?action=deleteimage&amp;gallery=$_REQUEST[gallery]&amp;image=$_REQUEST[image]\">Delete image</a>\n";
-    echo "<a href=\"admin.php?action=newimage&amp;gallery=$_REQUEST[gallery]\">New image</a>\n";
-  } elseif(isset($_REQUEST["gallery"]) && !(isset($_REQUEST["action"]) && $_REQUEST["action"]=="deletegallery-confirmed")) {
-    echo "<a href=\"admin.php?action=editgallery&amp;gallery=$_REQUEST[gallery]\">Edit gallery</a>\n";
-    echo "<a href=\"admin.php?action=deletegallery&amp;gallery=$_REQUEST[gallery]\">Delete gallery</a>\n";
-    echo "<a href=\"admin.php?action=newimage&amp;gallery=$_REQUEST[gallery]\">New image</a>\n";
+  if(isset($_REQUEST["image"]) && !(isset($_REQUEST["action"]) && strpos($_REQUEST["action"],"-confirmed"))) {
+    echo "  <a href=\"admin.php?action=editimage&amp;gallery=$_REQUEST[gallery]&amp;image=$_REQUEST[image]\">Edit image</a>\n";
+    echo "  <a href=\"admin.php?action=deleteimage&amp;gallery=$_REQUEST[gallery]&amp;image=$_REQUEST[image]\">Delete image</a>\n";
+    echo "  <a href=\"admin.php?action=newimage&amp;gallery=$_REQUEST[gallery]\">New image</a>\n";
+  } elseif(isset($_REQUEST["gallery"]) && !(isset($_REQUEST["action"]) && strpos($_REQUEST["action"],"-confirmed"))) {
+    echo "  <a href=\"admin.php?action=editgallery&amp;gallery=$_REQUEST[gallery]\">Edit gallery</a>\n";
+    echo "  <a href=\"admin.php?action=deletegallery&amp;gallery=$_REQUEST[gallery]\">Delete gallery</a>\n";
+    echo "  <a href=\"admin.php?action=newimage&amp;gallery=$_REQUEST[gallery]\">New image</a>\n";
   } else {
-    echo "<a href=\"admin.php?action=newgallery\">New gallery</a>\n";
+    echo "  <a href=\"admin.php?action=newgallery\">New gallery</a>\n";
   }
   
-  echo "</div>";
+  echo "</div>\n\n";
 }
 
 function sgShowIndex($gallery, $startat)
@@ -67,12 +67,24 @@ function sgShowIndex($gallery, $startat)
   for($i=0;$i<count($dir->dirs);$i++) {
     $gal = sgGetGalleryInfo($dir->dirs[$i]);
     
-    echo("<div class=\"sgGallery\"><table class=\"sgGallery\">\n");
-    echo("<tr valign=\"top\">\n");
-    echo("  <td class=\"sgGallery\"><a href=\"?gallery=$gal->id\"><img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" /></a></td>\n");
-    echo("  <td><p><strong><a href=\"?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n");
-    echo("</tr>\n");
-    echo("</table></div>\n\n");
+    echo "<div class=\"sgGallery\"><table class=\"sgGallery\">\n";
+    echo "<tr valign=\"top\">\n";
+    echo "  <td class=\"sgGallery\"><a href=\"?gallery=$gal->id\">";
+    
+    switch($gal->filename) {
+    case "__none__" :
+      echo "No<br />thumbnail<br />selected";
+      break;
+    case "__random__" :
+      echo "Random!";
+      break;
+    default :
+      echo "<img src=\"thumb.php?gallery=$gal->id&amp;image=$gal->filename&amp;size=".sgGetConfig("gallery_thumb_size")."\" class=\"sgGallery\" alt=\"Example image from gallery\" />";
+    }
+    echo "</a></td>\n";
+    echo "  <td><p><strong><a href=\"?gallery=$gal->id\">$gal->name</a></strong></p><p>$gal->desc</p></td>\n";
+    echo "</tr>\n";
+    echo "</table></div>\n\n";
   }
   
   //container frame bottom
@@ -177,8 +189,8 @@ function sgShowImage($gallery, $image)
   echo "      <img src=\"";
   //if image is local (filename does not start with 'http://')
   //then prepend filename with path to current gallery
-  if(substr($img->filename,0,7)!="http://") echo
-  sgGetConfig("pathto_galleries") . rawurlencode($gallery) . "/";
+  if(substr($img->filename,0,7)!="http://") 
+    echo sgGetConfig("pathto_galleries") . rawurlencode($gallery) . "/";
 
   echo rawurlencode($img->filename) . "\" alt=\"$img->name";
   if(!empty($img->artist)) echo " by $img->artist";
