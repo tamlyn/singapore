@@ -1,24 +1,14 @@
 ; singapore secret configuration file <http://singapore.sourceforge.net>
 ;
-; <?php die("Hacking attempt detected"); ?>
+; <?php die("The contents of this file are hidden"); ?>
 ;
 ; these options are hidden from web users
 
-[MySQL]
+[SQL]
 ;
-; settings relevant to the MySQL backend. 
+; settings relevant to all the SQL backends. 
 ; You may ignore these if you are not using this backend.
 ;
 
-mysql_user = 
-mysql_pass = 
-
-[PEAR::DB]
-;
-; settings relevant to the PEAR::DB backend. 
-; You may ignore these if you are not using this backend.
-;
-
-
-db_user = 
-db_password = 
+sql_user = 
+sql_pass = 

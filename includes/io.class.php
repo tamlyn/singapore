@@ -4,12 +4,13 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.2 2004/11/01 08:58:22 tamlyn Exp $
+ * @version $Id: io.class.php,v 1.3 2004/12/01 23:55:27 tamlyn Exp $
  */
 
 /**
- * Superclass of all IO classes. Also implements iifn code.
+ * Abstract superclass of all IO classes. Also implements iifn code.
  * @package singapore
+ * @abstract
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @copyright (c)2003, 2004 Tamlyn Rhodes
  */

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.15 2004/11/01 08:58:22 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.16 2004/12/01 23:55:27 tamlyn Exp $
  */
 
 /**
@@ -93,7 +93,7 @@ class sgIO_csv extends sgIO
         
     } else
       //no metadata found so use iifn method implemented in parent class
-      return parent::getGallery($galleryId, $language, $getChildGalleries-1);
+      return parent::getGallery($galleryId, $language, $getChildGalleries);
     
     //discover child galleries
     $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
@@ -262,7 +262,7 @@ class sgIO_csv extends sgIO
     $fp = fopen($this->config->base_path.$this->config->pathto_data_dir."users.csv.php","w");
     if(!$fp) return false;
     
-    $success = (bool) fwrite($fp,"<?php die(\"Hacking attempt detected\"); ?>username,md5(pass),permissions,group(s),email,name,description,stats\n");
+    $success = (bool) fwrite($fp,"<?php die(\"The contents of this file are hidden\"); ?>username,md5(pass),permissions,group(s),email,name,description,stats\n");
     for($i=0;$i<count($users);$i++) 
       $success &= (bool) fwrite($fp,$users[$i]->username.",".$users[$i]->userpass.",".$users[$i]->permissions.",\"".$users[$i]->groups."\",\"".$users[$i]->email."\",\"".$users[$i]->fullname."\",\"".$users[$i]->description."\",\"".$users[$i]->stats."\"\n");
     

@@ -76,7 +76,27 @@ ul.things > li {
   color: #d00;
 }
 
-.boxed, .note {
+.boxed, .note, #progressBox {
   border: 1px dashed #ccc;
   padding: 0.5em;
+}
+
+#progressBox {
+  float: right;
+  background-color: inherit;
+}
+
+#progressBox li.currentStep {
+  color: #f60;
+  font-size: medium;
+}
+
+#progressBox p, #progressBox li, #progressBox ol {
+  font-weight: bold;
+  margin: 0em;
+}
+
+a.button {
+  margin-top: 2em;
+  display: block;
 }

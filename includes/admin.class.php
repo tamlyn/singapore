@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.29 2004/12/01 06:34:55 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.30 2004/12/01 23:55:27 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -51,6 +51,7 @@ class sgAdmin extends Singapore
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/user.class.php";
     require_once $basePath."includes/io.class.php";
+    require_once $basePath."includes/io_sql.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
@@ -443,7 +444,7 @@ class sgAdmin extends Singapore
         return false;
       }
     
-    if(!preg_match("/[a-zA-Z0-9_]{3,}/",$$_REQUEST["user"])) {
+    if(!preg_match("/[a-zA-Z0-9_]{3,}/",$_REQUEST["user"])) {
       $this->lastError = $this->i18n->_g("Username must be at least 3 characters long and contain only alphanumeric characters");
       return false;
     }
@@ -617,7 +618,7 @@ class sgAdmin extends Singapore
     if(get_magic_quotes_gpc())
       $text = stripslashes($text);
     
-    if($mulitline) {
+    if($multiline) {
       $text = strip_tags($text, $this->config->allowed_tags);
       $text = str_replace(array("\n","\r"), array("<br />",""), $text);
     } else
