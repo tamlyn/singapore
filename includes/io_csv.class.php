@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.11 2004/09/12 21:39:02 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.12 2004/09/28 00:51:36 tamlyn Exp $
  */
 
 /**
@@ -101,10 +101,10 @@ class sgIO_csv {
           $gal->images[$i]->type
         ) = substr($gal->images[$i]->filename, 0, 7)=="http://"
             ? @GetImageSize($gal->images[$i]->filename)
-            : @GetImageSize($this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+            : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
       }
         
-    } elseif(file_exists($this->config->pathto_galleries.$galleryId)) { 
+    } elseif(file_exists($this->config->base_path.$this->config->pathto_galleries.$galleryId)) { 
       //no metadata so use iifn
 
       $bits = explode("/",$gal->id);
@@ -116,7 +116,7 @@ class sgIO_csv {
       else
         $gal->name = $temp;
       
-      $dir = Singapore::getListing($this->config->pathto_galleries.$gal->id."/", "images");
+      $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$gal->id."/", "images");
       
       //set gallery thumbnail to first image in gallery (if any)
       if(isset($dir->files[0])) $gal->filename = $dir->files[0];
@@ -137,14 +137,14 @@ class sgIO_csv {
           $gal->images[$i]->width, 
           $gal->images[$i]->height, 
           $gal->images[$i]->type
-        ) = @GetImageSize($this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+        ) = @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
       }
     } else {
       //selected gallery does not exist
       return null;
     }
     
-    $dir = Singapore::getListing($this->config->pathto_galleries.$gal->id."/", "dirs");
+    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$gal->id."/", "dirs");
 
     foreach($dir->dirs as $gallery) 
       $gal->galleries[] = $this->getSubGallery($this->config->base_path.$this->config->pathto_galleries, $gal->id."/".$gallery, $language);

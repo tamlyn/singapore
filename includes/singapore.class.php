@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.29 2004/09/12 21:39:02 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.30 2004/09/28 00:51:36 tamlyn Exp $
  */
 
 //define constants for request variables
@@ -111,6 +111,7 @@ class Singapore
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
     $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
     $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
+    if(isset($basePath)) $this->config->base_path = $basePath;
     
     //convert octal strings to integers
     if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);

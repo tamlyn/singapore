@@ -7,14 +7,16 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: setup.php,v 1.9 2004/02/02 16:31:35 tamlyn Exp $
+ * @version $Id: setup.php,v 1.10 2004/09/28 00:51:38 tamlyn Exp $
  */
 
 //require config class
 require_once "includes/config.class.php";
 //create config object
 $config = new sgConfig();
-
+$config->pathto_logs  = $config->pathto_data_dir."logs/";
+$config->pathto_cache = $config->pathto_data_dir."cache/";
+    
 
 function doSetdown()
 {
