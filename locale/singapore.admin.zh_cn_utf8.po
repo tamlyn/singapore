@@ -1,11 +1,13 @@
+﻿# Singapore 网页相册管理界面部分简体中文翻译 v0.99版
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 皮皮鲁, 2004年五月. 为我的爱妻和即将出生的女儿
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.8\n"
-"POT-Creation-Date: 2004-01-06 21:22+0000\n"
-"PO-Revision-Date: 2004-04-13 11:50-0500\n"
+"Project-Id-Version: singapore 0.9.9\n"
+"POT-Creation-Date: 2004-02-19 00:45+0000\n"
+"PO-Revision-Date: 2004-05-26 11:49-0500\n"
 "Last-Translator: Bin Yuan <yuanbin at yuanbinzhaoxia dot com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +60,8 @@ msgstr "删除相冊"
 #, possible-c-format
 msgid ""
 "Gallery %s is not empty.\n"
-"Are you sure you want to irretrievably delete it and all subgalleries and images it contains?"
+"Are you sure you want to irretrievably delete it and all subgalleries and "
+"images it contains?"
 msgstr ""
 "%s这个相册里面尚有内容。\n"
 "你确实想永久性删除这个相册及里面包含的所有子相册或者图片吗？"
@@ -101,111 +104,113 @@ msgstr "删除预存的缩略图"
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr "你确实想删除这%s张预存的缩略图吗？"
 
-#: ../includes/admin.class.php:178
+#: ../includes/admin.class.php:138
 msgid "admin bar|Back"
 msgstr "返回"
 
-#: ../includes/admin.class.php:180
+#: ../includes/admin.class.php:140
 msgid "admin bar|Admin"
 msgstr "管理菜单"
 
-#: ../includes/admin.class.php:181
+#: ../includes/admin.class.php:141
 msgid "admin bar|Galleries"
 msgstr "相册列表"
 
-#: ../includes/admin.class.php:182
+#: ../includes/admin.class.php:142
 msgid "admin bar|Log out"
 msgstr "退出"
 
-#: ../includes/admin.class.php:184
+#: ../includes/admin.class.php:144
 msgid "admin bar|Edit gallery"
 msgstr "编辑相册信息"
 
-#: ../includes/admin.class.php:185
+#: ../includes/admin.class.php:145
 msgid "admin bar|Delete gallery"
 msgstr "删除相册"
 
-#: ../includes/admin.class.php:186
+#: ../includes/admin.class.php:146
 msgid "admin bar|New subgallery"
 msgstr "新建子相册"
 
-#: ../includes/admin.class.php:188
+#: ../includes/admin.class.php:148
 msgid "admin bar|Edit image"
 msgstr "编辑图片信息"
 
-#: ../includes/admin.class.php:189
+#: ../includes/admin.class.php:149
 msgid "admin bar|Delete image"
 msgstr "删除图片"
 
-#: ../includes/admin.class.php:191
+#: ../includes/admin.class.php:151
 msgid "admin bar|New image"
 msgstr "新建图片"
 
-#: ../includes/admin.class.php:215
+#: ../includes/admin.class.php:175
 msgid "There was an error saving the new password."
 msgstr "保存口令时产生错误。"
 
-#: ../includes/admin.class.php:218
+#: ../includes/admin.class.php:178
 msgid "New password must be between 6 and 16 characters long."
 msgstr "新口令长度必需在6到16个字符之间。"
 
-#: ../includes/admin.class.php:220
+#: ../includes/admin.class.php:180
 msgid "The new passwords you entered do not match."
 msgstr "两次输入的新口令不匹配。"
 
-#: ../includes/admin.class.php:222
-msgid "The current password you entered does not match the one in the database."
-msgstr "你输入的口令和数据库中的口令不匹配。"
+#: ../includes/admin.class.php:182
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr ""
+"你输入的口令和数据库中的口令不匹配。"
 
-#: ../includes/admin.class.php:225
+#: ../includes/admin.class.php:185
 msgid "The username specified was not found in the database."
 msgstr "没有在数据库中找到指定的用户名。"
 
-#: ../includes/admin.class.php:261
+#: ../includes/admin.class.php:221
 msgid "Username and/or password incorrect"
 msgstr "用户名或口令错误"
 
-#: ../includes/admin.class.php:264
+#: ../includes/admin.class.php:224
 msgid "You must enter a username and password"
 msgstr "你需要输入用户名和口令"
 
-#: ../includes/admin.class.php:289
+#: ../includes/admin.class.php:249
 msgid "Gallery already exists"
 msgstr "相册已经存在"
 
-#: ../includes/admin.class.php:296
+#: ../includes/admin.class.php:256
 msgid "Could not create directory"
 msgstr "无法建立目录"
 
-#: ../includes/admin.class.php:327
+#: ../includes/admin.class.php:287
 msgid "Could not save gallery info"
 msgstr "无法保存相册信息"
 
-#: ../includes/admin.class.php:345
+#: ../includes/admin.class.php:305
 msgid "Cannot delete the top level directory"
 msgstr "无法删除顶级目录"
 
-#: ../includes/admin.class.php:386
+#: ../includes/admin.class.php:346
 msgid "File already exists"
 msgstr "文件已经存在"
 
-#: ../includes/admin.class.php:391
+#: ../includes/admin.class.php:351
 msgid "Could not upload file"
 msgstr "无法上传文件"
 
-#: ../includes/admin.class.php:396
+#: ../includes/admin.class.php:356
 msgid "Invalid location choice"
 msgstr "你选择的位置无效"
 
-#: ../includes/admin.class.php:415
+#: ../includes/admin.class.php:375
 msgid "Could not add image to gallery"
 msgstr "无法将图片加入到相册中"
 
-#: ../includes/admin.class.php:448
+#: ../includes/admin.class.php:408
 msgid "Could not save image information"
 msgstr "无法保存图片信息"
 
-#: ../includes/admin.class.php:470
+#: ../includes/admin.class.php:430
 msgid "Could not delete image"
 msgstr "无法删除图片"
 
@@ -215,7 +220,7 @@ msgstr "请选择缩略图"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:6
 msgid "Choose the filename of the image used to represent this gallery."
-msgstr "请选择代表本相册的图片。"
+msgstr "请选择代表本相册的图片文件名。"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:9
 msgid "thumbnail|None"
@@ -373,7 +378,8 @@ msgid "new image"
 msgstr "添加新图片"
 
 #: ../templates/admin_default/newimage.tpl.php:3
-msgid "This image will not be visible because this gallery contains subgalleries."
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
 msgstr "由于本相册包含子相册，所以这张图片将是不可见的。"
 
 #: ../templates/admin_default/newimage.tpl.php:12

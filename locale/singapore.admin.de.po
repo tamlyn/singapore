@@ -1,22 +1,22 @@
-# GERMAN TRANSLATION OF THE ADMIN INTERFACE FOR SINGAPORE IMAGE GALLERY
-# Copyright (C) 2003 Free Software Foundation, Inc.
-# Niels Hackius <niels@hackius.de>,2003.
+# GERMAN TRANSLATION FOR SINGAPORE IMAGE GALLERY ADMIN INTERFACE.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Niels Hackius <niels@hackius.de>, 2003.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.7\n"
-"POT-Creation-Date: 2004-01-06 21:22+0000\n"
-"PO-Revision-Date: 2003-11-24 20:36+0001\n"
+"Project-Id-Version: singapore 0.9.9\n"
+"POT-Creation-Date: 2004-05-16 02:18+0100\n"
+"PO-Revision-Date: 2004-05-28 17:51+0100\n"
 "Last-Translator: Niels Hackius <niels@hackius.de>\n"
-"Language-Team: German\n"
+"Language-Team: de <niels@hackius.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
 # File: ../admin.php, line: 43
 msgid "Welcome to singapore admin!"
-msgstr "Willkommen bei den singapore Einstellungen."
+msgstr "Willkomen in den singapore Einstellungen."
 #
 # File: ../admin.php, line: 46
 # File: ../admin.php, line: 55
@@ -25,20 +25,21 @@ msgstr "Willkommen bei den singapore Einstellungen."
 # File: ../admin.php, line: 93
 # File: ../admin.php, line: 104
 # File: ../admin.php, line: 121
-# File: ../admin.php, line: 139
-# File: ../admin.php, line: 153
-# File: ../admin.php, line: 163
-# File: ../admin.php, line: 188
+# File: ../admin.php, line: 142
+# File: ../admin.php, line: 151
+# File: ../admin.php, line: 170
+# File: ../admin.php, line: 180
+# File: ../admin.php, line: 205
 msgid "An error occurred:"
 msgstr "Ein Fehler ist aufgetreten."
 #
 # File: ../admin.php, line: 52
 msgid "Thank you and goodbye!"
-msgstr "Vielen Dank und auf Wiedersehen."
+msgstr "Danke schön und auf Wiedersehen."
 #
 # File: ../admin.php, line: 62
 msgid "Password saved"
-msgstr "Passwort gespeichert."
+msgstr "Passwort gespeichert"
 #
 # File: ../admin.php, line: 76
 msgid "Gallery added"
@@ -46,12 +47,12 @@ msgstr "Galerie hinzugefügt"
 #
 # File: ../admin.php, line: 90
 msgid "Gallery info saved"
-msgstr "Galeriebeschreibung gespeichert."
+msgstr "Galerie-Beschreibung gespeichert"
 #
 # File: ../admin.php, line: 99
 # File: ../admin.php, line: 117
-# File: ../admin.php, line: 159
-# File: ../admin.php, line: 184
+# File: ../admin.php, line: 176
+# File: ../admin.php, line: 201
 msgid "confirm|OK"
 msgstr "OK"
 #
@@ -61,14 +62,14 @@ msgstr "Galerie gelöscht"
 #
 # File: ../admin.php, line: 107
 # File: ../admin.php, line: 123
-# File: ../admin.php, line: 165
-# File: ../admin.php, line: 189
+# File: ../admin.php, line: 182
+# File: ../admin.php, line: 206
 msgid "confirm|Cancel"
 msgstr "Abbrechen"
 #
 # File: ../admin.php, line: 110
 msgid "delete gallery"
-msgstr "Galerie entfernen"
+msgstr "Galerie löschen"
 #
 # File: ../admin.php, line: 111
 #, c-format
@@ -77,169 +78,181 @@ msgid ""
 "Are you sure you want to irretrievably delete it and all subgalleries and "
 "images it contains?"
 msgstr ""
-"Galerie %s enthält immer noch Bilder\n"
-"Sind Sie sicher, dass die Galerie unwiederherstellbar gelöscht werden soll?"
+"Galerie %s is nicht leer.\n"
+"Soll die Galerie und alle Unter-Galerien wirklich "
+"unwiederherstellbargelöscht werden?"
 #
 # File: ../admin.php, line: 119
 msgid "Thumbnail changed"
-msgstr "Bildvorschau geändert"
+msgstr "Miniaturbild wurde geändert"
 #
-# File: ../admin.php, line: 136
+# File: ../admin.php, line: 139
 msgid "Image added"
-msgstr "Bild hinzugefügt"
+msgstr "Bild wurde hinzugefügt"
 #
-# File: ../admin.php, line: 150
+# File: ../admin.php, line: 148
+msgid "Archive contents added"
+msgstr "Archiv Inhalte wurden hinzugefügt"
+#
+# File: ../admin.php, line: 167
 msgid "Image saved successfully"
-msgstr "Bild erfolgreich gespeichert."
+msgstr "Bild wurde gespeichert"
 #
-# File: ../admin.php, line: 161
+# File: ../admin.php, line: 178
 msgid "Image deleted"
-msgstr "Bild gelöscht"
+msgstr "Bild wurde gelöscht"
 #
-# File: ../admin.php, line: 168
+# File: ../admin.php, line: 185
 msgid "delete image"
-msgstr "Bild entfernen"
+msgstr "Bild löschen"
 #
-# File: ../admin.php, line: 169
+# File: ../admin.php, line: 186
 #, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
 msgstr ""
-"Sind Sie sicher, dass Sie das Bild %s unwiederherstellbar aus der Galerie %s "
-"löschen möchten?"
+"Soll das Bild %s wirklich unwiederherstellbar aus der Galerie %s gelöscht "
+"werden?"
 #
-# File: ../admin.php, line: 186
+# File: ../admin.php, line: 203
 msgid "Thumbnail cache purged"
-msgstr "Bildvorschau Cache geleert."
+msgstr "Miniaturvorschau-Cache wurde geleert"
 #
-# File: ../admin.php, line: 192
+# File: ../admin.php, line: 209
 msgid "purge cached thumbnails"
-msgstr "Bildvorschau Cache leeren."
+msgstr "Miniaturvorschau-Cache leeren"
 #
-# File: ../admin.php, line: 194
+# File: ../admin.php, line: 211
 #, c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
-msgstr ""
-"Sind Sie sicher, dass Sie alle %s Vorschau Bilder aus dem Cache enfternen "
-"möchten. "
+msgstr "Wirklich alle %s Miniaturvorschau-Bilder aus dem Cache löschen?"
 #
-# File: ../includes/admin.class.php, line: 178
+# File: ../includes/admin.class.php, line: 171
 msgid "admin bar|Back"
 msgstr "Zurück"
 #
-# File: ../includes/admin.class.php, line: 180
+# File: ../includes/admin.class.php, line: 173
 msgid "admin bar|Admin"
 msgstr "Einstellungen"
 #
-# File: ../includes/admin.class.php, line: 181
+# File: ../includes/admin.class.php, line: 174
 msgid "admin bar|Galleries"
 msgstr "Galerien"
 #
-# File: ../includes/admin.class.php, line: 182
+# File: ../includes/admin.class.php, line: 175
 msgid "admin bar|Log out"
 msgstr "Abmelden"
 #
-# File: ../includes/admin.class.php, line: 184
+# File: ../includes/admin.class.php, line: 177
 msgid "admin bar|Edit gallery"
 msgstr "Galerie bearbeiten"
 #
-# File: ../includes/admin.class.php, line: 185
+# File: ../includes/admin.class.php, line: 178
 msgid "admin bar|Delete gallery"
-msgstr "Galerie entfernen"
+msgstr "Galerie löschen"
 #
-# File: ../includes/admin.class.php, line: 186
+# File: ../includes/admin.class.php, line: 179
 msgid "admin bar|New subgallery"
-msgstr "Neue untergeordnete Galerie"
+msgstr "Neue Unter-Galerie"
 #
-# File: ../includes/admin.class.php, line: 188
+# File: ../includes/admin.class.php, line: 181
 msgid "admin bar|Edit image"
 msgstr "Bild bearbeiten"
 #
-# File: ../includes/admin.class.php, line: 189
+# File: ../includes/admin.class.php, line: 182
 msgid "admin bar|Delete image"
-msgstr "Bild entfernen"
+msgstr "Bild löschen"
 #
-# File: ../includes/admin.class.php, line: 191
+# File: ../includes/admin.class.php, line: 184
 msgid "admin bar|New image"
-msgstr "Bild erstellen"
+msgstr "Bild hinzufügen"
+#
+# File: ../includes/admin.class.php, line: 208
+msgid "There was an error saving the new password."
+msgstr "Beim speichern des Passworts ist ein Fehler aufgetreten."
+#
+# File: ../includes/admin.class.php, line: 211
+msgid "New password must be between 6 and 16 characters long."
+msgstr "Ein neues Passwort muss von 6 bis 16 lang sein."
+#
+# File: ../includes/admin.class.php, line: 213
+msgid "The new passwords you entered do not match."
+msgstr "Die neuen, eingebenen Passwörter stimmen nicht überein."
 #
 # File: ../includes/admin.class.php, line: 215
-msgid "There was an error saving the new password."
-msgstr "Fehler beim Speichern des Passworts."
-#
-# File: ../includes/admin.class.php, line: 218
-msgid "New password must be between 6 and 16 characters long."
-msgstr "Passwort muss 6 bis 16 Zeichen enthalten."
-#
-# File: ../includes/admin.class.php, line: 220
-msgid "The new passwords you entered do not match."
-msgstr "Die eingegebenen Passwörter stimmten nicht überein."
-#
-# File: ../includes/admin.class.php, line: 222
 msgid ""
 "The current password you entered does not match the one in the database."
-msgstr "Das eingegebene Passwort ist falsch."
+msgstr "Das aktuelle Passwort stimmt nicht mit dem gespeicherten überein."
 #
-# File: ../includes/admin.class.php, line: 225
+# File: ../includes/admin.class.php, line: 218
 msgid "The username specified was not found in the database."
-msgstr "Der eingegebene Nutzername existiert nicht."
+msgstr "Der angegebene Nutzername wurde nicht gefunden."
 #
-# File: ../includes/admin.class.php, line: 261
+# File: ../includes/admin.class.php, line: 254
 msgid "Username and/or password incorrect"
-msgstr "Nutzername und/oder Passwort falsch."
+msgstr "Nutzername und/oder Passwort inkorrekt."
 #
-# File: ../includes/admin.class.php, line: 264
+# File: ../includes/admin.class.php, line: 257
 msgid "You must enter a username and password"
-msgstr "Sie müssen Nutzernamen und Passwort eingeben."
+msgstr "Sie müssen einen Nutzernamen und ein Passwort eingeben."
 #
-# File: ../includes/admin.class.php, line: 289
+# File: ../includes/admin.class.php, line: 282
 msgid "Gallery already exists"
 msgstr "Galerie existiert bereits."
 #
-# File: ../includes/admin.class.php, line: 296
+# File: ../includes/admin.class.php, line: 289
 msgid "Could not create directory"
-msgstr "Ordner konnte nicht erstellt werden."
+msgstr "Konnte Ordner nicht erstellen"
 #
-# File: ../includes/admin.class.php, line: 327
+# File: ../includes/admin.class.php, line: 322
 msgid "Could not save gallery info"
-msgstr "Konnte Galeriebeschreibung nicht speichern."
+msgstr "Konnte Galerie-Beschreibung nicht speichern"
 #
-# File: ../includes/admin.class.php, line: 345
+# File: ../includes/admin.class.php, line: 343
 msgid "Cannot delete the top level directory"
-msgstr "Das Hauptverzeichniss kann nicht gelöscht werden."
+msgstr "Das Wurzel-Verzeichniss kann nicht gelöscht werden."
 #
-# File: ../includes/admin.class.php, line: 386
+# File: ../includes/admin.class.php, line: 398
+# File: ../includes/admin.class.php, line: 493
+# File: ../includes/admin.class.php, line: 524
 msgid "File already exists"
 msgstr "Datei existiert bereits"
 #
-# File: ../includes/admin.class.php, line: 391
-#, fuzzy
+# File: ../includes/admin.class.php, line: 403
+# File: ../includes/admin.class.php, line: 446
 msgid "Could not upload file"
-msgstr "Upload unvollständig."
+msgstr "Konnte Datei nicht hochladen."
 #
-# File: ../includes/admin.class.php, line: 396
-msgid "Invalid location choice"
-msgstr "Ungültige Zielwahl"
-#
-# File: ../includes/admin.class.php, line: 415
+# File: ../includes/admin.class.php, line: 422
 msgid "Could not add image to gallery"
-msgstr "Das Bild konnt enicht zur Galerie hinzugefügt werden."
+msgstr "Konnte Bild nicht zur Galerie hinzufügen"
 #
-# File: ../includes/admin.class.php, line: 448
+# File: ../includes/admin.class.php, line: 436
+msgid "Could not find temporary storage space"
+msgstr "Temporärer Speicherplatz wurde nicht gefunden"
+#
+# File: ../includes/admin.class.php, line: 456
+msgid "Could not decompress archive"
+msgstr "Archiv konnte nicht entpackt werden"
+#
+# File: ../includes/admin.class.php, line: 544
+msgid "Some archive contents could not be added"
+msgstr "Archiv-Teile konnten nicht hinzugefügt werden"
+#
+# File: ../includes/admin.class.php, line: 577
 msgid "Could not save image information"
-msgstr "Die Bildbeschreibung konnte nicht gespeichert werden."
+msgstr "Konnte Bild-Beschreibung nicht speichern"
 #
-# File: ../includes/admin.class.php, line: 470
+# File: ../includes/admin.class.php, line: 603
 msgid "Could not delete image"
-msgstr "Das Bild konnte ncht gelöscht werden."
+msgstr "Konnte Bild nicht löschen"
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 1
 msgid "choose thumbnail"
-msgstr "Bitte wählen Sie eine Bildvorschau."
+msgstr "Miniaturvorschaubild auswählen"
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 6
 msgid "Choose the filename of the image used to represent this gallery."
-msgstr ""
-"Wählen Sie den Dateinamen des Bildes, welches die Galerie kennzeichnen soll."
+msgstr "Wählen Sie ein Miniaturvorschau-Bild, als Vorschau für diese Galerie"
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 9
 msgid "thumbnail|None"
@@ -255,29 +268,31 @@ msgstr "Galerie bearbeiten"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 14
 msgid "Gallery thumbnail:"
-msgstr "Galerie Bildvorschau"
+msgstr "Miniaturvorschau-Bild für die Galerie:"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 18
 msgid ""
 "Random\n"
 "thumbnail"
-msgstr ""
-"Zufällig \n"
-"Bildvorschau"
+msgstr "ZufälligesMiniaturvorschau-Bild"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 23
 msgid "thumbnail|Change..."
-msgstr "Andere Bildvorschau wählen."
+msgstr "Ändern..."
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 27
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 msgid "Gallery name"
-msgstr "Name der Galerie"
+msgstr "Galerie-Name"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 31
 # File: ../templates/admin_default/editimage.tpl.php, line: 22
 msgid "Artist name"
-msgstr "Name des Künstlers."
+msgstr "Fotografen-Name"
+#
+# File: ../templates/admin_default/editgallery.tpl.php, line: 47
+msgid "Summary"
+msgstr ""
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 1
 msgid "edit image"
@@ -290,7 +305,7 @@ msgstr "Bild"
 # File: ../templates/admin_default/editimage.tpl.php, line: 18
 # File: ../templates/admin_default/imagehits.tpl.php, line: 22
 msgid "Image name"
-msgstr "Bildname"
+msgstr "Bilde-Name"
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 1
 msgid "change password"
@@ -302,54 +317,50 @@ msgstr "Bitte wählen Sie ein Passwort mit 6 bis 16 Zeichen Länge."
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 9
 msgid "Current password:"
-msgstr "Aktuelles Passwort"
+msgstr "Derzeitiges Passwort:"
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 13
 msgid "New password:"
-msgstr "Neues Passwort"
+msgstr "Neues Passwort:"
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 17
 msgid "Confirm password:"
-msgstr "Passwort bestätigen"
-#
-# File: ../templates/admin_default/footer.tpl.php, line: 3
-msgid "singapore|Powered by"
-msgstr "Erstellt mit"
+msgstr "Passwort bestätigen:"
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 # File: ../templates/admin_default/imagehits.tpl.php, line: 22
 msgid "hits table|Graph"
-msgstr ""
+msgstr "Diagramm"
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 # File: ../templates/admin_default/imagehits.tpl.php, line: 22
 msgid "hits table|Hits"
-msgstr ""
+msgstr "Zugriffe"
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 # File: ../templates/admin_default/imagehits.tpl.php, line: 22
 msgid "hits table|Last hit"
-msgstr ""
+msgstr "Letzter Zugriff"
 #
 # File: ../templates/admin_default/header.tpl.php, line: 39
 msgid "Admin message:"
-msgstr ""
+msgstr "Nachricht für den Administrator:"
 #
 # File: ../templates/admin_default/loggedout.tpl.php, line: 1
 msgid "Return to galleries."
-msgstr "Zurück zu den Galerien"
+msgstr "Zurück den Galerien"
 #
 # File: ../templates/admin_default/login.tpl.php, line: 1
 msgid "log in"
-msgstr "Anmelden"
+msgstr "anmelden"
 #
 # File: ../templates/admin_default/login.tpl.php, line: 3
 msgid ""
 "Only authorised users are allowed into the admin section.\n"
 "Please enter your admin username and password below."
 msgstr ""
-"Nur autorisierte Nutzer können die Einstellungen verändern. \n"
-"Bitte geben Sie Administrator Nutzernamen und Passwort ein."
+"Nur authorisierte dürfen die Einstellungen betreten.Bitte geben Sie "
+"Nutzernamen und Passwort unten ein."
 #
 # File: ../templates/admin_default/login.tpl.php, line: 8
 msgid "Username:"
@@ -365,15 +376,15 @@ msgstr "Bitte wählen Sie:"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 4
 msgid "Manage galleries and images"
-msgstr "Galerie und Bilder verwalten"
+msgstr "Galerien und Bilder verwalten"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 5
 msgid "View gallery hits"
-msgstr "Anzahl der Galeriebesuche anzeigen"
+msgstr "Zugriffszahlen für die Galerien anzeigen"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 6
 msgid "Purge cached thumbnails"
-msgstr "Vorschau der Bild aus dem Cache entfernen"
+msgstr "Miniaturvorschau-Bilder aus dem Cache löschen"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 7
 msgid "Change password"
@@ -381,46 +392,65 @@ msgstr "Passwort ändern"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 8
 msgid "Log out of admin"
-msgstr "Aus den Einstellungen abmelden."
+msgstr "Aus den Einstellungen abmelden"
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 1
 msgid "new gallery"
-msgstr "neue Galerie"
+msgstr "Neue Galerie"
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 9
-# File: ../templates/admin_default/newimage.tpl.php, line: 28
+# File: ../templates/admin_default/newimage.tpl.php, line: 22
 msgid "Identifier:"
 msgstr "Bezeichner:"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 1
 msgid "new image"
-msgstr "neues Bild"
+msgstr "Neues Bild"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 3
 msgid ""
 "This image will not be visible because this gallery contains subgalleries."
 msgstr ""
+"Dieses Bild wird nicht sichtbar sein, da die Galerie Unter-Galerien enthält."
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 12
-msgid "Remote file"
-msgstr "Datei auf einem anderem Server"
+# File: ../templates/admin_default/newimage.tpl.php, line: 13
+msgid "Upload single file"
+msgstr "Einzelne Datei hochladen"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 16
+# File: ../templates/admin_default/newimage.tpl.php, line: 17
+msgid "Image file to upload:"
+msgstr "Bild-Datei zum hochladen"
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 24
+msgid "Use filename of uploaded file."
+msgstr "Dateinamen der hochgeladenen Datei verwenden-"
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 25
+msgid "Specify different filename:"
+msgstr "Anderen Dateinamen angeben:"
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 30
+msgid "Upload multiple files"
+msgstr "Mehrere Dateien hochladen"
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 34
+msgid "ZIP file to upload:"
+msgstr "ZIP-Archiv hochladen"
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 39
+#, fuzzy
+msgid "Add remote file"
+msgstr "Datei auf einem anderen Server"
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 43
 msgid "URL of image:"
 msgstr "URL des Bildes:"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 20
-msgid "Local file"
-msgstr "Datei von der lokalen Maschine"
+#~ msgid "Invalid location choice"
+#~ msgstr "Das gewählte Ziel ungültig."
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 24
-msgid "Image file to upload:"
-msgstr "Bild welches hochgeladen werden soll:"
+#~ msgid "singapore|Powered by"
+#~ msgstr "Powered by"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 30
-msgid "Use filename of uploaded file."
-msgstr "Dateinamen des hochgeladenen Bildes benutzen"
-#
-# File: ../templates/admin_default/newimage.tpl.php, line: 31
-msgid "Specify different filename:"
-msgstr "Anderen Dateinamen festlegen:"
+#~ msgid "Local file"
+#~ msgstr "Datei von der lokalen Maschine"
