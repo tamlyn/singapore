@@ -20,7 +20,7 @@
       echo $sg->galleryThumbnailImage(); 
   ?>
   <br />
-  <a href="admin.php?action=changethumbnail&amp;gallery=<?php echo $sg->gallery->idEncoded ?>"><?php echo $sg->i18n->_g("thumbnail|Change...") ?></a>
+  <a href="<?php echo $sg->formatAdminURL("changethumbnail",$sg->gallery->idEncoded) ?>"><?php echo $sg->i18n->_g("thumbnail|Change...") ?></a>
 </div></td>
 </tr>
 <tr>

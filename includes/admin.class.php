@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.11 2004/02/02 16:31:35 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.12 2004/04/09 17:53:43 tamlyn Exp $
  */
 
 /**
@@ -48,6 +48,8 @@ class sgAdmin extends Singapore
       //to the tmp_name variable so I have to add them manually. Grrrr.
       if(isset($_FILES["sgImageFile"]["tmp_name"])) 
         $_FILES["sgImageFile"]["tmp_name"] = addslashes($_FILES["sgImageFile"]["tmp_name"]);
+      if(isset($_FILES["sgArchiveFile"]["tmp_name"])) 
+        $_FILES["sgArchiveFile"]["tmp_name"] = addslashes($_FILES["sgArchiveFile"]["tmp_name"]);
       $_FILES   = array_map(array("Singapore","arraystripslashes"), $_FILES);
     }
     
@@ -91,6 +93,26 @@ class sgAdmin extends Singapore
   }
   
   /**
+   * Returns a link to the image or gallery with the correct formatting and path
+   * NOTE: This takes its arguments in a different order to {@link Singapore::formatURL()}
+   *
+   * @author   Adam Sissman <adam at bluebinary dot com>
+   */
+  function formatAdminURL($action, $gallery = null, $image = null, $startat = null)
+  {
+    $ret  = $this->config->base_url."admin.php?";
+    $ret .= "action=".$action;
+    if($gallery != null)
+      $ret .= "&amp;gallery=".$gallery;
+    if($image != null)
+      $ret .= "&amp;image=".$image;
+    if($startat != null)
+      $ret .= "&amp;startat=".$startat;
+    
+    return $ret;
+  }
+
+  /**
    * Loads hits info into the galleries object.
    */
   function loadGalleryHits()
@@ -123,7 +145,7 @@ class sgAdmin extends Singapore
   function galleryHitsTab()
   {
     $showing = $this->galleryTabShowing();
-    if($this->gallery->id != ".") $links = "<a href=\"admin.php?action=showgalleryhits&amp;gallery=".$this->gallery->parent."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
+    if($this->gallery->id != ".") $links = "<a href=\"".$this->formatAdminURL("showgalleryhits",$this->gallery->parent)."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
     if(empty($links)) return $showing;
     else return $showing." | ".$links;
   }
@@ -137,18 +159,18 @@ class sgAdmin extends Singapore
   {
     if(!$this->isLoggedIn()) return array(0 => array($this->i18n->_g("admin bar|Back") => "."));
     
-    $ret[0][$this->i18n->_g("admin bar|Admin")] = "admin.php";
-    $ret[0][$this->i18n->_g("admin bar|Galleries")] = "admin.php?action=view".(isset($this->gallery) ? "&amp;gallery=".$this->gallery->idEncoded : "");
-    $ret[0][$this->i18n->_g("admin bar|Log out")] = "admin.php?action=logout";
+    $ret[0][$this->i18n->_g("admin bar|Admin")] = $this->formatAdminURL("menu");
+    $ret[0][$this->i18n->_g("admin bar|Galleries")] = $this->formatAdminURL("view", isset($this->gallery) ? $this->gallery->idEncoded : null);
+    $ret[0][$this->i18n->_g("admin bar|Log out")] = $this->formatAdminURL("logout");
     if(isset($this->gallery)) {
-      $ret[1][$this->i18n->_g("admin bar|Edit gallery")] = "admin.php?action=editgallery&amp;gallery=".$this->gallery->idEncoded;
-      $ret[1][$this->i18n->_g("admin bar|Delete gallery")] = "admin.php?action=deletegallery&amp;gallery=".$this->gallery->idEncoded;
-      $ret[1][$this->i18n->_g("admin bar|New subgallery")] = "admin.php?action=newgallery&amp;gallery=".$this->gallery->idEncoded;
+      $ret[1][$this->i18n->_g("admin bar|Edit gallery")] = $this->formatAdminURL("editgallery",$this->gallery->idEncoded);
+      $ret[1][$this->i18n->_g("admin bar|Delete gallery")] = $this->formatAdminURL("deletegallery",$this->gallery->idEncoded);
+      $ret[1][$this->i18n->_g("admin bar|New subgallery")] = $this->formatAdminURL("newgallery",$this->gallery->idEncoded);
       if($this->isImage()) {
-        $ret[2][$this->i18n->_g("admin bar|Edit image")] = "admin.php?action=editimage&amp;gallery=".$this->gallery->idEncoded."&amp;image=".$this->image->filename;
-        $ret[2][$this->i18n->_g("admin bar|Delete image")] = "admin.php?action=deleteimage&amp;gallery=".$this->gallery->idEncoded."&amp;image=".$this->image->filename;
+        $ret[2][$this->i18n->_g("admin bar|Edit image")] = $this->formatAdminURL("editimage",$this->gallery->idEncoded,$this->image->filename);
+        $ret[2][$this->i18n->_g("admin bar|Delete image")] = $this->formatAdminURL("deleteimage",$this->gallery->idEncoded,$this->image->filename);
       }
-      $ret[2][$this->i18n->_g("admin bar|New image")] = "admin.php?action=newimage&amp;gallery=".$this->gallery->idEncoded;
+      $ret[2][$this->i18n->_g("admin bar|New image")] = $this->formatAdminURL("newimage",$this->gallery->idEncoded);
     }
     return $ret;
   }
@@ -293,21 +315,24 @@ class sgAdmin extends Singapore
    *
    * @return boolean true on success; false otherwise
    */
-  function deleteGallery()
+  function deleteGallery($galleryId = null)
   {
+    if($galleryId ===null)
+      $galleryId = $_REQUEST['gallery'];
+  
     //check that there are no "../" references in the gallery name
     //this ensures that the gallery being deleted really is a 
     //subdirectory of the galleries directory 
-    if(strpos($_REQUEST['gallery'],"../") !== false) return false;
+    if(strpos($galleryId,"../") !== false) return false;
     
     //check that the gallery to delete is not the top level directory
-    if(realpath($this->config->pathto_galleries.$_REQUEST['gallery']) == realpath($this->config->pathto_galleries)) {
+    if(realpath($this->config->pathto_galleries.$galleryId) == realpath($this->config->pathto_galleries)) {
       $this->lastError = $this->i18n->_g("Cannot delete the top level directory");
       return false;
     }
     
     //remove the offending directory and all contained therein
-    return $this->rmdir_all($this->config->pathto_galleries.$_REQUEST['gallery']);
+    return $this->rmdir_all($this->config->pathto_galleries.$galleryId);
   }
   
   /**
@@ -332,32 +357,41 @@ class sgAdmin extends Singapore
     if($_REQUEST["sgLocationChoice"] == "remote") {
       $image = $_REQUEST["sgImageURL"];
       $path = $image;
-    } elseif($_REQUEST["sgLocationChoice"] == "local") {
+    } elseif($_REQUEST["sgLocationChoice"] == "single") {
       //set filename as requested
       if($_REQUEST["sgNameChoice"] == "same") $image = $_FILES["sgImageFile"]["name"];
       else $image = $_REQUEST["sgFileName"];
       
       //make sure file has a recognised extension
-      if(!preg_match("/\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff)$/i",$image)) $image .= ".jpeg";
+      if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpeg";
       
       $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
+      $srcImage = $image;
       
-      if(file_exists($path)) {
-        $this->lastError = $this->i18n->_g("File already exists"); 
-        return false;
-      }
-      
+      if(file_exists($path))
+        switch($this->config->upload_overwrite) {
+          case 1 : //overwrite
+            $this->deleteImage($image);
+            break;
+          case 2 : //generate unique
+            for($i=0;file_exists($path);$i++) {
+              $pivot = strrpos($srcImage,".");
+              $image = substr($srcImage, 0, $pivot).'-'.$i.substr($srcImage, $pivot,strlen($srcImage)-$pivot);
+              $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
+            }
+            break;
+          case 0 : //raise error
+          default :
+            $this->lastError = $this->i18n->_g("File already exists");
+            return false;
+        }
+            
       if(!move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) {
         $this->lastError = $this->i18n->_g("Could not upload file"); 
         return false;
       }
       
-    } else {
-      $this->lastError = $this->i18n->_g("Invalid location choice");
-      return false;
     }
-    
-    $i = count($this->gallery->images);
     
     $img = new sgImage();
     
@@ -375,6 +409,125 @@ class sgAdmin extends Singapore
     $this->lastError = $this->i18n->_g("Could not add image to gallery");
     @unlink($path);
     return false;
+  }
+  
+  /**
+   * Adds the contents of an uploaded archive to the database.
+   *
+   * @return boolean true on success; false otherwise
+   */
+  function addMultipleImages()
+  {
+    //create temp directory
+    while(!mkdir($tmpdir = $_ENV["TMP"]."/".uniqid("sg")));
+    
+    $archive = $_FILES["sgArchiveFile"]["tmp_name"];
+  
+    if(!is_uploaded_file($archive)) {
+      $this->lastError = $this->i18n->_g("Could not upload file"); 
+      return false;
+    }
+    
+    //decompress archive to temp
+    $cmd  = escapeshellcmd($this->config->pathto_unzip);
+    $cmd .= ' -d '.escapeshellarg(realpath($tmpdir));
+    $cmd .= ' '.escapeshellarg(realpath($archive));
+    
+    if(!exec($cmd)) {
+      $this->lastError = $this->i18n->_g("Could not decompress archive"); 
+      return false;
+    }
+    
+    //remove archive file
+    unlink($archive);
+    
+    //start processing archive contents
+    $wd = $tmpdir;
+    $contents = $this->getListing($wd,"images");
+    
+    //cope with archives contained within a directory
+    if(empty($contents->files) && count($contents->dirs) == 1)
+      $contents = $this->getListing($wd .= '/'.$contents->dirs[0],"images");
+      
+    $success = true;
+
+    //add any images to current gallery
+    foreach($contents->files as $image) {
+    
+      //make sure file has a recognised extension
+      if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpeg";
+      
+      $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
+      $srcImage = $image;
+      
+      if(file_exists($path))
+        switch($this->config->upload_overwrite) {
+          case 1 : //overwrite
+            $this->deleteImage($image);
+            break;
+          case 2 : //generate unique
+            for($i=0;file_exists($path);$i++) {
+              $pivot = strrpos($srcImage,".");
+              $image = substr($srcImage, 0, $pivot).'-'.$i.substr($srcImage, $pivot,strlen($srcImage)-$pivot);
+              $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
+            }
+            break;
+          case 0 : //raise error
+          default :
+            $this->lastError = $this->i18n->_g("File already exists");
+            $success = false;
+            continue;
+        }
+      
+      copy($wd.'/'.$srcImage,$path);
+      
+      $img = new sgImage();
+      
+      $img->filename = $image;
+      $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
+      list($img->width, $img->height) = GetImageSize($path);
+      
+      $this->gallery->images[count($this->gallery->images)] = $img;
+    }
+    
+    //add any directories as subgalleries
+    foreach($contents->dirs as $gallery) {
+      $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery;
+
+      if(file_exists($path))
+        switch($this->config->upload_overwrite) {
+          case 1 : //overwrite
+            $this->deleteGallery($this->gallery->id.'/'.$gallery);
+            break;
+          case 2 : //generate unique
+            for($i=0;file_exists($path);$i++)
+              $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery.'-'.$i;
+            break;
+          case 0 : //raise error
+          default :
+            $this->lastError = $this->i18n->_g("File already exists");
+            $success = false;
+            continue;
+        }
+
+      rename($wd.'/'.$gallery,$path);
+    }
+    
+    //if images were added save metadata
+    if(!empty($contents->files))
+      $success &= $this->io->putGallery($this->gallery);
+    
+    //if subgalleries were added reload gallery data
+    if(!empty($contents->dirs))
+      $this->selectGallery();
+    
+    //remove temporary directory
+    $this->rmdir_all($tmpdir);
+    
+    if(!$success)
+      $this->lastError = $this->i18n->_g("Some archive contents could not be added");
+      
+    return $success;
   }
   
   /**
@@ -412,16 +565,20 @@ class sgAdmin extends Singapore
   /**
    * Deletes an image from the current gallery.
    *
+   * @param string the filename of the image to delete (optional)
    * @return boolean true on success; false otherwise
    */
-  function deleteImage()
+  function deleteImage($image = null)
   {
+    if($image === null)
+      $image = $this->image->filename;
+  
     for($i=0;$i<count($this->gallery->images);$i++)
-      if($this->gallery->images[$i]->filename == $this->image->filename)
+      if($this->gallery->images[$i]->filename == $image)
         array_splice($this->gallery->images,$i,1);
     
-    if(file_exists($this->config->pathto_galleries.$this->gallery->id."/".$this->image->filename))
-      unlink($this->config->pathto_galleries.$this->gallery->id."/".$this->image->filename);
+    if(file_exists($this->config->pathto_galleries.$this->gallery->id."/".$image))
+      unlink($this->config->pathto_galleries.$this->gallery->id."/".$image);
     
     if($this->io->putGallery($this->gallery)) {
       $this->image = null;

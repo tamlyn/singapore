@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.18 2004/02/29 21:00:02 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.19 2004/04/09 17:53:44 tamlyn Exp $
  */
  
 /**
@@ -277,12 +277,12 @@ class Singapore
    */
   function formatURL($gallery, $image = null, $startat = null, $action = null)
   {
-    $ret  = $this->config->base_url;
+    $ret  = $this->config->base_url.$this->config->base_file;
     $ret .= "gallery=".$gallery;
     if($startat != null)
       $ret .= "&amp;startat=".$startat;
     if($image != null)
-      $ret .= "&amp;image=".$image;
+      $ret .= "&amp;image=".rawurlencode($image);
     if($action != null)
       $ret .= "&amp;acton=".$action;
 
@@ -300,7 +300,7 @@ class Singapore
     $ret = $this->config->base_path;
     $ret .= "thumb.php";
     $ret .= "?gallery=".$gallery;
-    $ret .= "&amp;image=".$image;
+    $ret .= "&amp;image=".rawurlencode($image);
     $ret .= "&amp;size=".$size;
 
     return $ret;
@@ -375,7 +375,7 @@ class Singapore
   /**
    * @return bool true if this is an image thumbnail page; false otherwise
    */
-  function isGallery($index = null)
+  function isAlbum($index = null)
   {
     return !$this->galleryHasSubGalleries($index) && !$this->isImage();
   }
@@ -447,7 +447,7 @@ class Singapore
   function getListing($wd, $type = "dirs")
   {
     $dir = new stdClass;
-    $dir->path = $wd;
+    $dir->path = realpath($wd).DIRECTORY_SEPARATOR;
     $dir->files = array();
     $dir->dirs = array();
     $dp = opendir($dir->path);
@@ -457,7 +457,7 @@ class Singapore
     switch($type) {
       case "images" :
         while(false !== ($entry = readdir($dp)))
-          if(!is_dir($entry) && preg_match("/\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff)$/i",$entry))
+          if(!is_dir($entry) && preg_match("/\.(".$this->config->recognised_extensions.")$/i",$entry))
             $dir->files[] = $entry;
         sort($dir->files);
         rewinddir($dp);
@@ -465,14 +465,14 @@ class Singapore
       case "dirs" :
        while(false !== ($entry = readdir($dp)))
           if(
-            is_dir($wd.$entry) && 
+            is_dir($dir->path.$entry) && 
             $entry{0} != '.'
           ) $dir->dirs[] = $entry;
         sort($dir->dirs);
         break;
       case "all" :
         while(false !== ($entry = readdir($dp)))
-          if(is_dir($wd.$entry)) $dir->dirs[] = $entry;
+          if(is_dir($dir->path.$entry)) $dir->dirs[] = $entry;
           else $dir->files[] = $entry;
         sort($dir->dirs);
         sort($dir->files);
@@ -574,7 +574,7 @@ class Singapore
     return $this->i18n->_g("crumb line|You are here:")." ".$this->crumbLineText();
   }
   
-  function imageNavigation()
+  function imageMap()
   {
     if(!$this->config->enable_image_navigation) return;
     
@@ -608,7 +608,7 @@ class Singapore
    */
   function galleryContents($index = null)
   {
-    if($this->isGallery($index))
+    if($this->isAlbum($index))
       return $this->imageCountText($index);
     else
       return $this->galleryCountText($index);
@@ -707,8 +707,8 @@ class Singapore
       if(count($gal->images)>0) {
         srand(time());
         $index = rand(0,count($gal->images)-1);
-        $ret  = "<img src=\"".$this->thumbnailURL(urlencode($gal->id),
-                                              urlencode($gal->images[$index]->filename),
+        $ret  = "<img src=\"".$this->thumbnailURL($this->encodeId($gal->id),
+                                              $gal->images[$index]->filename,
                                               $this->config->gallery_thumb_size);
         $ret .="\" class=\"sgGallery\" ";
         $ret .= "alt=\"".$this->i18n->_g("Sample image from gallery")."\" />";
@@ -719,8 +719,8 @@ class Singapore
       $ret = nl2br($this->i18n->_g("No\nthumbnail"));
       break;
     default :
-      $ret  = "<img src=\"".$this->thumbnailURL(urlencode($gal->id),
-                                            urlencode($gal->filename),
+      $ret  = "<img src=\"".$this->thumbnailURL($this->encodeId($gal->id),
+                                            $gal->filename,
                                             $this->config->gallery_thumb_size);
       $ret .= "\" class=\"sgGallery\""; 
       $ret .= "alt=\"".$this->i18n->_g("Sample image from gallery")."\" />";
@@ -745,7 +745,7 @@ class Singapore
    */
   function galleryTabShowing()
   {
-    if($this->isGallery()) {
+    if($this->isAlbum()) {
       $total = $this->imageCount();
       $perPage = $this->config->main_thumb_number;
     } else {
@@ -810,7 +810,7 @@ class Singapore
    * @return int the number of 'pages' or 'screen-fulls'
    */
   function galleryPageCount() {
-    if($this->isGallery())
+    if($this->isAlbum())
       return intval($this->imageCount()/$this->config->main_thumb_number)+1;
     else
       return intval($this->galleryCount()/$this->config->gallery_thumb_number)+1;
@@ -820,16 +820,16 @@ class Singapore
    * @return int
    */
   function lastPageIndex() {
-    if($this->isGallery())
+    if($this->isAlbum())
       return ($this->galleryPageCount()-1)*
-        ($this->isGallery()?$this->config->main_thumb_number:$this->config->gallery_thumb_number);
+        ($this->isAlbum()?$this->config->main_thumb_number:$this->config->gallery_thumb_number);
   }
   
   /**
    * @return bool true if there is at least one more page
    */
   function galleryHasNext() {
-    if($this->isGallery())
+    if($this->isAlbum())
       return count($this->gallery->images)>$this->startat+$this->config->main_thumb_number;
     else
       return count($this->gallery->galleries)>$this->startat+$this->config->gallery_thumb_number;
@@ -847,7 +847,7 @@ class Singapore
    */
   function galleryNextURL() {
     return $this->formatURL($this->gallery->idEncoded, null, ($this->startat+
-      ($this->isGallery()?$this->config->main_thumb_number:$this->config->gallery_thumb_number)));
+      ($this->isAlbum()?$this->config->main_thumb_number:$this->config->gallery_thumb_number)));
   }
   
   function galleryNextLink() {
@@ -859,7 +859,7 @@ class Singapore
    */
   function galleryPrevURL() {
     return $this->formatURL($this->gallery->idEncoded, null, ($this->startat-
-      ($this->isGallery()?$this->config->main_thumb_number:$this->config->gallery_thumb_number)));
+      ($this->isAlbum()?$this->config->main_thumb_number:$this->config->gallery_thumb_number)));
   }
   
   function galleryPrevLink() {
@@ -997,7 +997,7 @@ class Singapore
    */
   function imageThumbnailLinked()
   {
-    $ret  = "<a href=\"".$this->formatURL($this->gallery->idEncoded, urlencode($this->image->filename))."\">";
+    $ret  = "<a href=\"".$this->formatURL($this->gallery->idEncoded, $this->image->filename)."\">";
     $ret .= $this->imageThumbnailImage();
     $ret .= "</a>";
     return $ret;
@@ -1010,7 +1010,7 @@ class Singapore
   {
     list($thumbWidth, $thumbHeight) = $this->thumbnailSize($this->imageWidth(), $this->imageHeight(), $this->config->main_thumb_size);
     $ret  = "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded,
-                                          urlencode($this->image->filename),
+                                          $this->image->filename,
                                           $this->config->main_thumb_size);
     $ret .= "\" class=\"sgThumbnail\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" ";
     $ret .= "alt=\"".$this->imageName().$this->imageByArtist()."\" title=\"".$this->imageName().$this->imageByArtist()."\" />";
@@ -1068,7 +1068,7 @@ class Singapore
    */
   function imageCommentLink()
   {
-    return "<a href=\"".$this->formatURL($this->gallery->idEncoded, rawurlencode($this->image->filename), null, "addcomment")."\">".$this->i18n->_g("Add a comment")."</a>";
+    return "<a href=\"".$this->formatURL($this->gallery->idEncoded, $this->image->filename, null, "addcomment")."\">".$this->i18n->_g("Add a comment")."</a>";
   }
   
   /**
@@ -1124,7 +1124,7 @@ class Singapore
   function imageURL()
   {
     if($this->config->max_image_size)
-      return $this->thumbnailURL($this->gallery->idEncoded, rawurlencode($this->image->filename), $this->config->max_image_size);
+      return $this->thumbnailURL($this->gallery->idEncoded, $this->image->filename, $this->config->max_image_size);
     
     //check if image is local (filename does not start with 'http://')
     if(substr($this->image->filename,0,7)!="http://") 
@@ -1146,14 +1146,14 @@ class Singapore
         continue;
       
       list($thumbWidth, $thumbHeight) = $this->thumbnailSize($temp->width, $temp->height, $this->config->preview_thumb_size);
-      $ret .= "<a href=\"".$this->formatURL($this->gallery->idEncoded, urlencode($temp->filename))."\">";
-      $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, urlencode($temp->filename), $this->config->preview_thumb_size);
+      $ret .= "<a href=\"".$this->formatURL($this->gallery->idEncoded, $temp->filename)."\">";
+      $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, $temp->filename, $this->config->preview_thumb_size);
       $ret .= "\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$temp->name."\" title=\"".$temp->name."\" />";
       $ret .= "</a>\n";
     }
     
     list($thumbWidth, $thumbHeight) = $this->thumbnailSize($this->image->width, $this->image->height, $this->config->preview_thumb_size);
-    $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, urlencode($this->image->filename), $this->config->preview_thumb_size);
+    $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, $this->image->filename, $this->config->preview_thumb_size);
     $ret .= "\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$this->imageName()."\" title=\"".$this->imageName()."\" />\n";
     
     for($i=1;$i<=$this->config->preview_thumb_number;$i++) {
@@ -1162,8 +1162,8 @@ class Singapore
       else
         continue;
       list($thumbWidth, $thumbHeight) = $this->thumbnailSize($temp->width, $temp->height, $this->config->preview_thumb_size);
-      $ret .= "<a href=\"".$this->formatURL($this->gallery->idEncoded, urlencode($temp->filename))."\">";
-      $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, urlencode($temp->filename), $this->config->preview_thumb_size);
+      $ret .= "<a href=\"".$this->formatURL($this->gallery->idEncoded, $temp->filename)."\">";
+      $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, $temp->filename, $this->config->preview_thumb_size);
       $ret .= "\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$temp->name."\" title=\"".$temp->name."\" />";
       $ret .= "</a>\n";
     }
@@ -1216,12 +1216,12 @@ class Singapore
   
   function imageFirstURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, urlencode($this->gallery->images[0]->filename));
+    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[0]->filename);
   }
   
   function imagePrevURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, urlencode($this->gallery->images[$this->image->index-1]->filename));
+    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[$this->image->index-1]->filename);
   }
   
   function imageParentURL()
@@ -1231,12 +1231,12 @@ class Singapore
   
   function imageNextURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, urlencode($this->gallery->images[$this->image->index+1]->filename));
+    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[$this->image->index+1]->filename);
   }
   
   function imageLastURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, urlencode($this->gallery->images[$this->imageCount()-1]->filename));
+    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[$this->imageCount()-1]->filename);
   }
   
   /**

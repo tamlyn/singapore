@@ -45,4 +45,4 @@
 <?php endforeach; ?>
 </p>
 
-<?php echo $sg->imageNavigation() ?>
+<?php echo $sg->imageMap() ?>

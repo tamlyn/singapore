@@ -10,7 +10,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.21 2004/02/02 16:31:35 tamlyn Exp $
+ * @version $Id: admin.php,v 1.22 2004/04/09 17:53:37 tamlyn Exp $
  */
 
 //include main class
@@ -132,12 +132,29 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "addimage" :
       $sg->selectGallery();
-      if($sg->addImage()) {
-        $adminMessage = $sg->i18n->_g("Image added");
-        $includeFile = "editimage";
-      } else {
-        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-        $includeFile = "newimage";
+      switch($_REQUEST["sgLocationChoice"]) {
+        case "remote" :
+        case "single" :
+          if($sg->addImage()) {
+            $adminMessage = $sg->i18n->_g("Image added");
+            $includeFile = "editimage";
+          } else {
+            $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+            $includeFile = "newimage";
+          }
+          break;
+        case "multi" :
+          if($sg->addMultipleImages()) {
+            $adminMessage = $sg->i18n->_g("Archive contents added");
+            $includeFile = "view";
+          } else {
+            $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+            $includeFile = "newimage";
+          }
+          break;
+        default :
+          $includeFile = "newimage";
+          break;
       }
       break;
     case "editimage" :

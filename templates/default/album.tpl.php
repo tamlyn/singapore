@@ -19,23 +19,29 @@
   <tr>
     <td class="ml"><img src="<?php echo $sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
-    
-    <?php foreach($sg->gallerySelectedGalleriesArray() as $index => $gal): ?>
-    <div class="sgGallery"><table class="sgGallery">
-    <tr valign="top">
-      <td class="sgGallery">
-        <?php echo $sg->galleryThumbnailLinked($index+$sg->startat) ?>
-      </td>
-      <td>
-        <p><strong><a href="<?php echo $sg->galleryURL($index) ?>"><?php echo $gal->name ?></a></strong></p>
-        <p><?php echo $gal->desc ?></p>
-        <p>[<?php echo $sg->galleryContents($index+$sg->startat) ?>]</p>
-      </td>
-    </tr>
-    </table>
+  
+    <?php 
+      $selectedImagesArray = $sg->gallerySelectedImagesArray();
+      for($i=0;$i<count($selectedImagesArray);$i++): ?>
+    <div class="sgThumbnail">
+      <div class="sgThumbnailContent">
+        <img class="borderTL" src="<?php echo $sg->config->pathto_current_template ?>images/slide-tl.gif" alt="" />
+        <img class="borderTR" src="<?php echo $sg->config->pathto_current_template ?>images/slide-tr.gif" alt="" />
+        
+        <table><tr><td>
+          <?php $sg->selectImage($selectedImagesArray[$i]->filename) ?>
+          <?php echo $sg->imageThumbnailLinked() ?>
+        </td></tr></table>
+        
+        <div class="roundedCornerSpacer">&nbsp;</div>
+      </div>
+      <div class="bottomCorners">
+        <img class="borderBL" src="<?php echo $sg->config->pathto_current_template ?>images/slide-bl.gif" alt="" />
+        <img class="borderBR" src="<?php echo $sg->config->pathto_current_template ?>images/slide-br.gif" alt="" />
+      </div>
     </div>
-    <?php endforeach; ?>
-    
+    <?php endfor; ?>
+  
     </td>
     <td class="mr"><img src="<?php echo $sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
   </tr>

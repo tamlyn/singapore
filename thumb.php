@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.21 2004/02/02 16:31:35 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.22 2004/04/09 17:53:38 tamlyn Exp $
  */
 
 //require config class
@@ -70,7 +70,7 @@ function showThumb($gallery, $image, $maxsize) {
   }
 
   //set default files permissions
-  //umask($config->umask);
+  umask($config->umask);
   
   //if file is remote then copy locally first
   if($isRemoteFile) {

@@ -17,10 +17,10 @@ case "addcomment" :
 default :
   if($sg->isImage()) {
     include $sg->config->pathto_current_template."image.tpl.php";
-  } elseif($sg->isGallery()) {
-    include $sg->config->pathto_current_template."gallery.tpl.php";
+  } elseif($sg->isAlbum()) {
+    include $sg->config->pathto_current_template."album.tpl.php";
   } else {
-    include $sg->config->pathto_current_template."listing.tpl.php";
+    include $sg->config->pathto_current_template."gallery.tpl.php";
   }
 }
 //include footer file

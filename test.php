@@ -7,9 +7,14 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: test.php,v 1.7 2004/02/02 16:31:35 tamlyn Exp $
+ * @version $Id: test.php,v 1.8 2004/04/09 17:53:38 tamlyn Exp $
  */
 
+if(isset($_REQUEST["phpinfo"])) {
+  phpinfo();
+  exit;
+}
+ 
 function doTests()
 {
   setupHeader("Testing PHP version");
@@ -153,6 +158,8 @@ if(false) {
 
 ?>
 </p>
+
+<p><small>Complete <a href="test.php?phpinfo">phpinfo</a> for advanced users.</small></p>
 
 </body>
 </html>

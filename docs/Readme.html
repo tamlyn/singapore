@@ -23,6 +23,7 @@
   <li><a href="#permissions">Help with file permissions</a></li>
   <li><a href="#override">Overriding settings</a></li>
   <li><a href="#hiding">Hiding galleries</a></li>
+  <li><a href="#nomenclature">Naming of parts</a></li>
   <li><a href="#history">Version history</a></li>
   <li><a href="Development.html">Developer documentation</a></li>
   <li><a href="Translation.html">Translating singapore</a></li>
@@ -133,7 +134,7 @@ admin password will be reset and the root ini file (singapore.ini) will be
 overwritten. Unless otherwise stated you can keep your old adminusers.csv file. 
 When new configuration options are added you will need to either add these 
 to your old singapore.ini or re-edit the new singapore.ini in order to keep your 
-personal settings. You may want to use 
+personal settings. You may want to use a utility such as
 <a href="http://winmerge.sourceforge.net">WinMerge</a> to merge the differences.</p>
 
 <p>The default templates will also be overwritten in an upgrade. For this reason 
@@ -170,12 +171,37 @@ singapore will revert to using <em>info in file name</em>.</p>
 <p>Galleries may contain <em>either</em> images or further subgalleries. This 
 means that if you create one or more subgalleries in a gallery that already 
 contains images, these images will be 'hidden'. Removing these subgalleries will
-make the images visible again.</p>
- 
-<p>There is currently no support for bulk image upload via the admin interface. You
-are recommended to use FTP to upload your images and then use the admin mode to
-add image information and for occasional additions and deletions.</p>
+make the images visible again. Galleries containing only images are called albums.</p>
 
+<h3>Bulk image uploading</h3>
+
+<p>You may upload several images at the same time by first storing them in a 
+PKWARE compatible ZIP file. Most archiving utilities are able to produce such 
+files also sometimes referred to as <em>compressed folders</em> on Windows. You 
+need an unzipping utility to use this feature. Most Linux/Unix machines come 
+with the free <em>unzip</em> utility by Info-Zip preinstalled but precompiled 
+binaries for nearly all operating systems ever conceived can be found on the 
+<a href="http://www.info-zip.org/">Info-Zip website</a>. A Win32 version is 
+also available here: 
+<a href="http://singapore.sourceforge.net/binaries/singapore-unzip-Win32.zip">http://singapore.sourceforge.net/binaries/singapore-unzip-Win32.zip</a>.
+Simply place the executable in your PATH or in the singapore root directory.</p>
+
+<p>Upload the archive using the 'new image' option in the singapore admin and 
+select 'Upload multiple files'</p>
+
+<p>If the archive contains only images, these will be added to the current 
+gallery just as if they had been uploaded individually. If an archive contains 
+subdirectories, these will be copied into the current gallery. Any images in 
+the archive root directory will be imported as above. This mechanism 
+may be used to upload complete directory structures including metadata.csv 
+and gallery.ini files. If the archive root directory contains no images and a 
+single directory, singapore will navigate into this directory and proceed to 
+import the contents into the current gallery as though they were in the root 
+directory.</p>
+
+<p>NOTE: There is a maximum size of file that PHP will allow you to upload.
+This defaults to 2MB and cannot be changed by singapore. Consult the PHP manual
+or you server's administrator for more information.</p>
 
 <h2><a name="iifn">Info in file name</a></h2>
 
@@ -259,7 +285,7 @@ galleries/
 <p>A user browsing the root gallery (e.g. <code>www.some-site.com/?gallery=.</code>)
 will see <code>my_pretty_pictures</code> and <code>some_other_things</code>; 
 <code>.a_hidden_gallery</code> and all its contents will be hidden from view. If,
-however, the user is supplied with the exact URL (e.g. <code>www.some-site.com/?gallery=./.a_hidden_gallery</code>)
+however, the user is supplied with the exact URL (e.g. <code>www.example.com/?gallery=./.a_hidden_gallery</code>)
 they will be able to see the contents as usual (in this case only 
 <code>some_embarrassing_pictures</code> because <code>.this_is_also_hidden</code>
 is hidden as above).</p>
@@ -267,6 +293,38 @@ is hidden as above).</p>
 <p>Since a user could guess the exact URL or discover it by some other means, 
 this feature is not to be used for concealing sensitive information.</p>
 
+
+<h2><a name="nomenclature">Naming of parts</a></h2>
+
+<dl>
+
+<dt>Installation</dt>
+  <dd>an installation of singapore is contained within a website. It is usually 
+  in its own separate directory and contains one gallery: the root gallery.</dd>
+  
+<dt>Gallery</dt>
+  <dd>a gallery is contained within an installation (if it is the root gallery) 
+  or another gallery (in which case it is a subgallery and the containing 
+  gallery is called the parent). Galleries may contain more galleries and also 
+  images.</dd>
+
+<dt>Album</dt>
+  <dd>an album is a special case of gallery in that it contains no subgalleries
+  and zero or more images.</dd>
+
+<dt>Image</dt>
+  <dd>an image is contained within an album or a gallery.</dd>
+
+<dt>Root gallery</dt>
+  <dd>There is only one root gallery and it is not contained within any other 
+  galleries. It is located directly in the directory specified by the 
+  <code>pathto_galleries</code> option. It is sometimes referred to with a 
+  single dot (.).</dd>
+  
+<dt>Subgallery, Parent gallery</dt>
+  <dd>these are relative terms.</dd>
+  
+</dl>
 
 <h2><a name="history">Version history</a></h2>
 
@@ -280,12 +338,16 @@ o changed
 <h3>0.9.9</h3>
 
 <p>
++ added multi-image upload using ZIP files<br />
 * fixed umask functionality (thanks to afuhrmann)<br />
 + added navigation by clickable image map<br />
-o moved url generation into separate function (thanks to Adam Sissman)<br />
++ added upload_overwrite config option<br />
+o moved url generation into separate function(s) (thanks to Adam Sissman)<br />
 o moved i18n functions into separate class<br />
 * made site navigation links xhtml compatible<br />
-* fixed special characters in filenames under ImageMagick *again*?
+* fixed special characters in filenames under ImageMagick *again*?<br />
+o introduced consistent 'gallery>album>image' naming scheme<br />
+o GD2 used as default thumbnail_software (GD1 support still built-in)
 </p>
 
 <h3>0.9.8 - 2004-01-06</h3>
@@ -439,7 +501,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2004/02/29 20:59:50 $</em></p>
+<p><em>$Date: 2004/04/09 17:53:43 $</em></p>
 
 </body>
 </html>
