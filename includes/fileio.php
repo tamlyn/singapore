@@ -71,7 +71,7 @@ function sgGetGallery($gallery, $galleryOnly = false) {
     
     return $gal;
   } else {
-    $dir = sgGetListing(sgGetConfig("pathto_galleries")."$gal->id/", ".log");
+    $dir = sgGetListing(sgGetConfig("pathto_galleries")."$gal->id/", "jpegs");
     for($i=0;$i<count($dir->files);$i++) $gal->img[$i]->filename = $dir->files[$i];
     
     $temp = strtr($gal->id, "_", " ");

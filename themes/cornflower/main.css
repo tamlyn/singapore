@@ -10,6 +10,24 @@ a img {
   border: 0;
 }
 
+table.sgList {
+  background-color: #fff;
+}
+
+table.sgList td {
+  margin: 5px;
+}
+
+tr.sgRow0 {
+  background-color: #f0f0f0;
+  margin: 1px;
+}
+
+tr.sgRow1 {
+  background-color: #e0e0e0;
+  margin: 1px;
+}
+
 table.formTable input, table.formTable textarea {
   width: 500px;
 }
@@ -50,6 +68,7 @@ div.sgShadow {
 table.sgShadow {
   margin-left: auto;
   margin-right: auto;
+  clear: both;
 }
 
 table.sgShadow, table.sgShadowTab {
@@ -59,14 +78,13 @@ table.sgShadow, table.sgShadowTab {
   text-align: left;
 }
 
-table.sgShadowTab {
-  margin: 0;
+table.sgShadowTab td {
+  font-size: 13px;
 }
 
 table.sgShadow td {
   padding: 0;
   margin: 0;
-  font-size: 75%;
 }
 
 table.sgShadow td.tabm, table.sgShadow td.tabr {

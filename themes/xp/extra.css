@@ -1,12 +1,12 @@
 body {
   margin: 2em;
-  font: x-small sans-serif;
+  font: small sans-serif;
   color: #000;
   background-color: #fff;
 }
 
 p, td, th, li {
-  font: x-small sans-serif;
+  font: small sans-serif;
 }
 
 h1, h2, h3, h4 {

@@ -65,6 +65,7 @@ div.sgShadow {
 table.sgShadow {
   margin-left: auto;
   margin-right: auto;
+  clear: both;
 }
 
 table.sgShadow, table.sgShadowTab {
@@ -77,7 +78,6 @@ table.sgShadow, table.sgShadowTab {
 table.sgShadowTab {
   margin: 0;
   color: #fff;
-  font: bold;
   background: url('images/shadow-tabm.gif');
 }
 
@@ -94,8 +94,8 @@ table.sgShadow td.tabm, table.sgShadow td.tabr {
   background-color: #fff;
 }
 
-table.sgShadowTab td.tabm {
-  margin-right: 4px;
+table.sgShadowTab td {
+  font: bold 13px Verdana;
 }
 
 table.sgShadow td.tl {

@@ -46,7 +46,7 @@ function sgGetConfig($var) {
        //preview thumbnails of in image view (eg a value of 2 here 
        //will result in 5 thumbnails (2 before + current + 2 after)
        
-    case "theme_name" :           return "xp";
+    case "theme_name" :           return "cornflower";
        //the name of the current theme
 
     case "pathto_themes":         return "themes/";
@@ -55,7 +55,7 @@ function sgGetConfig($var) {
     case "pathto_cache":          return "cache/";
        //path to thumbnail cache (must be writeable by web server)
        
-    case "pathto_galleries":      return "../../photosoc.man.ac.uk/gallery/galleries/";
+    case "pathto_galleries":      return "galleries/";
        //path to galleries (must be accessible via local file system)
 
     case "pathto_logs" :          return "logs/";
