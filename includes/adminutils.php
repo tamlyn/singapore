@@ -548,7 +548,7 @@ function sgShowPurgeConfirmation()
 
 function sgPurgeCache()
 {
-  $dir = sgGetListing($GLOBALS["sgConfig"]->pathto_cache,"jpegs");
+  $dir = sgGetListing($GLOBALS["sgConfig"]->pathto_cache,"all");
   
   $success = true;
   for($i=0;$i<count($dir->files);$i++) {
