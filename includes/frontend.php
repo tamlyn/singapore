@@ -215,7 +215,7 @@ function sgShowImage($gallery, $image)
   //bottom navigation bar
   echo "<div class=\"sgNavBar\"><p>\n";
   if(isset($img->prev[0])) echo "<a href=\"index.php?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
-  echo "<a href=\"index.php?gallery=$gallery\">Thumbnails</a>\n";
+  echo "<a href=\"index.php?gallery=$gallery&amp;startat=".(floor($img->index/$GLOBALS["sgConfig"]->main_thumb_number)*$GLOBALS["sgConfig"]->main_thumb_number)."\">Thumbnails</a>\n";
   if(isset($img->next[0])) echo " | <a href=\"index.php?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
 
