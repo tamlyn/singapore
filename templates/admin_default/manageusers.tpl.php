@@ -30,5 +30,5 @@
   <?php echo $sg->i18n->_g("Username:"); ?>
   <input type="hidden" name="action" value="newuser" />
   <input type="input" name="user" />
-  <input type="submit" class="button" value="<?php \*"*\ echo $sg->i18n->_g("Create"); ?>" />
+  <input type="submit" class="button" value="<?php /*"*/ echo $sg->i18n->_g("Create"); ?>" />
 </p></form>

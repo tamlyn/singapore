@@ -11,7 +11,7 @@
   </tr>
   <tr>
     <td></td>
-    <td><input type="submit" class="button" value="<?php \*"*\ echo $sg->i18n->_g("Create") ?>" /></td>
+    <td><input type="submit" class="button" value="<?php /*"*/ echo $sg->i18n->_g("Create") ?>" /></td>
   </tr>
 </table>
   
