@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.23 2004/10/15 17:24:47 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.24 2004/10/15 18:09:22 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -316,7 +316,7 @@ class sgAdmin extends Singapore
    */
   function checkPermissions($obj, $action, $gallery = null, $image = null)
   {
-    if($this->isAdmin() || $this->isOwner($obj))
+    if($this->isAdmin() || $this->isOwner($obj))// || (!$this->isGuest() && $obj->owner == "__nobody__"))
       return true;
     
     $usr = $_SESSION["sgUser"];
@@ -562,17 +562,29 @@ class sgAdmin extends Singapore
    */
   function addGallery()
   {
-    $path = $this->config->pathto_galleries.$this->gallery->id."/".$_REQUEST["newgallery"];
+    $newGalleryId = $this->gallery->id."/".$_REQUEST["newgallery"];
+    $path = $this->config->pathto_galleries.$newGalleryId;
     
     if(file_exists($path)) {
       $this->lastError = $this->i18n->_g("Gallery already exists");
       return false;
     }
     
-    if(mkdir($path, $this->config->directory_mode))
-      return true;
+    if(!mkdir($path, $this->config->directory_mode)) {
+      $this->lastError = $this->i18n->_g("Could not create directory");
+      return false;
+    }
     
-    $this->lastError = $this->i18n->_g("Could not create directory");
+    $gal = new sgGallery($newGalleryId);
+    $gal->owner = $_SESSION["sgUser"]->username;
+    $gal->name = $_REQUEST["newgallery"];
+    
+    print_r($gal);
+    
+    if($this->io->putGallery($gal))
+      return true;
+      
+    $this->lastError = $this->i18n->_g("Could not save gallery info");
     return false;
   }
   
