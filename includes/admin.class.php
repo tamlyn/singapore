@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.34 2005/03/22 21:46:52 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.35 2005/03/23 01:46:49 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -113,6 +113,11 @@ class sgAdmin extends Singapore
     
     //set page title
     $this->pageTitle = $this->config->gallery_name;
+    
+    //set root node of crumb line
+    $holder = new sgGallery("");
+    $holder->name = $this->config->gallery_name;
+    $this->ancestors = array($holder);
   }
   
   /**

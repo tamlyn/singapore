@@ -14,7 +14,7 @@
 <body>
 
 <div id="crumb">
-<?php echo $sg->i18n->_g("crumb line|You are here:") ?> <?php echo $sg->crumbLineText() ?>
+<?php echo $sg->crumbLine() ?>
 </div>
 
 <div id="header"><img src="<?php echo $sg->config->pathto_admin_template ?>images/header.gif" alt="<?php echo $sg->config->gallery_name ?>" /></div>

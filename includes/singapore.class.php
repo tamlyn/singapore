@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.45 2005/03/22 21:46:53 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.46 2005/03/23 01:46:49 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -634,10 +634,8 @@ class Singapore
   {
     $crumb = array_reverse($this->ancestors);
     
-    $crumb[] = $this->gallery;
-    
-    if($this->isImage())
-      $crumb[] = $this->image;
+    if($this->isGallery() || $this->isAlbum() || $this->isImage()) $crumb[] = $this->gallery;
+    if($this->isImage()) $crumb[] = $this->image;
     
     return $crumb;
   }
