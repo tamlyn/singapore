@@ -129,9 +129,8 @@ things that can be done to customize it to your needs. Here are some:</p>
 
   <li>Set file permissions. This part is dependent on your operating system and 
   web server setup and can seem quite daunting to a beginner. Your best bet, if 
-  you need help, is to contact your server administrator. If you are the 
-  administrator and still need help then RTFM! Here is the list of files and 
-  directories that need to be writable by the web server:
+  you need help, is to contact your server administrator. Here is the list of 
+  files and directories that need to be writable by the web server:
   <ul>
     <li><code>cache/</code></li>
     <li><code>galleries/</code> and all subdirectories and files</li>
@@ -146,21 +145,26 @@ things that can be done to customize it to your needs. Here are some:</p>
   different passwords.</span></li>
   
   <li>If your PHP installation uses GD version 2 or later or you have access to 
-  ImageMagick then you can get much nicer generated thumbnails by changing the 
-  option in <code>includes/config.php</code>.</li>
+  <a href="http://www.imagemagick.org">ImageMagick</a> then you can get much 
+  nicer generated thumbnails by changing the option in 
+  <code>includes/class_configuration.php</code>.</li>
 </ul>
 
 <p>Things you MIGHT do:</p>
 <ul>
   <li>Edit <code>includes/header.php</code> and <code>includes/footer.php</code>
   or use your own custom header and/or footer files by editing the paths in 
-  <code>includes/config.php</code>.</li>
+  <code>includes/class_configuration.php</code>.</li>
 
-  <li>Edit the values in <code>includes/config.php</code>. The file is commented
+  <li>Change the <em>secret string</em> value in <code>includes/class_configuration.php</code>.
+  This is not essential but it makes it harder for someone to fake an admin 
+  session thereby gaining unauthorised access to your galleries.</li>
+  
+  <li>Edit the values in <code>includes/class_configuration.php</code>. The file is commented
   and should be self-explanatory. For most purposes the default values will 
   be fine.</li>
   
-  <li>Make custom "themes" using CSS. <a href="#themes">More info</a>.</li>
+  <li>Make custom "themes" using CSS. <a href="Development.html#themeing">More info</a>.</li>
 </ul>
 
 
@@ -278,7 +282,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/10 21:01:02 $</em></p>
+<p><em>$Date: 2003/05/11 23:47:16 $</em></p>
 
 </body>
 </html>
