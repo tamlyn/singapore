@@ -234,7 +234,9 @@ function sgGetContainerCode()
   "    <td class=\"ml\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "    <td class=\"mm\">\n\n";
   
-  $code->bottom = 
+  $code->bottom =
+  //uncommenting the following line provides a partial workaround to an Opera bug/feature 
+  //"&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ".
   "\n    </td>\n".
   "    <td class=\"mr\"><img src=\"images/blank.gif\" alt=\"\" /></td>\n".
   "  </tr>\n".
