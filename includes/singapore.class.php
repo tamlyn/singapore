@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.30 2004/09/28 00:51:36 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.31 2004/10/11 05:24:11 tamlyn Exp $
  */
 
 //define constants for request variables
@@ -96,22 +96,29 @@ class Singapore
     if(empty($galleryId)) 
       $galleryId = isset($_REQUEST[SG_GALLERY]) ? $_REQUEST[SG_GALLERY] : ".";
     
-    //load config from current directory
-    $this->config = new sgConfig("singapore.ini");
+    //load config from singapore root directory
+    $this->config = new sgConfig($basePath."singapore.ini");
     
     //load config from gallery ini file (gallery.ini) if present
-    $this->config->loadConfig($this->config->pathto_galleries.$galleryId."/gallery.ini");
+    $this->config->loadConfig($basePath.$this->config->pathto_galleries.$galleryId."/gallery.ini");
     //set current template from request vars or config
     $this->template = isset($_REQUEST[SG_TEMPLATE]) ? $_REQUEST[SG_TEMPLATE] : $this->config->default_template;
     $this->config->pathto_current_template = $this->config->pathto_templates.$this->template.'/';
     //load config from template ini file (template.ini) if present
-    $this->config->loadConfig($this->config->pathto_current_template."template.ini");
+    $this->config->loadConfig($basePath.$this->config->pathto_current_template."template.ini");
+    
+    //if instantiated remotely load local config
+    if(!empty($basePath))
+      $this->config->loadConfig("singapore.local.ini");
     
     //set runtime values
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
     $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
     $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
-    if(isset($basePath)) $this->config->base_path = $basePath;
+    if(!empty($basePath)) {
+      $this->config->base_path = $basePath;
+      $this->config->base_url  = $basePath;
+    }
     
     //convert octal strings to integers
     if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
@@ -121,7 +128,7 @@ class Singapore
     //set current language from request vars or config
     $this->language = isset($_REQUEST[SG_LANG]) ? $_REQUEST[SG_LANG] : $this->config->default_language;
     //read the language file
-    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->language.".pmo");
+    $this->i18n = new Translator($basePath.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     
     //set the UMASK
     umask($this->config->umask);
@@ -315,7 +322,7 @@ class Singapore
         $ret .= '?'.implode('&amp;', $query);
     } else {
       //format plain url
-      $ret  = $this->config->base_url.$this->config->base_file;
+      $ret  = $this->config->index_file_url;
       $ret .= SG_GALLERY."=".$gallery;
       if($startat) $ret .= "&amp;".SG_STARTAT."=".$startat;
       if($image)   $ret .= "&amp;".SG_IMAGE."=".rawurlencode($image);
@@ -1152,7 +1159,7 @@ class Singapore
   }
   
   /**
-   * @uses imageThumbnailImage
+   * Image thumbnail that links to the appropriate image page
    * @return string
    */
   function imageThumbnailLinked($index = null)
@@ -1163,6 +1170,22 @@ class Singapore
     $ret  = "<a href=\"".$this->formatURL($this->gallery->idEncoded, $img->filename)."\">";
     $ret .= $this->imageThumbnailImage($index);
     $ret .= "</a>";
+    return $ret;
+  }
+  
+  /**
+   * Image thumbnail that pops up a new window containing the image
+   * @return string
+   * @depreciated
+   */
+  function imageThumbnailPopup($index = null)
+  {
+    $ret =  '<a href="'.$this->imageURL($index).'" onclick="';
+    $ret .= "window.open('".$this->imageURL($index)."','','toolbar=0,resizable=1,";
+    $ret .= "width=".($this->imageWidth($index)+20).",";
+    $ret .= "height=".($this->imageheight($index)+20)."');";
+    $ret .= "return false;\">".$this->imageThumbnailImage($index)."</a>";
+
     return $ret;
   }
   

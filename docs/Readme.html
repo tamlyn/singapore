@@ -24,6 +24,8 @@
   <li><a href="#adminpermissions">The deal with admin permissions</a></li>
   <li><a href="#override">Overriding settings</a></li>
   <li><a href="#hiding">Hiding galleries</a></li>
+  <li><a href="#modrewrite">Using Apache mod_rewrite</a></li>
+  <li><a href="#including">Including singapore into another page</a></li>
   <li><a href="#nomenclature">Naming of parts</a></li>
   <li><a href="#history">Version history</a></li>
   <li><a href="Development.html">Developer documentation</a></li>
@@ -265,9 +267,10 @@ administrator may alter the permissions of an object.</p>
 <p>There are four kinds of action that may be either allowed or disallowed: 
 read, edit, add and delete. Read permissions allow an object to be viewed. Edit 
 permissions allow a user to edit (i.e. change) aspects of the object. Add 
-permissions allow a user to add sub objects (i.e. images and subgalleries) and
-are therefore meaningless when applied to images. Finally Delete permissions 
-allow a user to delete the object concerned (and any sub objects).</p>
+permissions allow a user to add sub objects (i.e. images and subgalleries). This 
+is obviously meaningless when applied to images but it may be used later to 
+allow image comments. Finally Delete permissions allow a user to delete the 
+object concerned (and any sub objects).</p>
 
 <p>These four permissions come in two flavours: group and world. World 
 permissions apply to all users so if, for example, a gallery has the world add 
@@ -285,8 +288,8 @@ object since both belong to the group 'friends'.</p>
 
 <p class="note">NOTE: read permissions are not currently enforced, a future 
 version will prevent anyone from seeing objects that do not have sufficient read 
-permissions. Note also that image permissions are currently meaningless. This 
-may or may not be changed in a later release.</p>
+permissions. Note also that there is no mechanism to set image permissions this 
+will be ammended in a later release.</p>
 
 
 <h2><a name="override">Overriding settings</a></h2>
@@ -388,6 +391,43 @@ get images but the pages are still unstyled then your template probably needs
 adapting to use the base_url config option. See the default template for an 
 example. If you still can't work out what's wrong then just give up.</p>
 
+<h2><a name="including"><code>Include</code>ing singapore into another page</a></h2>
+
+<p>Since v0.9.10 it has been possible to include singapore into your web design
+simply by including index.php as in: <code>&lt;?php include("path/to/singapore/index.php"); 
+?&gt;</code>. There are, however, a few things that need to be noted:</p>
+
+<ul>
+  <li>You will almost certainly need to edit your chosen template in order that
+  the HTML generated is still valid. For example you do not want two &lt;html&gt; 
+  start tags, two &lt;head&gt; sections etc..</li>
+  <li>If the file into which you are including singapore is named something 
+  other than index.php or it requires additional GET variables (such as page etc.)
+  then you will need to change index_file_url to reflect this. For example if 
+  the page you are including singapore into is <code>site.php?page=gallery</code>
+  you will need to change index_file_url to <code>site.php?page=gallery&amp;amp;</code></li>
+  <li>If you want to keep both the included singapore installation and the 
+  original simultaneously functional then you can place a file named 
+  <code>singapore.local.ini</code> in the same directory as the including file. 
+  If found, this file will be loaded after singapore.ini but before gallery.ini 
+  and template.ini. It can thus be used to provide local settings such as index_file_url
+  mantioned above. Note that base_file and base_url are automatically calculated 
+  and should not need to be specified.</li>
+  <li>If there is any content on the including page <em>before</em> index.php is
+  included then singapore will not be able to send any headers. Possible solutions:
+  <ul>
+    <li>turn on output buffering before any content is printed and do not flush 
+    it until after index.php is included (<a href="http://uk.php.net/manual/en/ref.outcontrol.php">About output control</a>.</li>
+    <li>Remove the lines from index.php which try to send header information. 
+    Doing this will prevent you from using languages with non-default character 
+    sets.</li>
+  </ul>
+  </li>
+  <li>Finally note that currently mod_rewrite doesn't work with such included 
+  installations of singapore.</li>
+</ul>
+
+
 <h2><a name="nomenclature">Naming of parts</a></h2>
 
 <dl>
@@ -429,7 +469,7 @@ example. If you still can't work out what's wrong then just give up.</p>
 o changed
 </pre>
 
-<h3>0.9.10PRE - 2004-09-26</h3>
+<h3>0.9.10 - 2004-10-26</h3>
 
 <pre>
 + implemented full multi-user support with permissions
@@ -438,8 +478,11 @@ o changed
 + summary field now used instead of description field
 o introduced new streamlined admin template with quicklinks
 o tidied up css classes and annotated the default stylesheet
+* fixed md5 dictionary attack vulnerability by hiding user account details
 * fixed security issue with back-references in arguments to thumb.php
 o made thumb.php reject files with extensions not in recognised_extensions
++ index.php now autodetects the base_path if it is included
+o changed base_file config option to index_file_url
 o changed language config option to default_language
 o changed template_name config option to default_template
 </pre>
@@ -628,7 +671,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2004/09/27 07:29:27 $</em></p>
+<p><em>$Date: 2004/10/11 05:24:11 $</em></p>
 
 </body>
 </html>

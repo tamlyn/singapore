@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.12 2004/09/28 00:51:36 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.13 2004/10/11 05:24:11 tamlyn Exp $
  */
 
 /**
@@ -354,7 +354,7 @@ class sgIO_csv {
   }
   
   function getUsers() {
-    $fp = fopen($this->config->base_path.$this->config->pathto_data_dir."users.csv","r");
+    $fp = fopen($this->config->base_path.$this->config->pathto_data_dir."users.csv.php","r");
     
     //strip off description line
     fgetcsv($fp,1024);
@@ -378,10 +378,10 @@ class sgIO_csv {
   }
   
   function putUsers($users) {
-    $fp = fopen($this->config->base_path.$this->config->pathto_data_dir."users.csv","w");
+    $fp = fopen($this->config->base_path.$this->config->pathto_data_dir."users.csv.php","w");
     if(!$fp) return false;
     
-    $success = (bool) fwrite($fp,"username,md5(pass),permissions,group(s),email,name,description,stats\n");
+    $success = (bool) fwrite($fp,"<?php die(\"Hacking attempt detected\"); ?>username,md5(pass),permissions,group(s),email,name,description,stats\n");
     for($i=0;$i<count($users);$i++) 
       $success &= (bool) fwrite($fp,$users[$i]->username.",".$users[$i]->userpass.",".$users[$i]->permissions.",\"".$users[$i]->groups."\",\"".$users[$i]->email."\",\"".$users[$i]->fullname."\",\"".$users[$i]->description."\",\"".$users[$i]->stats."\"\n");
     
