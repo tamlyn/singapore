@@ -42,7 +42,7 @@
 </tr>
 <tr>
   <td><?php echo $sg->i18n->_g("Summary") ?></td>
-  <td><textarea name="sgSummary" cols="70" rows="3"><?php echo $sg->gallery->summary ?></textarea></td>
+  <td><textarea name="sgSummary" cols="70" rows="3"><?php echo $sg->gallerySummaryStripped() ?></textarea></td>
 </tr>
 <tr>
   <td><?php echo $sg->i18n->_g("Description") ?></td>

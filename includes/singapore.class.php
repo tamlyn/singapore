@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.41 2005/01/28 14:20:24 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.42 2005/02/16 19:02:15 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -1097,7 +1097,16 @@ class Singapore
       return $this->gallery->galleries[$index]->summary;
   }
   
-/**
+  /**
+   * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
+   * @return string the summary of the gallery
+   */
+  function gallerySummaryStripped($index = null)
+  {
+    return str_replace("<br />","\n",$this->gallerySummary($index));
+  }
+  
+  /**
    * @return string the description of the gallery
    */
   function galleryDescription($index = null)
@@ -1515,15 +1524,18 @@ class Singapore
   
   
   /**
-   * @return string the html to display the preview thumbnails
+   * @param  string  this text/html will be inserted before each linked thumbnail (optional)
+   * @param  string  this text/html will be inserted after each linked thumbnail (optional)
+   * @return string  the html to display the preview thumbnails
    */
-  function imagePreviewThumbnails()
+  function imagePreviewThumbnails($before = '', $after = '')
   {
     $ret = "";
     for($i = $this->image->index - $this->config->thumb_number_preview; $i <= $this->image->index + $this->config->thumb_number_preview; $i++) {
       if(!isset($this->gallery->images[$i])) 
         continue;
       
+      $ret .= $before;
       $ret .= '<a href="'.$this->formatURL($this->gallery->idEncoded, $this->gallery->images[$i]->filename).'">';
       $ret .= '<img src="'.$this->thumbnailURL(
                              $this->gallery->idEncoded, $this->gallery->images[$i]->filename,
@@ -1544,7 +1556,9 @@ class Singapore
       $ret .= 'title="'.$this->imageName($i).$this->imageByArtist($i).'" ';
       if($i==$this->image->index) $ret .= 'class="sgPreviewThumbCurrent" ';
       else $ret .= 'class="sgPreviewThumb" ';
-      $ret .= "/></a>\n";
+      $ret .= "/></a>";
+      $ret .= $after;
+      $ret .= "\n";
     }
     
     return $ret;
