@@ -5,195 +5,224 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: singapore 0.9.9\n"
-"POT-Creation-Date: 2004-02-19 00:45+0000\n"
+"POT-Creation-Date: 2004-09-27 08:35+0100\n"
 "PO-Revision-Date: 2004-06-07 21:55+0000\n"
 "Last-Translator: Stefan Freyr Stefansson <stefan@freyr.org>\n"
-"Language-Team: Icelandic (�slenska)\n"
+"Language-Team: Icelandic (slenska)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 "Plural-Forms: nplurals=2; plural=n==1 ? 0 : 1;\n"
-
-#: ../includes/singapore.class.php:141
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 164
+#, c-format
 msgid "Gallery not found '%s'"
 msgstr "Fann ekki myndasafn '%s'"
-
-#: ../includes/singapore.class.php:203
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 225
+#, c-format
 msgid "Image not found '%s'"
 msgstr "Fann ekki mynd '%s'"
-
-#: ../includes/singapore.class.php:258
+#
+# File: ../includes/singapore.class.php, line: 280
 msgid "email|at"
 msgstr "að"
-
-#: ../includes/singapore.class.php:258
+#
+# File: ../includes/singapore.class.php, line: 280
 msgid "email|dot"
 msgstr "punktur"
-
-#: ../includes/singapore.class.php:361
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 452
+#, c-format
 msgid "Page created in %s seconds"
 msgstr "Síða búin til á %s sekúndum"
-
-#: ../includes/singapore.class.php:378
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 469
+#, c-format
 msgid "singapore|Powered by %s"
 msgstr "Keyrt á %s"
-
-#: ../includes/singapore.class.php:383
+#
+# File: ../includes/singapore.class.php, line: 474
 msgid "All rights reserved."
 msgstr "Allur réttur áskilinn."
-
-#: ../includes/singapore.class.php:388
+#
+# File: ../includes/singapore.class.php, line: 479
 msgid ""
 "Images may not be reproduced in any form without the express written "
 "permission of the copyright holder."
-msgstr "Óleyfilegt er að afrita myndir á neinn hátt nema með skriflegu leyfi handhafa höfundarréttar."
-
-#: ../includes/singapore.class.php:393
+msgstr ""
+"Óleyfilegt er að afrita myndir á neinn hátt nema með skriflegu leyfi "
+"handhafa höfundarréttar."
+#
+# File: ../includes/singapore.class.php, line: 484
 msgid "Log in"
 msgstr "Innskrá"
-
-#: ../includes/singapore.class.php:527
+#
+# File: ../includes/singapore.class.php, line: 616
 msgid "crumb line|You are here:"
 msgstr "Þú ert hér:"
-
-#: ../includes/singapore.class.php:567
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 629
+# File: ../includes/singapore.class.php, line: 1510
+msgid "image|Next"
+msgstr "Næsta"
+#
+# File: ../includes/singapore.class.php, line: 630
+# File: ../includes/singapore.class.php, line: 633
+# File: ../includes/singapore.class.php, line: 635
+# File: ../includes/singapore.class.php, line: 1501
+msgid "image|Thumbnails"
+msgstr "Smámyndir"
+#
+# File: ../includes/singapore.class.php, line: 632
+# File: ../includes/singapore.class.php, line: 1484
+msgid "image|Previous"
+msgstr "Fyrri"
+#
+# File: ../includes/singapore.class.php, line: 671
+msgid "Select language..."
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 679
+# File: ../includes/singapore.class.php, line: 711
+msgid "Go"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 701
+msgid "Select template..."
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 768
+#, c-format
 msgid "%s gallery"
 msgid_plural "%s galleries"
 msgstr[0] "%s myndasafn"
 msgstr[1] "%s myndasöfn"
-
-#: ../includes/singapore.class.php:596
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 797
+#, c-format
 msgid "%s image"
 msgid_plural "%s images"
 msgstr[0] "%s mynd"
 msgstr[1] "%s myndir"
-
-#: ../includes/singapore.class.php:640 ../includes/singapore.class.php:650
-msgid "Sample image from gallery"
-msgstr "Dæmi um mynd úr myndasafni"
-
-#: ../includes/singapore.class.php:644
+#
+# File: ../includes/singapore.class.php, line: 842
+# File: ../includes/singapore.class.php, line: 846
 msgid ""
 "No\n"
 "thumbnail"
 msgstr ""
 "Engin\n"
 "smámynd"
-
-#: ../includes/singapore.class.php:684
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 858
+msgid "Sample image from gallery"
+msgstr "Dæmi um mynd úr myndasafni"
+#
+# File: ../includes/singapore.class.php, line: 893
+#, c-format
 msgid "Showing %s-%s of %s"
 msgstr "Sýni %s-%s af %s"
-
-#: ../includes/singapore.class.php:696
+#
+# File: ../includes/singapore.class.php, line: 905
 msgid "gallery|Up"
 msgstr "Upp"
-
-#: ../includes/singapore.class.php:696
+#
+# File: ../includes/singapore.class.php, line: 905
 msgid "gallery|Up one level"
 msgstr "Upp um eitt stig"
-
-#: ../includes/singapore.class.php:720 ../includes/singapore.class.php:789
+#
+# File: ../includes/singapore.class.php, line: 929
+# File: ../includes/singapore.class.php, line: 998
 msgid "gallery|Previous"
 msgstr "Fyrri"
-
-#: ../includes/singapore.class.php:721
+#
+# File: ../includes/singapore.class.php, line: 930
 msgid "gallery|First"
 msgstr "Fyrsta"
-
-#: ../includes/singapore.class.php:724 ../includes/singapore.class.php:777
+#
+# File: ../includes/singapore.class.php, line: 933
+# File: ../includes/singapore.class.php, line: 986
 msgid "gallery|Next"
 msgstr "Næsta"
-
-#: ../includes/singapore.class.php:725
+#
+# File: ../includes/singapore.class.php, line: 934
 msgid "gallery|Last"
 msgstr "Síðasta"
-
-#: ../includes/singapore.class.php:797 ../includes/singapore.class.php:1025
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 1006
+# File: ../includes/singapore.class.php, line: 1381
+#, c-format
 msgid "artist name|by %s"
 msgstr "eftir %s"
-
-#: ../includes/singapore.class.php:872 ../includes/singapore.class.php:1171
+#
+# File: ../includes/singapore.class.php, line: 1092
+# File: ../includes/singapore.class.php, line: 1571
 msgid "Email"
 msgstr "Tölvupóstfang"
-
-#: ../includes/singapore.class.php:874 ../includes/singapore.class.php:1177
+#
+# File: ../includes/singapore.class.php, line: 1094
+# File: ../includes/singapore.class.php, line: 1577
 msgid "Description"
 msgstr "Lýsing"
-
-#: ../includes/singapore.class.php:876 ../includes/singapore.class.php:878
-#: ../includes/singapore.class.php:1189 ../includes/singapore.class.php:1191
+#
+# File: ../includes/singapore.class.php, line: 1096
+# File: ../includes/singapore.class.php, line: 1098
+# File: ../includes/singapore.class.php, line: 1589
+# File: ../includes/singapore.class.php, line: 1591
 msgid "Copyright"
 msgstr "Höfundaréttur"
-
-#: ../includes/singapore.class.php:880 ../includes/singapore.class.php:1193
+#
+# File: ../includes/singapore.class.php, line: 1100
+# File: ../includes/singapore.class.php, line: 1593
 msgid "Viewed"
 msgstr "Skoðuð"
-
-#: ../includes/singapore.class.php:880 ../includes/singapore.class.php:1193
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 1100
+# File: ../includes/singapore.class.php, line: 1593
+#, c-format
 msgid "viewed|%s time"
 msgid_plural "viewed|%s times"
 msgstr[0] "%s sinni"
 msgstr[1] "%s sinnum"
-
-#: ../includes/singapore.class.php:993
+#
+# File: ../includes/singapore.class.php, line: 1349
 msgid "Add a comment"
 msgstr "Bæta við athugasemd"
-
-#: ../includes/singapore.class.php:1102
-msgid "image|Previous"
-msgstr "Fyrri"
-
-#: ../includes/singapore.class.php:1113
+#
+# File: ../includes/singapore.class.php, line: 1493
 msgid "image|First"
 msgstr "Fyrsta"
-
-#: ../includes/singapore.class.php:1130
-msgid "image|Thumbnails"
-msgstr "Smámyndir"
-
-#: ../includes/singapore.class.php:1141
-msgid "image|Next"
-msgstr "Næsta"
-
-#: ../includes/singapore.class.php:1152
+#
+# File: ../includes/singapore.class.php, line: 1519
 msgid "image|Last"
 msgstr "Síðasta"
-
-#: ../includes/singapore.class.php:1173
+#
+# File: ../includes/singapore.class.php, line: 1573
 msgid "Location"
 msgstr "Staðsetning"
-
-#: ../includes/singapore.class.php:1175
+#
+# File: ../includes/singapore.class.php, line: 1575
 msgid "Date"
 msgstr "Dagsetning"
-
-#: ../includes/singapore.class.php:1179
+#
+# File: ../includes/singapore.class.php, line: 1579
 msgid "Camera"
 msgstr "Myndavél"
-
-#: ../includes/singapore.class.php:1181
+#
+# File: ../includes/singapore.class.php, line: 1581
 msgid "Lens"
 msgstr "Linsa"
-
-#: ../includes/singapore.class.php:1183
+#
+# File: ../includes/singapore.class.php, line: 1583
 msgid "Film"
 msgstr "Filma"
-
-#: ../includes/singapore.class.php:1185
+#
+# File: ../includes/singapore.class.php, line: 1585
 msgid "Darkroom manipulation"
 msgstr "Meðhöndlun í myrkraherbergi"
-
-#: ../includes/singapore.class.php:1187
+#
+# File: ../includes/singapore.class.php, line: 1587
 msgid "Digital manipulation"
 msgstr "Stafræn meðhöndlun"
-

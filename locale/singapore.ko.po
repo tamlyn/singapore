@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: singapore 0.9.8\n"
-"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"POT-Creation-Date: 2004-09-27 08:35+0100\n"
 "PO-Revision-Date: 2004-01-06 21:22+0000\n"
 "Last-Translator: Young-Ho Cha <ganadist@mizi.com>\n"
 "Language-Team: Korean (EUC-KR)\n"
@@ -13,167 +13,213 @@ msgstr ""
 "Content-Type: text/plain; charset=euc-kr\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#: ../includes/singapore.class.php:323
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 164
+#, c-format
+msgid "Gallery not found '%s'"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 225
+#, c-format
+msgid "Image not found '%s'"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 280
+#, fuzzy
+msgid "email|at"
+msgstr "메일"
+#
+# File: ../includes/singapore.class.php, line: 280
+msgid "email|dot"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 452
+#, c-format
 msgid "Page created in %s seconds"
 msgstr "%s초 만에 페이지가 만들어 졌습니다"
-
-#: ../includes/singapore.class.php:340
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 469
+#, c-format
 msgid "singapore|Powered by %s"
 msgstr "Powered by %s"
-
-#: ../includes/singapore.class.php:345
+#
+# File: ../includes/singapore.class.php, line: 474
 msgid "All rights reserved."
 msgstr "All rights reserved."
-
-#: ../includes/singapore.class.php:350
+#
+# File: ../includes/singapore.class.php, line: 479
 msgid ""
 "Images may not be reproduced in any form without the express written "
 "permission of the copyright holder."
 msgstr ""
 "Images may not be reproduced in any form without the express written "
 "permission of the copyright holder."
-
-#: ../includes/singapore.class.php:355
+#
+# File: ../includes/singapore.class.php, line: 484
 msgid "Log in"
 msgstr "로그인"
-
-#: ../includes/singapore.class.php:490
+#
+# File: ../includes/singapore.class.php, line: 616
 msgid "crumb line|You are here:"
 msgstr "현재 위치:"
-
-#: ../includes/singapore.class.php:530
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 629
+# File: ../includes/singapore.class.php, line: 1510
+msgid "image|Next"
+msgstr "다음"
+#
+# File: ../includes/singapore.class.php, line: 630
+# File: ../includes/singapore.class.php, line: 633
+# File: ../includes/singapore.class.php, line: 635
+# File: ../includes/singapore.class.php, line: 1501
+msgid "image|Thumbnails"
+msgstr "목록보기"
+#
+# File: ../includes/singapore.class.php, line: 632
+# File: ../includes/singapore.class.php, line: 1484
+msgid "image|Previous"
+msgstr "이전"
+#
+# File: ../includes/singapore.class.php, line: 671
+msgid "Select language..."
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 679
+# File: ../includes/singapore.class.php, line: 711
+msgid "Go"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 701
+msgid "Select template..."
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 768
+#, c-format
 msgid "%s gallery"
 msgid_plural "%s galleries"
 msgstr[0] "%s개 갤러리"
-
-#: ../includes/singapore.class.php:559
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 797
+#, c-format
 msgid "%s image"
 msgid_plural "%s images"
 msgstr[0] "%s개 그림"
-
-#: ../includes/singapore.class.php:603 ../includes/singapore.class.php:613
-msgid "Sample image from gallery"
-msgstr "갤러리의 샘플 그림"
-
-#: ../includes/singapore.class.php:607
+#
+# File: ../includes/singapore.class.php, line: 842
+# File: ../includes/singapore.class.php, line: 846
 msgid ""
 "No\n"
 "thumbnail"
 msgstr ""
 "목록보기\n"
 "없음"
-
-#: ../includes/singapore.class.php:647
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 858
+msgid "Sample image from gallery"
+msgstr "갤러리의 샘플 그림"
+#
+# File: ../includes/singapore.class.php, line: 893
+#, c-format
 msgid "Showing %s-%s of %s"
 msgstr "전체 %3$s개 중 %1$s부터 %2$s 까지 보기"
-
-#: ../includes/singapore.class.php:659
+#
+# File: ../includes/singapore.class.php, line: 905
 msgid "gallery|Up"
 msgstr "위로"
-
-#: ../includes/singapore.class.php:659
+#
+# File: ../includes/singapore.class.php, line: 905
 msgid "gallery|Up one level"
 msgstr "한단계 위로"
-
-#: ../includes/singapore.class.php:683 ../includes/singapore.class.php:752
+#
+# File: ../includes/singapore.class.php, line: 929
+# File: ../includes/singapore.class.php, line: 998
 msgid "gallery|Previous"
 msgstr "이전"
-
-#: ../includes/singapore.class.php:684
+#
+# File: ../includes/singapore.class.php, line: 930
 msgid "gallery|First"
 msgstr "맨앞"
-
-#: ../includes/singapore.class.php:687 ../includes/singapore.class.php:740
+#
+# File: ../includes/singapore.class.php, line: 933
+# File: ../includes/singapore.class.php, line: 986
 msgid "gallery|Next"
 msgstr "다음"
-
-#: ../includes/singapore.class.php:688
+#
+# File: ../includes/singapore.class.php, line: 934
 msgid "gallery|Last"
 msgstr "갤러리|마지막"
-
-#: ../includes/singapore.class.php:760 ../includes/singapore.class.php:991
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 1006
+# File: ../includes/singapore.class.php, line: 1381
+#, c-format
 msgid "artist name|by %s"
 msgstr "작가 이름|%s 순"
-
-#: ../includes/singapore.class.php:836 ../includes/singapore.class.php:838
-#: ../includes/singapore.class.php:1138 ../includes/singapore.class.php:1140
+#
+# File: ../includes/singapore.class.php, line: 1092
+# File: ../includes/singapore.class.php, line: 1571
 msgid "Email"
 msgstr "메일"
-
-#: ../includes/singapore.class.php:840 ../includes/singapore.class.php:1146
+#
+# File: ../includes/singapore.class.php, line: 1094
+# File: ../includes/singapore.class.php, line: 1577
 msgid "Description"
 msgstr "설명"
-
-#: ../includes/singapore.class.php:842 ../includes/singapore.class.php:844
-#: ../includes/singapore.class.php:1158 ../includes/singapore.class.php:1160
+#
+# File: ../includes/singapore.class.php, line: 1096
+# File: ../includes/singapore.class.php, line: 1098
+# File: ../includes/singapore.class.php, line: 1589
+# File: ../includes/singapore.class.php, line: 1591
 msgid "Copyright"
 msgstr "저작권"
-
-#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
+#
+# File: ../includes/singapore.class.php, line: 1100
+# File: ../includes/singapore.class.php, line: 1593
 msgid "Viewed"
 msgstr "방문회수"
-
-#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
-#, possible-c-format
+#
+# File: ../includes/singapore.class.php, line: 1100
+# File: ../includes/singapore.class.php, line: 1593
+#, c-format
 msgid "viewed|%s time"
 msgid_plural "viewed|%s times"
 msgstr[0] "%s 번째 보임"
-
-#: ../includes/singapore.class.php:959
+#
+# File: ../includes/singapore.class.php, line: 1349
 msgid "Add a comment"
 msgstr "설명 달기"
-
-#: ../includes/singapore.class.php:1068
-msgid "image|Previous"
-msgstr "이전"
-
-#: ../includes/singapore.class.php:1079
+#
+# File: ../includes/singapore.class.php, line: 1493
 msgid "image|First"
 msgstr "맨 앞"
-
-#: ../includes/singapore.class.php:1096
-msgid "image|Thumbnails"
-msgstr "목록보기"
-
-#: ../includes/singapore.class.php:1107
-msgid "image|Next"
-msgstr "다음"
-
-#: ../includes/singapore.class.php:1118
+#
+# File: ../includes/singapore.class.php, line: 1519
 msgid "image|Last"
 msgstr "마지막"
-
-#: ../includes/singapore.class.php:1142
+#
+# File: ../includes/singapore.class.php, line: 1573
 msgid "Location"
 msgstr "위치"
-
-#: ../includes/singapore.class.php:1144
+#
+# File: ../includes/singapore.class.php, line: 1575
 msgid "Date"
 msgstr "날짜"
-
-#: ../includes/singapore.class.php:1148
+#
+# File: ../includes/singapore.class.php, line: 1579
 msgid "Camera"
 msgstr "카메라"
-
-#: ../includes/singapore.class.php:1150
+#
+# File: ../includes/singapore.class.php, line: 1581
 msgid "Lens"
 msgstr "렌즈"
-
-#: ../includes/singapore.class.php:1152
+#
+# File: ../includes/singapore.class.php, line: 1583
 msgid "Film"
 msgstr "필름"
-
-#: ../includes/singapore.class.php:1154
+#
+# File: ../includes/singapore.class.php, line: 1585
 msgid "Darkroom manipulation"
 msgstr "암실 처리"
-
-#: ../includes/singapore.class.php:1156
+#
+# File: ../includes/singapore.class.php, line: 1587
 msgid "Digital manipulation"
 msgstr "디지털 처리"

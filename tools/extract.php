@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.6 2004/02/02 16:31:37 tamlyn Exp $
+ * @version $Id: extract.php,v 1.7 2004/09/27 07:43:03 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -72,7 +72,7 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   $fp = fopen($temp, 'wb') or die("Couldn't open tempfile {$temp} for writing.\n");
   
   // Get all files matching pattern in current template
-  $files = parseDirectory("../".$config->pathto_current_template);
+  $files = parseDirectory("../".$config->pathto_templates.$config->default_template.'/');
   $files[count($files)] = "../includes/singapore.class.php";
   fwrite($fp, implode("\n", $files));
   
@@ -97,7 +97,7 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   $fp = fopen($temp, 'w') or die("Couldn't open tempfile {$temp} for writing.\n");
   
   // Get all files matching pattern in current template
-  $files = parseDirectory("../".$config->pathto_admin_template);
+  $files = parseDirectory("../".$config->pathto_templates.$config->admin_template_name.'/');
   $files[count($files)] = "../includes/admin.class.php";
   $files[count($files)] = "../admin.php";
   fwrite($fp, implode("\n", $files));
