@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.32 2004/12/08 10:57:36 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.33 2004/12/09 22:50:31 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -165,7 +165,7 @@ class sgAdmin extends Singapore
    */
   function isSubPath($parent, $child) {
     $parentPath = realpath($parent);
-    return substr(realpath($child),0,strlen($parentPath)) != $parentPath;
+    return substr(realpath($child),0,strlen($parentPath)) == $parentPath;
   }
 
   /**
@@ -662,12 +662,12 @@ class sgAdmin extends Singapore
    */
   function deleteGallery($galleryId = null)
   {
-    if($galleryId ===null)
+    if($galleryId === null)
       $galleryId = $_REQUEST['gallery'];
   
     //security check: make sure requested file is in galleries directory
-    if(!$this->isSubPath($config->pathto_galleries,$config->pathto_galleries.$galleryId)) {
-      $this->lastError = $this->i18n->_g("Attempting to delete object outside of gallery directory");
+    if(!$this->isSubPath($this->config->pathto_galleries,$this->config->pathto_galleries.$galleryId)) {
+      $this->lastError = $this->i18n->_g("Object not found");
       return false;
     }
   
@@ -704,19 +704,12 @@ class sgAdmin extends Singapore
       $image = $_REQUEST["sgImageURL"];
       $path = $image;
     } elseif($_REQUEST["sgLocationChoice"] == "single") {
-      //set filename as requested
-      if($_REQUEST["sgNameChoice"] == "same") $image = addslashes($_FILES["sgImageFile"]["name"]);
-      else $image = $_REQUEST["sgFileName"];
+      //set filename as requested and strip off any clandestine path info
+      if($_REQUEST["sgNameChoice"] == "same") $image = basename($_FILES["sgImageFile"]["name"]);
+      else $image = basename($_REQUEST["sgFileName"]);
       
       //make sure file has a recognised extension
       if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpeg";
-      
-      //make sure image name does not contain null bytes
-      if(strpos("\0",$image)) {
-        $this->lastError = $this->i18n->_g("Image name cannot contain NULL bytes"); 
-        return false;
-      }
-        
       
       $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
       $srcImage = $image;
@@ -933,7 +926,9 @@ class sgAdmin extends Singapore
       if($this->gallery->images[$i]->filename == $image)
         array_splice($this->gallery->images,$i,1);
     
-    if(file_exists($this->config->pathto_galleries.$this->gallery->id."/".$image))
+    if(file_exists($this->config->pathto_galleries.$this->gallery->id."/".$image)
+      //security check: make sure requested file is in galleries directory
+      && $this->isSubPath($this->config->pathto_galleries,$this->config->pathto_galleries.$this->gallery->id."/".$image))
       unlink($this->config->pathto_galleries.$this->gallery->id."/".$image);
     
     if($this->io->putGallery($this->gallery)) {
