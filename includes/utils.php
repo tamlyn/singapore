@@ -46,8 +46,10 @@ function sgGetListing($wd, $type = ""){
     case "jpegs" :
       while(false !== ($entry = readdir($dp)))
         if(
-          strpos(strtolower($entry),".jpg") || 
-          strpos(strtolower($entry),".jpeg")
+          strpos(strtolower($entry),".jpg") ||
+          strpos(strtolower($entry),".jpeg")||
+          strpos(strtolower($entry),".png") ||
+          strpos(strtolower($entry),".gif")
         ) $dir->files[] = $entry;
       sort($dir->files);
       break;
