@@ -20,21 +20,21 @@
     <td class="ml"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
     
-    <?php foreach($sg->gallerySelectedGalleriesArray() as $index => $gal): ?>
+    <?php for($index = $sg->startat; $index < $sg->gallerySelectedGalleriesCount()+$sg->startat; $index++): ?>
     <div class="sgGallery"><table class="sgGallery">
     <tr valign="top">
       <td class="sgGallery">
-        <?php echo $sg->galleryThumbnailLinked($index+$sg->startat) ?>
+        <?php echo $sg->galleryThumbnailLinked($index) ?> 
       </td>
       <td>
-        <p><strong><a href="<?php echo $sg->galleryURL($index+$sg->startat) ?>"><?php echo $gal->name ?></a></strong></p>
-        <p><?php echo $gal->desc ?></p>
-        <p>[<?php echo $sg->galleryContents($index+$sg->startat) ?>]</p>
+        <p><strong><a href="<?php echo $sg->galleryURL($index) ?>"><?php echo $sg->galleryName($index) ?></a></strong></p>
+        <p><?php echo $sg->galleryDescription($index) ?></p>
+        <p>[<?php echo $sg->galleryContents($index) ?>]</p>
       </td>
     </tr>
     </table>
     </div>
-    <?php endforeach; ?>
+    <?php endfor; ?>
     
     </td>
     <td class="mr"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>

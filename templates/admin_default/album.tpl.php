@@ -20,24 +20,21 @@
     <td class="ml"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
   
-    <?php 
-      $selectedImagesArray = $sg->gallerySelectedImagesArray();
-      for($i=0;$i<count($selectedImagesArray);$i++): ?>
+    <?php for($index = $sg->startat; $index < $sg->gallerySelectedImagesCount()+$sg->startat; $index++): ?>
     <div class="sgThumbnail">
       <div class="sgThumbnailContent">
-        <img class="borderTL" src="<?php echo $sg->config->pathto_admin_template ?>images/slide-tl.gif" alt="" />
-        <img class="borderTR" src="<?php echo $sg->config->pathto_admin_template ?>images/slide-tr.gif" alt="" />
+        <img class="borderTL" src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/slide-tl.gif" alt="" />
+        <img class="borderTR" src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/slide-tr.gif" alt="" />
         
         <table><tr><td>
-          <?php $sg->selectImage($selectedImagesArray[$i]->filename) ?>
-          <?php echo $sg->imageThumbnailLinked() ?>
+          <?php echo $sg->imageThumbnailLinked($index) ?>
         </td></tr></table>
         
         <div class="roundedCornerSpacer">&nbsp;</div>
       </div>
       <div class="bottomCorners">
-        <img class="borderBL" src="<?php echo $sg->config->pathto_admin_template ?>images/slide-bl.gif" alt="" />
-        <img class="borderBR" src="<?php echo $sg->config->pathto_admin_template ?>images/slide-br.gif" alt="" />
+        <img class="borderBL" src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/slide-bl.gif" alt="" />
+        <img class="borderBR" src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/slide-br.gif" alt="" />
       </div>
     </div>
     <?php endfor; ?>
