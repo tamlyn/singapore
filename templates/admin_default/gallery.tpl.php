@@ -26,6 +26,7 @@
         <?php 
           echo '<a href="'.$sg->formatAdminURL("view",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|View gallery")."</a> |\n";
           echo '<a href="'.$sg->formatAdminURL("editgallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Edit gallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("editpermissions",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Edit permissions")."</a> |\n";
           echo '<a href="'.$sg->formatAdminURL("deletegallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Delete gallery")."</a> |\n";
           echo '<a href="'.$sg->formatAdminURL("newgallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|New subgallery")."</a> |\n";
           echo '<a href="'.$sg->formatAdminURL("reindex",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Re-index gallery")."</a> |\n";

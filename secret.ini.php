@@ -4,6 +4,13 @@
 ;
 ; <?php if(false): ?>
 
+[Security]
+;
+; Security related settings
+;
+
+md5_salt = "There is a guy in the south village called Tony. He is a ninja."
+
 [PEAR::DB]
 ;
 ; settings relevant to the PEAR::DB backend. 
@@ -11,8 +18,8 @@
 ;
 
 
-db_user = tamlyn
-db_password = goosebutt
+db_user = 
+db_password = 
 
 
 ;

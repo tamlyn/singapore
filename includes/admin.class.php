@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.19 2004/09/13 05:15:09 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.20 2004/09/13 09:22:40 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -307,38 +307,34 @@ class sgAdmin extends Singapore
   	return true;
   }
   
-  
-  function checkPermissions($obj, $action, $user = null, $gallery = null, $image = null, $user = null)
+  /**
+   * Checks if the specified operation is permitted on the specified object
+   * 
+   * @param sgImage|sgGallery the object to be operated on
+   * @param string the action to perform (either 'read', 'edit', 'add' or 'delete')
+   * @return bool true if permissions are satisfied; false otherwise
+   */
+  function checkPermissions($obj, $action, $gallery = null, $image = null)
   {
-    if($user === null)
-      $usr = $_SESSION["sgUser"];
-    else {
-      $users = $this->io->getUsers();
-      for($i=0; $i<count($users); $i++)
-        if($users[$i]->username == $user) {
-          $usr = $users[$i];
-          break;
-        }
-      if(!isset($usr)) 
-        return false;
-    }
-    
-    if($this->isAdmin())
+    if($this->isAdmin() || $this->isOwner($obj))
       return true;
     
+    $usr = $_SESSION["sgUser"];
     switch($action) {
       case "read" :
-        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_READ 
+        return $obj->permissions & SG_WLD_READ
            || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_READ);
       case "edit" :
-        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_EDIT 
+        return $obj->permissions & SG_WLD_EDIT 
            || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_EDIT);
       case "add" :
-        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_ADD 
+        return $obj->permissions & SG_WLD_ADD 
            || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_ADD);
       case "delete" :
-        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_DELETE 
+        return $obj->permissions & SG_WLD_DELETE 
            || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_DELETE);
+      default :
+        return false;
     }
   }
   

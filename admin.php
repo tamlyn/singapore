@@ -10,7 +10,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.25 2004/09/13 05:15:07 tamlyn Exp $
+ * @version $Id: admin.php,v 1.26 2004/09/13 09:22:39 tamlyn Exp $
  */
 
 //include main class
@@ -333,23 +333,23 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "showgalleryhits" :
       $sg->selectGallery();
-      if(!$sg->checkPermissions($sg->gallery,"read")) {
+      /*if(!$sg->checkPermissions($sg->gallery,"read")) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-      } else {
+      } else {*/
         $sg->loadGalleryHits();
         $includeFile = "galleryhits";
-      }
+      //}
       break;
     case "showimagehits" :
       $sg->selectGallery();
-      if(!$sg->checkPermissions($sg->gallery,"read")) {
+      /*if(!$sg->checkPermissions($sg->gallery,"read")) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-      } else {
+      } else {*/
         $sg->loadImageHits();
         $includeFile = "imagehits";
-      }
+      //}
       break;
     case "suspenduser" :
       if(!$sg->isAdmin()) {
@@ -365,10 +365,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "view" :
       $sg->selectGallery();
-      if(!$sg->checkPermissions($sg->gallery,"read")) {
+      /*if(!$sg->checkPermissions($sg->gallery,"read")) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-      } else
+      } else*/
         $includeFile = "view";
       break;
     case "menu" :
