@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.7 2003/11/17 02:18:11 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.8 2003/11/24 20:07:04 tamlyn Exp $
  */
  
 /**
@@ -352,8 +352,7 @@ class Singapore
         while(false !== ($entry = readdir($dp)))
           if(
             is_dir($wd.$entry) && 
-            $entry != "." && 
-            $entry != ".."
+            $entry{0} != '.'
           ) $dir->dirs[] = $entry;
         sort($dir->dirs);
         
