@@ -104,7 +104,7 @@ msgstr "Bild entfernen"
 #, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
 msgstr ""
-"Sind Sie sicher, dass Sie das Bild %S unwiederherstellbar aus der Galerie %s "
+"Sind Sie sicher, dass Sie das Bild %s unwiederherstellbar aus der Galerie %s "
 "löschen möchten?"
 #
 # File: ../admin.php, line: 186
@@ -214,7 +214,7 @@ msgstr "Datei existiert bereits"
 # File: ../includes/admin.class.php, line: 391
 #, fuzzy
 msgid "Could not upload file"
-msgstr "Das Bild konnte ncht gelöscht werden."
+msgstr "Upload unvollständig."
 #
 # File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
@@ -353,11 +353,11 @@ msgstr ""
 #
 # File: ../templates/admin_default/login.tpl.php, line: 8
 msgid "Username:"
-msgstr "Nutzername"
+msgstr "Nutzername:"
 #
 # File: ../templates/admin_default/login.tpl.php, line: 9
 msgid "Password:"
-msgstr "Passwort"
+msgstr "Passwort:"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 1
 msgid "Please choose an option:"
@@ -390,7 +390,7 @@ msgstr "neue Galerie"
 # File: ../templates/admin_default/newgallery.tpl.php, line: 9
 # File: ../templates/admin_default/newimage.tpl.php, line: 28
 msgid "Identifier:"
-msgstr "Bezeichner"
+msgstr "Bezeichner:"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 1
 msgid "new image"
@@ -403,11 +403,11 @@ msgstr ""
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 12
 msgid "Remote file"
-msgstr "Datei auf einem anderem Server."
+msgstr "Datei auf einem anderem Server"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 16
 msgid "URL of image:"
-msgstr "URL des Bildes"
+msgstr "URL des Bildes:"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 20
 msgid "Local file"
@@ -415,7 +415,7 @@ msgstr "Datei von der lokalen Maschine"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 24
 msgid "Image file to upload:"
-msgstr "Bild welches hochgeladen werden soll."
+msgstr "Bild welches hochgeladen werden soll:"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 30
 msgid "Use filename of uploaded file."
@@ -423,4 +423,4 @@ msgstr "Dateinamen des hochgeladenen Bildes benutzen"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 31
 msgid "Specify different filename:"
-msgstr "Anderen Dateinamen festlegen"
+msgstr "Anderen Dateinamen festlegen:"
