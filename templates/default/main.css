@@ -96,40 +96,6 @@ table.formTable input.radio, table.formTable input.radio {
   padding: 2px;
 }
 
-div.sgAdminBar {
-  background-color: #f0f0f0;
-  border: 1px solid #000;
-  margin: 1em 0 1em 0;
-  padding: 5px;
-  font-size: x-small;
-}
-
-div.sgAdminBar a:link, div.sgAdminBar a:visited, div.sgAdminBar a:active {
-  color: #000;
-  font: x-small Verdana;
-  position: relative;
-  left: 1px;
-  top: 1px;
-  border: 1px solid #f0f0f0;
-  text-decoration: none;
-  padding: 2px;
-}
-
-div.sgAdminBar a:hover {
-  position: relative;
-  left: 0px;
-  top: 0px;
-  border: 1px solid #000;
-  color: #000;
-  background-color: #fff;
-}
-
-span.sgAdminBarSeparator {
-  border-left: 1px solid #888;
-  width: 0px;
-  margin-right: 4px;
-}
-
 div.sgShadow {
   text-align: center;
   padding: 1em;

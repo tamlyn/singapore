@@ -114,7 +114,7 @@ table.formTable input.radio, table.formTable input.radio {
 
 #sgAdminBar a:link, #sgAdminBar a:visited, #sgAdminBar a:active {
   color: #000;
-  font: x-small Verdana;
+  font: x-small Verdana, sans-serif;
   position: relative;
   left: 1px;
   top: 1px;
