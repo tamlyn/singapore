@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.29 2004/08/08 13:58:21 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.30 2004/09/06 02:15:07 tamlyn Exp $
  */
 
 //require config class
@@ -20,6 +20,10 @@ else
   showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["width"], $_REQUEST["height"], isset($_REQUEST["force"]));
 
 function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
+  //security check: exit if back-references found
+  if(strpos($gallery.$image,'/../') !== false)
+    die("Suspected security threat");
+
   //create config object
   $config = new sgConfig();
 
@@ -29,7 +33,7 @@ function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
   if($isRemoteFile) $imagePath = $image;
   else $imagePath = $config->pathto_galleries."$gallery/$image";
   
-  $thumbPath = $config->pathto_cache.$maxWidth."x".$maxHeight.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = $config->pathto_data_dir."cache/".$maxWidth."x".$maxHeight.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
   
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
