@@ -76,6 +76,10 @@ ul.things > li {
   color: #d00;
 }
 
+.error {
+  color: #f00;
+}
+
 .boxed, .note, #progressBox {
   border: 1px dashed #ccc;
   padding: 0.5em;

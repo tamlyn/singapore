@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: functions.php,v 1.1 2004/12/01 23:57:45 tamlyn Exp $
+ * @version $Id: install.inc.php,v 1.1 2004/12/02 12:01:59 tamlyn Exp $
  */
 
 /**
@@ -226,37 +226,6 @@ function sqlCreateTables(&$io) {
   return $success;
 }
 
-/**
- * Drops all tables created by singapore.
- * @param sgIO_sql  pointer to a singapore SQL backend object
- */
-function sqlDropTables($io) {
-  $success = true;
-  setupHeader("Deleting tables");
-  if(!$io->query("SELECT * FROM ".$io->config->sql_prefix."galleries"))
-    setupMessage("'".$io->config->sql_prefix."galleries' table not found - skipped");
-  elseif($io->query("DROP TABLE ".$io->config->sql_prefix."galleries")) 
-    setupMessage("'".$io->config->sql_prefix."galleries' table deleted");
-  else
-    $success = setupError("Unable to delete '".$io->config->sql_prefix."galleries' table:".$io->error());
-    
-  if(!$io->query("SELECT * FROM ".$io->config->sql_prefix."images"))
-    setupMessage("'".$io->config->sql_prefix."images' table not found - skipped");
-  elseif($io->query("DROP TABLE ".$io->config->sql_prefix."images")) 
-    setupMessage("'".$io->config->sql_prefix."images' table deleted");
-  else
-    $success = setupError("Unable to delete '".$io->config->sql_prefix."images' table:".$io->error());
-    
-  if(!$io->query("SELECT * FROM ".$io->config->sql_prefix."users"))
-    setupMessage("'".$io->config->sql_prefix."users' table not found - skipped");
-  elseif($io->query("DROP TABLE ".$io->config->sql_prefix."users")) 
-    setupMessage("'".$io->config->sql_prefix."users' table deleted");
-  else
-    $success = setupError("Unable to delete '".$io->config->sql_prefix."users' table:".$io->error());
-    
-  return $success;
-}
-
 
 //output functions
 function setupHeader($var)
@@ -280,7 +249,7 @@ function setupMessage($var)
  */
 function setupError($var)
 {
-  echo "<font color=\"#ff0000\">{$var}</font>.<br />\n";
+  echo "<span class=\"error\">{$var}</span>.<br />\n";
   return false;
 }
 
