@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.25 2004/05/13 01:20:32 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.26 2004/05/14 13:43:22 tamlyn Exp $
  */
 
 //require config class
@@ -29,7 +29,7 @@ function showThumb($gallery, $image, $width, $height, $forceAspect) {
   if($isRemoteFile) $imagePath = $image;
   else $imagePath = $config->pathto_galleries."$gallery/$image";
   
-  $thumbPath = $config->pathto_cache.$width."x".$height.strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = $config->pathto_cache.$width."x".$height.($forceAspect?"f":"").strtr("-$gallery-$image",":/?\\","----");
   
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
