@@ -38,6 +38,9 @@ require "includes/backend.php";
 //include header file
 include sgGetConfig("pathto_header");
 
+//show admin toolbar (only if user is logged in)
+sgShowAdminBar();
+
 if(sgIsLoggedIn()) {
   if(isset($_REQUEST["action"])) {
     switch($_REQUEST["action"]) {

@@ -333,10 +333,7 @@ function sgShowImageHits($gallery, $startat = 0)
   //get contaner xhtml
   $code = sgGetContainerCode();
   
-  //if logged in to admin show admin panel
-  sgShowAdminBar("galleryhits", $gallery);
-  
-  echo "<h1>stats for $gal->name</h1>\n";
+  echo "<h1>$gal->name statistics</h1>\n";
   
   //container frame top (tab)
   echo $code->tab1;
@@ -373,10 +370,7 @@ function sgShowGalleryHits($gallery = "", $startat = 0)
   //get contaner xhtml
   $code = sgGetContainerCode();
   
-  //if logged in to admin show admin panel
-  sgShowAdminBar("indexhits");
-  
-  echo "<h1>viewing statistics</h1>\n";
+  echo "<h1>gallery statistics</h1>\n";
   
   //container frame top (tab)
   echo $code->tab1;

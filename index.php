@@ -39,6 +39,9 @@ require "includes/backend.php";
 //include header file
 include sgGetConfig("pathto_header");
 
+//show admin toolbar (only if user is logged in)
+sgShowAdminBar();
+
 if(isset($_REQUEST["image"])) sgShowImage($_REQUEST["gallery"],$_REQUEST["image"]);
 elseif(isset($_REQUEST["gallery"])) sgShowThumbnails($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
 else sgShowIndex(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
