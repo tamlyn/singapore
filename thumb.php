@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.33 2004/12/02 12:02:49 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.34 2005/02/27 06:47:09 tamlyn Exp $
  */
 
 //require config class
@@ -90,7 +90,7 @@ function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
   $cropY = floor(($imageHeight-$cropHeight)/2);
     
   //compute width and height of thumbnail to create
-  if($cropWidth > $maxWidth && ($cropHeight < $maxHeight || ($cropHeight > $maxHeight && round($cropWidth/$cropHeight * $maxHeight) > $maxWidth))) {
+  if($cropWidth > $maxWidth && ($cropHeight <= $maxHeight || ($cropHeight > $maxHeight && round($cropWidth/$cropHeight * $maxHeight) > $maxWidth))) {
     $thumbWidth = $maxWidth;
     $thumbHeight = round($cropHeight/$cropWidth * $maxWidth);
   } elseif($cropHeight > $maxHeight) {

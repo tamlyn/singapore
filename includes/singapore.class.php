@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.43 2005/02/22 04:05:02 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.44 2005/02/27 06:47:07 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -1311,7 +1311,7 @@ class Singapore
       $cropHeight = $imageHeight;
     }
     
-    if($cropHeight > $maxHeight && ($cropWidth < $maxWidth || ($cropWidth > $maxWidth && round($cropHeight/$cropWidth * $maxWidth) > $maxHeight)))
+    if($cropHeight > $maxHeight && ($cropWidth <= $maxWidth || ($cropWidth > $maxWidth && round($cropHeight/$cropWidth * $maxWidth) > $maxHeight)))
       return round($cropWidth/$cropHeight * $maxHeight);
     elseif($cropWidth > $maxWidth)
       return $maxWidth;
@@ -1347,7 +1347,7 @@ class Singapore
       $cropHeight = $imageHeight;
     }
     
-    if($cropWidth > $maxWidth && ($cropHeight < $maxHeight || ($cropHeight > $maxHeight && round($cropWidth/$cropHeight * $maxHeight) > $maxWidth)))
+    if($cropWidth > $maxWidth && ($cropHeight <= $maxHeight || ($cropHeight > $maxHeight && round($cropWidth/$cropHeight * $maxHeight) > $maxWidth)))
       return round($cropHeight/$cropWidth * $maxWidth);
     elseif($cropHeight > $maxHeight)
       return $maxHeight;
