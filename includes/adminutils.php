@@ -64,10 +64,10 @@ function sgEditGallery($gallery = "")
   
   $gal = sgGetGalleryInfo($gallery);
   
-  echo "<h1 style=\"float:left\">edit gallery: $gal->name</h1>\n";
-  echo "<p><a href=\"index.php?gallery=$gallery\">";
+  echo "<p style=\"float:right\"><a href=\"index.php?gallery=$gallery\">";
   echo "<img src=\"thumb.php?gallery=$gallery&amp;image=$gal->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"Sample image from gallery\" />";
   echo "</a></p> ";
+  echo "<h1>edit gallery: $gal->name</h1>\n";
   
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"savegallery\" />\n";

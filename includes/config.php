@@ -57,8 +57,8 @@ function sgGetConfig($var) {
     case "log_path" :             return "logs/";
        //path used to store image view logs (if enabled)
 
-    case "copyright_message" :    return "All rights reserved. Images may not be reproduced in any form without the express written consent of the copyright holder.";
-       //message to display at the foot of every page
+    case "skin_name" :    return "cornflower";
+       //the name of the current skin
 
     return null;
   } 

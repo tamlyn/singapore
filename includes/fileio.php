@@ -55,7 +55,9 @@ function sgGetGallery($gallery, $galleryOnly = false) {
     if($galleryOnly) return $gal;
     
     for($i=0;$i<count($gal->img);$i++) {
-      $temp = strtr(substr($gal->img[$i]->filename, 0, -4), "_", " ");
+      //trim off file extension and replace underscores with spaces
+      $temp = strtr(substr($gal->img[$i]->filename, 0, strrpos($gal->img[$i]->filename,".")-strlen($gal->img[$i]->filename)), "_", " ");
+      //split string in two on " - " delimiter
       if(strstr($temp, " - ")) list($gal->img[$i]->artist,$gal->img[$i]->name) = explode(" - ", $temp);
       else $gal->img[$i]->name = $temp;
     }

@@ -9,6 +9,10 @@ body {
   
 }
 
+#footer {
+  text-align: center; 
+}
+
 h1, h2, h3, h4 {
   color: #f60;
 }
@@ -22,7 +26,15 @@ a:hover {
   text-decoration: none;
 }
 
-#footer {
-  text-align: center;
-  
+input, textarea, select {
+  border: 1px solid #f60;
+  color: #000;
+  background-color: #fff;
+}
+
+input.button {
+  font-weight: bold;
+  border: 1px outset #fff;
+  color: #fff;
+  background-color: #f60;
 }

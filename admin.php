@@ -44,11 +44,12 @@ require "includes/backend.php";
 <title>singapore admin</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" type="text/css" href="styles/main.css" />
-<link rel="stylesheet" type="text/css" href="styles/extra.css" />
+<link rel="stylesheet" type="text/css" href="styles/<?php echo sgGetConfig("skin_name") ?>.css" />
 </head>
 
 <body>
 
+<div id="header"><img src="images/<?php echo sgGetConfig("skin_name") ?>-header.gif" alt="singapore" /></div>
 
 <?php 
 
@@ -103,6 +104,10 @@ if(isset($_REQUEST["action"])) {
 }
 ?>
 
+<div id="footer"><p>
+  Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9</a> | 
+  <a href="admin.php">admin</a>.
+</p></div>
 
 </body>
 </html>
