@@ -28,7 +28,10 @@ $sg = new Singapore($basePath);
 
 function showAllThumbnails($sg, $galleryId)
 {
-  $dir = $sg->getListing($sg->config->pathto_galleries.$galleryId.'/',"images");
+  $dir = $sg->getListing($sg->config->base_path.$sg->config->pathto_galleries.$galleryId.'/',"images");
+  
+  //if($sg->config->loadConfig($sg->config->base_path.$sg->config->pathto_galleries.$galleryId."/gallery.ini"))
+  // $sg->config->loadConfig($sg->config->base_path.$sg->config->pathto_templates.$sg->config->default_template."/template.ini");
   
   echo "Entering <code>$galleryId</code><br />\n";
   

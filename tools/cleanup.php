@@ -8,13 +8,13 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2004 Tamlyn Rhodes
- * @version $Id: cleanup.php,v 1.1 2004/10/07 22:41:56 tamlyn Exp $
+ * @version $Id: cleanup.php,v 1.2 2004/10/11 05:25:18 tamlyn Exp $
  */
 
 /**
  * Recursively attempts to make all files and directories in $dir writable 
  *
- * @param    string    $dir        full directory name (must end with /)
+ * @param string  full directory name (must end with /)
  */
 function makeWritable($dir)
 {
@@ -23,7 +23,7 @@ function makeWritable($dir)
     while (($file = $d->read()) !== false) {
       if ($file == '.' || $file == '..') continue;
       $fullfile = $d->path . $file;
-      if(chmod($fullfile,0777))
+      if(@chmod($fullfile,0777))
         echo "Made $fullfile writable.<br />";
       if (is_dir($fullfile))
         makeWritable($fullfile."/");
@@ -48,6 +48,7 @@ function makeWritable($dir)
 <h1>cleanup script</h1>
 
 <p><?php 
+  //start with parent directory (singapore root)
   makeWritable("../");
 ?></p>
 
