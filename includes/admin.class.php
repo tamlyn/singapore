@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.28 2004/11/01 08:17:33 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.29 2004/12/01 06:34:55 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -90,7 +90,7 @@ class sgAdmin extends Singapore
     if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
     if(isset($this->config->umask) && is_string($this->config->umask)) $this->config->umask = octdec($this->config->umask);
     
-		
+    
     //set current language from request vars or config
     $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
     //read the standard language file
@@ -148,7 +148,7 @@ class sgAdmin extends Singapore
   }
 
   /**
-   *
+   * Tries to find temporary storage space
    */
   function findTempDirectory()
   {
@@ -156,6 +156,17 @@ class sgAdmin extends Singapore
     elseif(isset($_ENV["TEMP"]) && is_writable($_ENV["TEMP"])) return $_ENV["TEMP"];
     elseif(is_writable("/tmp")) return "/tmp";
     else return null;
+  }
+  
+  /**
+   * Tests if $child is within $parent
+   * @param string  relative or absolute path to parent directory
+   * @param string  relative or absolute path to child directory or file
+   * @return bool   true if $child is contained within $parent 
+   */
+  function isSubPath($parent, $child) {
+    $parentPath = realpath($parent);
+    return substr(realpath($child),0,strlen($parentPath)) != $parentPath;
   }
 
   /**
@@ -250,7 +261,7 @@ class sgAdmin extends Singapore
             $this->lastError = $this->i18n->_g("The new passwords you entered do not match.");
         else 
           $this->lastError = $this->i18n->_g("The current password you entered does not match the one in the database.");
-  		}
+      }
     
     if(!$found) $this->lastError = $this->i18n->_g("The username specified was not found in the database.");
     
@@ -264,8 +275,8 @@ class sgAdmin extends Singapore
   function isLoggedIn()
   {
     if(isset($_SESSION["sgUser"]) && $_SESSION["sgUser"]->check == md5($_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["sgUser"]->loginTime < 1800)) {
-  		$_SESSION["sgUser"]->loginTime = time();
-  	  return true;
+      $_SESSION["sgUser"]->loginTime = time();
+      return true;
     }
     return false;
   }
@@ -278,7 +289,7 @@ class sgAdmin extends Singapore
   function doLogin() 
   {
     if(isset($_POST["sgUsername"]) && isset($_POST["sgPassword"])) {
-  	  $users = $this->io->getUsers();
+      $users = $this->io->getUsers();
       for($i=0;$i < count($users);$i++)
         if($_POST["sgUsername"] == $users[$i]->username && md5($_POST["sgPassword"]) == $users[$i]->userpass){
           if($users[$i]->permissions & SG_SUSPENDED) {
@@ -287,15 +298,15 @@ class sgAdmin extends Singapore
           } else { 
             $_SESSION["sgUser"] = $users[$i];
             $_SESSION["sgUser"]->check = md5($_SERVER["REMOTE_ADDR"]);
-    			  $_SESSION["sgUser"]->ip = $_SERVER["REMOTE_ADDR"];
+            $_SESSION["sgUser"]->ip = $_SERVER["REMOTE_ADDR"];
             $_SESSION["sgUser"]->loginTime = time();
             return true;
           }
-  			}
-  		$this->logout();
+        }
+      $this->logout();
       $this->lastError = $this->i18n->_g("Username and/or password incorrect");
       return false;
-  	}
+    }
     $this->lastError = $this->i18n->_g("You must enter a username and password");
     return false;
   }
@@ -308,7 +319,7 @@ class sgAdmin extends Singapore
   function logout()
   {
     $_SESSION["sgUser"] = null;
-  	return true;
+    return true;
   }
   
   /**
@@ -425,12 +436,17 @@ class sgAdmin extends Singapore
    */
   function addUser()
   {
-  	$users = $this->io->getUsers();
+    $users = $this->io->getUsers();
     for($i=0; $i<count($users); $i++)
       if($users[$i]->username == $_REQUEST["user"]) {
         $this->lastError = $this->i18n->_g("Username already exists");
         return false;
       }
+    
+    if(!preg_match("/[a-zA-Z0-9_]{3,}/",$$_REQUEST["user"])) {
+      $this->lastError = $this->i18n->_g("Username must be at least 3 characters long and contain only alphanumeric characters");
+      return false;
+    }
     
     $users[$i] = new sgUser($_REQUEST["user"], md5("password"));
     
@@ -456,7 +472,7 @@ class sgAdmin extends Singapore
       return false;
     }
       
-  	$users = $this->io->getUsers();
+    $users = $this->io->getUsers();
     for($i=0; $i<count($users); $i++)
       if($users[$i]->username == $_REQUEST["user"]) {
         
@@ -483,11 +499,11 @@ class sgAdmin extends Singapore
     $users = $this->io->getUsers();
     for($i=0; $i<count($users); $i++)
       if($users[$i]->username == $_REQUEST["user"]) {
-        $users[$i]->email = $_REQUEST["sgEmail"];
-        $users[$i]->fullname = $_REQUEST["sgFullname"];
-        $users[$i]->description = $_REQUEST["sgDescription"];
+        $users[$i]->email = $this->prepareText($_REQUEST["sgEmail"]);
+        $users[$i]->fullname = $this->prepareText($_REQUEST["sgFullname"]);
+        $users[$i]->description = $this->prepareText($_REQUEST["sgDescription"]);
         if($this->isAdmin() && $_REQUEST["action"] == "saveuser") {
-          $users[$i]->groups = $_REQUEST["sgGroups"];
+          $users[$i]->groups = $this->prepareText($_REQUEST["sgGroups"]);
           $users[$i]->permissions = ($_REQUEST["sgType"] == "admin") ? $users[$i]->permissions | SG_ADMIN : $users[$i]->permissions & ~SG_ADMIN;
           if(isset($_REQUEST["sgPassword"]) && $_REQUEST["sgPassword"] != "**********")
             $users[$i]->userpass = md5($_REQUEST["sgPassword"]);
@@ -552,7 +568,7 @@ class sgAdmin extends Singapore
     }
     
     if($this->io->putGallery($this->gallery))
-  	  return $imagesAdded;
+      return $imagesAdded;
       
     $this->lastError = $this->i18n->_g("Could not save gallery info");
       return 0;
@@ -596,6 +612,20 @@ class sgAdmin extends Singapore
     return false;
   }
   
+  function prepareText($text, $multiline = false)
+  {
+    if(get_magic_quotes_gpc())
+      $text = stripslashes($text);
+    
+    if($mulitline) {
+      $text = strip_tags($text, $this->config->allowed_tags);
+      $text = str_replace(array("\n","\r"), array("<br />",""), $text);
+    } else
+      $text = strip_tags($text);
+      
+    return $text;
+  }
+  
   /**
    * Saves gallery info to the database.
    *
@@ -604,13 +634,13 @@ class sgAdmin extends Singapore
   function saveGallery()
   {
     $this->gallery->categories = $_REQUEST["sgCategories"];
-    $this->gallery->name = stripslashes($_REQUEST["sgGalleryName"]);
-    $this->gallery->artist = stripslashes($_REQUEST["sgArtistName"]);
-    $this->gallery->email = stripslashes($_REQUEST["sgArtistEmail"]);
-    $this->gallery->date = stripslashes($_REQUEST["sgDate"]);
-    $this->gallery->copyright = stripslashes($_REQUEST["sgCopyright"]);
-    $this->gallery->summary = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgSummary"]));
-    $this->gallery->desc = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgGalleryDesc"]));
+    $this->gallery->name = $this->prepareText($_REQUEST["sgGalleryName"]);
+    $this->gallery->artist = $this->prepareText($_REQUEST["sgArtistName"]);
+    $this->gallery->email = $this->prepareText($_REQUEST["sgArtistEmail"]);
+    $this->gallery->date = $this->prepareText($_REQUEST["sgDate"]);
+    $this->gallery->copyright = $this->prepareText($_REQUEST["sgCopyright"]);
+    $this->gallery->summary = $this->prepareText($_REQUEST["sgSummary"],true);
+    $this->gallery->desc = $this->prepareText($_REQUEST["sgGalleryDesc"],true);
     
     if($this->config->enable_clickable_urls) {
       //recognise URLs and htmlise them
@@ -636,11 +666,12 @@ class sgAdmin extends Singapore
     if($galleryId ===null)
       $galleryId = $_REQUEST['gallery'];
   
-    //check that there are no "../" references in the gallery name
-    //this ensures that the gallery being deleted really is a 
-    //subdirectory of the galleries directory 
-    if(strpos($galleryId,"../") !== false) return false;
-    
+    //security check: make sure requested file is in galleries directory
+    if(!$this->isSubPath($config->pathto_galleries,$config->pathto_galleries.$galleryId)) {
+      $this->lastError = $this->i18n->_g("Attempting to delete object outside of gallery directory");
+      return false;
+    }
+  
     //check that the gallery to delete is not the top level directory
     if(realpath($this->config->pathto_galleries.$galleryId) == realpath($this->config->pathto_galleries)) {
       $this->lastError = $this->i18n->_g("Cannot delete the top level directory");
@@ -858,21 +889,21 @@ class sgAdmin extends Singapore
    */
   function saveImage()
   {
-    $this->image->filename = $_REQUEST['image'];
-    $this->image->thumbnail = $_REQUEST["sgThumbnail"];
-    $this->image->categories = $_REQUEST["sgCategories"];
-    $this->image->name = stripslashes($_REQUEST["sgImageName"]);
-    $this->image->artist = stripslashes($_REQUEST["sgArtistName"]);
-    $this->image->email = stripslashes($_REQUEST["sgArtistEmail"]);
-    $this->image->location = stripslashes($_REQUEST["sgLocation"]);
-    $this->image->date = stripslashes($_REQUEST["sgDate"]);
-    $this->image->copyright = stripslashes($_REQUEST["sgCopyright"]);
-    $this->image->desc = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgImageDesc"]));
-    $this->image->camera = stripslashes($_REQUEST["sgField01"]);
-    $this->image->lens = stripslashes($_REQUEST["sgField02"]);
-    $this->image->film = stripslashes($_REQUEST["sgField03"]);
-    $this->image->darkroom = stripslashes($_REQUEST["sgField04"]);
-    $this->image->digital = stripslashes($_REQUEST["sgField05"]);
+    $this->image->filename   = $this->prepareText($_REQUEST['image']);
+    $this->image->thumbnail  = $this->prepareText($_REQUEST["sgThumbnail"]);
+    $this->image->categories = $this->prepareText($_REQUEST["sgCategories"]);
+    $this->image->name       = $this->prepareText($_REQUEST["sgImageName"]);
+    $this->image->artist     = $this->prepareText($_REQUEST["sgArtistName"]);
+    $this->image->email      = $this->prepareText($_REQUEST["sgArtistEmail"]);
+    $this->image->location   = $this->prepareText($_REQUEST["sgLocation"]);
+    $this->image->date       = $this->prepareText($_REQUEST["sgDate"]);
+    $this->image->copyright  = $this->prepareText($_REQUEST["sgCopyright"]);
+    $this->image->desc       = $this->prepareText($_REQUEST["sgImageDesc"],true);
+    $this->image->camera     = $this->prepareText($_REQUEST["sgField01"]);
+    $this->image->lens       = $this->prepareText($_REQUEST["sgField02"]);
+    $this->image->film       = $this->prepareText($_REQUEST["sgField03"]);
+    $this->image->darkroom   = $this->prepareText($_REQUEST["sgField04"]);
+    $this->image->digital    = $this->prepareText($_REQUEST["sgField05"]);
     
     if($this->io->putGallery($this->gallery)) return true;
     
