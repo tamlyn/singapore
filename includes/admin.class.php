@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.24 2004/10/15 18:09:22 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.25 2004/10/15 18:27:58 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -576,10 +576,14 @@ class sgAdmin extends Singapore
     }
     
     $gal = new sgGallery($newGalleryId);
-    $gal->owner = $_SESSION["sgUser"]->username;
     $gal->name = $_REQUEST["newgallery"];
     
-    print_r($gal);
+    //set full permissions on guest-created objects
+    if($this->isGuest())
+      $gal->permissions = SG_GRP_READ | SG_GRP_EDIT | SG_GRP_ADD | SG_GRP_DELETE
+                        | SG_WLD_READ | SG_WLD_EDIT | SG_WLD_ADD | SG_WLD_DELETE;
+    else
+      $gal->owner = $_SESSION["sgUser"]->username;
     
     if($this->io->putGallery($gal))
       return true;
