@@ -201,7 +201,7 @@ function sgShowGalleryDeleteConfirmation($gallery)
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"deletegallery-confirmed\" />\n";
   echo "<input type=\"hidden\" name=\"gallery\" value=\"$gallery\" />\n";
-  echo "<p>Are you sure you want to irretrievable delete gallery <em>$gal->name</em>";
+  echo "<p>Are you sure you want to irretrievably delete gallery <em>$gal->name</em>";
   if(count($gal->img)>0) echo " and all ".count($gal->img)." images contained therein";
   echo "?</p>\n";
   echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
@@ -407,7 +407,7 @@ function sgShowImageDeleteConfirmation($gallery, $image)
   echo "<input type=\"hidden\" name=\"image\" value=\"$img->filename\" />\n";
   echo "<input type=\"hidden\" name=\"sgPrevImage\" value=\"".(isset($img->prev[0])?$img->prev[0]->filename:"")."\" />\n";
   echo "<input type=\"hidden\" name=\"sgNextImage\" value=\"".(isset($img->next[0])?$img->next[0]->filename:"")."\" />\n";
-  echo "<p>Are you sure you want to irretrievable delete image <em>'$img->name'";
+  echo "<p>Are you sure you want to irretrievably delete image <em>'$img->name'";
   if(!empty($img->author)) echo " by $img->author";
   echo "</em> from gallery <em>$img->galname</em>?</p>\n";
   echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
