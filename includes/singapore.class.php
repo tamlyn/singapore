@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.35 2004/11/01 08:17:33 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.36 2004/12/01 09:30:04 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -96,7 +96,7 @@ class Singapore
       $this->config->base_path = $basePath;
       $this->config->base_url  = $basePath;
       //...load local config if present
-      //over-rides guessed values above
+      //may over-ride guessed values above
       $this->config->loadConfig("singapore.local.ini");
     }
     
@@ -130,7 +130,7 @@ class Singapore
       $this->language = $this->config->default_language;
       if($this->config->detect_language)
         foreach($this->getBrowserLanguages() as $lang)
-          if($lang=="en" || $lang=="en_us" || file_exists($basePath.$this->config->pathto_locale."singapore.".$lang.".pmo")) {
+          if($lang=="en" || file_exists($basePath.$this->config->pathto_locale."singapore.".$lang.".pmo")) {
             $this->language = $lang;
             break;
           }
@@ -724,7 +724,7 @@ class Singapore
     $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
     //carry over current get vars
     foreach($_GET as $var => $val)
-      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\">\n";
+      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\" />\n";
     $ret .= '<select name="'.$this->config->url_lang."\">\n";
     $ret .= '  <option value="'.$this->config->default_language.'">'.$this->i18n->_g("Select language...")."</option>\n";
     foreach($availableLanguages as $code => $name) {
@@ -734,7 +734,7 @@ class Singapore
       $ret .= '>'.htmlentities($name)."</option>\n";
     }
     $ret .= "</select>\n";
-    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\">\n";
+    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\" />\n";
     $ret .= "</form></div>\n";
     return $ret;
   }
@@ -754,7 +754,7 @@ class Singapore
     $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
     //carry over current get vars
     foreach($_GET as $var => $val)
-      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\">\n";
+      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\" />\n";
     $ret .= '<select name="'.$this->config->url_template."\">\n";
     $ret .= '  <option value="'.$this->config->default_template.'">'.$this->i18n->_g("Select template...")."</option>\n";
     foreach($templates->dirs as $name)
@@ -766,7 +766,7 @@ class Singapore
         $ret .= '>'.$name."</option>\n";
       }
     $ret .= "</select>\n";
-    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\">\n";
+    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\" />\n";
     $ret .= "</form></div>\n";
     return $ret;
   }
