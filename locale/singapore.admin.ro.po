@@ -1,0 +1,400 @@
+# Romanian langage file for singapore.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2004-01-26 10:25+0000\n"
+"Last-Translator: Stefan NICOLAE <shakabut@hotmail.com>\n"
+"Language-Team: Romanian <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../admin.php:43
+msgid "Welcome to singapore admin!"
+msgstr "Bine ai venit in panoul de administrare!"
+
+#: ../admin.php:46 ../admin.php:55 ../admin.php:64 ../admin.php:79
+#: ../admin.php:93 ../admin.php:104 ../admin.php:121 ../admin.php:139
+#: ../admin.php:153 ../admin.php:163 ../admin.php:188
+msgid "An error occurred:"
+msgstr "Eroare:"
+
+#: ../admin.php:52
+msgid "Thank you and goodbye!"
+msgstr "La revedere!"
+
+#: ../admin.php:62
+msgid "Password saved"
+msgstr "Parola salvata"
+
+#: ../admin.php:76
+msgid "Gallery added"
+msgstr "Galerie adaugata"
+
+#: ../admin.php:90
+msgid "Gallery info saved"
+msgstr "Informatie salvata"
+
+#: ../admin.php:99 ../admin.php:117 ../admin.php:159 ../admin.php:184
+msgid "confirm|OK"
+msgstr "OK"
+
+#: ../admin.php:102
+msgid "Gallery deleted"
+msgstr "Galerie stearsa"
+
+#: ../admin.php:107 ../admin.php:123 ../admin.php:165 ../admin.php:189
+msgid "confirm|Cancel"
+msgstr "Renunta"
+
+#: ../admin.php:110
+msgid "delete gallery"
+msgstr "sterge galerie"
+
+#: ../admin.php:111
+#, possible-c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and "
+"images it contains?"
+msgstr "Galeria %s nu e goala.\n Vrei sa stergi si imaginile si subgaleriile continute?"
+
+#: ../admin.php:119
+msgid "Thumbnail changed"
+msgstr "Miniaturi schimbate"
+
+#: ../admin.php:136
+msgid "Image added"
+msgstr "Imagina adaugata"
+
+#: ../admin.php:150
+msgid "Image saved successfully"
+msgstr "Imagine salvata cu succes"
+
+#: ../admin.php:161
+msgid "Image deleted"
+msgstr "Imagine stearsa"
+
+#: ../admin.php:168
+msgid "delete image"
+msgstr "sterge imagine"
+
+#: ../admin.php:169
+#, possible-c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "Esti sigur ca vrei sa stergi irevocabil imaginea %s din galeria %s?"
+
+#: ../admin.php:186
+msgid "Thumbnail cache purged"
+msgstr "Miniaturile din cache sterse"
+
+#: ../admin.php:192
+msgid "purge cached thumbnails"
+msgstr "sterge miniaturile din cache"
+
+#: ../admin.php:194
+#, possible-c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "Sigur vrei sa stergi toate %s miniaturile din cache?"
+
+#: ../includes/admin.class.php:178
+msgid "admin bar|Back"
+msgstr "Inapoi"
+
+#: ../includes/admin.class.php:180
+msgid "admin bar|Admin"
+msgstr "Admin"
+
+#: ../includes/admin.class.php:181
+msgid "admin bar|Galleries"
+msgstr "Galerii"
+
+#: ../includes/admin.class.php:182
+msgid "admin bar|Log out"
+msgstr "Iesire"
+
+#: ../includes/admin.class.php:184
+msgid "admin bar|Edit gallery"
+msgstr "Editeaza galerie"
+
+#: ../includes/admin.class.php:185
+msgid "admin bar|Delete gallery"
+msgstr "Sterge galerie"
+
+#: ../includes/admin.class.php:186
+msgid "admin bar|New subgallery"
+msgstr "subgalerie noua"
+
+#: ../includes/admin.class.php:188
+msgid "admin bar|Edit image"
+msgstr "Editeaza imagine"
+
+#: ../includes/admin.class.php:189
+msgid "admin bar|Delete image"
+msgstr "Sterge imagine"
+
+#: ../includes/admin.class.php:191
+msgid "admin bar|New image"
+msgstr "Imagine noua"
+
+#: ../includes/admin.class.php:215
+msgid "There was an error saving the new password."
+msgstr "A fost o eroare la salvarea noii parole."
+
+#: ../includes/admin.class.php:218
+msgid "New password must be between 6 and 16 characters long."
+msgstr "Parola trebuie sa aiba intre 6 si 16 caractere."
+
+#: ../includes/admin.class.php:220
+msgid "The new passwords you entered do not match."
+msgstr "Parolele introduse nu se potrivesc."
+
+#: ../includes/admin.class.php:222
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr "Parola introdusa nu se potriveste cu cea din baza de date."
+
+#: ../includes/admin.class.php:225
+msgid "The username specified was not found in the database."
+msgstr "Utilizatorul nu a fost gasit in baza de date"
+
+#: ../includes/admin.class.php:261
+msgid "Username and/or password incorrect"
+msgstr "Utilizator si/sau parola incorecta"
+
+#: ../includes/admin.class.php:264
+msgid "You must enter a username and password"
+msgstr "Trebuie sa introduci un nume de utilizator si o parola"
+
+#: ../includes/admin.class.php:289
+msgid "Gallery already exists"
+msgstr "Galeria deja exista"
+
+#: ../includes/admin.class.php:296
+msgid "Could not create directory"
+msgstr "Nu pot crea galeria"
+
+#: ../includes/admin.class.php:327
+msgid "Could not save gallery info"
+msgstr "Nu pot salva informatia despre galerie"
+
+#: ../includes/admin.class.php:345
+msgid "Cannot delete the top level directory"
+msgstr "Nu pot sterge directorul"
+
+#: ../includes/admin.class.php:386
+msgid "File already exists"
+msgstr "Fisierul exista deja"
+
+#: ../includes/admin.class.php:391
+msgid "Could not upload file"
+msgstr ""
+
+#: ../includes/admin.class.php:396
+msgid "Invalid location choice"
+msgstr "Locatia aleasa e invalida"
+
+#: ../includes/admin.class.php:415
+msgid "Could not add image to gallery"
+msgstr "Nu pot adauga imaginea la galerie"
+
+#: ../includes/admin.class.php:448
+msgid "Could not save image information"
+msgstr "Nu pot salva informatia despre imagine"
+
+#: ../includes/admin.class.php:470
+msgid "Could not delete image"
+msgstr "Nu pot sterge imaginea"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr "alege miniatura"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "Alege numele de fisier al imaginii care vrei sa reprezinte galeria"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr "Niciunul"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr "Aleator"
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr "diteaza galeria"
+
+#: ../templates/admin_default/editgallery.tpl.php:14
+msgid "Gallery thumbnail:"
+msgstr "Miniatura galeriei:"
+
+#: ../templates/admin_default/editgallery.tpl.php:18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr "Miniatura\n aleatoare"
+
+#: ../templates/admin_default/editgallery.tpl.php:23
+msgid "thumbnail|Change..."
+msgstr "Schimba..."
+
+#: ../templates/admin_default/editgallery.tpl.php:27
+#: ../templates/admin_default/galleryhits.tpl.php:22
+msgid "Gallery name"
+msgstr "Numele galeriei"
+
+#: ../templates/admin_default/editgallery.tpl.php:31
+#: ../templates/admin_default/editimage.tpl.php:22
+msgid "Artist name"
+msgstr "Numele artistului"
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr "editeaza imagine"
+
+#: ../templates/admin_default/editimage.tpl.php:14
+msgid "Image"
+msgstr "Imagine"
+
+#: ../templates/admin_default/editimage.tpl.php:18
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "Image name"
+msgstr "Numele imaginii"
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr "schimba parola"
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "Te rog alege o parola noua cu o lungime intre 6 si 16 caractere"
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr "Parola curenta:"
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr "Parola noua:"
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr "Confirma parola:"
+
+#: ../templates/admin_default/footer.tpl.php:3
+msgid "singapore|Powered by"
+msgstr "Creat cu"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Graph"
+msgstr "Grafic"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Hits"
+msgstr "Hit-uri"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Last hit"
+msgstr "Ultimul hit"
+
+#: ../templates/admin_default/header.tpl.php:39
+msgid "Admin message:"
+msgstr "Mesajul administratorului:"
+
+#: ../templates/admin_default/loggedout.tpl.php:1
+msgid "Return to galleries."
+msgstr "Intoarce-te la galerii"
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr "Administrare"
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr "Numai utilizatorii autorizati pot accesa sectiunea de administrare.\n"
+
+#: ../templates/admin_default/login.tpl.php:8
+msgid "Username:"
+msgstr "User:"
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr "Parola:"
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr "Alege o optiune:"
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr "Administreaza galeriile si imaginile"
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr "Vezi hit-urile galeriilor"
+
+#: ../templates/admin_default/menu.tpl.php:6
+msgid "Purge cached thumbnails"
+msgstr "Sterge miniaturile din cache"
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr "Schimba parola"
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "Log out of admin"
+msgstr "Iesire"
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr "galerie noua"
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:28
+msgid "Identifier:"
+msgstr "Identificator:"
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr "imagine noua"
+
+#: ../templates/admin_default/newimage.tpl.php:3
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
+msgstr "Imaginea nu e vizibila, pentru ca galeria are subgalerii."
+
+#: ../templates/admin_default/newimage.tpl.php:12
+msgid "Remote file"
+msgstr "Fisier remote"
+
+#: ../templates/admin_default/newimage.tpl.php:16
+msgid "URL of image:"
+msgstr "Link la imagine"
+
+#: ../templates/admin_default/newimage.tpl.php:20
+msgid "Local file"
+msgstr "Fisier local"
+
+#: ../templates/admin_default/newimage.tpl.php:24
+msgid "Image file to upload:"
+msgstr "Fisier de uploadat"
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Use filename of uploaded file."
+msgstr "Foloseste numele fisierlui uploadat."
+
+#: ../templates/admin_default/newimage.tpl.php:31
+msgid "Specify different filename:"
+msgstr "Specifica alt nume de fisier:"
