@@ -47,8 +47,8 @@ $pageTitle = "singapore admin";
 //include header file
 include $GLOBALS["sgConfig"]->pathto_header;
 
-//show admin toolbar (only if user is logged in)
-sgShowAdminBar();
+//if user is logged in show admin toolbar
+if(sgIsLoggedIn()) sgShowAdminBar();
 
 if(sgIsLoggedIn()) {
   if(isset($_REQUEST["action"])) {
@@ -80,7 +80,7 @@ if(sgIsLoggedIn()) {
         if(sgAddGallery($_REQUEST["gallery"]))
           sgEditGallery($_REQUEST["gallery"]);
         else 
-          echo "<h1>error creating gallery</h1>\n <p>Gallery could not be created. ".
+          echo "<h1>error creating gallery</h1>\n<p>Gallery could not be created. ".
                "It may already exist or you may not have permission to create a gallery here.</p>";
         break;
       case "editgallery" :
