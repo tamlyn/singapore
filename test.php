@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: test.php,v 1.9 2004/04/11 14:45:06 tamlyn Exp $
+ * @version $Id: test.php,v 1.10 2004/05/13 01:14:48 tamlyn Exp $
  */
 
 if(isset($_REQUEST["phpinfo"])) {
@@ -159,7 +159,7 @@ if(false) {
 ?>
 </p>
 
-<p><small>Complete <a href="test.php?phpinfo">phpinfo</a> for advanced users.</small></p>
+<p><small>Complete <a href="test.php?phpinfo=1">phpinfo</a> for advanced users.</small></p>
 
 </body>
 </html>
