@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.25 2004/06/11 18:09:08 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.26 2004/08/08 13:58:19 tamlyn Exp $
  */
  
 /**
@@ -991,6 +991,14 @@ class Singapore
   }
   
   /**
+   * @return int number of images in current view
+   */
+  function gallerySelectedImagesCount()
+  {
+    return min(count($this->gallery->images) - $this->startat, $this->config->thumb_number_album);
+  }
+  
+  /**
    * @return array array of {@link sgGallery} objects
    */
   function galleryGalleriesArray()
@@ -1004,6 +1012,14 @@ class Singapore
   function gallerySelectedGalleriesArray()
   {
     return array_slice($this->gallery->galleries, $this->startat, $this->config->thumb_number_gallery);
+  }
+  
+  /**
+   * @return int number of galleries in current view
+   */
+  function gallerySelectedGalleriesCount()
+  {
+    return min(count($this->gallery->galleries) - $this->startat, $this->config->thumb_number_gallery);
   }
   
   /**
@@ -1062,11 +1078,11 @@ class Singapore
    * @param bool force size of thumbnail
    * @return int width of thumbnail in pixels
    */
-  function thumbnailWidth($imageWidth, $imageHeight, $width, $height, $forceSize)
+  function thumbnailWidth($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
   {
     //if aspect ratio is to be constrained set crop size
     if($forceSize) {
-      $newAspect = $width/$height;
+      $newAspect = $maxWidth/$maxHeight;
       $oldAspect = $imageWidth/$imageHeight;
       if($newAspect > $oldAspect) {
         $cropWidth = $imageWidth;
@@ -1081,10 +1097,10 @@ class Singapore
       $cropHeight = $imageHeight;
     }
     
-    if($cropWidth < $cropHeight && ($cropWidth>$width || $cropHeight>$height))
-      return round($cropWidth/$cropHeight * $width);
-    elseif($cropWidth > $width || $cropHeight > $height)
-      return $width;
+    if($cropHeight > $maxHeight && ($cropWidth < $maxWidth || ($cropWidth > $maxWidth && round($cropHeight/$cropWidth * $maxWidth) > $maxHeight)))
+      return round($cropWidth/$cropHeight * $maxHeight);
+    elseif($cropWidth > $maxWidth)
+      return $maxWidth;
     else
       return $imageWidth;
   }
@@ -1098,17 +1114,17 @@ class Singapore
    * @param bool force size of thumbnail
    * @return int height of thumbnail in pixels
    */
-  function thumbnailHeight($imageWidth, $imageHeight, $width, $height, $forceSize)
+  function thumbnailHeight($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
   {
     //if aspect ratio is to be constrained set crop size
     if($forceSize) {
-      $newAspect = $width/$height;
+      $newAspect = $maxWidth/$maxHeight;
       $oldAspect = $imageWidth/$imageHeight;
       if($newAspect > $oldAspect) {
         $cropWidth = $imageWidth;
-        $cropHeight = round($imageHeight*($oldAspect/$newAspect));
+        $cropHeight = round($oldAspect/$newAspect * $imageHeight);
       } else {
-        $cropWidth = round($imageWidth*($newAspect/$oldAspect));
+        $cropWidth = round($newAspect/$oldAspect * $imageWidth);
         $cropHeight = $imageHeight;
       }
     //else crop size is image size
@@ -1117,10 +1133,10 @@ class Singapore
       $cropHeight = $imageHeight;
     }
     
-    if($cropWidth < $cropHeight && ($cropWidth>$width || $cropHeight>$height))
-      return $height;
-    elseif($cropWidth > $width || $cropHeight > $height)
-      return round($cropHeight/$cropWidth * $height);
+    if($cropWidth > $maxWidth && ($cropHeight < $maxHeight || ($cropHeight > $maxHeight && round($cropWidth/$cropHeight * $maxHeight) > $maxWidth)))
+      return round($cropHeight/$cropWidth * $maxWidth);
+    elseif($cropHeight > $maxHeight)
+      return $maxHeight;
     else
       return $imageHeight;
   }
@@ -1190,6 +1206,14 @@ class Singapore
   ///////////////////////////
   
   /**
+   * @return string
+   */
+  function imageViews($index = null)
+  {
+    //todo: redo hit logging system to allow this
+  }
+  
+  /**
    * @return string link for adding a comment to image
    */
   function imageCommentLink()
@@ -1228,6 +1252,17 @@ class Singapore
   {
     if($this->imageArtist($index)!="") return " ".$this->i18n->_g("artist name|by %s",$this->imageArtist($index));
     else return "";
+  }
+  
+  /**
+   * @return string
+   */
+  function imageDescription($index = null)
+  {
+    if($index===null)
+      return $this->image->desc;
+    else
+      return $this->gallery->images[$index]->desc;
   }
   
   /**

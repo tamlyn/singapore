@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.28 2004/06/11 17:59:10 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.29 2004/08/08 13:58:21 tamlyn Exp $
  */
 
 //require config class
@@ -19,7 +19,7 @@ if(get_magic_quotes_gpc())
 else
   showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["width"], $_REQUEST["height"], isset($_REQUEST["force"]));
 
-function showThumb($gallery, $image, $width, $height, $forceSize) {
+function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
   //create config object
   $config = new sgConfig();
 
@@ -29,7 +29,7 @@ function showThumb($gallery, $image, $width, $height, $forceSize) {
   if($isRemoteFile) $imagePath = $image;
   else $imagePath = $config->pathto_galleries."$gallery/$image";
   
-  $thumbPath = $config->pathto_cache.$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = $config->pathto_cache.$maxWidth."x".$maxHeight.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
   
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
@@ -60,13 +60,13 @@ function showThumb($gallery, $image, $width, $height, $forceSize) {
   
   //if aspect ratio is to be constrained set crop size
   if($forceSize) {
-    $newAspect = $width/$height;
+    $newAspect = $maxWidth/$maxHeight;
     $oldAspect = $imageWidth/$imageHeight;
     if($newAspect > $oldAspect) {
       $cropWidth = $imageWidth;
-      $cropHeight = round($imageHeight*($oldAspect/$newAspect));
+      $cropHeight = round($oldAspect/$newAspect * $imageHeight);
     } else {
-      $cropWidth = round($imageWidth*($newAspect/$oldAspect));
+      $cropWidth = round($newAspect/$oldAspect * $imageWidth);
       $cropHeight = $imageHeight;
     }
   //else crop size is image size
@@ -80,12 +80,12 @@ function showThumb($gallery, $image, $width, $height, $forceSize) {
   $cropY = floor(($imageHeight-$cropHeight)/2);
     
   //compute width and height of thumbnail to create
-  if($cropWidth < $cropHeight && ($cropWidth>$width || $cropHeight>$height)) {
-    $thumbWidth = round($cropWidth/$cropHeight * $width);
-    $thumbHeight = $height;
-  } elseif($cropWidth > $width || $cropHeight > $height) {
-    $thumbWidth = $width;
-    $thumbHeight = round($cropHeight/$cropWidth * $width);
+  if($cropWidth > $maxWidth && ($cropHeight < $maxHeight || ($cropHeight > $maxHeight && round($cropWidth/$cropHeight * $maxHeight) > $maxWidth))) {
+    $thumbWidth = $maxWidth;
+    $thumbHeight = round($cropHeight/$cropWidth * $maxWidth);
+  } elseif($cropHeight > $maxHeight) {
+    $thumbWidth = round($cropWidth/$cropHeight * $maxHeight);
+    $thumbHeight = $maxHeight;
   } else {
     //image is smaller than required dimensions so output it and exit
     readfile($imagePath);
