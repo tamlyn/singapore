@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.22 2004/10/14 02:05:26 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.23 2004/10/15 17:24:47 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -80,7 +80,7 @@ class sgAdmin extends Singapore
     //load config from admin template ini file (admin.ini) if present
     $this->config->loadConfig($this->config->pathto_admin_template."admin.ini");
     
-    $this->template = isset($_REQUEST[SG_TEMPLATE]) ? $_REQUEST[SG_TEMPLATE] : $this->config->default_template;
+    $this->template = isset($_REQUEST["template"]) ? $_REQUEST["template"] : $this->config->default_template;
     
     //do not load gallery-specific ini files
 
@@ -90,7 +90,7 @@ class sgAdmin extends Singapore
     
 		
     //set current language from request vars or config
-    $this->language = isset($_REQUEST[SG_LANG]) ? $_REQUEST[SG_LANG] : $this->config->default_language;
+    $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
     //read the standard language file
     $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->default_language.".pmo");
     //read extra admin language file
@@ -733,9 +733,9 @@ class sgAdmin extends Singapore
     
     //decompress archive to temp
     $cmd  = escapeshellcmd($this->config->pathto_unzip);
-    $cmd .= ' -d '.escapeshellarg(realpath($tmpdir));
-    $cmd .= ' '.escapeshellarg(realpath($archive));
-    
+    $cmd .= ' -d "'.escapeshellcmd(realpath($tmpdir));
+    $cmd .= '" "'.escapeshellcmd(realpath($archive)).'"';
+    echo $cmd;
     if(!exec($cmd)) {
       $this->lastError = $this->i18n->_g("Could not decompress archive"); 
       return false;

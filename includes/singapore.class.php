@@ -4,17 +4,9 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.32 2004/10/14 02:05:26 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.33 2004/10/15 17:24:47 tamlyn Exp $
  */
 
-//define constants for request variables
-//you may change these if there is a conflict
-define('SG_GALLERY',  'gallery');
-define('SG_IMAGE',    'image');
-define('SG_STARTAT',  'startat');
-define('SG_ACTION',   'action');
-define('SG_LANG',     'lang');
-define('SG_TEMPLATE', 'template');
 //define constants for regular expressions
 define('SG_REGEXP_PROTOCOLURL', '(?:http://|https://|ftp://|mailto:)(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,4}(?::[0-9]+)?(?:/[^ \n\r\"\'<]+)?');
 define('SG_REGEXP_WWWURL',      'www\.(?:[a-zA-Z0-9\-]+\.)*[a-zA-Z]{2,4}(?:/[^ \n\r\"\'<]+)?');
@@ -93,8 +85,6 @@ class Singapore
     if(get_magic_quotes_gpc())
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
-    $galleryId = isset($_REQUEST[SG_GALLERY]) ? $_REQUEST[SG_GALLERY] : ".";
-    
     //load config from singapore root directory
     $this->config = new sgConfig($basePath."singapore.ini");
     
@@ -108,10 +98,13 @@ class Singapore
       $this->config->loadConfig("singapore.local.ini");
     }
     
+    //set current gallery to root if not specified in url
+    $galleryId = isset($_REQUEST[$this->config->url_gallery]) ? $_REQUEST[$this->config->url_gallery] : ".";
+    
     //load config from gallery ini file (gallery.ini) if present
     $this->config->loadConfig($basePath.$this->config->pathto_galleries.$galleryId."/gallery.ini");
     //set current template from request vars or config
-    $this->template = isset($_REQUEST[SG_TEMPLATE]) ? $_REQUEST[SG_TEMPLATE] : $this->config->default_template;
+    $this->template = isset($_REQUEST[$this->config->url_template]) ? $_REQUEST[$this->config->url_template] : $this->config->default_template;
     $this->config->pathto_current_template = $this->config->pathto_templates.$this->template.'/';
     //load config from template ini file (template.ini) if present
     $this->config->loadConfig($basePath.$this->config->pathto_current_template."template.ini");
@@ -129,7 +122,18 @@ class Singapore
     
     
     //set current language from request vars or config
-    $this->language = isset($_REQUEST[SG_LANG]) ? $_REQUEST[SG_LANG] : $this->config->default_language;
+    if(!empty($_REQUEST[$this->config->url_lang]))
+      $this->language = $_REQUEST[$this->config->url_lang];
+    else {
+      $this->language = $this->config->default_language;
+      if($this->config->detect_language)
+        foreach($this->getBrowserLanguages() as $lang)
+          if($lang=="en" || $lang=="en_us" || file_exists($basePath.$this->config->pathto_locale."singapore.".$lang.".pmo")) {
+            $this->language = $lang;
+            break;
+          }
+    }
+    
     //read the language file
     $this->i18n = new Translator($basePath.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     
@@ -149,7 +153,7 @@ class Singapore
       $this->character_set = $this->config->default_charset;
     
     //temporary code
-    if(isset($_REQUEST[SG_ACTION])) $this->action = $_REQUEST[SG_ACTION];
+    if(isset($_REQUEST[$this->config->url_action])) $this->action = $_REQUEST[$this->config->url_action];
   }
   
   /**
@@ -158,7 +162,7 @@ class Singapore
    */
   function selectGallery($galleryId = "")
   {
-    if(empty($galleryId)) $galleryId = isset($_REQUEST[SG_GALLERY]) ? $_REQUEST[SG_GALLERY] : ".";
+    if(empty($galleryId)) $galleryId = isset($_REQUEST[$this->config->url_gallery]) ? $_REQUEST[$this->config->url_gallery] : ".";
     
     //try to validate gallery id
     if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
@@ -182,7 +186,7 @@ class Singapore
     if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
     
     //if startat is set the cast to int otherwise startat 0
-    $this->startat = isset($_REQUEST[SG_STARTAT]) ? (int)$_REQUEST[SG_STARTAT] : 0;
+    $this->startat = isset($_REQUEST[$this->config->url_startat]) ? (int)$_REQUEST[$this->config->url_startat] : 0;
     
 
     //encode the gallery name
@@ -197,17 +201,13 @@ class Singapore
       $this->gallery->parentName = $this->config->gallery_name;
     
     //do the logging stuff and select the image (if any)
-    if(empty($_REQUEST[SG_IMAGE])) {
+    if(empty($_REQUEST[$this->config->url_image])) {
       if($this->config->track_views) $hits = $this->logGalleryView();
       if($this->config->show_views) $this->gallery->hits = $hits;
-      //set page title
-      $this->pageTitle = $this->gallery->name;
     } else {
-      $this->selectImage($_REQUEST[SG_IMAGE]);
+      $this->selectImage($_REQUEST[$this->config->url_image]);
       if($this->config->track_views) $hits = $this->logImageView();
       if($this->config->show_views) $this->image->hits = $hits;
-      //set page title
-      $this->pageTitle = $this->image->name;
     }
     
   }
@@ -327,21 +327,21 @@ class Singapore
       if($image)   $ret .= rawurlencode($image);
       
       $query = array();
-      if($action)  $query[] = SG_ACTION."=".$action;
-      if($this->language != $this->config->default_language) $query[] = SG_LANG.'='.$this->language;
-      if($this->template != $this->config->default_template) $query[] = SG_TEMPLATE.'='.$this->template;
+      if($action)  $query[] = $this->config->url_action."=".$action;
+      if($this->language != $this->config->default_language) $query[] = $this->config->url_lang.'='.$this->language;
+      if($this->template != $this->config->default_template) $query[] = $this->config->url_template.'='.$this->template;
       
       if(!empty($query))
         $ret .= '?'.implode('&amp;', $query);
     } else {
       //format plain url
       $ret  = $this->config->index_file_url;
-      $ret .= SG_GALLERY."=".$gallery;
-      if($startat) $ret .= "&amp;".SG_STARTAT."=".$startat;
-      if($image)   $ret .= "&amp;".SG_IMAGE."=".rawurlencode($image);
-      if($action)  $ret .= "&amp;".SG_ACTION."=".$action;
-      if($this->language != $this->config->default_language) $ret .= '&amp;'.SG_LANG.'='.$this->language;
-      if($this->template != $this->config->default_template) $ret .= '&amp;'.SG_TEMPLATE.'='.$this->template;
+      $ret .= $this->config->url_gallery."=".$gallery;
+      if($startat) $ret .= "&amp;".$this->config->url_startat."=".$startat;
+      if($image)   $ret .= "&amp;".$this->config->url_image."=".rawurlencode($image);
+      if($action)  $ret .= "&amp;".$this->config->url_action."=".$action;
+      if($this->language != $this->config->default_language) $ret .= '&amp;'.$this->config->url_lang.'='.$this->language;
+      if($this->template != $this->config->default_template) $ret .= '&amp;'.$this->config->url_template.'='.$this->template;
     }
     
     return $ret;
@@ -586,6 +586,24 @@ class Singapore
   }
   
   /**
+   * Returns an array of language codes specified in the Accept-Language HHTP
+   * header field of the user's browser. q= components are ignored and removed.
+   * hyphens (-) are converted to underscores (_).
+   * @return array  accepted language codes
+   * @static
+   */
+  function getBrowserLanguages()
+  {
+    $langs = array();
+    foreach(explode(",",$_SERVER["HTTP_ACCEPT_LANGUAGE"]) as $bit)
+      if($pos = strpos($bit,";"))
+        $langs[] = strtr(substr($bit,0,$pos),"-","_");
+      else
+        $langs[] = strtr($bit,"-","_");
+    return $langs;
+  }
+  
+  /**
    * Checks to see if the user is currently logged in to admin mode. Also resets
    * the login timeout to the current time.
    * @returns boolean true if the user is logged in; false otherwise
@@ -683,7 +701,7 @@ class Singapore
   {
     if(!$this->config->language_flipper) return "";
     
-    $languageCache = $this->config->pathto_data_dir."languages.cache";
+    $languageCache = $this->config->base_path.$this->config->pathto_data_dir."languages.cache";
     // Look for the language file
     if(!file_exists($languageCache))
       return "";
@@ -703,7 +721,7 @@ class Singapore
     //carry over current get vars
     foreach($_GET as $var => $val)
       $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\">\n";
-    $ret .= '<select name="'.SG_LANG."\">\n";
+    $ret .= '<select name="'.$this->config->url_lang."\">\n";
     $ret .= '  <option value="'.$this->config->default_language.'">'.$this->i18n->_g("Select language...")."</option>\n";
     foreach($availableLanguages as $code => $name) {
       $ret .= '  <option value="'.$code.'"';
@@ -726,14 +744,14 @@ class Singapore
     if(!$this->config->template_flipper) return "";
     
     //get list of installed templates
-    $templates = $this->getListing($this->config->pathto_templates, "dirs");
+    $templates = $this->getListing($this->config->base_path.$this->config->pathto_templates, "dirs");
     
     $ret  = '<div class="sgTemplateFlipper">';
     $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
     //carry over current get vars
     foreach($_GET as $var => $val)
       $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\">\n";
-    $ret .= '<select name="'.SG_TEMPLATE."\">\n";
+    $ret .= '<select name="'.$this->config->url_template."\">\n";
     $ret .= '  <option value="'.$this->config->default_template.'">'.$this->i18n->_g("Select template...")."</option>\n";
     foreach($templates->dirs as $name)
       //do not list admin template(s)

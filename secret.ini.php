@@ -1,15 +1,17 @@
 ; singapore secret configuration file <http://singapore.sourceforge.net>
 ;
+; <?php die("Hacking attempt detected"); ?>
+;
 ; these options are hidden from web users
-;
-; <?php if(false): ?>
 
-[Security]
+[MySQL]
 ;
-; Security related settings
+; settings relevant to the PEAR::DB backend. 
+; You may ignore these if you are using the CSV or iifn backends.
 ;
 
-md5_salt = "There is a guy in the south village called Tony. He is a ninja."
+mysql_user = 
+mysql_pass = 
 
 [PEAR::DB]
 ;
@@ -20,8 +22,3 @@ md5_salt = "There is a guy in the south village called Tony. He is a ninja."
 
 db_user = 
 db_password = 
-
-
-;
-; <?php endif; ?>
-;

@@ -3,40 +3,20 @@
 /**
  * Main file drives the gallery.
  *
- * This file may be included into another but be sure to check the consequences 
- * of this in the readme.
+ * Do not include this file into another page; include external.php instead.
  * 
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: index.php,v 1.17 2004/10/11 05:24:11 tamlyn Exp $
+ * @version $Id: index.php,v 1.18 2004/10/15 17:24:47 tamlyn Exp $
  */
 
-//you may leave this blank as it will be automatically detected
-$relativePath = "";
-
-//check whether this file has been included by another and if 
-//so calculate the relative path and instantiate $sg with it 
-if(isset($_SERVER["SCRIPT_FILENAME"]) && realpath(__FILE__) != realpath($_SERVER["SCRIPT_FILENAME"])) {
-  //split each path into chunks
-  $you = explode(DIRECTORY_SEPARATOR,dirname(realpath($_SERVER["SCRIPT_FILENAME"])));
-  $me  = explode(DIRECTORY_SEPARATOR,dirname(realpath(__FILE__)));
-  $i=0;
-  //find at what level paths first differ
-  while($i<count($you) && $i<count($me) && $you[$i] == $me[$i]) $i++;
-  //travel up appropriate number of directories
-  for($j=$i;$j<count($you);$j++) $relativePath .= "../";
-  //travel down appropriate directories
-  for($j=$i;$j<count($me); $j++) $relativePath .= $me[$j]."/";
-}
-  
-
 //include main class
-require_once $relativePath."includes/singapore.class.php";
+require_once "includes/singapore.class.php";
 
 //create a wrapper
-$sg = new Singapore($relativePath);
+$sg = new Singapore();
 
 //only start session if session is already registered
 if(isset($_REQUEST[$sg->config->session_name])) {
