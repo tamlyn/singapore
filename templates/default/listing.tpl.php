@@ -44,7 +44,7 @@
   
   
 <p>
-<?php foreach($sg->galleryDetailsArray() as $detail): ?>
-<strong><?php echo $detail->name ?>:</strong> <?php echo $detail->value ?><br />
+<?php foreach($sg->galleryDetailsArray() as $key => $value): ?>
+<strong><?php echo $key ?>:</strong> <?php echo $value ?><br />
 <?php endforeach; ?>
 </p>

@@ -40,7 +40,7 @@
 <p><em><?php echo $sg->imageName() ?></em><?php echo $sg->imageByArtist() ?></p>
   
 <p>
-<?php foreach($sg->imageDetailsArray() as $detail): ?>
-<strong><?php echo $detail->name ?>:</strong> <?php echo $detail->value ?><br />
+<?php foreach($sg->imageDetailsArray() as $key => $value): ?>
+<strong><?php echo $key ?>:</strong> <?php echo $value ?><br />
 <?php endforeach; ?>
 </p>

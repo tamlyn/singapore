@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.2 2003/09/09 17:10:36 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.3 2003/10/18 00:58:08 tamlyn Exp $
  */
  
 /**
@@ -22,7 +22,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.6";
+  var $version = "0.9.7CVS";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -616,17 +616,23 @@ class Singapore
   /**
    * @return string the name of the gallery
    */
-  function galleryName()
+  function galleryName($index = null)
   {
-    return $this->gallery->name;
+    if($index===null)
+      return $this->gallery->name;
+    else
+      return $this->gallery->galleries[$index]->name;
   }
   
   /**
    * @return string the name of the gallery's artist
    */
-  function galleryArtist()
+  function galleryArtist($index = null)
   {
-    return $this->gallery->artist;
+    if($index===null)
+      return $this->gallery->artist;
+    else
+      return $this->gallery->galleries[$index]->artist;
   }
   
   /**
@@ -634,7 +640,7 @@ class Singapore
    */
   function galleryDescription($index = null)
   {
-    if($index==null)
+    if($index===null)
       return $this->gallery->desc;
     else
       return $this->gallery->galleries[$index]->desc;
@@ -645,7 +651,7 @@ class Singapore
    */
   function galleryViews($index = null)
   {
-    if($index==null)
+    if($index===null)
       return $this->gallery->hits->hits;
     else
       return $this->gallery->galleries[$index]->hits->hits;
@@ -657,34 +663,19 @@ class Singapore
   function galleryDetailsArray()
   {
     $ret = array();
-    $i = 0;
-    if(!empty($this->gallery->email)) {
-      $ret[$i]->name = $this->_g("Email");
+    if(!empty($this->gallery->email))
       if($this->config->obfuscate_email)
-        $ret[$i]->value = strtr($this->gallery->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
+        $ret[$this->_g("Email")] = strtr($this->gallery->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
       else
-        $ret[$i]->value = "<a href=\"mailto:".$this->gallery->email."\">".$this->gallery->email."</a>";
-      $i++;
-    }
-    if(!empty($this->gallery->desc)) {
-      $ret[$i]->name = $this->_g("Description");
-      $ret[$i]->value = $this->gallery->desc;
-      $i++;
-    }
-    if(!empty($this->gallery->copyright)) {
-      $ret[$i]->name = $this->_g("Copyright");
-      $ret[$i]->value = $this->gallery->copyright;
-      $i++;
-    } elseif(!empty($this->gallery->artist)) {
-      $ret[$i]->name = $this->_g("Copyright");
-      $ret[$i]->value = $this->gallery->artist;
-      $i++;
-    }
-    if(!empty($this->gallery->hits)) {
-      $ret[$i]->name = $this->_g("Viewed");
-      $ret[$i]->value = $this->__g("viewed|%s times",$this->gallery->hits);
-      $i++;
-    }
+        $ret[$this->_g("Email")] = "<a href=\"mailto:".$this->gallery->email."\">".$this->gallery->email."</a>";
+    if(!empty($this->gallery->desc))
+      $ret[$this->_g("Description")] = $this->gallery->desc;
+    if(!empty($this->gallery->copyright))
+      $ret[$this->_g("Copyright")] = $this->gallery->copyright;
+    elseif(!empty($this->gallery->artist))
+      $ret[$this->_g("Copyright")] = $this->gallery->artist;
+    if(!empty($this->gallery->hits))
+      $ret[$this->_g("Viewed")] = $this->__g("viewed|%s times",$this->gallery->hits);
     
     return $ret;
   }
@@ -738,7 +729,7 @@ class Singapore
    */
   function imageThumbnailImage()
   {
-    list($thumbWidth, $thumbHeight) = $this->thumbnailSize($this->image->width, $this->image->height, $this->config->main_thumb_size);
+    list($thumbWidth, $thumbHeight) = $this->thumbnailSize($this->imageWidth(), $this->imageHeight(), $this->config->main_thumb_size);
     $ret  = "<img src=\"thumb.php?gallery=".$this->gallery->idEncoded."&amp;image=";
     $ret .= urlencode($this->image->filename)."&amp;size=".$this->config->main_thumb_size."\" ";
     $ret .= "class=\"sgThumbnail\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" ";
@@ -762,6 +753,28 @@ class Singapore
       $thumbHeight = $imageHeight;
     }
     return array($thumbWidth, $thumbHeight);
+  }
+  
+  function imageWidth()
+  {
+    if(!$this->config->max_image_size || ($this->config->max_image_size > $this->image->width && $this->config->max_image_size > $this->image->height)) 
+      return $this->image->width;
+    else
+      if($this->image->width < $this->image->height)
+        return floor($this->image->width/$this->image->height * $this->config->max_image_size);
+      else
+        return $this->config->max_image_size;
+  }
+  
+  function imageHeight()
+  {
+    if(!$this->config->max_image_size || ($this->config->max_image_size > $this->image->width && $this->config->max_image_size > $this->image->height)) 
+      return $this->image->height;
+    else
+      if($this->image->width > $this->image->height)
+        return floor($this->image->height/$this->image->width * $this->config->max_image_size);
+      else
+        return $this->config->max_image_size;
   }
   
   
@@ -803,8 +816,11 @@ class Singapore
    */
   function image()
   {
-    return "<img src=\"".$this->imageURL()."\" width=\"".$this->image->width."\" ".
-      "height=\"".$this->image->height."\" alt=\"".$this->imageName().$this->imageByArtist()."\" />\n";
+    $ret = "<img src=\"".$this->imageURL()."\" ";
+    if($this->imageWidth() && $this->imageHeight())
+      $ret .= "width=\"".$this->imageWidth()."\" height=\"".$this->imageHeight()."\" ";
+    $ret .= "alt=\"".$this->imageName().$this->imageByArtist()."\" />\n";
+    return $ret;
   }
   
   /**
@@ -812,6 +828,9 @@ class Singapore
    */
   function imageURL()
   {
+    if($this->config->max_image_size)
+      return "thumb.php?gallery=".$this->gallery->idEncoded."&amp;image=".rawurlencode($this->image->filename)."&amp;size=".$this->config->max_image_size;
+    
     //check if image is local (filename does not start with 'http://')
     if(substr($this->image->filename,0,7)!="http://") 
       return $this->config->pathto_galleries.$this->gallery->idEncoded."/".rawurlencode($this->image->filename);
@@ -910,69 +929,33 @@ class Singapore
   function imageDetailsArray()
   {
     $ret = array();
-    $i = 0;
-    if(!empty($this->image->email)) {
-      $ret[$i]->name = $this->_g("Email");
+    if(!empty($this->image->email))
       if($this->config->obfuscate_email)
-        $ret[$i]->value = strtr($this->image->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
+        $ret[$this->_g("Email")] = strtr($this->image->email,array("@" => " <b>at</b> ", "." => " <b>dot</b> "));
       else
-        $ret[$i]->value = "<a href=\"mailto:".$this->image->email."\">".$this->image->email."</a>";
-      $i++;
-    }
-    if(!empty($this->image->location)) {
-      $ret[$i]->name = $this->_g("Location");
-      $ret[$i]->value = $this->image->location;
-      $i++;
-    }
-    if(!empty($this->image->date)) {
-      $ret[$i]->name = $this->_g("Date");
-      $ret[$i]->value = $this->image->date;
-      $i++;
-    }
-    if(!empty($this->image->desc)) {
-      $ret[$i]->name = $this->_g("Description");
-      $ret[$i]->value = $this->image->desc;
-      $i++;
-    }
-    if(!empty($this->image->camera)) {
-      $ret[$i]->name = $this->_g("Camera");
-      $ret[$i]->value = $this->image->camera;
-      $i++;
-    }
-    if(!empty($this->image->lens)) {
-      $ret[$i]->name = $this->_g("Lens");
-      $ret[$i]->value = $this->image->lens;
-      $i++;
-    }
-    if(!empty($this->image->film)) {
-      $ret[$i]->name = $this->_g("Film");
-      $ret[$i]->value = $this->image->film;
-      $i++;
-    }
-    if(!empty($this->image->darkroom)) {
-      $ret[$i]->name = $this->_g("Darkroom manipulation");
-      $ret[$i]->value = $this->image->darkroom;
-      $i++;
-    }
-    if(!empty($this->image->digital)) {
-      $ret[$i]->name = $this->_g("Digital manipulation");
-      $ret[$i]->value = $this->image->digital;
-      $i++;
-    }
-    if(!empty($this->image->copyright)) {
-      $ret[$i]->name = $this->_g("Copyright");
-      $ret[$i]->value = $this->image->copyright;
-      $i++;
-    } elseif(!empty($this->image->artist)) {
-      $ret[$i]->name = $this->_g("Copyright");
-      $ret[$i]->value = $this->image->artist;
-      $i++;
-    }
-    if(!empty($this->image->hits)) {
-      $ret[$i]->name = $this->_g("Viewed");
-      $ret[$i]->value = $this->__g("viewed|%s times",$this->image->hits);
-      $i++;
-    }
+        $ret[$this->_g("Email")] = "<a href=\"mailto:".$this->image->email."\">".$this->image->email."</a>";
+    if(!empty($this->image->location))
+      $ret[$this->_g("Location")]->value = $this->image->location;
+    if(!empty($this->image->date))
+      $ret[$this->_g("Location")] = $this->image->date;
+    if(!empty($this->image->desc))
+      $ret[$this->_g("Description")] = $this->image->desc;
+    if(!empty($this->image->camera))
+      $ret[$this->_g("Camera")] = $this->image->camera;
+    if(!empty($this->image->lens))
+      $ret[$this->_g("Lens")] = $this->image->lens;
+    if(!empty($this->image->film))
+      $ret[$this->_g("Film")] = $this->image->film;
+    if(!empty($this->image->darkroom))
+      $ret[$this->_g("Darkroom manipulation")]->value = $this->image->darkroom;
+    if(!empty($this->image->digital))
+      $ret[$this->_g("Digital manipulation")] = $this->image->digital;
+    if(!empty($this->image->copyright))
+      $ret[$this->_g("Copyright")] = $this->image->copyright;
+    elseif(!empty($this->image->artist))
+      $ret[$this->_g("Copyright")] = $this->image->artist;
+    if(!empty($this->image->hits))
+      $ret[$this->_g("Viewed")] = $this->__g("viewed|%s times",$this->image->hits);
     
     return $ret;
   }
