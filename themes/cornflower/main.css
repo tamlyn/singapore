@@ -33,9 +33,9 @@ table.formTable td {
   vertical-align: top;
 }
 
-table.formTable input.radio {
-  width: 20px;
-  height: 20px;
+table.formTable input.radio, table.formTable input.radio {
+  width: auto;
+  height: auto;
 }
 
 .sgImageInput {
@@ -46,7 +46,7 @@ table.formTable input.radio {
 div.sgAdminBar {
   background-color: #f0f0f0;
   border: 1px solid #000;
-  margin: 10px;
+  margin-top: 0.75em;;
   padding: 5px;
   font-size: x-small;
 }
@@ -69,6 +69,12 @@ div.sgAdminBar a:hover {
   border: 1px solid #000;
   color: #000;
   background-color: #fff;
+}
+
+span.sgAdminBarSeparator {
+  border-left: 1px solid #888;
+  width: 0px;
+  margin-right: 4px;
 }
 
 div.sgShadow {

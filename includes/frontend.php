@@ -27,9 +27,10 @@ function sgShowAdminBar()
   if(!sgIsLoggedIn()) return;
   
   echo "<div class=\"sgAdminBar\">\n";
-  echo "  <a href=\"admin.php\">Admin options</a>\n";
+  echo "  <a href=\"admin.php\">Admin</a>\n";
+  echo "  <a href=\"index.php\">Galleries</a>\n";
   echo "  <a href=\"admin.php?action=logout\">Logout</a>\n";
-  echo "  <a href=\"index.php\">View galleries</a>\n";
+  echo "  <span class=\"sgAdminBarSeparator\"> </span>\n";
   
   if(isset($_REQUEST["image"]) && !(isset($_REQUEST["action"]) && strpos($_REQUEST["action"],"-confirmed"))) {
     echo "  <a href=\"admin.php?action=editimage&amp;gallery=$_REQUEST[gallery]&amp;image=$_REQUEST[image]\">Edit image</a>\n";

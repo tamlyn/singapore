@@ -159,7 +159,7 @@ function sgEditGallery($gallery)
   echo "<tr>\n  <td>Artist name:</td>\n  <td><input type=\"text\" name=\"sgArtistName\" value=\"".htmlentities($gal->artist)."\" size=\"40\" />*</td>\n</tr>\n";
   echo "<tr>\n  <td>Artist email:</td>\n  <td><input type=\"text\" name=\"sgArtistEmail\" value=\"".htmlentities($gal->email)."\" size=\"40\" />*</td>\n</tr>\n";
   echo "<tr>\n  <td>Copyright holder:</td>\n  <td><input type=\"text\" name=\"sgCopyright\" value=\"".htmlentities($gal->copyright)."\" size=\"40\" />*</td>\n</tr>\n";
-  echo "<tr>\n  <td valign=\"top\">Description:</td>\n  <td><textarea name=\"sgGalleryDesc\" cols=\"70\" rows=\"8\">".htmlentities(str_replace("<br />","\n",$gal->desc))."</textarea></td>\n</tr>\n";
+  echo "<tr>\n  <td>Description:</td>\n  <td><textarea name=\"sgGalleryDesc\" cols=\"70\" rows=\"8\">".htmlentities(str_replace("<br />","\n",$gal->desc))."</textarea></td>\n</tr>\n";
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
   echo "</table>\n";
   
@@ -304,7 +304,7 @@ function sgEditImage($gallery, $image)
   echo "<tr>\n  <td>Location:</td>\n  <td><input type=\"text\" name=\"sgLocation\" value=\"".htmlentities($img->location)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Date:</td>\n  <td><input type=\"text\" name=\"sgDate\" value=\"".htmlentities($img->date)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Copyright holder:</td>\n  <td><input type=\"text\" name=\"sgCopyright\" value=\"".htmlentities($img->copyright)."\" size=\"40\" /></td>\n</tr>\n";
-  echo "<tr>\n  <td valign=\"top\">Description:</td>\n  <td><textarea name=\"sgImageDesc\" cols=\"70\" rows=\"8\">".htmlentities(str_replace("<br />","\n",$img->desc))."</textarea></td>\n</tr>\n";
+  echo "<tr>\n  <td>Description:</td>\n  <td><textarea name=\"sgImageDesc\" cols=\"70\" rows=\"8\">".htmlentities(str_replace("<br />","\n",$img->desc))."</textarea></td>\n</tr>\n";
   echo "<tr>\n  <td>Camera info:</td>\n  <td><input type=\"text\" name=\"sgCamera\" value=\"".htmlentities($img->camera)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Lens info:</td>\n  <td><input type=\"text\" name=\"sgLens\" value=\"".htmlentities($img->lens)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Film info:</td>\n  <td><input type=\"text\" name=\"sgFilm\" value=\"".htmlentities($img->film)."\" size=\"40\" /></td>\n</tr>\n";
