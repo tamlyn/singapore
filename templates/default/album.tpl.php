@@ -1,5 +1,5 @@
-<h1 style="margin-bottom: 0px"><?php echo $sg->galleryName()?></h1>
-<p style="margin-top: 0;"><?php echo $sg->galleryByArtist()?></p>
+<h1 class="sgTitle"><?php echo $sg->galleryName()?></h1>
+<p class="sgSubTitle"><?php echo $sg->galleryByArtist()?></p>
 
 <div class="sgShadow"><table class="sgShadow" cellspacing="0">
   <tr>

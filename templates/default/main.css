@@ -1,3 +1,7 @@
+/* * * * * * * * * * */
+/* Generic elements  */
+/* * * * * * * * * * */
+
 body {
   margin: 1em;
   font: small sans-serif;
@@ -44,78 +48,65 @@ input.button {
   background-color: #f60;
 }
 
-
-
-
-#header {
-  
-}
-
-#crumb {
-  
-}
-
-#footer {
-  text-align: center; 
-}
-
 a img {
   border: 0;
 }
 
-table.sgList {
-  background-color: #fff;
-  border: 1px solid #ccc;
+
+/* * * * * * * * * * */
+/* Elements with IDs */
+/* * * * * * * * * * */
+
+
+/* header: image and/or title */
+#header { }
+
+/* crumb line: (You are here: ...) */
+#crumb { }
+
+/* footer: copyright notices */
+#footer {
+  text-align: center; 
 }
 
-tr.sgRow0 {
-  background-color: #f0f0f0;
-  margin: 1px;
+
+/* * * * * * * * * */
+/* Custom classes  */
+/* * * * * * * * * */
+
+
+/* image or gallery name header */
+.sgTitle {
+  margin-bottom: 0;
 }
 
-tr.sgRow1 {
-  background-color: #e0e0e0;
-  margin: 1px;
+/* image or gallery artist subheader */
+.sgSubTitle {
+  margin-top: 0;
 }
 
-table.formTable input, table.formTable textarea, table.formTable .inputbox {
-  width: 500px;
-}
-
-table.formTable td {
-  vertical-align: top;
-}
-
-table.formTable input.radio, table.formTable input.radio {
-  width: auto;
-  height: auto;
-}
-
-.sgImageInput {
-  text-align: center;
-  padding: 2px;
-}
-
+/* wraps the drop-shadow table to allow IE to center it */
 div.sgShadow {
   text-align: center;
   padding: 1em;
 }
 
+/* the main content table that does the drop-shadow effect */
 table.sgShadow {
   margin-left: auto;
   margin-right: auto;
   clear: both;
 }
 
-table.sgShadow, table.sgShadowTab {
-  background-color: #f0f0f0;
-  /*background: #f0f0f0 url('images/osx-bg.gif')*/
-  padding: 0;
-  text-align: left;
-}
-
+/* the tab with previous, up, next */
 table.sgShadowTab td {
   font-size: 13px;
+}
+
+table.sgShadow, table.sgShadowTab {
+  background-color: #f0f0f0;
+  padding: 0;
+  text-align: left;
 }
 
 table.sgShadow td {
@@ -127,42 +118,18 @@ table.sgShadow td.tabm, table.sgShadow td.tabr {
   background-color: #fff;
 }
 
-table.sgShadow td.tl {
-  background-image: url('images/shadow-tl.gif');
-}
+/* appropriate background images for drop-shadow effect */
+table.sgShadow td.tl {  background-image: url('images/shadow-tl.gif');}
+table.sgShadow td.tm {  background-image: url('images/shadow-tm.gif');}
+table.sgShadow td.tr {  background-image: url('images/shadow-tr.gif');}
+table.sgShadow td.ml {  background-image: url('images/shadow-ml.gif');}
+table.sgShadow td.mm {  padding: 10px;} /* cell containing image */
+table.sgShadow td.mr {  background-image: url('images/shadow-mr.gif');}
+table.sgShadow td.bl {  background-image: url('images/shadow-bl.gif');}
+table.sgShadow td.bm {  background-image: url('images/shadow-bm.gif');}
+table.sgShadow td.br {  background-image: url('images/shadow-br.gif');}
 
-table.sgShadow td.tm {
-  background-image: url('images/shadow-tm.gif');
-}
-
-table.sgShadow td.tr {
-  background-image: url('images/shadow-tr.gif');
-}
-
-table.sgShadow td.ml {
-  background-image: url('images/shadow-ml.gif');
-}
-
-table.sgShadow td.mm {
-  padding: 10px;
-}
-
-table.sgShadow td.mr {
-  background-image: url('images/shadow-mr.gif');
-}
-
-table.sgShadow td.bl {
-  background-image: url('images/shadow-bl.gif');
-}
-
-table.sgShadow td.bm {
-  background-image: url('images/shadow-bm.gif');
-}
-
-table.sgShadow td.br {
-  background-image: url('images/shadow-br.gif');
-}
-
+/* div containing each gallery sub-gallery on a gallery page */
 div.sgGallery {
   margin: 5px;
   padding: 5px;
@@ -170,30 +137,36 @@ div.sgGallery {
   background-color: #fff;
 }
 
-td.sgGallery {
+/* the table cell containing the gallery thumbnail */
+td.sgGalleryThumb {
   width: 100px;
   text-align: center;
 }
 
-img.sgGallery {
+/* the gallery thumbnail itself */
+img.sgGalleryThumb {
   border: 1px solid #000;
 }
 
+/* the descriptive text (title, summary, contents) */
 div.sgGallery p {
   margin-top: 0;
   margin-bottom: 2px;
 }
 
+
+/* full size image on an image page*/
 img.sgImage {
-  border: 1px solid #000;
+  border: none;
 }
 
-div.sgNavBar, p.sgNavBar {
+/* the preview thumbnails and previous, thumbnails, next links */
+p.sgTopNavBar, p.sgBottomNavBar {
   text-align: center;
   float: right;
 }
 
-
+/* wraps the thumbnail and rounded-corner code on an album page */
 div.sgThumbnail {
   width:  120px;
   height: 120px;
@@ -218,6 +191,9 @@ div.sgThumbnail table {
 	border: 1px solid #ccc;
 }
 
+
+/* the following code does the rounded corners of the 35mm slide effect on 
+   the album pages. Taken from http://www.albin.net/CSS/roundedCorners/ */
 .roundedCornerSpacer {
     margin: 0px; padding: 0px; border: 0px;
     clear: both;

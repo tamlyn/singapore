@@ -1,13 +1,13 @@
-<div class="sgNavBar"><p>
+<p class="sgTopNavBar">
   <?php echo $sg->imagePreviewThumbnails(); ?>
 <br />
 <?php echo $sg->imagePrevLink(); ?>
 <?php echo $sg->imageParentLink(); ?>
 <?php echo $sg->imageNextLink(); ?>
-</p></div>
+</p>
   
-<h1 style="margin-bottom: 0px"><?php echo $sg->imageName()?></h1>
-<p style="margin-top: 0;"><?php echo $sg->imageByArtist()?></p>
+<h1 class="sgTitle"><?php echo $sg->imageName()?></h1>
+<p class="sgSubTitle"><?php echo $sg->imageByArtist()?></p>
   
 <div class="sgShadow"><table class="sgShadow" cellspacing="0">
   <tr>
@@ -31,13 +31,13 @@
   </tr>
 </table></div>
   
-<div class="sgNavBar"><p>
-<?php echo $sg->imagePrevLink(); ?>
-<?php echo $sg->imageParentLink(); ?>
-<?php echo $sg->imageNextLink(); ?>
-</p></div>
+<p class="sgBottomNavBar">
+<?php echo $sg->imagePrevLink(); ?> 
+<?php echo $sg->imageParentLink(); ?> 
+<?php echo $sg->imageNextLink(); ?> 
+</p>
 
-<p><em><?php echo $sg->imageName() ?></em><?php echo $sg->imageByArtist() ?></p>
+<p class="sgNameByArtist"><em><?php echo $sg->imageName() ?></em><?php echo $sg->imageByArtist() ?></p>
   
 <p>
 <?php foreach($sg->imageDetailsArray() as $key => $value): ?>
