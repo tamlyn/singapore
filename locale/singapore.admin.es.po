@@ -1,60 +1,61 @@
-# SOME DESCRIPTIVE TITLE.
+# Singapore-Versión español (mexicano)
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-10-25 01:50+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: singapore 0.9.6\n"
+"POT-Creation-Date: 2003-08-14 22:10+0100\n"
+"PO-Revision-Date: 2003-10-26 19:00+1GMT\n"
+"Last-Translator: Kemie Guaida <kemie@pixilate.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+
 #: ../admin.php:44
-msgid "Welcome to singapore admin!"
+msgid "Bienvenido a la administración de Singapore"
 msgstr ""
 
 #: ../admin.php:47 ../admin.php:56 ../admin.php:65 ../admin.php:80
 #: ../admin.php:94 ../admin.php:105 ../admin.php:122 ../admin.php:140
 #: ../admin.php:154 ../admin.php:164 ../admin.php:189
 msgid "An error occurred:"
-msgstr ""
+msgstr "Ha ocurrido un error:"
 
 #: ../admin.php:53
 msgid "Thank you and goodbye!"
-msgstr ""
+msgstr "¡Gracias y hasta luego!"
 
 #: ../admin.php:63
 msgid "Password saved"
-msgstr ""
+msgstr "Contraseña guardada"
 
 #: ../admin.php:77
 msgid "Gallery added"
-msgstr ""
+msgstr "Galería añadida"
 
 #: ../admin.php:91
 msgid "Gallery info saved"
-msgstr ""
+msgstr "Información de la galería guardada"
 
 #: ../admin.php:100 ../admin.php:118 ../admin.php:160 ../admin.php:185
 msgid "confirm|OK"
-msgstr ""
+msgstr "confirmar|OK"
 
 #: ../admin.php:103
 msgid "Gallery deleted"
-msgstr ""
+msgstr "Galería borrada"
 
 #: ../admin.php:108 ../admin.php:124 ../admin.php:166 ../admin.php:190
 msgid "confirm|Cancel"
-msgstr ""
+msgstr "confirmar|Cancelar"
 
 #: ../admin.php:111
 msgid "delete gallery"
-msgstr ""
+msgstr "borrar galería"
 
 #: ../admin.php:112
 #, possible-c-format
@@ -63,363 +64,369 @@ msgid ""
 "Are you sure you want to irretrievably delete it and all subgalleries and "
 "images it contains?"
 msgstr ""
+"La galería %s no está vacía"
+"¿Estás seguro que quieres eliminarla permanentemente junto con todas las subgalerías e imagenes que contiene?"
 
 #: ../admin.php:120
 msgid "Thumbnail changed"
-msgstr ""
+msgstr "Vista previa cambiada"
 
 #: ../admin.php:137
 msgid "Image added"
-msgstr ""
+msgstr "Imagen añadida"
 
 #: ../admin.php:151
 msgid "Image saved successfully"
-msgstr ""
+msgstr "Imagen guardada exitosamente"
 
 #: ../admin.php:162
 msgid "Image deleted"
-msgstr ""
+msgstr "Imagen eliminada"
 
 #: ../admin.php:169
 msgid "delete image"
-msgstr ""
+msgstr "Eliminar imagen"
 
 #: ../admin.php:170
 #, possible-c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
-msgstr ""
+msgstr "Estás seguro que quieres borrar imagen  %s de la galería %s permanentemente?"
 
 #: ../admin.php:187
 msgid "Thumbnail cache purged"
-msgstr ""
+msgstr "Cache de vistas previas vaciado"
 
 #: ../admin.php:193
 msgid "purge cached thumbnails"
-msgstr ""
+msgstr "Vaciar vistas previas del cache"
 
 #: ../admin.php:195
 #, possible-c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
-msgstr ""
+msgstr "Estas seguro que quieres vaciar  %s vistas previas del cache?"
 
 #: ../includes/admin.class.php:163
 msgid "admin bar|Back"
-msgstr ""
+msgstr "barra de admin.|Atrás"
 
 #: ../includes/admin.class.php:165
 msgid "admin bar|Admin"
-msgstr ""
+msgstr "barra de admin.|Admin"
 
 #: ../includes/admin.class.php:166
 msgid "admin bar|Galleries"
-msgstr ""
+msgstr "barra de admin.|Galerías"
 
 #: ../includes/admin.class.php:167
 msgid "admin bar|Log out"
-msgstr ""
+msgstr "barra de admin.|Salir"
 
 #: ../includes/admin.class.php:169
 msgid "admin bar|Edit gallery"
-msgstr ""
+msgstr "barra de admin.|Editar galería"
 
 #: ../includes/admin.class.php:170
 msgid "admin bar|Delete gallery"
-msgstr ""
+msgstr "barra de admin.|Eliminar galería"
 
 #: ../includes/admin.class.php:171
 msgid "admin bar|New subgallery"
-msgstr ""
+msgstr "barra de admin.|Nueva subgalería"
 
 #: ../includes/admin.class.php:173
 msgid "admin bar|Edit image"
-msgstr ""
+msgstr "barra de admin.|Editar imagen"
 
 #: ../includes/admin.class.php:174
 msgid "admin bar|Delete image"
-msgstr ""
+msgstr "barra de admin.|Eliminar imagen"
 
 #: ../includes/admin.class.php:176
 msgid "admin bar|New image"
-msgstr ""
+msgstr "barra de admin.|Nueva imagen"
 
 #: ../includes/admin.class.php:200
 msgid "There was an error saving the new password."
-msgstr ""
+msgstr "Hubo un error al guardar la nueva contraseña."
 
 #: ../includes/admin.class.php:203
 msgid "New password must be between 6 and 16 characters long."
-msgstr ""
+msgstr "La nueva contraseña debe de tener entre 6 y 16 caracteres."
 
 #: ../includes/admin.class.php:205
 msgid "The new passwords you entered do not match."
-msgstr ""
+msgstr "Las nuevas contraseñas no coinciden."
 
 #: ../includes/admin.class.php:207
 msgid ""
 "The current password you entered does not match the one in the database."
-msgstr ""
+msgstr "La contraseña actual no coincide con la que está en la base de datos."
 
 #: ../includes/admin.class.php:210
 msgid "The username specified was not found in the database."
-msgstr ""
+msgstr "El nombre de usuario especificado no se encontró en la base de datos."
 
 #: ../includes/admin.class.php:246
 msgid "Username and/or password incorrect"
-msgstr ""
+msgstr "Usuario y/o contraseña incorrectos"
 
 #: ../includes/admin.class.php:249
 msgid "You must enter a username and password"
-msgstr ""
+msgstr "Debes escribir un nombre de usuario y contraseña."
 
 #: ../includes/admin.class.php:274
 msgid "Gallery already exists"
-msgstr ""
+msgstr "La galería ya existe"
 
 #: ../includes/admin.class.php:281
 msgid "Could not create directory"
-msgstr ""
+msgstr "No se pudo crear el directorio"
 
 #: ../includes/admin.class.php:305
 msgid "Could not save gallery info"
-msgstr ""
+msgstr "No se pudo guardar la información de la galería."
 
 #: ../includes/admin.class.php:323
 msgid "Cannot delete the top level directory"
-msgstr ""
+msgstr "No se puede borrar el directorio principal"
 
 #: ../includes/admin.class.php:364
 msgid "File already exists"
-msgstr ""
+msgstr "El archivo ya existe"
 
 #: ../includes/admin.class.php:374
 msgid "Invalid location choice"
-msgstr ""
+msgstr "Localización inválida"
 
 #: ../includes/admin.class.php:393
 msgid "Could not add image to gallery"
-msgstr ""
+msgstr "No se pudo añadir la imagen a la galería"
 
 #: ../includes/admin.class.php:426
 msgid "Could not save image information"
-msgstr ""
+msgstr "No se pudo guardar la información de la imagen."
 
 #: ../includes/admin.class.php:448
 msgid "Could not delete image"
-msgstr ""
+msgstr "No se pudo borrar la imagen."
 
 #: ../templates/admin_default/changethumbnail.tpl.php:1
 msgid "choose thumbnail"
-msgstr ""
+msgstr "Escoge una vista previa"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:6
 msgid "Choose the filename of the image used to represent this gallery."
-msgstr ""
+msgstr "Escoge el archivo de la imagen para representar esta galería."
 
 #: ../templates/admin_default/changethumbnail.tpl.php:9
 msgid "thumbnail|None"
-msgstr ""
+msgstr "vista previa|Ninguna"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:10
 msgid "thumbnail|Random"
-msgstr ""
+msgstr "vista previa|Aleatoria"
 
 #: ../templates/admin_default/editgallery.tpl.php:1
 msgid "edit gallery"
-msgstr ""
+msgstr "editar galería"
 
 #: ../templates/admin_default/editgallery.tpl.php:14
 msgid "Gallery thumbnail:"
-msgstr ""
+msgstr "Vista previa de galería:"
 
 #: ../templates/admin_default/editgallery.tpl.php:18
 msgid ""
 "Random\n"
 "thumbnail"
 msgstr ""
+"Vista previa "
+"aleatoria\n"
 
 #: ../templates/admin_default/editgallery.tpl.php:23
 msgid "thumbnail|Change..."
-msgstr ""
+msgstr "vista previa |Cambiar..."
 
 #: ../templates/admin_default/editgallery.tpl.php:27
 msgid "gallery details|Gallery name:"
-msgstr ""
+msgstr "detalles de la galería|Nombre de la galería:"
 
 #: ../templates/admin_default/editgallery.tpl.php:31
 msgid "gallery details|Artist name:"
-msgstr ""
+msgstr "detalles de la galería|Nombre del artista:"
 
 #: ../templates/admin_default/editgallery.tpl.php:35
 msgid "gallery details|Artist email:"
-msgstr ""
+msgstr "detalles de la galería|Email del artista:"
 
 #: ../templates/admin_default/editgallery.tpl.php:39
 msgid "gallery details|Copyright holder:"
-msgstr ""
+msgstr "detalles de la galería|Dueño del copyright:"
 
 #: ../templates/admin_default/editgallery.tpl.php:43
 msgid "gallery details|Description:"
-msgstr ""
+msgstr "detalles de la galería|Descripción:"
 
 #: ../templates/admin_default/editimage.tpl.php:1
 msgid "edit image"
-msgstr ""
+msgstr "editar imagen"
 
 #: ../templates/admin_default/editimage.tpl.php:14
 msgid "image details|Image:"
-msgstr ""
+msgstr "detalles de la imagen|Imagen:"
 
 #: ../templates/admin_default/editimage.tpl.php:18
 msgid "image details|Image name:"
-msgstr ""
+msgstr "detalles de la imagen|Nombre de la Imagen"
 
 #: ../templates/admin_default/editimage.tpl.php:22
 msgid "image details|Artist name:"
-msgstr ""
+msgstr "detalles de la imagen|Nombre del artista:"
 
 #: ../templates/admin_default/editimage.tpl.php:26
 msgid "image details|Artist email:"
-msgstr ""
+msgstr "detalles de la imagen|Email del artista:"
 
 #: ../templates/admin_default/editimage.tpl.php:30
 msgid "image details|Location:"
-msgstr ""
+msgstr "detalles de la imagen|Locación:"
 
 #: ../templates/admin_default/editimage.tpl.php:34
 msgid "image details|Date:"
-msgstr ""
+msgstr "detalles de la imagen|Fecha:"
 
 #: ../templates/admin_default/editimage.tpl.php:38
 msgid "image details|Copyright holder:"
-msgstr ""
+msgstr "detalles de la imagen|Dueño del copyright:"
 
 #: ../templates/admin_default/editimage.tpl.php:42
 msgid "image details|Description:"
-msgstr ""
+msgstr "detalles de la imagen|Descripción:"
 
 #: ../templates/admin_default/editimage.tpl.php:46
 msgid "image details|Camera info:"
-msgstr ""
+msgstr "detalles de la imagen|Información de la cámara:"
 
 #: ../templates/admin_default/editimage.tpl.php:50
 msgid "image details|Lens info:"
-msgstr ""
+msgstr "detalles de la imagen|Información del lente:"
 
 #: ../templates/admin_default/editimage.tpl.php:54
 msgid "image details|Film info:"
-msgstr ""
+msgstr "detalles de la imagen|Información de la película:"
 
 #: ../templates/admin_default/editimage.tpl.php:58
 msgid "image details|Darkroom manipulation:"
-msgstr ""
+msgstr "detalles de la imagen|Manipulación en el cuarto obscuro:"
 
 #: ../templates/admin_default/editimage.tpl.php:62
 msgid "image details|Digital manipulation:"
-msgstr ""
+msgstr "detalles de la imagen|Manipulación digital:"
 
 #: ../templates/admin_default/editpass.tpl.php:1
 msgid "change password"
-msgstr ""
+msgstr "cambiar contraseña"
 
 #: ../templates/admin_default/editpass.tpl.php:2
 msgid "Please choose a new password between 6 and 16 characters in length."
-msgstr ""
+msgstr "Por favor escoja una nueva contraseña de entre 6 y 16 caracteres."
 
 #: ../templates/admin_default/editpass.tpl.php:9
 msgid "Current password:"
-msgstr ""
+msgstr "Contraseña actual:"
 
 #: ../templates/admin_default/editpass.tpl.php:13
 msgid "New password:"
-msgstr ""
+msgstr "Nueva contraseña:"
 
 #: ../templates/admin_default/editpass.tpl.php:17
 msgid "Confirm password:"
-msgstr ""
+msgstr "Confirmar contraseña:"
 
 #: ../templates/admin_default/footer.tpl.php:3
 msgid "singapore|Powered by"
-msgstr ""
+msgstr "singapore|Powered by"
 
 #: ../templates/admin_default/loggedout.tpl.php:1
 msgid "Return to galleries."
-msgstr ""
+msgstr "Regresar a las galerías."
 
 #: ../templates/admin_default/login.tpl.php:1
 msgid "log in"
-msgstr ""
+msgstr "Entrar a la Administración"
 
 #: ../templates/admin_default/login.tpl.php:3
 msgid ""
 "Only authorised users are allowed into the admin section.\n"
 "Please enter your admin username and password below."
 msgstr ""
+"Solo se permiten usuarios autorizados a esta sección\n"
+"Por favor entre el nombre de usuario y contraseña de administración."
 
 #: ../templates/admin_default/login.tpl.php:8
 msgid "Username:"
-msgstr ""
+msgstr "Usuario:"
 
 #: ../templates/admin_default/login.tpl.php:9
 msgid "Password:"
-msgstr ""
+msgstr "Contraseña:"
 
 #: ../templates/admin_default/menu.tpl.php:1
 msgid "Please choose an option:"
-msgstr ""
+msgstr "Seleccione una opción:"
 
 #: ../templates/admin_default/menu.tpl.php:4
 msgid "Manage galleries and images"
-msgstr ""
+msgstr "Administrar galerías e imagenes"
 
 #: ../templates/admin_default/menu.tpl.php:5
 msgid "View gallery hits"
-msgstr ""
+msgstr "Ver hits a  galerías"
 
 #: ../templates/admin_default/menu.tpl.php:6
 msgid "Purge cached thumbnails"
-msgstr ""
+msgstr "Eliminar vistas previas del cache"
 
 #: ../templates/admin_default/menu.tpl.php:7
 msgid "Change password"
-msgstr ""
+msgstr "Cambiar contraseña"
 
 #: ../templates/admin_default/menu.tpl.php:8
 msgid "Log out of admin"
-msgstr ""
+msgstr "Salir de admin"
 
 #: ../templates/admin_default/newgallery.tpl.php:1
 msgid "new gallery"
-msgstr ""
+msgstr "nueva galería"
 
 #: ../templates/admin_default/newgallery.tpl.php:9
 #: ../templates/admin_default/newimage.tpl.php:27
 msgid "Identifier:"
-msgstr ""
+msgstr "Identificador:"
 
 #: ../templates/admin_default/newimage.tpl.php:1
 msgid "new image"
-msgstr ""
+msgstr "nueva imagen"
 
 #: ../templates/admin_default/newimage.tpl.php:11
 msgid "Remote file"
-msgstr ""
+msgstr "Archivo remoto"
 
 #: ../templates/admin_default/newimage.tpl.php:15
 msgid "URL of image:"
-msgstr ""
+msgstr "URL de la imagen:"
 
 #: ../templates/admin_default/newimage.tpl.php:19
 msgid "Local file"
-msgstr ""
+msgstr "Archivo local"
 
 #: ../templates/admin_default/newimage.tpl.php:23
 msgid "Image file to upload:"
-msgstr ""
+msgstr "Archivo de imagen a subir:"
 
 #: ../templates/admin_default/newimage.tpl.php:29
 msgid "Use filename of uploaded file."
-msgstr ""
+msgstr "Usar el nombre del archivo subido."
 
 #: ../templates/admin_default/newimage.tpl.php:30
 msgid "Specify different filename:"
-msgstr ""
+msgstr "Especificar un nombre de archivo distinto:"

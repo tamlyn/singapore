@@ -1,0 +1,191 @@
+# singapore English language file
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# Tamlyn Rhodes <tam@zenology.org>, 2003.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore v0.9.6\n"
+"POT-Creation-Date: 2003-10-25 01:47+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Tamlyn Rhodes <tam@zenology.org>\n"
+"Language-Team: English <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1;\n"
+#
+# File: ../includes/singapore.class.php, line: 247
+#, c-format
+msgid "Page created in %s seconds"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 264
+#, c-format
+msgid "singapore|Powered by %s"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 269
+msgid "All rights reserved."
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 274
+msgid ""
+"Images may not be reproduced in any form without the express written "
+"permission of the copyright holder."
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 279
+msgid "Log in"
+msgstr ""
+#
+# templates\default\header.tpl.php:17
+# File: ../includes/singapore.class.php, line: 407
+msgid "crumb line|You are here:"
+msgstr ""
+#
+# includes\singapore.class.php:448
+# File: ../includes/singapore.class.php, line: 447
+#, c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] ""
+#
+# includes\singapore.class.php:477
+# File: ../includes/singapore.class.php, line: 476
+#, c-format
+msgid "%s image"
+msgid_plural "%s images"
+msgstr[0] ""
+#
+# File: ../includes/singapore.class.php, line: 485
+#, c-format
+msgid "viewed|%s time"
+msgid_plural "viewed|%s times"
+msgstr[0] ""
+msgstr[1] ""
+#
+# includes\singapore.class.php:522
+# includes\singapore.class.php:532
+# File: ../includes/singapore.class.php, line: 529
+# File: ../includes/singapore.class.php, line: 539
+msgid "Sample image from gallery"
+msgstr ""
+#
+# includes\singapore.class.php:526
+# File: ../includes/singapore.class.php, line: 533
+msgid ""
+"No\n"
+"thumbnail"
+msgstr ""
+#
+# includes\singapore.class.php:566
+# File: ../includes/singapore.class.php, line: 573
+#, c-format
+msgid "Showing %s-%s of %s"
+msgstr ""
+#
+# includes\singapore.class.php:576
+# File: ../includes/singapore.class.php, line: 585
+msgid "gallery|Up"
+msgstr ""
+#
+# includes\singapore.class.php:576
+# File: ../includes/singapore.class.php, line: 585
+msgid "gallery|Up one level"
+msgstr ""
+#
+# includes\singapore.class.php:577
+# File: ../includes/singapore.class.php, line: 609
+msgid "gallery|Next"
+msgstr ""
+#
+# includes\singapore.class.php:575
+# File: ../includes/singapore.class.php, line: 618
+msgid "gallery|Previous"
+msgstr ""
+#
+# includes\singapore.class.php:586
+# includes\singapore.class.php:730
+# File: ../includes/singapore.class.php, line: 626
+# File: ../includes/singapore.class.php, line: 831
+#, c-format
+msgid "artist name|by %s"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 682
+# File: ../includes/singapore.class.php, line: 684
+# File: ../includes/singapore.class.php, line: 956
+# File: ../includes/singapore.class.php, line: 958
+msgid "Email"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 686
+# File: ../includes/singapore.class.php, line: 964
+msgid "Description"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 688
+# File: ../includes/singapore.class.php, line: 690
+# File: ../includes/singapore.class.php, line: 976
+# File: ../includes/singapore.class.php, line: 978
+msgid "Copyright"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 692
+# File: ../includes/singapore.class.php, line: 980
+msgid "Viewed"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 692
+# File: ../includes/singapore.class.php, line: 980
+#, c-format
+msgid "viewed|%s times"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 805
+msgid "Add a comment"
+msgstr ""
+#
+# includes\singapore.class.php:791
+# File: ../includes/singapore.class.php, line: 908
+msgid "image|Previous"
+msgstr ""
+#
+# includes\singapore.class.php:808
+# File: ../includes/singapore.class.php, line: 925
+msgid "image|Thumbnails"
+msgstr ""
+#
+# includes\singapore.class.php:819
+# File: ../includes/singapore.class.php, line: 936
+msgid "image|Next"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 960
+msgid "Location"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 962
+msgid "Date"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 966
+msgid "Camera"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 968
+msgid "Lens"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 970
+msgid "Film"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 972
+msgid "Darkroom manipulation"
+msgstr ""
+#
+# File: ../includes/singapore.class.php, line: 974
+msgid "Digital manipulation"
+msgstr ""
