@@ -6,7 +6,7 @@ require_once('DB.php');
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_db.class.php,v 1.1 2004/02/02 16:28:48 tamlyn Exp $
+ * @version $Id: io_db.class.php,v 1.2 2004/05/23 16:57:30 tamlyn Exp $
  */
 
 /**
@@ -57,7 +57,7 @@ class sgIO_db {
         $dsn .= $this->config->db_host;
         if ($this->config->db_port) $dsn .= ':' . $this->config->db_port;
         if ($this->config->db_database) $dsn .= '/' . $this->config->db_database;
-        echo $dsn."<br />";
+        
         // Establish connection
         $this->db = DB::connect($dsn);
         // An error?
