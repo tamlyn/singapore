@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.30 2004/12/01 23:55:27 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.31 2004/12/02 12:02:48 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -707,11 +707,18 @@ class sgAdmin extends Singapore
       $path = $image;
     } elseif($_REQUEST["sgLocationChoice"] == "single") {
       //set filename as requested
-      if($_REQUEST["sgNameChoice"] == "same") $image = $_FILES["sgImageFile"]["name"];
+      if($_REQUEST["sgNameChoice"] == "same") $image = addslashes($_FILES["sgImageFile"]["name"]);
       else $image = $_REQUEST["sgFileName"];
       
       //make sure file has a recognised extension
       if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpeg";
+      
+      //make sure image name does not contain null bytes
+      if(strpos("\0",$image)) {
+        $this->lastError = $this->i18n->_g("Image name cannot contain NULL bytes"); 
+        return false;
+      }
+        
       
       $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
       $srcImage = $image;
@@ -733,7 +740,7 @@ class sgAdmin extends Singapore
             $this->lastError = $this->i18n->_g("File already exists");
             return false;
         }
-            
+      
       if(!move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) {
         $this->lastError = $this->i18n->_g("Could not upload file"); 
         return false;

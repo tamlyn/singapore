@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.32 2004/12/01 06:29:33 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.33 2004/12/02 12:02:49 tamlyn Exp $
  */
 
 //require config class
@@ -30,7 +30,7 @@ function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
   $galPath = realpath($config->pathto_galleries);
   $imgPath = realpath($config->pathto_galleries.$gallery."/".$image);
   if(substr($imgPath,0,strlen($galPath)) != $galPath && !$isRemoteFile)
-    die("Requested image is outside allowed directory");
+    die("Requested image does not exist or is outside allowed directory");
   
   //security check: make sure $image has a valid extension
   if(!$isRemoteFile && !preg_match("/.+\.(".$config->recognised_extensions.")$/i",$image))

@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.38 2004/12/02 01:36:55 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.39 2004/12/02 12:02:48 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -181,7 +181,7 @@ class Singapore
     //check if gallery was successfully fetched
     if($this->gallery == null) {
       $this->gallery = new sgGallery($galleryId);
-      $this->gallery->name = $this->i18n->_g("Gallery not found '%s'",$galleryId);
+      $this->gallery->name = $this->i18n->_g("Gallery not found '%s'",htmlspecialchars($galleryId));
     }
     
     //sort galleries and images
@@ -238,7 +238,7 @@ class Singapore
       return true;
     }
     $this->image = new sgImage();
-    $this->image->name = $this->i18n->_g("Image not found '%s'",$image);
+    $this->image->name = $this->i18n->_g("Image not found '%s'",htmlspecialchars($image));
     return false;
   }
   
