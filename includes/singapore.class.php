@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.4 2003/10/25 00:22:44 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.5 2003/11/01 14:25:06 tamlyn Exp $
  */
  
 /**
@@ -14,7 +14,6 @@
  * @uses sgConfig
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot org>
- * @version 0.9.6
  */
 class Singapore
 {
@@ -22,7 +21,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.7CVS";
+  var $version = "0.9.7PRE";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -50,6 +49,8 @@ class Singapore
    */
   var $image;
   
+  
+  var $action = null;
   
   /**
    * Constructor
@@ -114,6 +115,9 @@ class Singapore
       $this->character_set = $this->languageStrings[0]["charset"];
     else
       $this->character_set = $this->config->default_charset;
+      
+    //temporary code
+    if(isset($_REQUEST["action"])) $this->action = $_REQUEST["action"];
   }
   
   /**
@@ -472,15 +476,6 @@ class Singapore
   }
   
   /**
-   * @param   int     the number of times the object has been viewed
-   * @return  string  text with number of times viewed
-   */
-  function viewedTimesText ($num)
-  {
-    return $this->_ng("viewed|%s time", "viewed|%s times", $num);
-  }
-
-  /**
    * @param int the index of the sub gallery to check (optional)
    * @return boolean true if the specified gallery (or the current gallery 
 	 * if $index is not specified) contains one or more images; false otherwise
@@ -684,7 +679,7 @@ class Singapore
     elseif(!empty($this->gallery->artist))
       $ret[$this->_g("Copyright")] = $this->gallery->artist;
     if(!empty($this->gallery->hits))
-      $ret[$this->_g("Viewed")] = $this->__g("viewed|%s times",$this->gallery->hits);
+      $ret[$this->_g("Viewed")] = $this->_ng("viewed|%s time", "viewed|%s times",$this->gallery->hits);
     
     return $ret;
   }
@@ -791,6 +786,14 @@ class Singapore
   ///////////////////////////
   //////image functions//////
   ///////////////////////////
+  
+  /**
+   * @return string link for adding a comment to image
+   */
+  function imageCommentLink()
+  {
+    return "<a href=\"".$this->config->base_url."action=addcomment&amp;gallery=".$this->gallery->idEncoded."&amp;image=".rawurlencode($this->image->filename)."\">".$this->_g("Add a comment")."</a>";
+  }
   
   /**
    * @return string the name of the image
@@ -964,7 +967,7 @@ class Singapore
     elseif(!empty($this->image->artist))
       $ret[$this->_g("Copyright")] = $this->image->artist;
     if(!empty($this->image->hits))
-      $ret[$this->_g("Viewed")] = $this->__g("viewed|%s times",$this->image->hits);
+      $ret[$this->_g("Viewed")] = $this->_ng("viewed|%s time", "viewed|%s times",$this->image->hits);
     
     return $ret;
   }
@@ -1037,7 +1040,10 @@ class Singapore
       // String exists and is not empty?
       if (!empty($this->languageStrings[$text])) {
           $text = $this->languageStrings[$text];
+      } else {
+        $text = preg_replace("/^[^\|]*\|/", "", $text);
       }
+      
       // More arguments were passed? sprintf() them...
       if (func_num_args() > 1) {
           $args = func_get_args();
@@ -1069,7 +1075,7 @@ class Singapore
       if (!empty($this->languageStrings[$msgid1][$plural])) {
         $text = $this->languageStrings[$msgid1][$plural];
       } else {
-        $text = $n == 1 ? $msgid1 : $msgid2;
+        $text = preg_replace("/^[^\|]*\|/", "", ($n == 1 ? $msgid1 : $msgid2));
       }
       
       if (func_num_args() > 3) {
