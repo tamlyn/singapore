@@ -24,6 +24,54 @@
 //this object holds script configuration data
 class sgConfiguration
 {
+  var $thumbnail_software = "gd1";
+     //the software to use to generate the thumbnails
+     //  gd1 = GD v1.x
+     //  gd2 = GD v2.x
+     //  im  = ImageMagick
+     
+  var $thumbnail_quality = 75;
+     //the JPEG quality of generated thumbnails
+     //100 is the highest quality; 0 is the lowest
+  
+  var $secret_string = "Tetsuo!! Kanedaaaa!!!!";
+     //this string can be *anything* you want but should
+     //be unique to your site and be kept secret
+     
+  var $theme_name = "cornflower";
+     //the name of the current theme. this corresponds to the
+     //name of a directory in the themes directory (see below)
+
+  var $pathto_themes = "themes/";
+     //path to themes
+     
+  var $pathto_cache = "cache/";
+     //path to thumbnail cache
+     
+  var $pathto_galleries = "galleries/";
+     //path to galleries
+
+  var $pathto_logs = "logs/";
+     //path to image view logs
+
+  var $pathto_header = "includes/header.php";
+     //path to header file
+
+  var $pathto_footer = "includes/footer.php";
+     //path to footer file
+  
+  var $pathto_extra_css = "";
+     //path to custom css file or empty for default
+
+  var $track_views = true;
+     //whether to enable image view counting
+
+  var $show_views = true;
+     //whether to display image view counting
+
+  var $show_execution_time = true;
+     //true to display script execution time; false to hide
+
   var $main_thumb_size = 100;
      //maximum pixel size of normal thumbnails
      //if you make this much bigger you will probably 
@@ -46,39 +94,9 @@ class sgConfiguration
      //preview thumbnails of in image view (eg a value of 2 here 
      //will result in 5 thumbnails (2 before + current + 2 after)
      
-  var $theme_name = "cornflower";
-     //the name of the current theme
-
-  var $pathto_themes = "themes/";
-     //path to themes
      
-  var $pathto_cache = "../temp/cache/";
-     //path to thumbnail cache (must be writable by web server)
      
-  var $pathto_galleries = "../temp/galleries/";
-     //path to galleries (must be accessible via local file system)
-
-  var $pathto_logs = "../temp/logs/";
-     //path used to store image view logs (if enabled)
-
-  var $pathto_header = "includes/header.php";
-     //path to header file
-
-  var $pathto_footer = "includes/footer.php";
-     //path to footer file
-  
-  var $pathto_extra_css = "";
-     //path to custom css file or empty for default
-
-  var $track_views = true;
-     //whether to enable image view counting
-
-  var $show_views = true;
-     //whether to display image view counting
-
-  var $show_execution_time = true;
-     //true to display script execution time; false to hide
-
+  //these options have no effect yet:
   var $mysql_host = "localhost";
      //name of host running mysql database
      
@@ -88,22 +106,6 @@ class sgConfiguration
   var $mysql_pass = "";
      //password for username specified above
      
-  var $secret_string = "That girl understood, man. Phew! She fell in love with me, man.";
-     //this string can be *anything* you want but should
-     //be unique to your site and be kept secret
-     
-  var $thumbnail_quality = 75;
-     //the JPEG quality of generated thumbnails
-     //100 is the best quality; 0 is the lowest
-     
-  var $thumbnail_software = "gd1";
-     //the software to use to generate the thumbnails
-     //  gd1 = GD v1.x
-     //  gd2 = GD v2.x
-     //  im  = ImageMagick
-     
-     
-  //these two options have no effect yet:
   var $directory_mode = 0755;
      //the permissions to set on directories
      //(i.e. galleries) created by the script
@@ -111,14 +113,21 @@ class sgConfiguration
   var $file_mode = 0644;
      //the permissions to set on files (i.e. images, metadata 
      //files, thumbnails and logs) created by the script
+
+     
+ /* * * * * * * * * * * * * * * * * * * * * * * * * *\
+ *  You do not need to edit values beyond this line  *
+ \* * * * * * * * * * * * * * * * * * * * * * * * * */
+     
      
   //these properties are set at run-time in the constructor   
   var $pathto_current_theme;
 
-  //constructor
+  //constructor sets runtime values
   function sgConfiguration()
   {
     $this->pathto_current_theme = $this->pathto_themes.$this->theme_name."/";
+    if(empty($this->pathto_extra_css)) $this->pathto_extra_css = $this->pathto_current_theme."extra.css";
   }
 }
 
