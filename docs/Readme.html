@@ -11,7 +11,7 @@
 <body>
 
 
-<h1>singapore v0.9.4 - Readme</h1>
+<h1>singapore v0.9.4a- Readme</h1>
 
 <ul>
   <li><a href="#release">Release notes</a></li>
@@ -59,19 +59,16 @@ Singapore is free software released under the terms of the GNU GPL.</p>
 <p>You are also kindly requested not to modify or remove the following text in 
 <code>includes/footer.php</code> but this is not a requirement:</p>
 
-<p class="boxed">Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.4</a></p>
+<p class="boxed">Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.4a</a></p>
 
 
 <h2><a name="release">Release notes</a></h2>
 
-<p>Hmmm, shouldn't be releasing this now because I'm half way through reorganising 
-the directory structure but there are many bug fixes in this version that 
-I can't be bothered to reintegrate into the old version so here it is.<br />
-NOTE ON UPGRADING: Unless you are having trouble with 0.9.3 or you desperately 
-want some of the new features in 0.9.4 I would not recommend upgrading to this 
-version. Wait until the next version when the re-structuring will (hopefully) 
-be completed. First time users should use this version as it will be easier to 
-upgrade from.</p>
+<p>The only added feature in this release is support for thumbnail generation of 
+image types other than JPEG. Mainly a stop-gap bugfix release. We are currently 
+completely rewriting the html-generating code to be template driven (skinnable).
+This wasn't planned to happen until after version 1.0 but we probably won't see
+that for a while so, hey, why not do it now?</p>
 
 
 <h2><a name="install">Installation</a></h2>
@@ -102,6 +99,9 @@ things that can be done to customize it to your needs. Here are some:</p>
   
   <li>Add some galleries and images into the <code>galleries/</code> directory 
   <a href="#managing">More info</a>.</li>
+  
+  <li>Delete <code>setup.php</code> to prevent any unauthorised users from 
+  <a href="#uninstall">uninstalling</a> <strong>singapore</strong>.</li>
 
   <li>Log into the admin section and change the password. The username is 
   <code>admin</code> and the default password is <code>password</code>.<br />
@@ -111,7 +111,7 @@ things that can be done to customize it to your needs. Here are some:</p>
   <li>Have a browse through <code>data/singapore.ini</code> and look at the 
   available options. Each option has comments explaining its function. For most 
   purposes the default values will be fine but you may be able to tweak them 
-  slightly to your benefit.</li>
+  to your benefit.</li>
   
   <li>If your PHP installation uses GD version 2 or later or you have access to 
   <a href="http://www.imagemagick.org">ImageMagick</a> then you can get much 
@@ -203,7 +203,13 @@ o changed
 <h3>0.9.4a</h3>
 
 <p>
++ added PNG and GIF support under GD (GIF only with compatible versions of GD)<br />
++ added PNG, GIF, TIFF, BMP, and support from pretty much every 
+  other file type under ImageMagick<br />
++ more checks in test.php<br />
 * fixed image counting in iifn mode<br />
+* fixed show_image_name_in_thumbnail_view<br />
++ images link back to correct page of gallery (second link)<br />
 </p>
 
 <h3>0.9.4 - 2003-05-13</h3>
@@ -289,7 +295,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/14 07:53:57 $</em></p>
+<p><em>$Date: 2003/05/16 01:32:49 $</em></p>
 
 </body>
 </html>

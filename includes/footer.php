@@ -3,7 +3,7 @@
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\ 
  *  footer.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>       *
  *                                                                     *
- *  This file is part of singapore v0.9.4                              *
+ *  This file is part of singapore v0.9.4a                             *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *
@@ -27,7 +27,7 @@
 <div id="footer"><p>
   All rights reserved. Images may not be reproduced in any form
   without the express written permission of the copyright holder.<br />
-  Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.4</a> | 
+  Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9.4a</a> | 
   <?php
     if($GLOBALS["sgConfig"]->show_execution_time) {
       list($usec, $sec) = explode(" ",$scriptStartTime); 
