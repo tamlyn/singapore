@@ -160,8 +160,10 @@ function sgShowImage($gallery, $image)
   echo "      <img src=\"";
   //if image is local (filename does not start with 'http://')
   //then prepend filename with path to current gallery
-  if(substr($img->filename,0,7)!="http://") echo sgGetConfig("pathto_galleries")."$gallery/";
-  echo "$img->filename\" alt=\"$img->name";
+  if(substr($img->filename,0,7)!="http://") echo
+  sgGetConfig("pathto_galleries") . rawurlencode($gallery) . "/";
+
+  echo rawurlencode($img->filename) . "\" alt=\"$img->name";
   if(!empty($img->artist)) echo " by $img->artist";
   echo "\" />\n";
   
