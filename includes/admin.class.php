@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.2 2003/09/09 17:10:36 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.3 2003/11/17 02:14:44 tamlyn Exp $
  */
 
 /**
@@ -15,7 +15,6 @@
  * @uses Singapore
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot org>
- * @version 0.9.6
  */
 class sgAdmin extends Singapore
 {
@@ -27,18 +26,25 @@ class sgAdmin extends Singapore
   
   /**
    * Admin constructor. Doesn't call {@link Singapore} constructor.
+   * @param string the path to the base singapore directory
    */
-  function sgAdmin()
+  function sgAdmin($basePath = "")
   {
     //import class definitions
-    require_once "includes/gallery.class.php";
-    require_once "includes/image.class.php";
-    require_once "includes/config.class.php";
-    require_once "includes/io_csv.class.php";
+    require_once $basePath."includes/gallery.class.php";
+    require_once $basePath."includes/image.class.php";
+    require_once $basePath."includes/config.class.php";
+    require_once $basePath."includes/io_csv.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
 
+    //remove slashes
+    if(get_magic_quotes_gpc()) {
+      $_REQUEST = array_map("stripslashes", $_REQUEST);
+      $_FILES   = array_map("stripslashes", $_FILES);
+    }
+    
     //load config from default ini file (singapore.ini)
     $this->config = new sgConfig("singapore.ini");
     //load config from admin template ini file (admin.ini) if present
@@ -95,8 +101,15 @@ class sgAdmin extends Singapore
     //try to validate gallery id
     if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
     
+    //detect back-references to avoid file-system walking
+    if(strpos($galleryId,"../")!==false) $galleryId = ".";
+    
     //fetch the gallery and image info
     $this->gallery = $this->io->getGallery($galleryId);
+    
+    //sort galleries and images
+    usort($this->gallery->galleries, "gallerySort");
+    usort($this->gallery->images, "imageSort");
     
     $this->startat = isset($_REQUEST["startat"]) ? $_REQUEST["startat"] : 0;
     

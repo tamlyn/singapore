@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.5 2003/11/01 14:25:06 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.6 2003/11/17 02:14:44 tamlyn Exp $
  */
  
 /**
@@ -54,6 +54,7 @@ class Singapore
   
   /**
    * Constructor
+   * @param string the path to the base singapore directory
    */
   function Singapore($basePath = "")
   {
@@ -65,11 +66,18 @@ class Singapore
     
     //start execution timer
     $this->scriptStartTime = microtime();
-
+    
+    //remove slashes
+    if(get_magic_quotes_gpc())
+      $_REQUEST = array_map("stripslashes", $_REQUEST);
+    
     $galleryId = !empty($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
     //try to validate gallery id
     if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
+    
+    //detect back-references to avoid file-system walking
+    if(strpos($galleryId,"../")!==false) $galleryId = ".";
     
     //load config from default ini file (singapore.ini)
     $this->config = new sgConfig("singapore.ini");
@@ -82,6 +90,12 @@ class Singapore
     //fetch the gallery and image info
     $this->io = new sgIO_csv($this->config);
     $this->gallery = $this->io->getGallery($galleryId);
+    
+    //sort galleries and images
+    $GLOBALS["temp"]["gallery_sort_order"] = $this->config->gallery_sort_order;
+    $GLOBALS["temp"]["image_sort_order"] = $this->config->image_sort_order;
+    if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","gallerySort"));
+    if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
     
     //read the language file
     $this->readLanguageFile($this->config->language);
@@ -119,6 +133,41 @@ class Singapore
     //temporary code
     if(isset($_REQUEST["action"])) $this->action = $_REQUEST["action"];
   }
+  
+  /**
+   * Callback function for sorting galleries
+   * @static
+   */
+  function gallerySort($a, $b) {
+    switch($GLOBALS["temp"]["gallery_sort_order"]) {
+      case "p" : return strcmp($a->id, $b->id); //path
+      case "P" : return strcmp($b->id, $a->id); //path (reverse)
+      case "n" : return strcmp($a->name, $b->name); //name
+      case "N" : return strcmp($b->name, $a->name); //name (reverse)
+      case "i" : return strcasecmp($a->name, $b->name); //case-insensitive name
+      case "I" : return strcasecmp($b->name, $a->name); //case-insensitive name (reverse)
+    }
+  }
+  
+  /**
+   * Callback function for sorting images
+   * @static
+   */
+  function imageSort($a, $b) {
+    switch($GLOBALS["temp"]["image_sort_order"]) {
+      case "n" : return strcmp($a->name, $b->name); //name
+      case "N" : return strcmp($b->name, $a->name); //name (reverse)
+      case "i" : return strcasecmp($a->name, $b->name); //case-insensitive name
+      case "I" : return strcasecmp($b->name, $a->name); //case-insensitive name (reverse)
+      case "a" : return strcmp($a->artist, $b->artist); //artist
+      case "A" : return strcmp($b->artist, $a->artist); //artist (reverse)
+      case "d" : return strcmp($a->date, $b->date); //date
+      case "D" : return strcmp($b->date, $a->date); //date (reverse)
+      case "l" : return strcmp($a->location, $b->location); //location
+      case "L" : return strcmp($b->location, $a->location); //location (reverse)
+    }
+  }
+    
   
   /**
    * @return int|null the number of image hits or null
@@ -260,7 +309,7 @@ class Singapore
   
   function poweredByVersion()
   {
-    return $this->__g("singapore|Powered by %s",$this->versionLink());
+    return $this->_g("singapore|Powered by %s",$this->versionLink());
   }
   
   function allRightsReserved()
@@ -275,7 +324,7 @@ class Singapore
   
   function adminLink()
   {
-    return "<a href=\"admin.php\">".$this->__g("Log in")."</a>";
+    return "<a href=\"admin.php\">".$this->_g("Log in")."</a>";
   }
   
   /**
@@ -294,7 +343,7 @@ class Singapore
     switch($type) {
       case "images" :
         while(false !== ($entry = readdir($dp)))
-          if(preg_match("/(jpeg|jpg|jpe|png|gif|bmp|tif|tiff)$/i",$entry))
+          if(!is_dir($entry) && preg_match("/\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff)$/i",$entry))
             $dir->files[] = $entry;
         sort($dir->files);
         rewinddir($dp);
@@ -403,7 +452,7 @@ class Singapore
   
   function crumbLine()
   {
-    return $this->__g("crumb line|You are here:")." ".$this->crumbLineText();
+    return $this->_g("crumb line|You are here:")." ".$this->crumbLineText();
   }
   
   /////////////////////////////
@@ -572,7 +621,7 @@ class Singapore
     if($this->galleryHasPrev()) 
       $ret .= $this->galleryPrevLink()." ";
     if($this->gallery->id != ".") 
-      $ret .= "<a href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\" title=\"".$this->__g("gallery|Up one level")."\">".$this->__g("gallery|Up")."</a>";
+      $ret .= "<a href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\" title=\"".$this->_g("gallery|Up one level")."\">".$this->_g("gallery|Up")."</a>";
     if($this->galleryHasNext()) 
       $ret .= " ".$this->galleryNextLink();
         
@@ -596,7 +645,7 @@ class Singapore
   }
   
   function galleryNextLink() {
-    return "<a href=\"".$this->galleryNextURL()."\">".$this->__g("gallery|Next")."</a>";
+    return "<a href=\"".$this->galleryNextURL()."\">".$this->_g("gallery|Next")."</a>";
   }
   
   function galleryPrevURL() {
@@ -605,7 +654,7 @@ class Singapore
   }
   
   function galleryPrevLink() {
-    return "<a href=\"".$this->galleryPrevURL()."\">".$this->__g("gallery|Previous")."</a>";
+    return "<a href=\"".$this->galleryPrevURL()."\">".$this->_g("gallery|Previous")."</a>";
   }
   
   /**
@@ -613,7 +662,7 @@ class Singapore
    */
   function galleryByArtist()
   {
-    if(!empty($this->gallery->artist)) return " ".$this->__g("artist name|by %s",$this->gallery->artist);
+    if(!empty($this->gallery->artist)) return " ".$this->_g("artist name|by %s",$this->gallery->artist);
     else return "";
   }
   
@@ -818,7 +867,7 @@ class Singapore
    */
   function imageByArtist()
   {
-    if(!empty($this->image->artist)) return " ".$this->__g("artist name|by %s",$this->image->artist);
+    if(!empty($this->image->artist)) return " ".$this->_g("artist name|by %s",$this->image->artist);
     else return "";
   }
   
@@ -895,7 +944,7 @@ class Singapore
   {
     if($this->imageHasPrev())
       return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             $this->gallery->images[$this->image->index-1]->filename."\">".$this->__g("image|Previous")."</a> | \n";
+             urlencode($this->gallery->images[$this->image->index-1]->filename)."\">".$this->_g("image|Previous")."</a> | \n";
   }
 
   /**
@@ -912,7 +961,7 @@ class Singapore
   function imageParentLink()
   {
     return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".
-           (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number)."\">".$this->__g("image|Thumbnails")."</a>\n";
+           (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number)."\">".$this->_g("image|Thumbnails")."</a>\n";
   }
   
   /**
@@ -923,7 +972,7 @@ class Singapore
   {
     if($this->imageHasNext())
       return " | <a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             $this->gallery->images[$this->image->index+1]->filename."\">".$this->__g("image|Next")."</a>\n";
+             urlencode($this->gallery->images[$this->image->index+1]->filename)."\">".$this->_g("image|Next")."</a>\n";
   }
   
   /**
@@ -1026,7 +1075,9 @@ class Singapore
   /**
    * Returns a translated string, or the same if no language is chosen.
    * You can pass more arguments to use for replacement within the
-   * string - just like sprintf().
+   * string - just like sprintf(). It also removes anything before 
+   * the first | in the text to translate. This is used to distinguish 
+   * strings with different meanings, but with the same spelling.
    * Examples:
    * _g("Text");
    * _g("Use a %s to drink %s", _g("glass"), "water");

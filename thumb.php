@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.17 2003/09/09 17:10:36 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.18 2003/11/17 02:14:44 tamlyn Exp $
  */
 
 //require config class
@@ -80,10 +80,10 @@ function showThumb($gallery, $image, $maxsize) {
   
   switch($config->thumbnail_software) {
   case "im" : //use ImageMagick  
-    $cmd  = $config->pathto_convert;
+    $cmd  = '"'.$config->pathto_convert.'"';
     $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
     if($imageType == 2) $cmd .= " -quality $thumbQuality";
-    if($config->remove_jpeg_profile) $cmd .= " +profile \"*\"";
+    if($config->remove_jpeg_profile) $cmd .= ' +profile "*"';
     $cmd .= ' "'.escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"';
     
     exec($cmd);
