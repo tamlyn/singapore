@@ -146,7 +146,7 @@ function sgShowImage($gallery, $image)
          "</a>\n";
   echo "<br />\n";
   if($img->prev[0]) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
-  echo "<a href=\"?gallery=$gallery&amp;startat=".(floor($img->index/20)*20)."\">Thumbnails</a>\n";
+  echo "<a href=\"?gallery=$gallery&amp;startat=".(floor($img->index/sgGetConfig("main_thumb_number"))*sgGetConfig("main_thumb_number"))."\">Thumbnails</a>\n";
   if($img->next[0]) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
   
