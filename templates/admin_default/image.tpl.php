@@ -44,3 +44,5 @@
 <strong><?php echo $key ?>:</strong> <?php echo $value ?><br />
 <?php endforeach; ?>
 </p>
+
+<?php echo $sg->imageNavigation() ?>

@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.17 2004/02/29 04:36:41 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.18 2004/02/29 21:00:02 tamlyn Exp $
  */
  
 /**
@@ -574,6 +574,27 @@ class Singapore
     return $this->i18n->_g("crumb line|You are here:")." ".$this->crumbLineText();
   }
   
+  function imageNavigation()
+  {
+    if(!$this->config->enable_image_navigation) return;
+    
+    $imageWidth = $this->imageWidth();
+    $imageHeight = $this->imageHeight();
+    $middleX = round($imageWidth/2);
+    $middleY = round($imageHeight/2);
+    
+    $ret  = "<map name=\"sgNavMap\">\n";
+    $ret .= '<area href="'.$this->imageNextURL().'" alt="'.$this->i18n->_g("image|Next").'" title="'.$this->i18n->_g("image|Next").'" shape="poly" ';
+    $ret .= "coords=\"$middleX,$middleY,$imageWidth,$imageHeight,$imageWidth,0,$middleX,$middleY\">\n";
+    $ret .= '<area href="'.$this->imagePrevURL().'" alt="'.$this->i18n->_g("image|Previous").'" title="'.$this->i18n->_g("image|Previous").'" shape="poly" ';
+    $ret .= "coords=\"$middleX,$middleY,0,0,0,$imageHeight,$middleX,$middleY\">\n";
+    $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
+    $ret .= "coords=\"$middleX,$middleY,0,0,$imageWidth,0,$middleX,$middleY\">\n";
+    $ret .= '</map>';
+    
+    return $ret;
+  }
+  
   /////////////////////////////
   //////gallery functions//////
   /////////////////////////////
@@ -760,7 +781,7 @@ class Singapore
     $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->formatURL(".")."\">\n";
     
     if($this->isImage()) {
-      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->formatURL($this->gallery->idEncoded)."\">\n";
+      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->imageParentURL()."\">\n";
       if ($this->imageHasPrev()) {
         $ret .= "<link rel=\"First\" title=\"".$this->imageName(0)."\" href=\"".$this->imageFirstURL()."\">\n";
         $ret .= "<link rel=\"Prev\" title=\"".$this->imageName($this->image->index-1)."\" href=\"".$this->imagePrevURL()."\">\n";
@@ -1091,6 +1112,8 @@ class Singapore
     $ret = "<img src=\"".$this->imageURL()."\" ";
     if($this->imageWidth() && $this->imageHeight())
       $ret .= "width=\"".$this->imageWidth()."\" height=\"".$this->imageHeight()."\" ";
+    if($this->config->enable_image_navigation)
+      $ret .= 'usemap="#sgNavMap" border="0" ';
     $ret .= "alt=\"".$this->imageName().$this->imageByArtist()."\" />\n";
     return $ret;
   }
@@ -1170,7 +1193,7 @@ class Singapore
    */
   function imageParentLink()
   {
-    return "<a href=\"".$this->formatURL($this->gallery->idEncoded, null, (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number))."\" title=\"".$this->galleryName()."\">".$this->i18n->_g("image|Thumbnails")."</a>\n";
+    return "<a href=\"".$this->imageParentURL()."\" title=\"".$this->galleryName()."\">".$this->i18n->_g("image|Thumbnails")."</a>\n";
   }
   
   /**
@@ -1199,6 +1222,11 @@ class Singapore
   function imagePrevURL()
   {
     return $this->formatURL($this->gallery->idEncoded, urlencode($this->gallery->images[$this->image->index-1]->filename));
+  }
+  
+  function imageParentURL()
+  {
+    return $this->formatURL($this->gallery->idEncoded, null, (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number));
   }
   
   function imageNextURL()
