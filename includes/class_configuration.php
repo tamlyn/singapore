@@ -37,6 +37,10 @@ class sgConfiguration
     $this->pathto_logs = $this->pathto_data_dir."logs/";
     $this->pathto_cache = $this->pathto_data_dir."cache/";
     
+    //convert octal strings to integers
+    if(is_string($this->directory_mode)) $this->directory_mode = octdec($this->directory_mode);
+    if(is_string($this->file_mode)) $this->file_mode = octdec($this->file_mode);
+    
     $this->pathto_current_theme = $this->pathto_themes.$this->theme_name."/";
     if(empty($this->pathto_extra_css)) $this->pathto_extra_css = $this->pathto_current_theme."extra.css";
   }
