@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-10-25 01:47+0100\n"
+"POT-Creation-Date: 2003-11-01 14:13+0000\n"
 "PO-Revision-Date: 2003-08-18 11:37+0100\n"
 "Last-Translator: Jan Thorn <jan@j-thorn.dk>\n"
 "Language-Team: SWEDISH <LL@li.org>\n"
@@ -266,80 +266,27 @@ msgid "thumbnail|Change..."
 msgstr "Ändra..."
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 27
-msgid "gallery details|Gallery name:"
-msgstr "Bildarkiv namn:"
+#, fuzzy
+msgid "Gallery name"
+msgstr "Bildarkiv finns redan"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 31
-msgid "gallery details|Artist name:"
-msgstr "Artist namn:"
-#
-# File: ../templates/admin_default/editgallery.tpl.php, line: 35
-msgid "gallery details|Artist email:"
-msgstr "Artist e-mail:"
-#
-# File: ../templates/admin_default/editgallery.tpl.php, line: 39
-msgid "gallery details|Copyright holder:"
-msgstr "Copyrightägare:"
-#
-# File: ../templates/admin_default/editgallery.tpl.php, line: 43
-msgid "gallery details|Description:"
-msgstr "Beskrivning:"
+# File: ../templates/admin_default/editimage.tpl.php, line: 22
+msgid "Artist name"
+msgstr ""
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 1
 msgid "edit image"
 msgstr "ändra bild"
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 14
-msgid "image details|Image:"
-msgstr "Bild:"
+msgid "Image"
+msgstr ""
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 18
-msgid "image details|Image name:"
-msgstr "Bildens namn:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 22
-msgid "image details|Artist name:"
-msgstr "Artist namn:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 26
-msgid "image details|Artist email:"
-msgstr "Artist e-mail:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 30
-msgid "image details|Location:"
-msgstr "Plats:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 34
-msgid "image details|Date:"
+#, fuzzy
+msgid "Image name"
 msgstr "Datum:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 38
-msgid "image details|Copyright holder:"
-msgstr "Copyrightägare:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 42
-msgid "image details|Description:"
-msgstr "Beskrivning:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 46
-msgid "image details|Camera info:"
-msgstr "Kamerainfo:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 50
-msgid "image details|Lens info:"
-msgstr "Lensinfo:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 54
-msgid "image details|Film info:"
-msgstr "Filminfo:"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 58
-msgid "image details|Darkroom manipulation:"
-msgstr "Mörkrumamanipulering"
-#
-# File: ../templates/admin_default/editimage.tpl.php, line: 62
-msgid "image details|Digital manipulation:"
-msgstr "Digital manipulering"
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 1
 msgid "change password"
@@ -451,12 +398,129 @@ msgid "Specify different filename:"
 msgstr "Skriv nytt filnamn:"
 #
 #
+#
+#
+#~ msgid "gallery details|Gallery name:"
+#~ msgstr "Bildarkiv namn:"
+#
+#
+#
+#
+#~ msgid "gallery details|Artist name:"
+#~ msgstr "Artist namn:"
+#
+#
+#
+#
+#~ msgid "gallery details|Artist email:"
+#~ msgstr "Artist e-mail:"
+#
+#
+#
+#
+#~ msgid "gallery details|Copyright holder:"
+#~ msgstr "Copyrightägare:"
+#
+#
+#
+#
+#~ msgid "gallery details|Description:"
+#~ msgstr "Beskrivning:"
+#
+#
+#
+#
+#~ msgid "image details|Image:"
+#~ msgstr "Bild:"
+#
+#
+#
+#
+#~ msgid "image details|Image name:"
+#~ msgstr "Bildens namn:"
+#
+#
+#
+#
+#~ msgid "image details|Artist name:"
+#~ msgstr "Artist namn:"
+#
+#
+#
+#
+#~ msgid "image details|Artist email:"
+#~ msgstr "Artist e-mail:"
+#
+#
+#
+#
+#~ msgid "image details|Location:"
+#~ msgstr "Plats:"
+#
+#
+#
+#
+#~ msgid "image details|Date:"
+#~ msgstr "Datum:"
+#
+#
+#
+#
+#~ msgid "image details|Copyright holder:"
+#~ msgstr "Copyrightägare:"
+#
+#
+#
+#
+#~ msgid "image details|Description:"
+#~ msgstr "Beskrivning:"
+#
+#
+#
+#
+#~ msgid "image details|Camera info:"
+#~ msgstr "Kamerainfo:"
+#
+#
+#
+#
+#~ msgid "image details|Lens info:"
+#~ msgstr "Lensinfo:"
+#
+#
+#
+#
+#~ msgid "image details|Film info:"
+#~ msgstr "Filminfo:"
+#
+#
+#
+#
+#~ msgid "image details|Darkroom manipulation:"
+#~ msgstr "Mörkrumamanipulering"
+#
+#
+#
+#
+#~ msgid "image details|Digital manipulation:"
+#~ msgstr "Digital manipulering"
+#
+#
+#
+#
+#
 #~ msgid "gallery|Up"
 #~ msgstr "Upp"
 #
 #
+#
+#
+#
 #~ msgid "gallery|Up one level"
 #~ msgstr "Upp en nivå"
+#
+#
+#
 #
 #
 #~ msgid "crumb line|You are here:"
