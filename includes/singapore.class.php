@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.40 2004/12/08 10:57:36 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.41 2005/01/28 14:20:24 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -1147,6 +1147,8 @@ class Singapore
     $ret = array();
     if(!empty($this->gallery->email))
         $ret[$this->i18n->_g("Email")] = $this->formatEmail($this->gallery->email);
+    if(!empty($this->gallery->date))
+      $ret[$this->i18n->_g("Date")] = $this->gallery->date;
     if(!empty($this->gallery->desc))
       $ret[$this->i18n->_g("Description")] = $this->gallery->desc;
     if(!empty($this->gallery->copyright))
