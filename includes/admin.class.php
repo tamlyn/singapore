@@ -6,9 +6,13 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.17 2004/09/07 19:09:06 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.18 2004/09/12 21:39:02 tamlyn Exp $
  */
 
+define("SG_ADMIN",    0x0001);
+define("SG_SUSPENDED", 0x0002);
+define("SG_X", 0x0004);
+ 
 /**
  * Provides administration functions.
  * 
@@ -34,6 +38,7 @@ class sgAdmin extends Singapore
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/image.class.php";
+    require_once $basePath."includes/user.class.php";
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/io_csv.class.php";
     
@@ -113,7 +118,7 @@ class sgAdmin extends Singapore
    *
    * @author   Adam Sissman <adam at bluebinary dot com>
    */
-  function formatAdminURL($action, $gallery = null, $image = null, $startat = null)
+  function formatAdminURL($action, $gallery = null, $image = null, $startat = null, $extra = null)
   {
     $ret  = $this->config->base_url."admin.php?";
     $ret .= "action=".$action;
@@ -123,6 +128,8 @@ class sgAdmin extends Singapore
       $ret .= "&amp;image=".$image;
     if($startat != null)
       $ret .= "&amp;startat=".$startat;
+    if($extra != null)
+      $ret .= $extra;
     
     return $ret;
   }
@@ -192,6 +199,7 @@ class sgAdmin extends Singapore
       $ret[1][$this->i18n->_g("admin bar|Edit gallery")] = $this->formatAdminURL("editgallery",$this->gallery->idEncoded);
       $ret[1][$this->i18n->_g("admin bar|Delete gallery")] = $this->formatAdminURL("deletegallery",$this->gallery->idEncoded);
       $ret[1][$this->i18n->_g("admin bar|New subgallery")] = $this->formatAdminURL("newgallery",$this->gallery->idEncoded);
+      $ret[1][$this->i18n->_g("admin bar|Re-index gallery")] = $this->formatAdminURL("reindex",$this->gallery->idEncoded);
       if($this->isImage()) {
         $ret[2][$this->i18n->_g("admin bar|Edit image")] = $this->formatAdminURL("editimage",$this->gallery->idEncoded,$this->image->filename);
         $ret[2][$this->i18n->_g("admin bar|Delete image")] = $this->formatAdminURL("deleteimage",$this->gallery->idEncoded,$this->image->filename);
@@ -212,7 +220,7 @@ class sgAdmin extends Singapore
     $users = $this->io->getUsers();
     
     $found = false;
-    for($i=1;$i < count($users);$i++)
+    for($i=0;$i < count($users);$i++)
       if($_POST["sgUsername"] == $users[$i]->username) {
         $found = true;
         if(md5($_POST["sgOldPass"]) == $users[$i]->userpass)
@@ -257,13 +265,18 @@ class sgAdmin extends Singapore
   {
     if(isset($_POST["sgUsername"]) && isset($_POST["sgPassword"])) {
   	  $users = $this->io->getUsers();
-  		for($i=1;$i < count($users);$i++)
+      for($i=0;$i < count($users);$i++)
         if($_POST["sgUsername"] == $users[$i]->username && md5($_POST["sgPassword"]) == $users[$i]->userpass){
-          $_SESSION["sgUser"] = $users[$i];
-          $_SESSION["sgUser"]->check = md5($_SERVER["REMOTE_ADDR"]);
-  			  $_SESSION["sgUser"]->ip = $_SERVER["REMOTE_ADDR"];
-          $_SESSION["sgUser"]->loginTime = time();
-          return true;
+          if($users[$i]->permissions & SG_SUSPENDED) {
+            $this->lastError = $this->i18n->_g("Your account has been temporarily suspended");
+            return false;
+          } else { 
+            $_SESSION["sgUser"] = $users[$i];
+            $_SESSION["sgUser"]->check = md5($_SERVER["REMOTE_ADDR"]);
+    			  $_SESSION["sgUser"]->ip = $_SERVER["REMOTE_ADDR"];
+            $_SESSION["sgUser"]->loginTime = time();
+            return true;
+          }
   			}
   		$this->logout();
       $this->lastError = $this->i18n->_g("Username and/or password incorrect");
@@ -282,6 +295,152 @@ class sgAdmin extends Singapore
   {
     $_SESSION["sgUser"] = null;
   	return true;
+  }
+  
+  /**
+   * Checks if currently logged in user is an administrator.
+   * 
+   * @return bool
+   */
+  function isAdmin()
+  {
+    return $_SESSION["sgUser"]->permissions & SG_ADMIN;
+  }
+  
+  /**
+   * Creates a new user.
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function addUser()
+  {
+  	$users = $this->io->getUsers();
+    for($i=0; $i<count($users); $i++)
+      if($users[$i]->username == $_REQUEST["user"]) {
+        $this->lastError = $this->i18n->_g("Username already exists");
+        return false;
+      }
+    
+    $users[$i] = new sgUser($_REQUEST["user"], md5("password"));
+    
+    if($this->io->putUsers($users))
+      return true;
+    
+    $this->lastError = $this->i18n->_g("Could not save user info");
+    return true;
+  }
+  
+  /**
+   * Deletes a user.
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function deleteUser($user = null)
+  {
+    if($user == null)
+      $user = $_REQUEST["user"];
+      
+  	$users = $this->io->getUsers();
+    for($i=0; $i<count($users); $i++)
+      if($users[$i]->username == $_REQUEST["user"]) {
+        
+        //delete user at offset $i from $users
+        array_splice($users,$i,1);
+        
+        if($this->io->putUsers($users))
+          return true;
+    
+        $this->lastError = $this->i18n->_g("Could not save user info");
+        return false;
+      }
+    
+    $this->lastError = $this->i18n->_g("Username not recognised");
+    return false;
+  }
+  
+  /**
+   * Saves a user's info.
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function saveUser() {
+    $users = $this->io->getUsers();
+    for($i=0; $i<count($users); $i++)
+      if($users[$i]->username == $_REQUEST["user"]) {
+        $users[$i]->email = $_REQUEST["sgEmail"];
+        $users[$i]->fullname = $_REQUEST["sgFullname"];
+        $users[$i]->description = $_REQUEST["sgDescription"];
+        if($this->isAdmin()) {
+          $users[$i]->groups = $_REQUEST["sgGroups"];
+          $users[$i]->permissions = ($_REQUEST["sgType"] == "admin") ? $users[$i]->permissions | SG_ADMIN : $users[$i]->permissions & ~SG_ADMIN;
+          if($_REQUEST["sgPassword"] != "**********")
+            $users[$i]->userpass = md5($_REQUEST["sgPassword"]);
+        }
+        if($this->io->putUsers($users))
+          return true;
+        $this->lastError = $this->i18n->_g("Could not save user info");
+        return false;
+      }
+    $this->lastError = $this->i18n->_g("Username not recognised");
+    return false;
+  }
+  
+  /**
+   * Suspend or unsuspend a user's account.
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function suspendUser() {
+    $users = $this->io->getUsers();
+    for($i=0; $i<count($users); $i++)
+      if($users[$i]->username == $_REQUEST["user"]) {
+      
+        $users[$i]->permissions = ($users[$i]->permissions & SG_SUSPENDED) ? $users[$i]->permissions & ~SG_SUSPENDED : $users[$i]->permissions | SG_SUSPENDED;
+        if($this->io->putUsers($users))
+          return true;
+        $this->lastError = $this->i18n->_g("Could not save user info");
+        return false;
+      }
+    $this->lastError = $this->i18n->_g("Username not recognised");
+    return false;
+  }
+  
+  /**
+   * Check for images in current gallery directory which are
+   * not in the metadata and add them.
+   * 
+   * @return int the number of images added
+   */
+  function reindexGallery()
+  {
+    $imagesAdded = 0;
+    $dir = $this->getListing($this->config->pathto_galleries.$this->gallery->id,"images");
+    for($i=0; $i<count($dir->files); $i++) {
+      $found = false;
+      for($j=0; $j<count($this->gallery->images); $j++)
+        if($dir->files[$i] == $this->gallery->images[$j]->filename) {
+          $found = true;
+          break;
+        }
+      if(!$found) {
+        $this->gallery->images[$j] = new sgImage();
+        $this->gallery->images[$j]->filename = $dir->files[$i];
+        $this->gallery->images[$j]->name = $dir->files[$i];
+        list(
+          $this->gallery->images[$j]->width, 
+          $this->gallery->images[$j]->height, 
+          $this->gallery->images[$j]->type
+        ) = GetImageSize($this->config->pathto_galleries.$this->gallery->id."/".$this->gallery->images[$j]->filename);
+        $imagesAdded++;
+      }
+    }
+    
+    if($this->io->putGallery($this->gallery))
+  	  return $imagesAdded;
+      
+    $this->lastError = $this->i18n->_g("Could not save gallery info");
+      return 0;
+
   }
   
   /**

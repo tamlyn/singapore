@@ -1,23 +1,8 @@
 <h1><?php echo $sg->galleryName()?></h1>
 
-<div class="sgShadow"><table class="sgShadow" cellspacing="0">
-  <tr>
-    <td><img src="<?php echo $sg->config->pathto_admin_template?>images/shadow-tabl.gif" alt="" /></td>
-    <td class="tabm"><table class="sgShadowTab" cellspacing="0"><tr><td>
-  
-    <?php echo $sg->galleryHitsTab()?>
-  
-    </td><td><img src="<?php echo $sg->config->pathto_admin_template?>images/shadow-tabr.gif" alt="" /></td></tr></table></td>
-    <td class="tabr"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
-  </tr>
-  <tr>
-    <td class="tl"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" width="32" height="16" alt="" /></td>
-    <td class="tm"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
-    <td class="tr"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
-  </tr>
-  <tr>
-    <td class="ml"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
-    <td class="mm">
+<div class="sgContainer">
+  <div class="sgTab"><?php echo $sg->galleryHitsTab()?></div>
+  <div class="sgContent">
     <table class="sgList">
       <tr><th><?php echo $sg->i18n->_g("Image name") ?></th><th><?php echo $sg->i18n->_g("hits table|Hits") ?></th><th><?php echo $sg->i18n->_g("hits table|Last hit") ?></th><th><?php echo $sg->i18n->_g("hits table|Graph") ?></th></tr>
       <?php foreach($sg->galleryImagesArray() as $index => $img): ?>
@@ -29,13 +14,5 @@
       </tr>
       <?php endforeach; ?>
     </table>
-    
-    </td>
-    <td class="mr"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
-  </tr>
-  <tr>
-    <td class="bl"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
-    <td class="bm"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
-    <td class="br"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" width="32" height="32" alt="" /></td>
-  </tr>
-</table></div>
+  </div>    
+</div>

@@ -1,4 +1,4 @@
-<h2 class="sgTitle"><?php echo $sg->galleryName(); ?></hh2>
+<h2 class="sgTitle"><?php echo $sg->galleryName(); ?></h2>
 <h4 class="sgSubTitle"><?php echo $sg->galleryByArtist(); ?></h4>
 
 <div class="sgShadow"><table class="sgShadow" cellspacing="0">

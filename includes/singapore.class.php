@@ -4,21 +4,21 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.28 2004/09/07 19:09:06 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.29 2004/09/12 21:39:02 tamlyn Exp $
  */
 
 //define constants for request variables
 //you may change these if there is a conflict
-define('SG_LANG', 'lang');
+define('SG_GALLERY',  'gallery');
+define('SG_IMAGE',    'image');
+define('SG_STARTAT',  'startat');
+define('SG_ACTION',   'action');
+define('SG_LANG',     'lang');
 define('SG_TEMPLATE', 'template');
-define('SG_GALLERY', 'gallery');
-define('SG_IMAGE', 'image');
-define('SG_ACTION', 'action');
-define('SG_STARTAT', 'startat');
 //define constants for regular expressions
 define('SG_REGEXP_PROTOCOLURL', '(?:http://|https://|ftp://|mailto:)(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,4}(?::[0-9]+)?(?:/[^ \n\r\"\'<]+)?');
-define('SG_REGEXP_WWWURL', 'www\.(?:[a-zA-Z0-9\-]+\.)*[a-zA-Z]{2,4}(?:/[^ \n\r\"\'<]+)?');
-define('SG_REGEXP_EMAILURL', '(?:[\w][\w\.\-]+)+@(?:[\w\-]+\.)+[a-zA-Z]{2,4}');
+define('SG_REGEXP_WWWURL',      'www\.(?:[a-zA-Z0-9\-]+\.)*[a-zA-Z]{2,4}(?:/[^ \n\r\"\'<]+)?');
+define('SG_REGEXP_EMAILURL',    '(?:[\w][\w\.\-]+)+@(?:[\w\-]+\.)+[a-zA-Z]{2,4}');
 
  
 /**
@@ -82,6 +82,7 @@ class Singapore
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/image.class.php";
+    require_once $basePath."includes/user.class.php";
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/io_csv.class.php";
     
@@ -675,7 +676,7 @@ class Singapore
       $ret .= '>'.htmlentities($name)."</option>\n";
     }
     $ret .= "</select>\n";
-    $ret .= '<input type="submit" class="button" value="Go">';
+    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\">\n";
     $ret .= "</form></div>\n";
     return $ret;
   }
@@ -719,6 +720,20 @@ class Singapore
   
   
   /**
+   * If the specified gallery is an album then it returns the number of 
+   * images contained otherwise the number of sub-galleries is returned
+   * @param int the index of the sub gallery to count (optional)
+   * @return string the contents of the specified gallery
+   */
+  function galleryIdEncoded($index = null)
+  {
+    if($index === null)
+      return $this->gallery->idEncoded;
+    else
+      return $this->encodeId($this->gallery->galleries[$index]->id);
+  }
+  
+	/**
    * If the specified gallery is an album then it returns the number of 
    * images contained otherwise the number of sub-galleries is returned
    * @param int the index of the sub gallery to count (optional)

@@ -10,7 +10,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.23 2004/04/11 14:45:06 tamlyn Exp $
+ * @version $Id: admin.php,v 1.24 2004/09/12 21:39:00 tamlyn Exp $
  */
 
 //include main class
@@ -34,41 +34,6 @@ header("Content-type: text/html; charset=".$sg->character_set);
 if($sg->isLoggedIn() || $sg->action == "login") 
   //choose which file to include and/or perform admin actions
   switch($sg->action) {
-    case "view" :
-      $sg->selectGallery();
-      $includeFile = "view";
-      break;
-    case "login" :
-      if($sg->login()) {
-        $adminMessage = $sg->i18n->_g("Welcome to singapore admin!");
-        $includeFile = "menu";
-      } else {
-        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-        $includeFile = "login";
-      }
-      break;
-    case "logout" :
-      if($sg->logout()) {
-        $adminMessage = $sg->i18n->_g("Thank you and goodbye!");
-        $includeFile = "loggedout";
-      } else
-        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-      break;
-    case "editpass" :
-      $includeFile = "editpass";
-      break;
-    case "savepass" :
-      if($sg->savePass())
-        $adminMessage = $sg->i18n->_g("Password saved");
-      else {
-        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-        $includeFile = "editpass";
-      }
-      break;
-    case "newgallery" :
-      $sg->selectGallery();
-      $includeFile = "newgallery";
-      break;
     case "addgallery" :
       $sg->selectGallery();
       if($sg->addGallery()) {
@@ -79,56 +44,6 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
         $includeFile = "newgallery";
       }
-      break;
-    case "editgallery" :
-      $sg->selectGallery();
-      $includeFile = "editgallery";
-      break;
-    case "savegallery" :
-      $sg->selectGallery();
-      if($sg->saveGallery()) {
-        $adminMessage = $sg->i18n->_g("Gallery info saved");
-        $includeFile = "view";
-      } else {
-        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-        $includeFile = "editgallery";
-      }
-      break;
-    case "deletegallery" :
-      $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
-        if($sg->deleteGallery()) {
-          $sg->selectGallery(rawurldecode($sg->gallery->parent));
-          $adminMessage = $sg->i18n->_g("Gallery deleted");
-        } else {
-          $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-        }
-        $includeFile = "view";
-      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|Cancel")) {
-        $includeFile = "view";
-      } else {
-        $confirmTitle = $sg->i18n->_g("delete gallery");
-        $confirmMessage = $sg->i18n->_g("Gallery %s is not empty.\nAre you sure you want to irretrievably delete it and all subgalleries and images it contains?", "<em>".$sg->gallery->name."</em>");
-        $includeFile = "confirm";
-      }
-      break;
-    case "changethumbnail" :
-      $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
-        if($sg->saveGalleryThumbnail())
-          $adminMessage = $sg->i18n->_g("Thumbnail changed");
-        else
-          $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-        $includeFile = "editgallery";
-      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|Cancel")) {
-        $includeFile = "editgallery";
-      } else {
-        $includeFile = "changethumbnail";
-      }
-      break;
-    case "newimage" :
-      $sg->selectGallery();
-      $includeFile = "newimage";
       break;
     case "addimage" :
       $sg->selectGallery();
@@ -157,18 +72,36 @@ if($sg->isLoggedIn() || $sg->action == "login")
           break;
       }
       break;
-    case "editimage" :
+    case "changethumbnail" :
       $sg->selectGallery();
-      $includeFile = "editimage";
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
+        if($sg->saveGalleryThumbnail())
+          $adminMessage = $sg->i18n->_g("Thumbnail changed");
+        else
+          $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editgallery";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|Cancel")) {
+        $includeFile = "editgallery";
+      } else {
+        $includeFile = "changethumbnail";
+      }
       break;
-    case "saveimage" :
+    case "deletegallery" :
       $sg->selectGallery();
-      if($sg->saveImage()) {
-        $adminMessage = $sg->i18n->_g("Image saved successfully");
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
+        if($sg->deleteGallery()) {
+          $sg->selectGallery(rawurldecode($sg->gallery->parent));
+          $adminMessage = $sg->i18n->_g("Gallery deleted");
+        } else {
+          $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        }
+        $includeFile = "view";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|Cancel")) {
         $includeFile = "view";
       } else {
-        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-        $includeFile = "view";
+        $confirmTitle = $sg->i18n->_g("delete gallery");
+        $confirmMessage = $sg->i18n->_g("Gallery %s is not empty.\nAre you sure you want to irretrievably delete it and all subgalleries and images it contains?", "<em>".$sg->gallery->name."</em>");
+        $includeFile = "confirm";
       }
       break;
     case "deleteimage" :
@@ -187,6 +120,159 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "confirm";
       }
       break;
+    case "deleteuser" :
+      if(!$sg->isAdmin()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $includeFile = "menu";
+        break;
+      }
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
+        if($sg->deleteUser())
+          $adminMessage = $sg->i18n->_g("User deleted");
+        else
+          $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "manageusers";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|Cancel")) {
+        $includeFile = "manageusers";
+      } else {
+        $confirmTitle = $sg->i18n->_g("delete user");
+        $confirmMessage = $sg->i18n->_g("Are you sure you want to permanently delete user %s?","<em>".$_REQUEST["user"]."</em>");
+        $includeFile = "confirm";
+      }
+      break;
+    case "editgallery" :
+      $sg->selectGallery();
+      $includeFile = "editgallery";
+      break;
+    case "editimage" :
+      $sg->selectGallery();
+      $includeFile = "editimage";
+      break;
+    case "editpass" :
+      $includeFile = "editpass";
+      break;
+    case "edituser" :
+      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $includeFile = "menu";
+        break;
+      }
+      $includeFile = "edituser";
+      break;
+    case "login" :
+      if($sg->login()) {
+        $adminMessage = $sg->i18n->_g("Welcome to singapore admin!");
+        $includeFile = "menu";
+      } else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "login";
+      }
+      break;
+    case "logout" :
+      $sg->logout();
+      $adminMessage = $sg->i18n->_g("Thank you and goodbye!");
+      $includeFile = "loggedout";
+      break;
+    case "manageusers" :
+      if(!$sg->isAdmin()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $includeFile = "menu";
+        break;
+      }
+      $includeFile = "manageusers";
+      break;
+    case "multigallery" :
+    case "multiimage" :
+      $adminMessage = "This feature is not yet implemented";
+      $sg->selectGallery();
+      $includeFile = "view";
+      break;
+    case "newgallery" :
+      $sg->selectGallery();
+      $includeFile = "newgallery";
+      break;
+    case "newimage" :
+      $sg->selectGallery();
+      $includeFile = "newimage";
+      break;
+    case "newuser" :
+      if(!$sg->isAdmin()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $includeFile = "menu";
+        break;
+      }
+      if($sg->addUser())
+        $includeFile = "edituser";
+      else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "manageusers";
+      }
+      break;
+    case "purgecache" :
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
+        if($sg->purgeCache())
+          $adminMessage = $sg->i18n->_g("Thumbnail cache purged");
+        else
+          $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "menu";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|Cancel")) {
+        $includeFile = "menu";
+      } else {
+        $confirmTitle = $sg->i18n->_g("purge cached thumbnails");
+        $dir = $sg->getListing($sg->config->pathto_cache,"all");
+        $confirmMessage = $sg->i18n->_g("Are you sure you want to delete all %s cached thumbnails?",count($dir->files));
+        $includeFile = "confirm";
+      }
+      break;
+    case "reindex" :
+      $sg->selectGallery();
+      $imagesAdded = $sg->reindexGallery();
+      $adminMessage = $sg->i18n->_g("Gallery re-indexed. %s images added.",$imagesAdded);
+      $includeFile = "view";
+      break;
+    case "savegallery" :
+      $sg->selectGallery();
+      if($sg->saveGallery()) {
+        $adminMessage = $sg->i18n->_g("Gallery info saved");
+        $includeFile = "view";
+      } else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editgallery";
+      }
+      break;
+    case "saveimage" :
+      $sg->selectGallery();
+      if($sg->saveImage()) {
+        $adminMessage = $sg->i18n->_g("Image saved successfully");
+        $includeFile = "view";
+      } else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "view";
+      }
+      break;
+    case "savepass" :
+      if($sg->savePass()) {
+        $adminMessage = $sg->i18n->_g("Password saved");
+        $includeFile = "menu";
+      } else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editpass";
+      }
+      break;
+    case "saveuser" :
+      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $includeFile = "menu";
+        break;
+      }
+      if($sg->saveUser()) {
+        $adminMessage = $sg->i18n->_g("User info saved");
+        $includeFile = $sg->isAdmin() ? "manageusers" : "menu";
+      } else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "edituser";
+      }
+      break;
     case "showgalleryhits" :
       $sg->selectGallery();
       $sg->loadGalleryHits();
@@ -197,20 +283,21 @@ if($sg->isLoggedIn() || $sg->action == "login")
       $sg->loadImageHits();
       $includeFile = "imagehits";
       break;
-    case "purgecache" :
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
-        if($sg->purgeCache())
-          $adminMessage = $sg->i18n->_g("Thumbnail cache purged");
-        else
-          $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
-      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|Cancel")) {
+    case "suspenduser" :
+      if(!$sg->isAdmin()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
         $includeFile = "menu";
-      } else {
-        $confirmTitle = $sg->i18n->_g("purge cached thumbnails");
-        $dir = $sg->getListing($sg->config->pathto_cache,"all");
-        $confirmMessage = $sg->i18n->_g("Are you sure you want to delete all %s cached thumbnails?",count($dir->files));
-        $includeFile = "confirm";
+        break;
       }
+      if($sg->suspendUser())
+        $adminMessage = $sg->i18n->_g("User info saved");
+      else
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+      $includeFile = "manageusers";
+      break;
+    case "view" :
+      $sg->selectGallery();
+      $includeFile = "view";
       break;
     case "menu" :
     default :
@@ -218,8 +305,6 @@ if($sg->isLoggedIn() || $sg->action == "login")
   }
 else //not logged in
   $includeFile = "login";
-
-if(empty($includeFile)) $includeFile = "menu";
 
 //pass control over to template
 include $sg->config->pathto_admin_template."index.tpl.php";
