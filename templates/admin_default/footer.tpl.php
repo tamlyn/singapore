@@ -1,7 +1,9 @@
 
 <div id="footer"><p>
-  <?php echo $sg->i18n->_g("singapore|Powered by") ?> <?php echo $sg->versionLink() ?> 
-  <?php echo $sg->scriptExecTimeText(); ?>
+  <?php echo $sg->allRightsReserved() ?>
+  <br />
+  <?php echo $sg->poweredByVersion() ?> 
+  <?php echo $sg->scriptExecTimeText() ?>
 </p></div>
 
 </body>
