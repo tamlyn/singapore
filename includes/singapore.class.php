@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.24 2004/05/23 17:16:35 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.25 2004/06/11 18:09:08 tamlyn Exp $
  */
  
 /**
@@ -1022,7 +1022,10 @@ class Singapore
   }
   
   /**
-   * @return string
+   * Creates a correctly formatted &lt;img&gt; tag to display the album 
+   * thumbnail of the specified image
+   * @param int index of image (optional)
+   * @return string html
    */
   function imageThumbnailImage($index = null)
   {
@@ -1035,12 +1038,12 @@ class Singapore
                            $this->config->thumb_height_album,
                            $this->config->thumb_force_size_album).'" ';
     $ret .= 'width="'.$this->thumbnailWidth(
-                           $this->imageWidth($index), $this->imageHeight($index),
+                           $this->imageRealWidth($index), $this->imageRealHeight($index),
                            $this->config->thumb_width_album,
                            $this->config->thumb_height_album,
                            $this->config->thumb_force_size_album).'" ';
     $ret .= 'height="'.$this->thumbnailHeight(
-                           $this->imageWidth($index), $this->imageHeight($index),
+                           $this->imageRealWidth($index), $this->imageRealHeight($index),
                            $this->config->thumb_width_album,
                            $this->config->thumb_height_album,
                            $this->config->thumb_force_size_album).'" ';
@@ -1050,66 +1053,134 @@ class Singapore
     return $ret;
   }
   
+  /**
+   * Calculates thumbnail width given:
+   * @param int original image width
+   * @param int original image height
+   * @param int required image width
+   * @param int required image height
+   * @param bool force size of thumbnail
+   * @return int width of thumbnail in pixels
+   */
   function thumbnailWidth($imageWidth, $imageHeight, $width, $height, $forceSize)
   {
-    if($forceSize || ($width > $imageWidth && $height > $imageHeight)) 
+    //if aspect ratio is to be constrained set crop size
+    if($forceSize) {
+      $newAspect = $width/$height;
+      $oldAspect = $imageWidth/$imageHeight;
+      if($newAspect > $oldAspect) {
+        $cropWidth = $imageWidth;
+        $cropHeight = round($imageHeight*($oldAspect/$newAspect));
+      } else {
+        $cropWidth = round($imageWidth*($newAspect/$oldAspect));
+        $cropHeight = $imageHeight;
+      }
+    //else crop size is image size
+    } else {
+      $cropWidth = $imageWidth;
+      $cropHeight = $imageHeight;
+    }
+    
+    if($cropWidth < $cropHeight && ($cropWidth>$width || $cropHeight>$height))
+      return round($cropWidth/$cropHeight * $width);
+    elseif($cropWidth > $width || $cropHeight > $height)
       return $width;
     else
-      if($imageWidth < $imageHeight)
-        return floor($imageWidth/$imageHeight * $width);
-      else
-        return $width;
+      return $imageWidth;
   }
   
+  /**
+   * Calculates thumbnail height given:
+   * @param int original image width
+   * @param int original image height
+   * @param int required image width
+   * @param int required image height
+   * @param bool force size of thumbnail
+   * @return int height of thumbnail in pixels
+   */
   function thumbnailHeight($imageWidth, $imageHeight, $width, $height, $forceSize)
   {
-    if($forceSize || ($width > $imageWidth && $height > $imageHeight)) 
+    //if aspect ratio is to be constrained set crop size
+    if($forceSize) {
+      $newAspect = $width/$height;
+      $oldAspect = $imageWidth/$imageHeight;
+      if($newAspect > $oldAspect) {
+        $cropWidth = $imageWidth;
+        $cropHeight = round($imageHeight*($oldAspect/$newAspect));
+      } else {
+        $cropWidth = round($imageWidth*($newAspect/$oldAspect));
+        $cropHeight = $imageHeight;
+      }
+    //else crop size is image size
+    } else {
+      $cropWidth = $imageWidth;
+      $cropHeight = $imageHeight;
+    }
+    
+    if($cropWidth < $cropHeight && ($cropWidth>$width || $cropHeight>$height))
       return $height;
+    elseif($cropWidth > $width || $cropHeight > $height)
+      return round($cropHeight/$cropWidth * $height);
     else
-      if($imageWidth > $imageHeight)
-        return floor($imageHeight/$imageWidth * $height);
-      else
-        return $height;
+      return $imageHeight;
   }
   
+  /**
+   * Calculates image width by supplying appropriate values to {@link thumbnailWidth()} 
+   * @param int index of image (optional)
+   * @return int width of image in pixels 
+   */
   function imageWidth($index = null)
   {
-    if($index === null) {
-      $imageWidth  = $this->image->width;
-      $imageHeight = $this->image->height;
-    } else {
-      $imageWidth  = $this->gallery->images[$index]->width;
-      $imageHeight = $this->gallery->images[$index]->height;
-    }
-  
-    if(!$this->config->full_image_resize || $this->config->thumb_force_size_image
-       || ($this->config->thumb_width_image > $imageWidth && $this->config->thumb_image_height > $imageHeight)) 
-      return $imageWidth;
+    if($this->config->full_image_resize)
+      return $this->thumbnailWidth(
+               $this->imageRealWidth($index), $this->imageRealHeight($index), 
+               $this->config->thumb_width_image, $this->config->thumb_height_image, 
+               $this->config->thumb_force_size_image);
     else
-      if($imageWidth < $imageHeight)
-        return floor($imageWidth/$imageHeight * $this->config->thumb_width_image);
-      else
-        return $this->config->thumb_width_image;
+      return $this->imageRealWidth($index);
   }
   
+  /**
+   * Calculates image height by supplying appropriate values to {@link thumbnailHeight()} 
+   * @param int index of image (optional)
+   * @return int height of image in pixels
+   */
   function imageHeight($index = null)
   {
-    if($index === null) {
-      $imageWidth  = $this->image->width;
-      $imageHeight = $this->image->height;
-    } else {
-      $imageWidth  = $this->gallery->images[$index]->width;
-      $imageHeight = $this->gallery->images[$index]->height;
-    }
-  
-    if(!$this->config->full_image_resize || $this->config->thumb_force_size_image 
-       || ($this->config->thumb_width_image > $imageWidth && $this->config->thumb_image_height > $imageHeight)) 
-      return $imageHeight;
+    if($this->config->full_image_resize)
+      return $this->thumbnailHeight(
+               $this->imageRealWidth($index), $this->imageRealHeight($index), 
+               $this->config->thumb_width_image, $this->config->thumb_height_image, 
+               $this->config->thumb_force_size_image);
     else
-      if($imageWidth > $imageHeight)
-        return floor($imageHeight/$this->image->width * $this->config->thumb_height_image);
-      else
-        return $this->config->thumb_height_image;
+      return $this->imageRealHeight($index);
+  }
+  
+  /**
+   * Returns the size of the original image 
+   * @param int index of image (optional)
+   * @return int width of image in pixels
+   */
+  function imageRealWidth($index = null)
+  {
+    if($index === null)
+      return $this->image->width;
+    else
+      return $this->gallery->images[$index]->width;
+  }
+  
+  /**
+   * Returns the size of the original image 
+   * @param int index of image (optional)
+   * @return int height of image in pixels
+   */
+  function imageRealHeight($index = null)
+  {
+    if($index === null)
+      return $this->image->height;
+    else
+      return $this->gallery->images[$index]->height;
   }
   
   
@@ -1209,12 +1280,12 @@ class Singapore
                              $this->config->thumb_height_preview,
                              $this->config->thumb_force_size_preview).'" ';
       $ret .= 'width="'.$this->thumbnailWidth(
-                             $this->imageWidth($i), $this->imageHeight($i),
+                             $this->imageRealWidth($i), $this->imageRealHeight($i),
                              $this->config->thumb_width_preview,
                              $this->config->thumb_height_preview,
                              $this->config->thumb_force_size_preview).'" ';
       $ret .= 'height="'.$this->thumbnailHeight(
-                             $this->imageWidth($i), $this->imageHeight($i),
+                             $this->imageRealWidth($i), $this->imageRealHeight($i),
                              $this->config->thumb_width_preview,
                              $this->config->thumb_height_preview,
                              $this->config->thumb_force_size_preview).'" ';
