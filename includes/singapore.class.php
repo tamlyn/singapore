@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.46 2005/03/23 01:46:49 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.47 2005/03/23 14:20:03 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -114,10 +114,6 @@ class Singapore
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
     $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
     $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
-    
-    //convert octal strings to integers
-    if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
-    if(isset($this->config->file_mode) && is_string($this->config->file_mode)) $this->config->file_mode = octdec($this->config->file_mode);
     
     //set current language from request vars or config
     if(!empty($_REQUEST[$this->config->url_lang]))

@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.8 2004/11/01 08:17:34 tamlyn Exp $
+ * @version $Id: extract.php,v 1.9 2005/03/23 14:20:11 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -79,7 +79,6 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   // Close tempfile
   fclose($fp);
   
-  
   // Call gettext
   $res = shell_exec("{$GETTEXT_EXTRACT} --debug --keyword=_g --keyword=_ng:1,2 --keyword=__g -C -F --output=\"" . $standardPot . "\" --files-from=\"" . $temp . "\"");
   if (trim($res)) die("Something seemed to go wrong with gettext:\n" . $res . "\n");
@@ -87,7 +86,9 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   
   // Remove tempfile
   unlink($temp);
-
+  
+  //set permissions on new POT file
+  @chmod($standardPot, $config->file_mode);
   
   
 ///////admin///////////
@@ -113,6 +114,9 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   // Remove tempfile
   unlink($temp);
 
+  //set permissions on new POT file
+  @chmod($adminPot, $config->file_mode);
+  
 ?>
 </p>
 

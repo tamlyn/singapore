@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: install.inc.php,v 1.1 2004/12/02 12:01:59 tamlyn Exp $
+ * @version $Id: install.inc.php,v 1.2 2005/03/23 14:20:11 tamlyn Exp $
  */
 
 /**
@@ -110,9 +110,10 @@ function createDirectories($config)
       else
         $success = setupError("Cache directory already exists at ".$config->base_path.$config->pathto_cache." but is not writable. Please CHMOD to 777");
     else
-      if(mkdir($config->base_path.$config->pathto_cache, $config->directory_mode)) 
+      if(mkdir($config->base_path.$config->pathto_cache, $config->directory_mode)) {
+        @chmod($config->base_path.$config->pathto_cache, $config->directory_mode);
         setupMessage("Created cache directory at ".$config->base_path.$config->pathto_cache);
-      else
+      } else
         $success = setupError("Could not create cache directory at ".$config->base_path.$config->pathto_cache);
     if($config->track_views)
       if(file_exists($config->base_path.$config->pathto_logs))
@@ -121,9 +122,10 @@ function createDirectories($config)
         else
           $success = setupError("Logs directory already exists at ".$config->base_path.$config->pathto_logs." but is not writable. Please CHMOD to 777");
       else
-        if(mkdir($config->base_path.$config->pathto_logs, $config->directory_mode)) 
+        if(mkdir($config->base_path.$config->pathto_logs, $config->directory_mode)) {
+          @chmod($config->base_path.$config->pathto_logs, $config->directory_mode); 
           setupMessage("Created logs directory at ".$config->base_path.$config->pathto_logs);
-        else
+        } else
           $success = setupError("Could not create logs directory at ".$config->base_path.$config->pathto_logs);
     else
       setupMessage("View logging disabled. Logs directory not created");

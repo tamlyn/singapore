@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: config.class.php,v 1.5 2004/09/06 16:30:23 tamlyn Exp $
+ * @version $Id: config.class.php,v 1.6 2005/03/23 14:20:03 tamlyn Exp $
  */
 
 /**
@@ -40,6 +40,10 @@ class sgConfig
 	  //get values from ini file
     $ini_values = parse_ini_file($configFilePath);
 
+    //convert octal strings to integers
+    if(isset($ini_values['directory_mode']) && is_string($ini_values['directory_mode'])) $ini_values['directory_mode'] = octdec($ini_values['directory_mode']);
+    if(isset($ini_values['file_mode']) && is_string($ini_values['file_mode'])) $ini_values['file_mode'] = octdec($ini_values['file_mode']);
+    
     //import values into object scope
     foreach($ini_values as $key => $value) $this->$key = $value;
  

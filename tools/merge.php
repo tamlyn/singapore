@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: merge.php,v 1.3 2004/02/02 16:31:37 tamlyn Exp $
+ * @version $Id: merge.php,v 1.4 2005/03/23 14:20:11 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -76,8 +76,12 @@ function parseDirectory ($dir, $filter = 'php|html|tpl|inc')
     $res = shell_exec("{$GETTEXT_MERGE} --strict \"{$backup}\" \"" . $standardPot . "\" > \"{$file}\"");
     if (trim($res)) echo "Something seemed to go wrong with msgmerge:\n" . $res . "\n";
     else echo "$standardPot merged with $file<br />";
+    
     // Remove backup?
     if (!@$createbackups) @unlink($backup);
+    
+    //set permissions on new POT file
+    @chmod($standardPot, $config->file_mode);
   }  
 
 ///////admin///////////
@@ -91,8 +95,12 @@ function parseDirectory ($dir, $filter = 'php|html|tpl|inc')
     $res = shell_exec("{$GETTEXT_MERGE} --strict \"{$backup}\" \"" . $adminPot . "\" > \"{$file}\"");
     if (trim($res)) echo "Something seemed to go wrong with msgmerge:\n" . $res . "\n";
     else echo "$adminPot merged with $file<br />";
+    
     // Remove backup?
     if (!@$createbackups) @unlink($backup);
+    
+    //set permissions on new POT file
+    @chmod($adminPot, $config->file_mode);
   }
 
 ?>

@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.35 2005/03/23 01:46:49 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.36 2005/03/23 14:19:55 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -85,10 +85,6 @@ class sgAdmin extends Singapore
     
     //do not load gallery-specific ini files
 
-    //convert octal strings to integers
-    if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
-    if(isset($this->config->file_mode) && is_string($this->config->file_mode)) $this->config->file_mode = octdec($this->config->file_mode);
-    
     //set current language from request vars or config
     $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
     //read the standard language file
@@ -588,15 +584,20 @@ class sgAdmin extends Singapore
     $newGalleryId = $this->gallery->id."/".$_REQUEST["newgallery"];
     $path = $this->config->pathto_galleries.$newGalleryId;
     
+    //fail if directory already exists
     if(file_exists($path)) {
       $this->lastError = $this->i18n->_g("Gallery already exists");
       return false;
     }
     
+    //create directory or fail
     if(!mkdir($path, $this->config->directory_mode)) {
       $this->lastError = $this->i18n->_g("Could not create directory");
       return false;
     }
+    
+    //explicitly set permissions on gallery directory
+    @chmod($path, $this->config->directory_mode);
     
     $gal = new sgGallery($newGalleryId);
     $gal->name = $_REQUEST["newgallery"];
@@ -608,9 +609,10 @@ class sgAdmin extends Singapore
     else
       $gal->owner = $_SESSION["sgUser"]->username;
     
+    //save gallery metadata
     if($this->io->putGallery($gal))
       return true;
-      
+    
     $this->lastError = $this->i18n->_g("Could not save gallery info");
     return false;
   }
@@ -742,10 +744,7 @@ class sgAdmin extends Singapore
       }
       
       // try to change file-permissions
-      if(!@chmod($path, $this->config->file_mode)) {
-        $this->lastError = $this->i18n->_g("Could not change file permissions");
-        return false;
-      } 
+      @chmod($path, $this->config->file_mode);
       
     }
     
@@ -841,6 +840,9 @@ class sgAdmin extends Singapore
       
       copy($wd.'/'.$srcImage,$path);
       
+      // try to change file-permissions
+      @chmod($path, $this->config->file_mode);
+      
       $img = new sgImage();
       
       $img->filename = $image;
@@ -848,7 +850,7 @@ class sgAdmin extends Singapore
       list($img->width, $img->height, $img->type) = GetImageSize($path);
       $img->owner = $_SESSION["sgUser"]->username;
       
-      $this->gallery->images[count($this->gallery->images)] = $img;
+      $this->gallery->images[] = $img;
     }
     
     //add any directories as subgalleries, if allowed
@@ -873,6 +875,9 @@ class sgAdmin extends Singapore
           }
   
         rename($wd.'/'.$gallery,$path);
+        
+        //change directory permissions (but not contents)
+        @chmod($path, $this->config->directory_mode);
       }
     
     //if images were added save metadata

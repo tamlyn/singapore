@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.35 2005/03/22 21:46:57 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.36 2005/03/23 14:20:11 tamlyn Exp $
  */
 
 //require config class
@@ -114,74 +114,75 @@ function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
   
   
   switch($config->thumbnail_software) {
-  case "im" : //use ImageMagick  
-    $cmd  = '"'.$config->pathto_convert.'"';
-    if($forceSize) $cmd .= " -crop {$cropWidth}x{$cropHeight}+$cropX+$cropY";
-    $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
-    if($imageType == 2) $cmd .= " -quality $thumbQuality";
-    if($config->progressive_thumbs) $cmd .= " -interlace Plane";
-    if($config->remove_jpeg_profile) $cmd .= ' +profile "*"';
-    $cmd .= ' '.escapeshellarg($imagePath).' '.escapeshellarg($thumbPath);
-    
-    exec($cmd);
-    readfile($thumbPath);
-    
-    break;
-  case "gd2" :
-  case "gd1" :
-  default : //use GD by default
-    //read in image as appropriate type
-    switch($imageType) {
-      case 1 : $image = ImageCreateFromGIF($imagePath); break;
-      case 3 : $image = ImageCreateFromPNG($imagePath); break;
-      case 2 : 
-      default: $image = ImageCreateFromJPEG($imagePath); break;
-    }
-    
-    switch($config->thumbnail_software) {
+    case "im" : //use ImageMagick  
+      $cmd  = '"'.$config->pathto_convert.'"';
+      if($forceSize) $cmd .= " -crop {$cropWidth}x{$cropHeight}+$cropX+$cropY";
+      $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
+      if($imageType == 2) $cmd .= " -quality $thumbQuality";
+      if($config->progressive_thumbs) $cmd .= " -interlace Plane";
+      if($config->remove_jpeg_profile) $cmd .= ' +profile "*"';
+      $cmd .= ' '.escapeshellarg($imagePath).' '.escapeshellarg($thumbPath);
+      
+      exec($cmd);
+      readfile($thumbPath);
+      
+      break;
     case "gd2" :
-      //create blank truecolor image
-      $thumb = ImageCreateTrueColor($thumbWidth,$thumbHeight);
-      //resize image with resampling
-      ImageCopyResampled(
-        $thumb,                    $image,
-        0,           0,            $cropX,     $cropY,
-        $thumbWidth, $thumbHeight, $cropWidth, $cropHeight);
-      break;
     case "gd1" :
-    default :
-      //create blank 256 color image
-      $thumb = ImageCreate($thumbWidth,$thumbHeight);
-      //resize image
-      ImageCopyResized(
-        $thumb,                    $image,
-        0,           0,            $cropX,     $cropY,
-        $thumbWidth, $thumbHeight, $cropWidth, $cropHeight);
-      break;
-    }
-    
-    //set image interlacing
-    ImageInterlace($thumb,$config->progressive_thumbs);
-    
-    //output image of appropriate type
-    switch($imageType) {
-      case 1 :
-        //GIF images are output as PNG
-      case 3 :
-        ImagePNG($thumb); 
-        ImagePNG($thumb,$thumbPath); 
+    default : //use GD by default
+      //read in image as appropriate type
+      switch($imageType) {
+        case 1 : $image = ImageCreateFromGIF($imagePath); break;
+        case 3 : $image = ImageCreateFromPNG($imagePath); break;
+        case 2 : 
+        default: $image = ImageCreateFromJPEG($imagePath); break;
+      }
+      
+      switch($config->thumbnail_software) {
+      case "gd2" :
+        //create blank truecolor image
+        $thumb = ImageCreateTrueColor($thumbWidth,$thumbHeight);
+        //resize image with resampling
+        ImageCopyResampled(
+          $thumb,                    $image,
+          0,           0,            $cropX,     $cropY,
+          $thumbWidth, $thumbHeight, $cropWidth, $cropHeight);
         break;
-      case 2 :
-      default: 
-        ImageJPEG($thumb,"",$thumbQuality); 
-        ImageJPEG($thumb,$thumbPath,$thumbQuality); 
+      case "gd1" :
+      default :
+        //create blank 256 color image
+        $thumb = ImageCreate($thumbWidth,$thumbHeight);
+        //resize image
+        ImageCopyResized(
+          $thumb,                    $image,
+          0,           0,            $cropX,     $cropY,
+          $thumbWidth, $thumbHeight, $cropWidth, $cropHeight);
         break;
-    }
-    ImageDestroy($image);
-    ImageDestroy($thumb);
-    @chmod($thumbPath, octdec($config->file_mode));
+      }
+      
+      //set image interlacing
+      ImageInterlace($thumb,$config->progressive_thumbs);
+      
+      //output image of appropriate type
+      switch($imageType) {
+        case 1 :
+          //GIF images are output as PNG
+        case 3 :
+          ImagePNG($thumb); 
+          ImagePNG($thumb,$thumbPath); 
+          break;
+        case 2 :
+        default: 
+          ImageJPEG($thumb,"",$thumbQuality); 
+          ImageJPEG($thumb,$thumbPath,$thumbQuality); 
+          break;
+      }
+      ImageDestroy($image);
+      ImageDestroy($thumb);
   }
-
+  
+  //set file permissions on newly created thumbnail
+  @chmod($thumbPath, $config->file_mode);
 }
 
 ?>
