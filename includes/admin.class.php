@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.14 2004/04/11 16:14:00 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.15 2004/05/14 02:58:26 tamlyn Exp $
  */
 
 /**
@@ -451,7 +451,7 @@ class sgAdmin extends Singapore
     $cmd  = escapeshellcmd($this->config->pathto_unzip);
     $cmd .= ' -d '.escapeshellarg(realpath($tmpdir));
     $cmd .= ' '.escapeshellarg(realpath($archive));
-    echo $cmd;
+    
     if(!exec($cmd)) {
       $this->lastError = $this->i18n->_g("Could not decompress archive"); 
       return false;
