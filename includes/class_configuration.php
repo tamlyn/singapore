@@ -28,12 +28,15 @@ class sgConfiguration
   function sgConfiguration()
   {
     //get values from ini file
-    $ini_values = parse_ini_file("config.ini");
+    $ini_values = parse_ini_file("data/singapore.ini");
 
     //import values into object scope
     foreach($ini_values as $key => $value) $this->$key = $value;
  
     //set runtime values
+    $this->pathto_logs = $this->pathto_data_dir."logs/";
+    $this->pathto_cache = $this->pathto_data_dir."cache/";
+    
     $this->pathto_current_theme = $this->pathto_themes.$this->theme_name."/";
     if(empty($this->pathto_extra_css)) $this->pathto_extra_css = $this->pathto_current_theme."extra.css";
   }
