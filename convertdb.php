@@ -94,7 +94,7 @@ if(isset($_REQUEST["tempfile"])) {
 From version:<br />
 <input type="radio" name="fromver" value="0.9" checked="true" />0.9 or 0.9a<br />
 To version:<br />
-<input type="radio" name="tover" value="0.9.1" checked="true" />0.9.1<br />
+<input type="radio" name="tover" value="0.9.1" checked="true" />0.9.1 and up<br />
 </p>
 <p>Metadata file: 
 <input type="file" name="tempfile" />
