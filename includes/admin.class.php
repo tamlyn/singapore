@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.21 2004/09/27 07:29:28 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.22 2004/10/14 02:05:26 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -67,7 +67,7 @@ class sgAdmin extends Singapore
       $_FILES   = array_map(array("Singapore","arraystripslashes"), $_FILES);
     }
     
-    if(empty($galleryId)) $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
+    $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
     //load config from default ini file (singapore.ini)
     $this->config = new sgConfig("singapore.ini");

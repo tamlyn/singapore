@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title><?php echo $sg->pageTitle; ?></title>
+<title><?php echo $sg->pageTitle(); ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>main.css" />
 <?php echo $sg->navigationLinks(); ?>
 <!-- 

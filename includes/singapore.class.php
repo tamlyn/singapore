@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.31 2004/10/11 05:24:11 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.32 2004/10/14 02:05:26 tamlyn Exp $
  */
 
 //define constants for request variables
@@ -73,7 +73,7 @@ class Singapore
   var $action = null;
   
   /**
-   * Constructor
+   * Constructor, does all init type stuff. This code is a total mess.
    * @param string the path to the base singapore directory
    */
   function Singapore($basePath = "")
@@ -93,11 +93,20 @@ class Singapore
     if(get_magic_quotes_gpc())
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
-    if(empty($galleryId)) 
-      $galleryId = isset($_REQUEST[SG_GALLERY]) ? $_REQUEST[SG_GALLERY] : ".";
+    $galleryId = isset($_REQUEST[SG_GALLERY]) ? $_REQUEST[SG_GALLERY] : ".";
     
     //load config from singapore root directory
     $this->config = new sgConfig($basePath."singapore.ini");
+    
+    //if instantiated remotely...
+    if(!empty($basePath)) {
+      //...try to guess base path and relative url
+      $this->config->base_path = $basePath;
+      $this->config->base_url  = $basePath;
+      //...load local config if present
+      //over-rides guessed values above
+      $this->config->loadConfig("singapore.local.ini");
+    }
     
     //load config from gallery ini file (gallery.ini) if present
     $this->config->loadConfig($basePath.$this->config->pathto_galleries.$galleryId."/gallery.ini");
@@ -107,18 +116,12 @@ class Singapore
     //load config from template ini file (template.ini) if present
     $this->config->loadConfig($basePath.$this->config->pathto_current_template."template.ini");
     
-    //if instantiated remotely load local config
-    if(!empty($basePath))
-      $this->config->loadConfig("singapore.local.ini");
     
     //set runtime values
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
     $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
     $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
-    if(!empty($basePath)) {
-      $this->config->base_path = $basePath;
-      $this->config->base_url  = $basePath;
-    }
+    
     
     //convert octal strings to integers
     if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
@@ -290,6 +293,11 @@ class Singapore
         return "<a href=\"mailto:".$email."\">".$email."</a>";
   }
 
+  /**
+   * rawurlencode() supplied string but preserve / character for cosmetic reasons.
+   * @param  string
+   * @return string
+   */
   function encodeId($id)
   {
     $bits = explode("/",$id);
@@ -303,6 +311,11 @@ class Singapore
    * Returns a link to the image or gallery with the correct formatting and path
    *
    * @author   Adam Sissman <adam at bluebinary dot com>
+   * @param string  gallery id
+   * @param string  image filename (optional)
+   * @param int  page offset (optional)
+   * @param string  action to perform (optional)
+   * @return string formatted URL
    */
   function formatURL($gallery, $image = null, $startat = null, $action = null)
   {
@@ -332,6 +345,22 @@ class Singapore
     }
     
     return $ret;
+  }
+  
+  /**
+   * Returns image name for image pages and gallery name for gallery pages.
+   * If either of these is empty, returns gallery_name config option.
+   *
+   * @return string  Title of current page
+   */
+  function pageTitle()
+  {
+    if($this->isImage() && $this->imageName()!="")
+      return $this->imageName();
+    elseif(($this->isAlbum() || $this->isGallery()) && $this->galleryName()!="")
+      return $this->galleryName();
+    else
+      return $this->config->gallery_name;
   }
   
   
@@ -421,7 +450,7 @@ class Singapore
    */
   function isGallery($index = null)
   {
-    return $this->galleryHasSubGalleries($index);
+    return !empty($this->gallery) && $this->galleryHasSubGalleries($index);
   }
   
   /**
@@ -429,7 +458,7 @@ class Singapore
    */
   function isAlbum($index = null)
   {
-    return !$this->isGallery($index) && !$this->isImage();
+    return !$this->isGallery($index) && !$this->isImage() && !empty($this->gallery);
   }
   
   /**
@@ -451,8 +480,7 @@ class Singapore
   
   /**
    * Displays the script execution time if configured to do so
-   * @uses scriptExecTime()
-   * @returns string the script execution time
+   * @returns string  the script execution time
    */
   function scriptExecTimeText()
   {
@@ -763,9 +791,9 @@ class Singapore
   function galleryCount($index = null)
   {
     if($index === null)
-      return count($this->gallery->galleries);
+      return @count($this->gallery->galleries);
     else
-      return count($this->gallery->galleries[$index]->galleries);
+      return @count($this->gallery->galleries[$index]->galleries);
   }
   
   /**
