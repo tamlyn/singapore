@@ -12,11 +12,12 @@
 <h1>singapore - Development</h1>
 
 <p>The information in this file is for people who wish to contribute to 
-<strong>singapore</strong>, modify it or understand how it works.</p>
+singapore, modify it or understand how it works.</p>
 
 <ul>
   <li><a href="#csvformat">CSV database format</a></li>
   <li><a href="Readme.html">General readme</a></li>
+  <li><a href="Advanced.html">Advanced features</a></li>
   <li><a href="Translation.html">Translating singapore</a></li>
 </ul>
 
@@ -31,8 +32,8 @@ or using a spreadsheet application (such as MS Excel). Care must be taken when u
 Excel to save using commas as the separator character and not tabs or semi-colons.</p>
 
 <p>The first line of each file stores human-readable descriptions of the fields 
-and is ignored by <strong>singapore</strong>. The second line stores information 
-about this gallery:</p>
+and is ignored by singapore. The second line stores information about this 
+gallery:</p>
 
 <pre>
   field 0
@@ -40,11 +41,11 @@ about this gallery:</p>
   field 1
      (not used)
   field 2
-     the owner of the gallery (not used)
+     the owner of the gallery
   field 3
-     space-separated list of usergroups (not used)
+     space-separated list of usergroups
   field 4 
-     gallery permission flags (not used)
+     gallery permission flags
   field 5
      space-separated list of categories the gallery belongs in (not used)
   field 6
@@ -56,8 +57,12 @@ about this gallery:</p>
   field 9
      copyright holder (optional)
   field 10
-     short description of the gallery (optional)
-  field 11 onwards
+     description of the gallery (optional)
+  field 11
+     short summary of the gallery (optional)
+  field 12
+     human-readable date (optional)
+  field 13 onwards
      (not used)
 </pre>
 
@@ -68,13 +73,13 @@ The format is as follows:</p>
   field 0
      the filename of the image
   field 1
-     the filename of the thumbnail image (not used)
+     the filename of the thumbnail image
   field 2
-     the owner of the image (not used)
+     the owner of the image
   field 3
-     space-separated list of usergroups (not used)
+     space-separated list of usergroups
   field 4 
-     image permission flags (not used)
+     image permission flags
   field 5
      space-separated list of categories the image belongs in (not used)
   field 6
@@ -103,7 +108,7 @@ The format is as follows:</p>
      digital manipulation (optional)
 </pre>
 
-<p><em>$Date: 2003/09/09 17:10:36 $</em></p>
+<p><em>$Date: 2004/10/15 18:53:36 $</em></p>
 
 </body>
 </html>
