@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.26 2004/05/14 13:43:22 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.27 2004/05/15 01:48:16 tamlyn Exp $
  */
 
 //require config class
@@ -76,8 +76,8 @@ function showThumb($gallery, $image, $width, $height, $forceAspect) {
   }
   
   //set cropping offset
-  $cropX = ($imageWidth-$cropWidth)/2;
-  $cropY = ($imageHeight-$cropHeight)/2;
+  $cropX = floor(($imageWidth-$cropWidth)/2);
+  $cropY = floor(($imageHeight-$cropHeight)/2);
     
   //compute width and height of thumbnail to create
   if($cropWidth < $cropHeight && ($cropWidth>$width || $cropHeight>$height)) {
