@@ -1,0 +1,161 @@
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# Piotr Szczepanski <me@piotr-szczepanski.org>, 2003.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore-0.9.7\n"
+"POT-Creation-Date: 2003-11-01 14:13+0000\n"
+"PO-Revision-Date: 2003-11-01 14:13+0000\n"
+"Last-Translator: Piotr Szczepanski <me@piotr-szczepanski.org>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../includes/singapore.class.php:247
+#, possible-c-format
+msgid "Page created in %s seconds"
+msgstr "Czas generowania strony: %s s"
+
+#: ../includes/singapore.class.php:264
+#, possible-c-format
+msgid "singapore|Powered by %s"
+msgstr "Obs³ugiwane przez %s"
+
+#: ../includes/singapore.class.php:269
+msgid "All rights reserved."
+msgstr "Wszelkie prawa zastrze¿one."
+
+#: ../includes/singapore.class.php:274
+msgid ""
+"Images may not be reproduced in any form without the express written "
+"permission of the copyright holder."
+msgstr "Obrazy nie mog± byæ reprodukowane w ¿adnej formie bez wyra¼nej zgody w³a¶ciciela praw autorskich, wyra¿onej na pi¶mie."
+
+#: ../includes/singapore.class.php:279
+msgid "Log in"
+msgstr "Zaloguj siê"
+
+#: ../includes/singapore.class.php:407
+msgid "crumb line|You are here:"
+msgstr "Jeste¶ w:"
+
+#: ../includes/singapore.class.php:447
+#, possible-c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] "Jedna galeria"
+msgstr[1] "Galerii: %s"
+
+#: ../includes/singapore.class.php:476
+#, possible-c-format
+msgid "%s image"
+msgid_plural "%s images"
+msgstr[0] "Jeden obraz"
+msgstr[1] "Obrazków: %s"
+
+#: ../includes/singapore.class.php:520 ../includes/singapore.class.php:530
+msgid "Sample image from gallery"
+msgstr "Przyk³adowy obraz z galerii"
+
+#: ../includes/singapore.class.php:524
+msgid ""
+"No\n"
+"thumbnail"
+msgstr "Brak\npróbki"
+
+#: ../includes/singapore.class.php:564
+#, possible-c-format
+msgid "Showing %s-%s of %s"
+msgstr "Od %s do %s z %s"
+
+#: ../includes/singapore.class.php:576
+msgid "gallery|Up"
+msgstr "W górê"
+
+#: ../includes/singapore.class.php:576
+msgid "gallery|Up one level"
+msgstr "Poziom w górê"
+
+#: ../includes/singapore.class.php:600
+msgid "gallery|Next"
+msgstr "Dalej"
+
+#: ../includes/singapore.class.php:609
+msgid "gallery|Previous"
+msgstr "Wstecz"
+
+#: ../includes/singapore.class.php:617 ../includes/singapore.class.php:822
+#, possible-c-format
+msgid "artist name|by %s"
+msgstr "Autor: %s"
+
+#: ../includes/singapore.class.php:673 ../includes/singapore.class.php:675
+#: ../includes/singapore.class.php:947 ../includes/singapore.class.php:949
+msgid "Email"
+msgstr "E-mail"
+
+#: ../includes/singapore.class.php:677 ../includes/singapore.class.php:955
+msgid "Description"
+msgstr "Opis"
+
+#: ../includes/singapore.class.php:679 ../includes/singapore.class.php:681
+#: ../includes/singapore.class.php:967 ../includes/singapore.class.php:969
+msgid "Copyright"
+msgstr "Prawa autorskie"
+
+#: ../includes/singapore.class.php:683 ../includes/singapore.class.php:971
+msgid "Viewed"
+msgstr "Ogl±dane"
+
+#: ../includes/singapore.class.php:683 ../includes/singapore.class.php:971
+#, possible-c-format
+msgid "viewed|%s time"
+msgid_plural "viewed|%s times"
+msgstr[0] "%s raz"
+msgstr[1] "%s razy"
+
+#: ../includes/singapore.class.php:796
+msgid "Add a comment"
+msgstr "Dodaj komentarz"
+
+#: ../includes/singapore.class.php:899
+msgid "image|Previous"
+msgstr "Wstecz"
+
+#: ../includes/singapore.class.php:916
+msgid "image|Thumbnails"
+msgstr "Miniatury"
+
+#: ../includes/singapore.class.php:927
+msgid "image|Next"
+msgstr "Dalej"
+
+#: ../includes/singapore.class.php:951
+msgid "Location"
+msgstr "Po³o¿enie"
+
+#: ../includes/singapore.class.php:953
+msgid "Date"
+msgstr "Data"
+
+#: ../includes/singapore.class.php:957
+msgid "Camera"
+msgstr "Aparat"
+
+#: ../includes/singapore.class.php:959
+msgid "Lens"
+msgstr "Obiektyw"
+
+#: ../includes/singapore.class.php:961
+msgid "Film"
+msgstr "Film"
+
+#: ../includes/singapore.class.php:963
+msgid "Darkroom manipulation"
+msgstr "Obróbka w ciemni"
+
+#: ../includes/singapore.class.php:965
+msgid "Digital manipulation"
+msgstr "Obróbka cyfrowa"

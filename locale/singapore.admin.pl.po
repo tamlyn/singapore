@@ -1,0 +1,369 @@
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# Piotr Szczepanski <me@piotr-szczepanski.org>, 2003.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore-0.9.7\n"
+"POT-Creation-Date: 2003-11-01 14:13+0000\n"
+"PO-Revision-Date: 2003-11-01 14:13+0000\n"
+"Last-Translator: Piotr Szczepanski <me@piotr-szczepanski.org>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../admin.php:44
+msgid "Welcome to singapore admin!"
+msgstr "Witamy w panelu administracyjnym Singapore!"
+
+#: ../admin.php:47 ../admin.php:56 ../admin.php:65 ../admin.php:80
+#: ../admin.php:94 ../admin.php:105 ../admin.php:122 ../admin.php:140
+#: ../admin.php:154 ../admin.php:164 ../admin.php:189
+msgid "An error occurred:"
+msgstr "Wyst±pi³ b³±d:"
+
+#: ../admin.php:53
+msgid "Thank you and goodbye!"
+msgstr "Dziêkujê i do widzenia!"
+
+#: ../admin.php:63
+msgid "Password saved"
+msgstr "Has³o zosta³o zapisane"
+
+#: ../admin.php:77
+msgid "Gallery added"
+msgstr "Galeria zosta³a dodana"
+
+#: ../admin.php:91
+msgid "Gallery info saved"
+msgstr "Informacja o galerii zosta³a zachowana"
+
+#: ../admin.php:100 ../admin.php:118 ../admin.php:160 ../admin.php:185
+msgid "confirm|OK"
+msgstr "OK"
+
+#: ../admin.php:103
+msgid "Gallery deleted"
+msgstr "Galeria zosta³a usuniêta"
+
+#: ../admin.php:108 ../admin.php:124 ../admin.php:166 ../admin.php:190
+msgid "confirm|Cancel"
+msgstr "Anuluj"
+
+#: ../admin.php:111
+msgid "delete gallery"
+msgstr "Usuñ galeriê"
+
+#: ../admin.php:112
+#, possible-c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and "
+"images it contains?"
+msgstr "Galeria %s nie jest pusta.\nCzy jeste¶ pewien, ¿e chcesz bezpowrotnie usun±æ j± oraz wszystkie galerie i obrazy w niej zawarte?"
+
+#: ../admin.php:120
+msgid "Thumbnail changed"
+msgstr "Miniatura zosta³a zmieniona"
+
+#: ../admin.php:137
+msgid "Image added"
+msgstr "Obraz zosta³ dodany"
+
+#: ../admin.php:151
+msgid "Image saved successfully"
+msgstr "Obraz zosta³ pomy¶lnie zapisany"
+
+#: ../admin.php:162
+msgid "Image deleted"
+msgstr "Obraz zosta³ usuniêty"
+
+#: ../admin.php:169
+msgid "delete image"
+msgstr "Usuñ obraz"
+
+#: ../admin.php:170
+#, possible-c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "Czy jeste¶ pewien, ¿e chcesz bezpowrotnie usun±æ obraz %s z galerii %s?"
+
+#: ../admin.php:187
+msgid "Thumbnail cache purged"
+msgstr "Bufor miniatur zosta³ opró¿niony"
+
+#: ../admin.php:193
+msgid "purge cached thumbnails"
+msgstr "Opró¿nij bufor miniatur"
+
+#: ../admin.php:195
+#, possible-c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "Czy jeste¶ pewien, ¿e chcesz usun±æ wszystkie buforowane miniatury? (jest ich %s)"
+
+#: ../includes/admin.class.php:163
+msgid "admin bar|Back"
+msgstr "Wstecz"
+
+#: ../includes/admin.class.php:165
+msgid "admin bar|Admin"
+msgstr "Admin"
+
+#: ../includes/admin.class.php:166
+msgid "admin bar|Galleries"
+msgstr "Galerie"
+
+#: ../includes/admin.class.php:167
+msgid "admin bar|Log out"
+msgstr "Wyloguj siê"
+
+#: ../includes/admin.class.php:169
+msgid "admin bar|Edit gallery"
+msgstr "Edytuj galeriê"
+
+#: ../includes/admin.class.php:170
+msgid "admin bar|Delete gallery"
+msgstr "Usuñ galeriê"
+
+#: ../includes/admin.class.php:171
+msgid "admin bar|New subgallery"
+msgstr "Nowa podgaleria"
+
+#: ../includes/admin.class.php:173
+msgid "admin bar|Edit image"
+msgstr "Edytuj obraz"
+
+#: ../includes/admin.class.php:174
+msgid "admin bar|Delete image"
+msgstr "Usuñ obraz"
+
+#: ../includes/admin.class.php:176
+msgid "admin bar|New image"
+msgstr "Nowy obraz"
+
+#: ../includes/admin.class.php:200
+msgid "There was an error saving the new password."
+msgstr "Zapis nowego has³a nie powiód³ siê."
+
+#: ../includes/admin.class.php:203
+msgid "New password must be between 6 and 16 characters long."
+msgstr "Haslo musi sk³adaæ siê z co najmniej 6 i nie wiêcej ni¿ 16 znaków."
+
+#: ../includes/admin.class.php:205
+msgid "The new passwords you entered do not match."
+msgstr "Podane przez Ciebie nowe has³a s± niezgodne."
+
+#: ../includes/admin.class.php:207
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr "Podane przez Ciebie bie¿±ce has³o nie zgadza siê z has³em w bazie danych."
+
+#: ../includes/admin.class.php:210
+msgid "The username specified was not found in the database."
+msgstr "Nazwa u¿ytkownika nie zosta³a znaleziona w bazie danych."
+
+#: ../includes/admin.class.php:246
+msgid "Username and/or password incorrect"
+msgstr "Nieprawid³owe has³o lub nazwa u¿ytkownika"
+
+#: ../includes/admin.class.php:249
+msgid "You must enter a username and password"
+msgstr "Musisz podaæ nazwê u¿ytkownika i has³o"
+
+#: ../includes/admin.class.php:274
+msgid "Gallery already exists"
+msgstr "Galeria ju¿ istnieje"
+
+#: ../includes/admin.class.php:281
+msgid "Could not create directory"
+msgstr "Nie uda³o siê utworzyæ katalogu"
+
+#: ../includes/admin.class.php:305
+msgid "Could not save gallery info"
+msgstr "Nie uda³o siê zapisaæ informacji o galerii"
+
+#: ../includes/admin.class.php:323
+msgid "Cannot delete the top level directory"
+msgstr "Nie mo¿na usun±æ katalogu g³ównego"
+
+#: ../includes/admin.class.php:364
+msgid "File already exists"
+msgstr "Plik ju¿ istnieje"
+
+#: ../includes/admin.class.php:374
+msgid "Invalid location choice"
+msgstr "Nieprawid³owy wybór po³o¿enia"
+
+#: ../includes/admin.class.php:393
+msgid "Could not add image to gallery"
+msgstr "Nie uda³o siê dodaæ obrazu do galerii"
+
+#: ../includes/admin.class.php:426
+msgid "Could not save image information"
+msgstr "Nie uda³o siê zapisaæ informacji o obrazie"
+
+#: ../includes/admin.class.php:448
+msgid "Could not delete image"
+msgstr "Nie uda³o siê usun±æ obrazu"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr "Wybierz miniaturê"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "Wybierz nazwê pliku obrazu, który bêdzie reprezentowa³ tê galeriê."
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr "Brak"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr "Losowo"
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr "Edytuj galeriê"
+
+#: ../templates/admin_default/editgallery.tpl.php:14
+msgid "Gallery thumbnail:"
+msgstr "Miniatura galerii:"
+
+#: ../templates/admin_default/editgallery.tpl.php:18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr "Miniatura\nlosowana"
+
+#: ../templates/admin_default/editgallery.tpl.php:23
+msgid "thumbnail|Change..."
+msgstr "Zmieñ..."
+
+#: ../templates/admin_default/editgallery.tpl.php:27
+msgid "Gallery name"
+msgstr "Nazwa galerii"
+
+#: ../templates/admin_default/editgallery.tpl.php:31
+#: ../templates/admin_default/editimage.tpl.php:22
+msgid "Artist name"
+msgstr "Autor"
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr "Edytuj obraz"
+
+#: ../templates/admin_default/editimage.tpl.php:14
+msgid "Image"
+msgstr "Obraz"
+
+#: ../templates/admin_default/editimage.tpl.php:18
+msgid "Image name"
+msgstr "Nazwa obrazu"
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr "Zmiana has³a"
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "Wybierz proszê nowe has³o, maj±ce co najmniej 6 i nie wiêcej ni¿ 16 znaków."
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr "Obecne has³o:"
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr "Nowe has³o:"
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr "Potwierd¼ has³o:"
+
+#: ../templates/admin_default/footer.tpl.php:3
+msgid "singapore|Powered by"
+msgstr "Galeria os³ugiwana przez"
+
+#: ../templates/admin_default/loggedout.tpl.php:1
+msgid "Return to galleries."
+msgstr "Powrót do galerii."
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr "Zaloguj siê"
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr "Dostêp do tego miejsca maj± tylko autoryzowani u¿ytkownicy.\nPodaj nazwê u¿ytkownika i has³o."
+
+#: ../templates/admin_default/login.tpl.php:8
+msgid "Username:"
+msgstr "Nazwa u¿ytkownika:"
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr "Has³o:"
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr "Wybierz proszê, co chcesz zrobiæ:"
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr "Zarz±dzaæ galeriami i obrazami"
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr "Wy¶wietliæ statystykê odwiedzin"
+
+#: ../templates/admin_default/menu.tpl.php:6
+msgid "Purge cached thumbnails"
+msgstr "Opró¿niæ bufor miniatur"
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr "Zmieniæ swoje has³o"
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "Log out of admin"
+msgstr "Wylogowaæ siê"
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr "Nowa galeria"
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:27
+msgid "Identifier:"
+msgstr "Identyfikator:"
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr "Nowy obraz"
+
+#: ../templates/admin_default/newimage.tpl.php:11
+msgid "Remote file"
+msgstr "Plik zdalny"
+
+#: ../templates/admin_default/newimage.tpl.php:15
+msgid "URL of image:"
+msgstr "Adres URL obrazu:"
+
+#: ../templates/admin_default/newimage.tpl.php:19
+msgid "Local file"
+msgstr "Plik lokalny"
+
+#: ../templates/admin_default/newimage.tpl.php:23
+msgid "Image file to upload:"
+msgstr "Wybierz plik do umieszczenia:"
+
+#: ../templates/admin_default/newimage.tpl.php:29
+msgid "Use filename of uploaded file."
+msgstr "U¿yj oryginalnej nazwy pliku"
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Specify different filename:"
+msgstr "Podaj inn± nazwê pliku:"
