@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.42 2005/02/16 19:02:15 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.43 2005/02/22 04:05:02 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -200,8 +200,10 @@ class Singapore
     //find the parent
     $this->gallery->parent = substr($this->gallery->idEncoded, 0, strrpos($this->gallery->idEncoded, "/"));
     $this->gallery->parentName = urldecode(substr($this->gallery->parent,strrpos($this->gallery->parent,"/")+1));
-    if($this->gallery->parentName == "")
+    if($this->gallery->parentName == "") {
       $this->gallery->parentName = $this->config->gallery_name;
+      $this->gallery->parent = ".";
+    }
     
     //do the logging stuff and select the image (if any)
     if(empty($_REQUEST[$this->config->url_image])) {
@@ -303,11 +305,11 @@ class Singapore
    */
   function encodeId($id)
   {
-    $bits = explode("/",$id);
-    for($i=1;$i<count($bits);$i++)
-      $bits[$i] = rawurlencode($bits[$i]);
-    //unset($bits[0]);
-    return implode("/",$bits);
+    $in = explode("/",$id);
+    $out = array();
+    for($i=1;$i<count($in);$i++)
+      $out[$i-1] = rawurlencode($in[$i]);
+    return $out ? implode("/",$out) : ".";
   }
   
   /**
@@ -322,8 +324,7 @@ class Singapore
    */
   function formatURL($gallery, $image = null, $startat = null, $action = null)
   {
-    if($this->config->use_mod_rewrite) {
-      //format url for use with mod_rewrite
+    if($this->config->use_mod_rewrite) { //format url for use with mod_rewrite
       $ret  = $this->config->base_url.$gallery;
       if($startat) $ret .= ','.$startat;
       $ret .= '/';
@@ -336,8 +337,7 @@ class Singapore
       
       if(!empty($query))
         $ret .= '?'.implode('&amp;', $query);
-    } else {
-      //format plain url
+    } else { //format plain url
       $ret  = $this->config->index_file_url;
       $ret .= $this->config->url_gallery."=".$gallery;
       if($startat) $ret .= "&amp;".$this->config->url_startat."=".$startat;
@@ -636,11 +636,13 @@ class Singapore
       return $crumb;
     
     $galleries = explode("/",$this->gallery->id);
+    $currentPath = ".";
     
     for($i=1;$i<count($galleries);$i++) {
       $crumb[$i] = new stdClass;
       $crumb[$i]->id = $galleries[$i];
-      $crumb[$i]->path = $crumb[$i-1]->path."/".rawurlencode($galleries[$i]);
+      $currentPath .= "/".$galleries[$i];
+      $crumb[$i]->path = $this->encodeId($currentPath);
       $crumb[$i]->name = $galleries[$i];
     }
     
