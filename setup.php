@@ -39,7 +39,7 @@ function doSetup()
       else
         setupError("Cache directory already exists at ".$GLOBALS["sgConfig"]->pathto_cache." but is not writable. Please CHMOD to 777");
     else
-      if(mkdir($GLOBALS["sgConfig"]->pathto_cache)) 
+      if(mkdir($GLOBALS["sgConfig"]->pathto_cache, 0755)) 
         setupMessage("Created cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
       else
         setupError("Could not create cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
@@ -50,7 +50,7 @@ function doSetup()
         else
           setupError("Logs directory already exists at ".$GLOBALS["sgConfig"]->pathto_logs." but is not writable. Please CHMOD to 777");
       else
-        if(mkdir($GLOBALS["sgConfig"]->pathto_logs)) 
+        if(mkdir($GLOBALS["sgConfig"]->pathto_logs, 0755)) 
           setupMessage("Created logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
         else
           setupError("Could not create logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
@@ -58,7 +58,7 @@ function doSetup()
       setupMessage("View logging disabled. Logs directory not created");
   }
   else
-    setupError("Data directory is not writable. Please CHMOD to 777");
+    setupError("Data directory (".$GLOBALS["sgConfig"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
 
   return true;
   
