@@ -50,6 +50,7 @@ table.sgShadow {
 
 table.sgShadow, table.sgShadowTab {
   background-color: #f0f0f0;
+  /*background: #f0f0f0 url('../images/osx-bg.gif')*/
   padding: 0;
   text-align: left;
 }
@@ -134,6 +135,7 @@ div.sgThumbnail {
   width:  120px;
   height: 120px;
   margin: 10px 5px 10px 5px;
+  background: #fff;
   float: left;
 	padding: 0px;
   text-align: center;
@@ -150,7 +152,6 @@ div.sgThumbnail table {
 .sgThumbnailContent {
 	margin: 0px;
 	padding: 0px;
-  background: #fff;
 	border: 1px solid #ccc;
 }
 

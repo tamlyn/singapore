@@ -20,6 +20,7 @@
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+
 //this function serves up script configuration data
 function sgGetConfig($var) {
   switch($var) {
@@ -57,9 +58,18 @@ function sgGetConfig($var) {
     case "log_path" :             return "logs/";
        //path used to store image view logs (if enabled)
 
-    case "skin_name" :    return "cornflower";
+    case "skin_name" :            return "cornflower";
        //the name of the current skin
 
+    case "mysql_host" :           return "localhost";
+       //name of host running mysql database
+       
+    case "mysql_user" :           return "singapore";
+       //username for mysql database
+       
+    case "mysql_pass" :           return "";
+       //password for username specified above
+       
     return null;
   } 
 }

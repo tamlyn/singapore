@@ -43,11 +43,11 @@ function sgGetGallery($gallery, $galleryOnly = false) {
   } else {
     $dp = opendir(sgGetConfig("gallery_root")."$gal->id/");
     while($entry = readdir($dp))
-      if(stristr($entry,".jpg") || stristr($entry,".jpeg")) $gal->img[]->filename = $entry;
+      if(strpos(strtolower($entry),".jpg") || strpos(strtolower($entry),".jpeg")) $gal->img[]->filename = $entry;
     closedir($dp);
     
     $temp = strtr($gal->id, "_", " ");
-    if(strstr($temp, " - ")) list($gal->artist,$gal->name) = explode(" - ", $temp);
+    if(strpos($temp, " - ")) list($gal->artist,$gal->name) = explode(" - ", $temp);
     else $gal->name = $temp;
     
     $gal->filename = $gal->img[0]->filename;
@@ -58,7 +58,7 @@ function sgGetGallery($gallery, $galleryOnly = false) {
       //trim off file extension and replace underscores with spaces
       $temp = strtr(substr($gal->img[$i]->filename, 0, strrpos($gal->img[$i]->filename,".")-strlen($gal->img[$i]->filename)), "_", " ");
       //split string in two on " - " delimiter
-      if(strstr($temp, " - ")) list($gal->img[$i]->artist,$gal->img[$i]->name) = explode(" - ", $temp);
+      if(strpos($temp, " - ")) list($gal->img[$i]->artist,$gal->img[$i]->name) = explode(" - ", $temp);
       else $gal->img[$i]->name = $temp;
     }
     
