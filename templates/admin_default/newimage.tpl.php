@@ -9,8 +9,8 @@
   
 <table class="formTable">
 <tr>
-  <td><input type="radio" class="radio" name="sgLocationChoice" value="single" checked="true" /></td>
-  <td colspan="2"><?php echo $sg->i18n->_g("Upload single file") ?></td>
+  <td><input type="radio" class="radio" id="sgLocationChoiceSingle" name="sgLocationChoice" value="single" checked="true" /></td>
+  <td colspan="2"><label for="sgLocationChoiceSingle"><?php echo $sg->i18n->_g("Upload single file") ?></label></td>
 <tr>
 <tr>
   <td></td>
@@ -21,13 +21,13 @@
   <td></td>
   <td><?php echo $sg->i18n->_g("Identifier:") ?></td>
   <td>
-    <input type="radio" class="radio" name="sgNameChoice" value="same" checked="true" /> <?php echo $sg->i18n->_g("Use filename of uploaded file.") ?><br />
-    <input type="radio" class="radio" name="sgNameChoice" value="new" /> <?php echo $sg->i18n->_g("Specify different filename:") ?><br />
+    <label for="sgNameChoiceSame"><input type="radio" class="radio" id="sgNameChoiceSame" name="sgNameChoice" value="same" checked="true" /> <?php echo $sg->i18n->_g("Use filename of uploaded file.") ?></label><br />
+    <label for="sgNameChoiceNew"><input type="radio" class="radio" id="sgNameChoiceNew" name="sgNameChoice" value="new" /> <?php echo $sg->i18n->_g("Specify different filename:") ?></label><br />
     <input type="text" name="sgFileName" value="" size="40" /></td>
 </tr>
 <tr>
-  <td><input type="radio" class="radio" name="sgLocationChoice" value="multi" /></td>
-  <td colspan="2"><?php echo $sg->i18n->_g("Upload multiple files") ?></td>
+  <td><input type="radio" class="radio" id="sgLocationChoiceMulti" name="sgLocationChoice" value="multi" /></td>
+  <td colspan="2"><label for="sgLocationChoiceMulti"><?php echo $sg->i18n->_g("Upload multiple files") ?></label></td>
 <tr>
 <tr>
   <td></td>
@@ -35,8 +35,8 @@
   <td><input type="file" name="sgArchiveFile" value="" size="40" /></td>
 </tr>
 <tr>
-  <td><input type="radio" class="radio" name="sgLocationChoice" value="remote"></td>
-  <td colspan="2"><?php echo $sg->i18n->_g("Add remote file") ?></td>
+  <td><input type="radio" class="radio" id="sgLocationChoiceRemote" name="sgLocationChoice" value="remote"></td>
+  <td colspan="2"><label for="sgLocationChoiceRemote"><?php echo $sg->i18n->_g("Add remote file") ?></label></td>
 <tr>
 <tr>
   <td></td>

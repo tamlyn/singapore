@@ -44,7 +44,9 @@ input.button {
   background-color: #f60;
 }
 
-
+label {
+  cursor: default;
+}
 
 
 #header {

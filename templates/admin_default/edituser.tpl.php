@@ -15,8 +15,8 @@
   echo "<tr><td>".$sg->i18n->_g("Username")."</td><td><strong>".$user->username."</strong></td></tr>\n";
   if($sg->isAdmin())
     echo "<tr><td>".$sg->i18n->_g("Type").'</td><td>'.
-         '<input type="radio" class="radio" name="sgType" value="admin"'.($user->permissions & SG_ADMIN ? ' checked="true"' : "").' />'.$sg->i18n->_g("Administrator")."<br />\n".
-         '<input type="radio" class="radio" name="sgType" value="user"'. ($user->permissions & SG_ADMIN ? "" : ' checked="true"').' />'.$sg->i18n->_g("User")."</td></tr>\n";
+         '<label for="sgTypeAdmin"><input type="radio" class="radio" id="sgTypeAdmin" name="sgType" value="admin"'.($user->permissions & SG_ADMIN ? ' checked="true"' : "").' />'.$sg->i18n->_g("Administrator")."</label><br />\n".
+         '<label for="sgTypeUser"><input type="radio" class="radio" id="sgTypeUser" name="sgType" value="user"'. ($user->permissions & SG_ADMIN ? "" : ' checked="true"').' />'.$sg->i18n->_g("User")."</label></td></tr>\n";
   if($sg->isAdmin())
     echo "<tr><td>".$sg->i18n->_g("Groups").'</td><td><input type="input" name="sgGroups" value="'.$user->groups."\" /></td></tr>\n";
   echo "<tr><td>".$sg->i18n->_g("Email").'</td><td><input type="input" name="sgEmail" value="'.$user->email."\" /></td></tr>\n";

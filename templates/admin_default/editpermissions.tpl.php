@@ -25,19 +25,19 @@
 <tr>
   <td><?php echo $sg->i18n->_g("Group permissions") ?></td>
   <td><div class="inputbox">
-    <input type="checkbox" class="checkbox" name="sgGrpRead" <?php if($obj->permissions & SG_GRP_READ) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Read") ?>
-    <input type="checkbox" class="checkbox" name="sgGrpEdit" <?php if($obj->permissions & SG_GRP_EDIT) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Edit") ?>
-    <input type="checkbox" class="checkbox" name="sgGrpAdd" <?php if($obj->permissions & SG_GRP_ADD) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Add") ?>
-    <input type="checkbox" class="checkbox" name="sgGrpDelete" <?php if($obj->permissions & SG_GRP_DELETE) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Delete") ?>
+    <label for="sgGrpRead"><input type="checkbox" class="checkbox" id="sgGrpRead" name="sgGrpRead" <?php if($obj->permissions & SG_GRP_READ) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Read") ?></label>
+    <label for="sgGrpEdit"><input type="checkbox" class="checkbox" id="sgGrpEdit" name="sgGrpEdit" <?php if($obj->permissions & SG_GRP_EDIT) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Edit") ?></label>
+    <label for="sgGrpAdd"><input type="checkbox" class="checkbox" id="sgGrpAdd" name="sgGrpAdd" <?php if($obj->permissions & SG_GRP_ADD) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Add") ?></label>
+    <label for="sgGrpDelete"><input type="checkbox" class="checkbox" id="sgGrpDelete" name="sgGrpDelete" <?php if($obj->permissions & SG_GRP_DELETE) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Delete") ?></label>
   </div></td>
 </tr>
 <tr>
   <td><?php echo $sg->i18n->_g("World permissions") ?></td>
   <td><div class="inputbox">
-    <input type="checkbox" class="checkbox" name="sgWldRead" <?php if($obj->permissions & SG_WLD_READ) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Read") ?>
-    <input type="checkbox" class="checkbox" name="sgWldEdit" <?php if($obj->permissions & SG_WLD_EDIT) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Edit") ?>
-    <input type="checkbox" class="checkbox" name="sgWldAdd" <?php if($obj->permissions & SG_WLD_ADD) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Add") ?>
-    <input type="checkbox" class="checkbox" name="sgWldDelete" <?php if($obj->permissions & SG_WLD_DELETE) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Delete") ?>
+    <label for="sgWldRead"><input type="checkbox" class="checkbox" id="sgWldRead" name="sgWldRead" <?php if($obj->permissions & SG_WLD_READ) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Read") ?></label>
+    <label for="sgWldEdit"><input type="checkbox" class="checkbox" id="sgWldEdit" name="sgWldEdit" <?php if($obj->permissions & SG_WLD_EDIT) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Edit") ?></label>
+    <label for="sgWldAdd"><input type="checkbox" class="checkbox" id="sgWldAdd" name="sgWldAdd" <?php if($obj->permissions & SG_WLD_ADD) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Add") ?></label>
+    <label for="sgWldDelete"><input type="checkbox" class="checkbox" id="sgWldDelete" name="sgWldDelete" <?php if($obj->permissions & SG_WLD_DELETE) echo 'checked="true" '; ?>/> <?php echo $sg->i18n->_g("permissions|Delete") ?></label>
   </div></td>
 </tr>
 <tr>
