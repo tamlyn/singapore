@@ -112,10 +112,10 @@ if(sgIsLoggedIn()) {
         else sgShowAdminOptions();
         break;
       case "showgalleryhits" :
-        sgShowGalleryHits($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
+        sgShowGalleryHits(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
         break;
       case "showimagehits" :
-        sgShowImageHits($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
+        sgShowImageHits(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
         break;
       case "purgecache" :
         sgShowPurgeConfirmation();

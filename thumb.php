@@ -29,7 +29,7 @@ function showThumb($gallery, $image, $maxsize) {
   
   //if image is local (filename does not start with 'http://')
   //then prepend filename with path to current gallery
-  if(substr($img->filename,0,7)!="http://") $imagePath = sgGetConfig("pathto_galleries")."$gallery/$image";
+  if(substr($image,0,7)!="http://") $imagePath = sgGetConfig("pathto_galleries")."$gallery/$image";
   else $imagePath = $image;
   $thumbPath = sgGetConfig("pathto_cache").$maxsize.strtr("-$gallery-$image",":/?\\","----");
   $imageModified = @filemtime($imagePath);
@@ -39,37 +39,56 @@ function showThumb($gallery, $image, $maxsize) {
   if($imageModified<$thumbModified) { //if thumbnail is newer than image output cached thumbnail
     header("Last-Modified: ".gmdate("D, d M Y H:i:s",$thumbModified)." GMT");
     readfile($thumbPath);
-  } else { //thumbnail is out of date or doesn't exist so create new one
+    exit;
+  }
+  
+  //thumbnail is out of date or doesn't exist so create new one
+  
+  $imgSize = GetImageSize($imagePath);
+
+  if($imgSize[0]<$imgSize[1]){
+    $y = $maxsize;
+    $x = $imgSize[0]/$imgSize[1] * $maxsize; 
+  }else{
+    $x = $maxsize;
+    $y = $imgSize[1]/$imgSize[0] * $maxsize;
+  }
+
+  
+  switch(sgGetConfig("thumbnail_software")) {
+  case "im" :
+    //use ImageMagick if available
     
-    $imgSize = GetImageSize($imagePath);
-  
-    if($imgSize[0]<$imgSize[1]){
-      $y = $maxsize;
-      $x = $imgSize[0]/$imgSize[1] * $maxsize; 
-    }else{
-      $x = $maxsize;
-      $y = $imgSize[1]/$imgSize[0] * $maxsize;
-    }
-  
+    break;
+  case "gd2" :
+    //use GD 2.x if available
+    
     $image = ImageCreateFromJPEG($imagePath);
+    $thumb = ImageCreateTrueColor($x,$y);
+  
+    ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
     
-    /* If you have PHP >= 4.0.6 and GD >= 2.0.1 then you will
-     * get nicer thumbnails by uncommenting the two lines commented
-     * out below. See Readme for more information.
-     */
+    ImageJPEG($thumb,"",$thumbQuality);
+    ImageJPEG($thumb,$thumbPath,$thumbQuality);
+    ImageDestroy($image);
+    ImageDestroy($thumb);
     
+    break;
+  case "gd1" :
+  default :
+    //use GD 1.6.x by default
+    
+    $image = ImageCreateFromJPEG($imagePath);
     $thumb = ImageCreate($x,$y);
-    //$thumb = ImageCreateTrueColor($x,$y);
   
     ImageCopyResized($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
-    //ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
-    
     
     ImageJPEG($thumb,"",$thumbQuality);
     ImageJPEG($thumb,$thumbPath,$thumbQuality);
     ImageDestroy($image);
     ImageDestroy($thumb);
   }
+
 }
 
 ?>

@@ -162,9 +162,9 @@ function sgShowImage($gallery, $image)
          "<img src=\"thumb.php?gallery=$gallery&amp;image={$img->next[$i]->filename}&amp;size=".sgGetConfig("preview_thumb_size")."\" alt=\"{$img->next[$i]->name} by {$img->next[$i]->artist}\" />".
          "</a>\n";
   echo "<br />\n";
-  if($img->prev[0]) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
+  if(isset($img->prev[0])) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
   echo "<a href=\"?gallery=$gallery&amp;startat=".(floor($img->index/sgGetConfig("main_thumb_number"))*sgGetConfig("main_thumb_number"))."\">Thumbnails</a>\n";
-  if($img->next[0]) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
+  if(isset($img->next[0])) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
   
   //heading with image name and artist
@@ -189,9 +189,9 @@ function sgShowImage($gallery, $image)
   
   //bottom navigation bar
   echo "<div class=\"sgNavBar\"><p>\n";
-  if($img->prev[0]) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
+  if(isset($img->prev[0])) echo "<a href=\"?gallery=$gallery&amp;image={$img->prev[0]->filename}\">Previous</a> | \n"; //<img src=\"content/gallery/images/prev.gif\" alt=\"Previous image\" /> 
   echo "<a href=\"?gallery=$gallery\">Thumbnails</a>\n";
-  if($img->next[0]) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
+  if(isset($img->next[0])) echo " | <a href=\"?gallery=$gallery&amp;image={$img->next[0]->filename}\">Next</a>\n"; // <img src=\"content/gallery/images/next.gif\" alt=\"Next image\" />
   echo "</p></div>\n\n";
 
   //image name and artist

@@ -25,6 +25,8 @@
 
 function sgGetListing($wd, $type = ""){
   $dir->path = $wd;
+  $dir->files = array();
+  $dir->dirs = array();
   $dp = @opendir($wd);
   
   if(!$dp) return false;
@@ -39,7 +41,7 @@ function sgGetListing($wd, $type = ""){
           $entry != ".." && 
           $entry != "CVS" //used in development to ignore CVS directories
         ) $dir->dirs[] = $entry;
-      if($dir->dirs!=null) sort($dir->dirs);
+      sort($dir->dirs);
       break;
     case "jpegs" :
       while(false !== ($entry = readdir($dp)))
@@ -47,20 +49,20 @@ function sgGetListing($wd, $type = ""){
           strpos(strtolower($entry),".jpg") || 
           strpos(strtolower($entry),".jpeg")
         ) $dir->files[] = $entry;
-      if($dir->files!=null) sort($dir->files);
+      sort($dir->files);
       break;
     case "all" :
       while(false !== ($entry = readdir($dp)))
         if(is_dir($wd.$entry)) $dir->dirs[] = $entry;
         else $dir->files[] = $entry;
-      if($dir->dirs!=null) sort($dir->dirs);
-      if($dir->files!=null) sort($dir->files);
+      sort($dir->dirs);
+      sort($dir->files);
       break;
     default :
       while(false !== ($entry = readdir($dp)))
         if(strpos(strtolower($entry),$type)) 
           $dir->files[] = $entry;
-      if($dir->files!=null) sort($dir->files);
+      sort($dir->files);
   }
   closedir($dp);
   return $dir;
@@ -88,6 +90,8 @@ function sgGetImage($gallery, $image) {
   
   for($i=0;$i<count($gal->img);$i++)
     if($gal->img[$i]->filename == $image) {
+      $gal->img[$i]->prev = array();
+      $gal->img[$i]->next = array();
       for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i>$j) $gal->img[$i]->prev[$j] = $gal->img[$i-$j-1];
       for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i<count($gal->img)-$j-1) $gal->img[$i]->next[$j] = $gal->img[$i+$j+1];
       $gal->img[$i]->index = $i;
@@ -115,7 +119,7 @@ function sgGetGalleryInfo($gallery){
 //included here because it is used on every page and
 //adminutils.php is not included on every page
 function sgIsLoggedIn() {
-  if($_SESSION["user"]->check == md5(sgGetConfig("secret_string").$_SERVER[REMOTE_ADDR]) && (time() - $_SESSION["user"]->loginTime < 1800)) {
+  if(isset($_SESSION["user"]) && $_SESSION["user"]->check == md5(sgGetConfig("secret_string").$_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["user"]->loginTime < 1800)) {
 		$_SESSION["user"]->loginTime = time();
 	  return true;
   }
@@ -127,12 +131,17 @@ function sgLogView($gallery, $image = "") {
   
   if(empty($image)) $selected = &$hits; //$selected represents gallery
   else {
-    //search selected for image in existing log
-    for($i=0;$i<count($hits->img);$i++) 
-      if($hits->img[$i]->filename == $image) {
-        $selected = &$hits->img[$i]; //$selected represents selected image 
-        break;
-      }
+    if(isset($hits->img)) {
+      //search selected for image in existing log
+      for($i=0;$i<count($hits->img);$i++) 
+        if($hits->img[$i]->filename == $image) {
+          $selected = &$hits->img[$i]; //$selected represents selected image 
+          break;
+        }
+    } else {
+      $hits->img = array();
+      $i = 0;
+    }
     //if image not found then add it
     if($i == count($hits->img)) {
       $hits->img[$i]->filename = $image;
@@ -140,7 +149,7 @@ function sgLogView($gallery, $image = "") {
     }
   }
   
-  $selected->hits++; //increase hit count by one
+  $selected->hits = isset($selected->hits)?$selected->hits+1:1; //increase hit count by one
   $selected->lasthit = time(); //log time of last hit
   
   //save modified hits data

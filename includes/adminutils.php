@@ -137,10 +137,10 @@ function sgEditGallery($gallery)
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"savegallery\" />\n";
   echo "<input type=\"hidden\" name=\"gallery\" value=\"$gal->id\" />\n";
-  echo "<input type=\"hidden\" name=\"sgOwner\" value=\"$img->owner\" />\n";
-  echo "<input type=\"hidden\" name=\"sgGroups\" value=\"$img->groups\" />\n";
-  echo "<input type=\"hidden\" name=\"sgPermissions\" value=\"$img->permissions\" />\n";
-  echo "<input type=\"hidden\" name=\"sgCategories\" value=\"$img->categories\" />\n";
+  echo "<input type=\"hidden\" name=\"sgOwner\" value=\"$gal->owner\" />\n";
+  echo "<input type=\"hidden\" name=\"sgGroups\" value=\"$gal->groups\" />\n";
+  echo "<input type=\"hidden\" name=\"sgPermissions\" value=\"$gal->permissions\" />\n";
+  echo "<input type=\"hidden\" name=\"sgCategories\" value=\"$gal->categories\" />\n";
   
   echo "<table class=\"formTable\">\n";
   echo "<tr>\n  <td>Gallery thumbnail:</td>\n  <td><div class=\"inputbox sgImageInput\">";
@@ -151,7 +151,7 @@ function sgEditGallery($gallery)
   echo "<tr>\n  <td>Artist name:</td>\n  <td><input type=\"text\" name=\"sgArtistName\" value=\"".htmlentities($gal->artist)."\" size=\"40\" />*</td>\n</tr>\n";
   echo "<tr>\n  <td>Artist email:</td>\n  <td><input type=\"text\" name=\"sgArtistEmail\" value=\"".htmlentities($gal->email)."\" size=\"40\" />*</td>\n</tr>\n";
   echo "<tr>\n  <td>Copyright holder:</td>\n  <td><input type=\"text\" name=\"sgCopyright\" value=\"".htmlentities($gal->copyright)."\" size=\"40\" />*</td>\n</tr>\n";
-  echo "<tr>\n  <td valign=\"top\">Description:</td>\n  <td><textarea name=\"sgGalleryDesc\" cols=\"70\" rows=\"8\">".str_replace("<br />","\n",htmlentities($gal->desc))."</textarea></td>\n</tr>\n";
+  echo "<tr>\n  <td valign=\"top\">Description:</td>\n  <td><textarea name=\"sgGalleryDesc\" cols=\"70\" rows=\"8\">".htmlentities(str_replace("<br />","\n",$gal->desc))."</textarea></td>\n</tr>\n";
   echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
   echo "</table>\n";
   
@@ -286,8 +286,8 @@ function sgEditImage($gallery, $image)
   echo "<input type=\"hidden\" name=\"sgGroups\" value=\"$img->groups\" />\n";
   echo "<input type=\"hidden\" name=\"sgPermissions\" value=\"$img->permissions\" />\n";
   echo "<input type=\"hidden\" name=\"sgCategories\" value=\"$img->categories\" />\n";
-  echo "<input type=\"hidden\" name=\"sgNextImage\" value=\"{$img->next[0]->filename}\" />\n";
-  echo "<input type=\"hidden\" name=\"sgPrevImage\" value=\"{$img->prev[0]->filename}\" />\n";
+  echo "<input type=\"hidden\" name=\"sgPrevImage\" value=\"".(isset($img->prev[0])?$img->prev[0]->filename:"")."\" />\n";
+  echo "<input type=\"hidden\" name=\"sgNextImage\" value=\"".(isset($img->next[0])?$img->next[0]->filename:"")."\" />\n";
   echo "<table class=\"formTable\">\n";
   echo "<tr>\n  <td>Image:</td>\n  <td><div class=\"inputbox sgImageInput\"><a href=\"index.php?gallery=$gallery&amp;image=$img->filename\"><img src=\"thumb.php?gallery=$gallery&amp;image=$img->filename&amp;size=".sgGetConfig("main_thumb_size")."\" class=\"sgThumbnail\" alt=\"Thumbnail of currently selected image\" /></a></div></td>\n</tr>\n";
   echo "<tr>\n  <td>Image name:</td>\n  <td><input type=\"text\" name=\"sgImageName\" value=\"".htmlentities($img->name)."\" size=\"40\" /></td>\n</tr>\n";
@@ -296,7 +296,7 @@ function sgEditImage($gallery, $image)
   echo "<tr>\n  <td>Location:</td>\n  <td><input type=\"text\" name=\"sgLocation\" value=\"".htmlentities($img->location)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Date:</td>\n  <td><input type=\"text\" name=\"sgDate\" value=\"".htmlentities($img->date)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Copyright holder:</td>\n  <td><input type=\"text\" name=\"sgCopyright\" value=\"".htmlentities($img->copyright)."\" size=\"40\" /></td>\n</tr>\n";
-  echo "<tr>\n  <td valign=\"top\">Description:</td>\n  <td><textarea name=\"sgImageDesc\" cols=\"70\" rows=\"8\">".str_replace("<br />","\n",htmlentities($img->desc))."</textarea></td>\n</tr>\n";
+  echo "<tr>\n  <td valign=\"top\">Description:</td>\n  <td><textarea name=\"sgImageDesc\" cols=\"70\" rows=\"8\">".htmlentities(str_replace("<br />","\n",$img->desc))."</textarea></td>\n</tr>\n";
   echo "<tr>\n  <td>Camera info:</td>\n  <td><input type=\"text\" name=\"sgCamera\" value=\"".htmlentities($img->camera)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Lens info:</td>\n  <td><input type=\"text\" name=\"sgLens\" value=\"".htmlentities($img->lens)."\" size=\"40\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>Film info:</td>\n  <td><input type=\"text\" name=\"sgFilm\" value=\"".htmlentities($img->film)."\" size=\"40\" /></td>\n</tr>\n";
@@ -386,11 +386,14 @@ function sgShowImageHits($gallery, $startat = 0)
   }
   $hits = sgGetHits($gal->id);
   
-  for($i=$max=0;$i<count($hits->img);$i++) {
-    if($hits->img[$i]->hits > $max) $max = $hits->img[$i]->hits;
-    for($j=0;$j<count($gal->img);$j++) 
-      if($hits->img[$i]->filename == $gal->img[$j]->filename) $gal->img[$j]->hits = $hits->img[$i];
-  }
+  $max = 1;
+  
+  if(isset($hits->img)) 
+    for($i=0;$i<count($hits->img);$i++) {
+      if($hits->img[$i]->hits > $max) $max = $hits->img[$i]->hits;
+      for($j=0;$j<count($gal->img);$j++) 
+        if($hits->img[$i]->filename == $gal->img[$j]->filename) $gal->img[$j]->hits = $hits->img[$i];
+    }
   
   //get contaner xhtml
   $code = sgGetContainerCode();
@@ -413,6 +416,10 @@ function sgShowImageHits($gallery, $startat = 0)
   echo "<table class=\"sgList\">\n<tr><th>Image</th><th>Hits</th><th>Last hit</th><th>Graph</th></tr>\n";
   
   for($i=$startat;$i<$startat+sgGetConfig("main_thumb_number") && $i<count($gal->img);$i++) {
+    if(!isset($gal->img[$i]->hits)) {
+      $gal->img[$i]->hits->hits = 0;
+      $gal->img[$i]->hits->lasthit = 0;
+    }
     echo "<tr class=\"sgRow".($i%2)."\"><td><a href=\"index.php?gallery=".$gal->id."&amp;image=".$gal->img[$i]->filename."\" title=\"by ".$gal->img[$i]->artist."\">".$gal->img[$i]->name."</a></td>";
     echo "<td align=\"right\">".($gal->img[$i]->hits->hits==0?"0":$gal->img[$i]->hits->hits)."</td>";
     echo "<td align=\"right\" title=\"".($gal->img[$i]->hits->lasthit==0?"n/a":date("Y-m-d H:i:s",$gal->img[$i]->hits->lasthit))."\">".($gal->img[$i]->hits->lasthit==0?"n/a":date("D&\\n\b\s\p;j&\\n\b\s\p;H:i",$gal->img[$i]->hits->lasthit))."</td>";

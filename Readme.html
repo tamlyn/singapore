@@ -103,10 +103,9 @@ Singapore is free software released under the terms of the GNU GPL.</p>
 
 <h2><a name="release">Release notes</a></h2>
 
-<p>This is a recommended update as it fixes a security hole in the admin section.
-It also introduces a new theme and hit logging. Upgrading should be simple. Just 
-conserve your galleries/ directory and any changes you may have made to 
-config.php and overwrite all other files.</p>
+<p>Lots of extra features, lots of bug fixes and, almost certainly, lots of 
+juicy new bugs. Notable: web based admin now pretty much works, GD 2 and
+ImageMagic may be used for thumbnail generation.</p>
 
 <h2><a name="install">Installation</a></h2>
 
@@ -122,9 +121,7 @@ things that can be done to customise it to your needs. Here are some:</p>
 <p>Things you SHOULD do:</p>
 <ul>
   <li>Add some galleries and images into the <code>galleries/</code> directory 
-  (and remove the example ones provided). <a href="#managing">More info</a>.<br />
-  <span class="note">NOTE: A future release will allow all gallery creation and 
-  management via the web interface but this is not yet implemented.</span></li>
+  (and remove the example ones provided). <a href="#managing">More info</a>.</li>
 
   <li>Set file permissions. This part is dependant on your operating system and 
   web server setup and can seem quite daunting to a beginner. Your best bet, if 
@@ -143,12 +140,16 @@ things that can be done to customise it to your needs. Here are some:</p>
   <li>Log into the admin section and change the password. The username is 
   <code>admin</code> and the default password is <code>password</code>. <br /><span class="note">NOTE: 
   a future release will allow multiple admin users with different passwords.</span></li>
+  
+  <li>If your PHP installation uses GD version 2.0.1 or later or you have access to 
+  ImageMagick then you can get nicer generated thumbnails by changing the option 
+  in <code>includes/config.php</code>.</li>
 </ul>
 
 <p>Things you MIGHT do:</p>
 <ul>
   <li>Edit the values in <code>includes/config.php</code>. The file is commented
-  and should be self-explanatory but for most purposes the default values will 
+  and should be self-explanatory. For most purposes the default values will 
   be fine.</li>
   
   <li>Edit <code>includes/header.php</code> and <code>includes/footer.php</code>
@@ -157,24 +158,7 @@ things that can be done to customise it to your needs. Here are some:</p>
 
   <li>Make custom "themes" using CSS. <a href="#themes">More info</a>.</li>
   
-  <li>If your PHP installation uses GD version 2.0.1 or later then you can get 
-  nicer generated thumbnails by changing two lines of code in <code>thumb.php</code>. 
-  Edit lines 61-65 from the following:
-<pre class="boxed">$thumb = ImageCreate($x,$y);
-<b>//</b>$thumb = ImageCreateTrueColor($x,$y);
-
-ImageCopyResized($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
-<b>//</b>ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);</pre>
-
-To the following:
-
-<pre class="boxed"><b>//</b>$thumb = ImageCreate($x,$y);
-$thumb = ImageCreateTrueColor($x,$y);
-    
-<b>//</b>ImageCopyResized($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
-ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);</pre>
-
-  </li>
+  
 </ul>
 
 
@@ -235,8 +219,10 @@ o changed
 
 <p>
 + web admin can add and delete images and galleries<br />
++ added config option for GD 2.0.x support<br />
 + added config option for generated thumbnail JPEG quality<br />
-* handles extended characters in gallery ansd image names<br />
+* does not generate any E_NOTICE errors anymore<br />
+* handles extended characters in gallery ansd image names (Piotr)<br />
 * fixed 'images link back to correct page of gallery'<br />
 + added directory_mode and file_mode options<br />
 * track_views and show_views now work indepentantly<br />
@@ -297,7 +283,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/05/08 00:54:36 $</em></p>
+<p><em>$Date: 2003/05/08 15:35:46 $</em></p>
 
 </body>
 </html>

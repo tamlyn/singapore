@@ -75,9 +75,20 @@ function sgGetGallery($gallery, $galleryOnly = false) {
     
     $temp = strtr($gal->id, "_", " ");
     if(strpos($temp, " - ")) list($gal->artist,$gal->name) = explode(" - ", $temp);
-    else $gal->name = $temp;
+    else {
+      $gal->artist = "";
+      $gal->name = $temp;
+    }
     
-    $gal->filename = $gal->img[0]->filename;
+    //set default values;
+    $gal->filename = isset($gal->img[0]->filename)?$gal->img[0]->filename:"__none__";
+    $gal->owner = "__nobody__";
+    $gal->groups = "__nogroup__";
+    $gal->permissions = 4096;
+    $gal->categories = "";
+    $gal->email = "";
+    $gal->copyright = "";
+    $gal->desc = "";
     
     if($galleryOnly) return $gal;
     
@@ -86,10 +97,25 @@ function sgGetGallery($gallery, $galleryOnly = false) {
       $temp = strtr(substr($gal->img[$i]->filename, 0, strrpos($gal->img[$i]->filename,".")-strlen($gal->img[$i]->filename)), "_", " ");
       //split string in two on " - " delimiter
       if(strpos($temp, " - ")) list($gal->img[$i]->artist,$gal->img[$i]->name) = explode(" - ", $temp);
-      else $gal->img[$i]->name = $temp;
+      else {
+        $gal->img[$i]->name = $temp;
+        $gal->img[$i]->artist = "";
+      }
+      
+      $gal->img[$i]->thumbnail = "";
+      $gal->img[$i]->owner = "__nogroup__";
+      $gal->img[$i]->groups = "__nogroup__";
+      $gal->img[$i]->permissions = 4096;
+      $gal->img[$i]->categories = "";
+      
+      $gal->img[$i]->email = $gal->img[$i]->copyright = $gal->img[$i]->desc =
+      $gal->img[$i]->location = $gal->img[$i]->date = $gal->img[$i]->camera =
+      $gal->img[$i]->lens = $gal->img[$i]->film = $gal->img[$i]->darkroom =
+      $gal->img[$i]->digital = "";
     }
     
     //sort($gal->img);
+    
     return $gal;
   } else 
       return false;
@@ -150,11 +176,17 @@ function sgGetHits($gallery) {
     fclose($fp);
   } else $temp = array();
   
-  list(
+  if(isset($temp[0])) 
+    list(
       ,
       $hits->hits,
       $hits->lasthit
     ) = $temp[0];
+  else {
+    $hits->hits = 0;
+    $hits->lasthit = 0;
+  };
+    
     
   for($i=0;$i<count($temp)-2;$i++)
     list(
@@ -169,7 +201,6 @@ function sgGetHits($gallery) {
 function sgPutHits($hits) {
 
   $fp = fopen(sgGetConfig("pathto_logs").strtr("$hits->gal",":/?\\","----").".log","w");
-  
   if(!$fp) return false;
   
   fwrite($fp, ",".
@@ -177,13 +208,14 @@ function sgPutHits($hits) {
     $hits->lasthit
   );
     
-  for($i=0;$i<count($hits->img);$i++)
-    if(!empty($hits->img[$i]->filename)) fwrite($fp, "\n".
-      $hits->img[$i]->filename.",".
-      $hits->img[$i]->hits.",".
-      $hits->img[$i]->lasthit
-    );
-  
+  if(isset($hits->img)) 
+    for($i=0;$i<count($hits->img);$i++)
+      if(!empty($hits->img[$i]->filename)) fwrite($fp, "\n".
+        $hits->img[$i]->filename.",".
+        $hits->img[$i]->hits.",".
+        $hits->img[$i]->lasthit
+      );
+    
   return true;
 }
 
