@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: localecache.php,v 1.1 2004/09/06 16:30:25 tamlyn Exp $
+ * @version $Id: localecache.php,v 1.2 2004/10/07 22:50:11 tamlyn Exp $
  */
 
 //require config class
@@ -76,6 +76,8 @@ function saveCache($availableLanguages, $output)
     $availableLanguages[$matches[1]] = $i18n->languageStrings[0]['language'];
     echo "Added $matches[1] => ".$i18n->languageStrings[0]['language']." to available languages.<br />\n";
   }
+  
+  ksort($availableLanguages);
   if(saveCache($availableLanguages, $OUTPUTFILE))
     echo "Cache file saved as ".$OUTPUTFILE;
   else
