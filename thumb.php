@@ -20,7 +20,11 @@
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-require "includes/config.php";
+//require config class
+require_once "includes/class_configuration.php";
+//create config object
+$sgConfig = new sgConfiguration();
+
 
 showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
 
