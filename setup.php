@@ -1,29 +1,19 @@
 <?php
 
- /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *  setup.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
- *                                                                     *
- *  This file is part of singapore v0.9.5                              *
- *                                                                     *
- *  singapore is free software; you can redistribute it and/or modify  *
- *  it under the terms of the GNU General Public License as published  *
- *  by the Free Software Foundation; either version 2 of the License,  *
- *  or (at your option) any later version.                             *
- *                                                                     *
- *  singapore is distributed in the hope that it will be useful,       *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty        *
- *  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.            *
- *  See the GNU General Public License for more details.               *
- *                                                                     *
- *  You should have received a copy of the GNU General Public License  *
- *  along with this; if not, write to the Free Software Foundation,    *
- *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
- \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+ * Creates cache and logs directories required to run singapore and ensures 
+ * all required directories are writeable.
+ * 
+ * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
+ * @copyright (c)2003 Tamlyn Rhodes
+ * @version $Id: setup.php,v 1.8 2003/09/09 17:10:36 tamlyn Exp $
+ */
 
 //require config class
-require_once "includes/class_configuration.php";
+require_once "includes/config.class.php";
 //create config object
-$sgConfig = new sgConfiguration();
+$config = new sgConfig();
 
 
 function doSetdown()
@@ -32,31 +22,31 @@ function doSetdown()
   
   setupHeader("Removing directories");
   
-  if(is_writable($GLOBALS["sgConfig"]->pathto_data_dir)) {
+  if(is_writable($GLOBALS["config"]->pathto_data_dir)) {
     setupMessage("Data directory is writable");
-    if(file_exists($GLOBALS["sgConfig"]->pathto_cache))
-      if(is_writable($GLOBALS["sgConfig"]->pathto_cache))
-        if(rmdir_all($GLOBALS["sgConfig"]->pathto_cache)) 
+    if(file_exists($GLOBALS["config"]->pathto_cache))
+      if(is_writable($GLOBALS["config"]->pathto_cache))
+        if(rmdir_all($GLOBALS["config"]->pathto_cache)) 
           setupMessage("Cache directory deleted");
         else
-          $success = setupError("Error deleting cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
+          $success = setupError("Error deleting cache directory at ".$GLOBALS["config"]->pathto_cache);
       else
         $success = setupError("Cache is not writable so cannot delete it");
     else
-      setupMessage("Cache directory not found at ".$GLOBALS["sgConfig"]->pathto_cache);
+      setupMessage("Cache directory not found at ".$GLOBALS["config"]->pathto_cache);
     
-    if(file_exists($GLOBALS["sgConfig"]->pathto_logs))
-      if(is_writable($GLOBALS["sgConfig"]->pathto_logs))
-        if(rmdir_all($GLOBALS["sgConfig"]->pathto_logs)) 
+    if(file_exists($GLOBALS["config"]->pathto_logs))
+      if(is_writable($GLOBALS["config"]->pathto_logs))
+        if(rmdir_all($GLOBALS["config"]->pathto_logs)) 
           setupMessage("Logs directory deleted");
         else
-          $success = setupError("Error deleting logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
+          $success = setupError("Error deleting logs directory at ".$GLOBALS["config"]->pathto_logs);
       else
         $success = setupError("Logs is not writable so cannot delete it");
     else
-      setupMessage("Logs directory not found at ".$GLOBALS["sgConfig"]->pathto_logs);
+      setupMessage("Logs directory not found at ".$GLOBALS["config"]->pathto_logs);
   } else
-    $success = setupError("Data directory (".$GLOBALS["sgConfig"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
+    $success = setupError("Data directory (".$GLOBALS["config"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
       
   return $success;
   
@@ -67,34 +57,34 @@ function doSetup()
   $success = true;
   setupHeader("Creating directories");
   
-  if(is_writable($GLOBALS["sgConfig"]->pathto_data_dir)) {
+  if(is_writable($GLOBALS["config"]->pathto_data_dir)) {
     setupMessage("Data directory is writable");
-    if(file_exists($GLOBALS["sgConfig"]->pathto_cache))
-      if(is_writable($GLOBALS["sgConfig"]->pathto_cache))
-        setupMessage("Cache directory already exists at ".$GLOBALS["sgConfig"]->pathto_cache." and is writable");
+    if(file_exists($GLOBALS["config"]->pathto_cache))
+      if(is_writable($GLOBALS["config"]->pathto_cache))
+        setupMessage("Cache directory already exists at ".$GLOBALS["config"]->pathto_cache." and is writable");
       else
-        $success = setupError("Cache directory already exists at ".$GLOBALS["sgConfig"]->pathto_cache." but is not writable. Please CHMOD to 777");
+        $success = setupError("Cache directory already exists at ".$GLOBALS["config"]->pathto_cache." but is not writable. Please CHMOD to 777");
     else
-      if(mkdir($GLOBALS["sgConfig"]->pathto_cache, 0755)) 
-        setupMessage("Created cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
+      if(mkdir($GLOBALS["config"]->pathto_cache, 0755)) 
+        setupMessage("Created cache directory at ".$GLOBALS["config"]->pathto_cache);
       else
-        $success = setupError("Could not create cache directory at ".$GLOBALS["sgConfig"]->pathto_cache);
-    if($GLOBALS["sgConfig"]->track_views)
-      if(file_exists($GLOBALS["sgConfig"]->pathto_logs))
-        if(is_writable($GLOBALS["sgConfig"]->pathto_logs))
-          setupMessage("Logs directory already exists at ".$GLOBALS["sgConfig"]->pathto_logs." and is writable");
+        $success = setupError("Could not create cache directory at ".$GLOBALS["config"]->pathto_cache);
+    if($GLOBALS["config"]->track_views)
+      if(file_exists($GLOBALS["config"]->pathto_logs))
+        if(is_writable($GLOBALS["config"]->pathto_logs))
+          setupMessage("Logs directory already exists at ".$GLOBALS["config"]->pathto_logs." and is writable");
         else
-          $success = setupError("Logs directory already exists at ".$GLOBALS["sgConfig"]->pathto_logs." but is not writable. Please CHMOD to 777");
+          $success = setupError("Logs directory already exists at ".$GLOBALS["config"]->pathto_logs." but is not writable. Please CHMOD to 777");
       else
-        if(mkdir($GLOBALS["sgConfig"]->pathto_logs, 0755)) 
-          setupMessage("Created logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
+        if(mkdir($GLOBALS["config"]->pathto_logs, 0755)) 
+          setupMessage("Created logs directory at ".$GLOBALS["config"]->pathto_logs);
         else
-          $success = setupError("Could not create logs directory at ".$GLOBALS["sgConfig"]->pathto_logs);
+          $success = setupError("Could not create logs directory at ".$GLOBALS["config"]->pathto_logs);
     else
       setupMessage("View logging disabled. Logs directory not created");
   }
   else
-    $success = setupError("Data directory (".$GLOBALS["sgConfig"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
+    $success = setupError("Data directory (".$GLOBALS["config"]->pathto_data_dir.") is not writable. Please CHMOD to 777");
 
   return $success;
   
@@ -142,11 +132,7 @@ function rmdir_all($wd)
 <head>
 <title>singapore setup</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" type="text/css" href="themes/cornflower/extra.css" />
-<!-- 
-  This file was generated by singapore <http://singapore.sourceforge.net>
-  Singapore is free software released under the terms of the GNU GPL.
--->
+<link rel="stylesheet" type="text/css" href="templates/default/main.css" />
 </head>
 
 <body>

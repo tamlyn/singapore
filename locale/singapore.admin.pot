@@ -1,0 +1,349 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2003-08-14 22:10+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../includes/admin.class.php:151
+msgid "gallery|Up"
+msgstr ""
+
+#: ../includes/admin.class.php:151
+msgid "gallery|Up one level"
+msgstr ""
+
+#: ../includes/admin.class.php:163
+msgid "admin bar|Back"
+msgstr ""
+
+#: ../includes/admin.class.php:165
+msgid "admin bar|Admin"
+msgstr ""
+
+#: ../includes/admin.class.php:166
+msgid "admin bar|Galleries"
+msgstr ""
+
+#: ../includes/admin.class.php:167
+msgid "admin bar|Log out"
+msgstr ""
+
+#: ../includes/admin.class.php:169
+msgid "admin bar|Edit gallery"
+msgstr ""
+
+#: ../includes/admin.class.php:170
+msgid "admin bar|Delete gallery"
+msgstr ""
+
+#: ../includes/admin.class.php:171
+msgid "admin bar|New subgallery"
+msgstr ""
+
+#: ../includes/admin.class.php:173
+msgid "admin bar|Edit image"
+msgstr ""
+
+#: ../includes/admin.class.php:174
+msgid "admin bar|Delete image"
+msgstr ""
+
+#: ../includes/admin.class.php:176
+msgid "admin bar|New image"
+msgstr ""
+
+#: ../includes/admin.class.php:200
+msgid "There was an error saving the new password."
+msgstr ""
+
+#: ../includes/admin.class.php:203
+msgid "New password must be between 6 and 16 characters long."
+msgstr ""
+
+#: ../includes/admin.class.php:205
+msgid "The new passwords you entered do not match."
+msgstr ""
+
+#: ../includes/admin.class.php:207
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr ""
+
+#: ../includes/admin.class.php:210
+msgid "The username specified was not found in the database."
+msgstr ""
+
+#: ../includes/admin.class.php:246
+msgid "Username and/or password incorrect"
+msgstr ""
+
+#: ../includes/admin.class.php:249
+msgid "You must enter a username and password"
+msgstr ""
+
+#: ../includes/admin.class.php:274
+msgid "Gallery already exists"
+msgstr ""
+
+#: ../includes/admin.class.php:281
+msgid "Could not create directory"
+msgstr ""
+
+#: ../includes/admin.class.php:305
+msgid "Could not save gallery info"
+msgstr ""
+
+#: ../includes/admin.class.php:323
+msgid "Cannot delete the top level directory"
+msgstr ""
+
+#: ../includes/admin.class.php:364
+msgid "File already exists"
+msgstr ""
+
+#: ../includes/admin.class.php:374
+msgid "Invalid location choice"
+msgstr ""
+
+#: ../includes/admin.class.php:393
+msgid "Could not add image to gallery"
+msgstr ""
+
+#: ../includes/admin.class.php:426
+msgid "Could not save image information"
+msgstr ""
+
+#: ../includes/admin.class.php:448
+msgid "Could not delete image"
+msgstr ""
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr ""
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr ""
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr ""
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:14
+msgid "Gallery thumbnail:"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:23
+msgid "thumbnail|Change..."
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:27
+msgid "gallery details|Gallery name:"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:31
+msgid "gallery details|Artist name:"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:35
+msgid "gallery details|Artist email:"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:39
+msgid "gallery details|Copyright holder:"
+msgstr ""
+
+#: ../templates/admin_default/editgallery.tpl.php:43
+msgid "gallery details|Description:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:14
+msgid "image details|Image:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:18
+msgid "image details|Image name:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:22
+msgid "image details|Artist name:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:26
+msgid "image details|Artist email:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:30
+msgid "image details|Location:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:34
+msgid "image details|Date:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:38
+msgid "image details|Copyright holder:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:42
+msgid "image details|Description:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:46
+msgid "image details|Camera info:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:50
+msgid "image details|Lens info:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:54
+msgid "image details|Film info:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:58
+msgid "image details|Darkroom manipulation:"
+msgstr ""
+
+#: ../templates/admin_default/editimage.tpl.php:62
+msgid "image details|Digital manipulation:"
+msgstr ""
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr ""
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr ""
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr ""
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr ""
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr ""
+
+#: ../templates/admin_default/footer.tpl.php:3
+msgid "singapore|Powered by"
+msgstr ""
+
+#: ../templates/admin_default/header.tpl.php:17
+msgid "crumb line|You are here:"
+msgstr ""
+
+#: ../templates/admin_default/loggedout.tpl.php:1
+msgid "Return to galleries."
+msgstr ""
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr ""
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr ""
+
+#: ../templates/admin_default/login.tpl.php:8
+msgid "Username:"
+msgstr ""
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr ""
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr ""
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr ""
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr ""
+
+#: ../templates/admin_default/menu.tpl.php:6
+msgid "Purge cached thumbnails"
+msgstr ""
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr ""
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "Log out of admin"
+msgstr ""
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr ""
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:27
+msgid "Identifier:"
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:11
+msgid "Remote file"
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:15
+msgid "URL of image:"
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:19
+msgid "Local file"
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:23
+msgid "Image file to upload:"
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:29
+msgid "Use filename of uploaded file."
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Specify different filename:"
+msgstr ""

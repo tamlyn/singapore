@@ -1,61 +1,37 @@
 <?php
 
- /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *  index.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
- *                                                                     *
- *  This file is part of singapore v0.9.5                              *
- *                                                                     *
- *  singapore is free software; you can redistribute it and/or modify  *
- *  it under the terms of the GNU General Public License as published  *
- *  by the Free Software Foundation; either version 2 of the License,  *
- *  or (at your option) any later version.                             *
- *                                                                     *
- *  singapore is distributed in the hope that it will be useful,       *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty        *
- *  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.            *
- *  See the GNU General Public License for more details.               *
- *                                                                     *
- *  You should have received a copy of the GNU General Public License  *
- *  along with this; if not, write to the Free Software Foundation,    *
- *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
- \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+ * Main file drives the gallery
+ * 
+ * @package singapore
+ * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
+ * @copyright (c)2003 Tamlyn Rhodes
+ * @version $Id: index.php,v 1.13 2003/09/09 17:10:36 tamlyn Exp $
+ * @version 0.9.6
+ */
 
-//require config class
-require_once "includes/class_configuration.php";
-//create config object
-$sgConfig = new sgConfiguration();
+//include main class
+require_once "includes/singapore.class.php";
 
+//create a wrapper
+$sg = new Singapore;
 
 //only start session if session is already registered
-if(isset($_REQUEST[$sgConfig->session_name])) {
+if(isset($_REQUEST[$sg->config->session_name])) {
   //set session arg separator to be xml compliant
   ini_set("arg_separator.output", "&amp;");
   
   //start session
-  session_name($sgConfig->session_name);
+  session_name($sg->config->session_name);
   session_start();
 }
 
 //send content-type and character encoding header
-header("Content-type: text/html; charset=".$sgConfig->default_charset);
-
-//include required files
-require_once "includes/frontend.php";
-require_once "includes/utils.php";
-require_once "includes/backend.php";
+header("Content-type: text/html; charset=".$sg->character_set);
 
 
-//include header file
-include $GLOBALS["sgConfig"]->pathto_header;
-
-//if user is logged in show admin toolbar
-if(sgIsLoggedIn()) sgShowAdminBar();
-
-if(isset($_REQUEST["image"])) sgShowImage($_REQUEST["gallery"],$_REQUEST["image"]);
-elseif(isset($_REQUEST["gallery"])) sgShowThumbnails($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
-else sgShowIndex(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
-
-//include footer file
-include $GLOBALS["sgConfig"]->pathto_footer;
+//pass control over to template
+include $sg->config->pathto_current_template."index.tpl.php";
 
 ?>

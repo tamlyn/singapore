@@ -1,52 +1,41 @@
 <?php
 
- /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *  thumb.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
- *                                                                     *
- *  This file is part of singapore v0.9.5                              *
- *                                                                     *
- *  singapore is free software; you can redistribute it and/or modify  *
- *  it under the terms of the GNU General Public License as published  *
- *  by the Free Software Foundation; either version 2 of the License,  *
- *  or (at your option) any later version.                             *
- *                                                                     *
- *  singapore is distributed in the hope that it will be useful,       *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty        *
- *  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.            *
- *  See the GNU General Public License for more details.               *
- *                                                                     *
- *  You should have received a copy of the GNU General Public License  *
- *  along with this; if not, write to the Free Software Foundation,    *
- *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
- \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+ * Creates and caches a thumbnail of the specified size for the 
+ * specified image. 
+ * 
+ * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
+ * @copyright (c)2003 Tamlyn Rhodes
+ * @version $Id: thumb.php,v 1.17 2003/09/09 17:10:36 tamlyn Exp $
+ */
 
 //require config class
-require_once "includes/class_configuration.php";
-//create config object
-$sgConfig = new sgConfiguration();
-
+require_once "includes/config.class.php";
 
 showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
 
 function showThumb($gallery, $image, $maxsize) {
-  
+  //create config object
+  $config = new sgConfig();
+
   //check if image is remote (filename starts with 'http://')
   $isRemoteFile = substr($image,0,7)=="http://";
   
   if($isRemoteFile) $imagePath = $image;
-  else $imagePath = $GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image";
+  else $imagePath = $config->pathto_galleries."$gallery/$image";
   
-  $thumbPath = $GLOBALS["sgConfig"]->pathto_cache.$maxsize.strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = $config->pathto_cache.$maxsize.strtr("-$gallery-$image",":/?\\","----");
   
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
-  $thumbQuality = $GLOBALS["sgConfig"]->thumbnail_quality;
+  $thumbQuality = $config->thumbnail_quality;
   
   list($imageWidth, $imageHeight, $imageType) = GetImageSize($imagePath);
   
   //send appropriate headers
   switch($imageType) {
-    case 1 : $GLOBALS["sgConfig"]->thumbnail_software=="gd2"?header("Content-type: image/png"):header("Content-type: image/gif"); break;
+    case 1 : $config->thumbnail_software=="gd2"?header("Content-type: image/png"):header("Content-type: image/gif"); break;
     case 3 : header("Content-type: image/png"); break;
     case 6 : header("Content-type: image/x-ms-bmp"); break;
     case 7 : 
@@ -75,6 +64,9 @@ function showThumb($gallery, $image, $maxsize) {
     $thumbHeight = $imageHeight;
   }
 
+  //set default files permissions
+  //umask($config->umask);
+  
   //if file is remote then copy locally first
   if($isRemoteFile) {
     $ip = fopen($imagePath, "rb");
@@ -86,12 +78,12 @@ function showThumb($gallery, $image, $maxsize) {
   }
   
   
-  switch($GLOBALS["sgConfig"]->thumbnail_software) {
+  switch($config->thumbnail_software) {
   case "im" : //use ImageMagick  
-    $cmd  = $GLOBALS["sgConfig"]->pathto_convert;
+    $cmd  = $config->pathto_convert;
     $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
     if($imageType == 2) $cmd .= " -quality $thumbQuality";
-    if($GLOBALS["sgConfig"]->remove_jpeg_profile) $cmd .= " +profile \"*\"";
+    if($config->remove_jpeg_profile) $cmd .= " +profile \"*\"";
     $cmd .= ' "'.escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"';
     
     exec($cmd);
@@ -109,7 +101,7 @@ function showThumb($gallery, $image, $maxsize) {
       default: $image = ImageCreateFromJPEG($imagePath); break;
     }
     
-    switch($GLOBALS["sgConfig"]->thumbnail_software) {
+    switch($config->thumbnail_software) {
     case "gd2" :
       //create blank truecolor image
       $thumb = ImageCreateTrueColor($thumbWidth,$thumbHeight);

@@ -1,174 +1,212 @@
 <?php
 
- /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *  admin.php - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
- *                                                                     *
- *  This file is part of singapore v0.9.5                              *
- *                                                                     *
- *  singapore is free software; you can redistribute it and/or modify  *
- *  it under the terms of the GNU General Public License as published  *
- *  by the Free Software Foundation; either version 2 of the License,  *
- *  or (at your option) any later version.                             *
- *                                                                     *
- *  singapore is distributed in the hope that it will be useful,       *
- *  but WITHOUT ANY WARRANTY; without even the implied warranty        *
- *  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.            *
- *  See the GNU General Public License for more details.               *
- *                                                                     *
- *  You should have received a copy of the GNU General Public License  *
- *  along with this; if not, write to the Free Software Foundation,    *
- *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
- \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
- 
+/**
+ * Admin interface file.
+ *
+ * Checks the selected 'action', calls the appropriate methods and sets the 
+ * required include file. Finally it includes the admin template's index file.
+ * 
+ * @author Tamlyn Rhodes <tam at zenology dot org>
+ * @package singapore
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
+ * @copyright (c)2003 Tamlyn Rhodes
+ * @version $Id: admin.php,v 1.17 2003/09/09 17:10:36 tamlyn Exp $
+ * @version 0.9.6
+ */
 
-//require config class
-require_once "includes/class_configuration.php";
-//create config object
-$sgConfig = new sgConfiguration();
+//include main class
+require_once "includes/singapore.class.php";
+require_once "includes/admin.class.php";
+
+//create the admin object
+$sg = new sgAdmin();
 
 //set session arg separator to be xml compliant
 ini_set("arg_separator.output", "&amp;");
 
 //start session
-session_name($sgConfig->session_name);
+session_name($sg->config->session_name);
 session_start();
 
 //send content-type and character encoding header
-header("Content-type: text/html; charset=".$sgConfig->default_charset);
+header("Content-type: text/html; charset=".$sg->character_set);
 
-//include required files
-require "includes/adminutils.php";
-require "includes/frontend.php";
-require "includes/utils.php";
-require "includes/backend.php";
-
-
-$pageTitle = $sgConfig->site_name." admin";
-
-//include header file
-include $GLOBALS["sgConfig"]->pathto_header;
-
-//if user is logged in show admin toolbar
-if(sgIsLoggedIn()) sgShowAdminBar();
-
-if(sgIsLoggedIn()) {
-  if(isset($_REQUEST["action"])) {
-    switch($_REQUEST["action"]) {
-      case "login" :
-        if(sgLogin()) sgShowAdminOptions();
-        else {
-          echo "<h1>login error</h1>\n";
-          echo "<p>Sorry, unrecognised username or password.</p>\n";
-          sgLoginForm();
+//check if user is logged in
+if($sg->isLoggedIn() || $sg->action == "login") 
+  //choose which file to include and/or perform admin actions
+  switch($sg->action) {
+    case "view" :
+      $sg->selectGallery();
+      $includeFile = "view";
+      break;
+    case "login" :
+      if($sg->login()) {
+        $adminMessage = $sg->_g("Welcome to singapore admin!");
+        $includeFile = "menu";
+      } else {
+        $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "login";
+      }
+      break;
+    case "logout" :
+      if($sg->logout()) {
+        $adminMessage = $sg->_g("Thank you and goodbye!");
+        $includeFile = "loggedout";
+      } else
+        $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+      break;
+    case "editpass" :
+      $includeFile = "editpass";
+      break;
+    case "savepass" :
+      if($sg->savePass())
+        $adminMessage = $sg->_g("Password saved");
+      else {
+        $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editpass";
+      }
+      break;
+    case "newgallery" :
+      $sg->selectGallery();
+      $includeFile = "newgallery";
+      break;
+    case "addgallery" :
+      $sg->selectGallery();
+      if($sg->addGallery()) {
+        $sg->selectGallery($sg->gallery->id."/".$_REQUEST["newgallery"]);
+        $adminMessage = $sg->_g("Gallery added");
+        $includeFile = "editgallery";
+      } else {
+        $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "newgallery";
+      }
+      break;
+    case "editgallery" :
+      $sg->selectGallery();
+      $includeFile = "editgallery";
+      break;
+    case "savegallery" :
+      $sg->selectGallery();
+      if($sg->saveGallery()) {
+        $adminMessage = $sg->_g("Gallery info saved");
+        $includeFile = "view";
+      } else {
+        $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editgallery";
+      }
+      break;
+    case "deletegallery" :
+      $sg->selectGallery();
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
+        if($sg->deleteGallery()) {
+          $sg->selectGallery(rawurldecode($sg->gallery->parent));
+          $adminMessage = $sg->_g("Gallery deleted");
+        } else {
+          $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
         }
-        break;
-      case "logout" :
-        if(sgLogout())
-          echo "<h1>logged out</h1>\n<p><a href=\"index.php\">Return to galleries</a>.</p>\n";
-        break;
-      case "editpass" :
-        echo "<h1>change password</h1>\n";
-        echo "<p>Please choose a new password between 6 and 16 characters in length.</p>\n";
-        sgEditPass();
-        break;
-      case "savepass" :
-        sgSavePass();
-        break;
-      case "newgallery" :
-        sgNewGallery();
-        break;
-      case "addgallery" :
-        if(sgAddGallery($_REQUEST["gallery"]))
-          sgEditGallery($_REQUEST["gallery"]);
-        else 
-          echo "<h1>error creating gallery</h1>\n<p>Gallery could not be created. ".
-               "It may already exist or you may not have permission to create a gallery here.</p>";
-        break;
-      case "editgallery" :
-        sgEditGallery($_REQUEST["gallery"]);
-        break;
-      case "savegallery" :
-        sgSaveGallery($_REQUEST["gallery"]);
-        break;
-      case "deletegallery" :
-        sgShowGalleryDeleteConfirmation($_REQUEST["gallery"]);
-        break;
-      case "deletegallery-confirmed" :
-        if($_REQUEST["confirm"]=="OK") 
-          if(sgDeleteGallery($_REQUEST["gallery"])) 
-            echo "<h1>gallery deleted</h1>\n";
-          else 
-            echo "<h1>error deleting gallery</h1>\n<p>An error was encountered and the gallery was not deleted.</p>\n";
-        else sgShowAdminOptions();
-        break;
-      case "changethumbnail" :
-        sgChangeThumbnail($_REQUEST["gallery"]);
-        break;
-      case "savethumbnail" :
-        if($_REQUEST["confirm"]=="OK") 
-          if(sgSaveThumbnail($_REQUEST["gallery"], $_REQUEST["sgThumbName"])) 
-            echo "<h1>thumbnail changed</h1>\n";
-          else
-            echo "<h1>error changing thumbnail</h1>\n";
-        sgEditGallery($_REQUEST["gallery"]);
-        break;
-      case "newimage" :
-        sgNewImage($_REQUEST["gallery"]);
-        break;
-      case "addimage" :
-        if($image = sgAddImage($_REQUEST["gallery"])) sgEditImage($_REQUEST["gallery"], $image);
-        else echo "<h1>error adding image</h1>\n <p>Image could not be added. ".
-                  "It may already exist or you may not have permission to add an image here.</p>";
-        break;
-      case "editimage" :
-        sgEditImage($_REQUEST["gallery"],$_REQUEST["image"]);
-        break;
-      case "saveimage" :
-        sgSaveImage($_REQUEST["gallery"],$_REQUEST["image"]);
-        break;
-      case "deleteimage" :
-        sgShowImageDeleteConfirmation($_REQUEST["gallery"],$_REQUEST["image"]);
-        break;
-      case "deleteimage-confirmed" :
-        if($_REQUEST["confirm"]=="OK") 
-          if(sgDeleteImage($_REQUEST["gallery"],$_REQUEST["image"]))
-            echo "<h1>image deleted</h1>\n\n<ul>\n".
-            "  <li><a href=\"index.php?gallery=$gallery&amp;image=$_REQUEST[sgNextImage]\">View next image</a></li>\n".
-            "  <li><a href=\"index.php?gallery=$gallery&amp;image=$_REQUEST[sgPrevImage]\">View previous image</a></li>\n".
-            "  <li><a href=\"index.php?gallery=$gallery\">View gallery</a></li>\n</ul>";
-          else echo "<h1>error deleting image</h1>\n<p>An error was encountered and the image was not deleted.</p>\n";
-        else sgShowAdminOptions();
-        break;
-      case "showgalleryhits" :
-        sgShowGalleryHits(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
-        break;
-      case "showimagehits" :
-        sgShowImageHits(isset($_REQUEST["gallery"])?$_REQUEST["gallery"]:"",isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
-        break;
-      case "purgecache" :
-        sgShowPurgeConfirmation();
-        break;
-      case "purgecache-confirmed" :
-        if($_REQUEST["confirm"]=="OK") 
-          if(sgPurgeCache()) echo "<h1>thumbnails purged</h1>\n<p><a href=\"admin.php\">Admin options</a></p>\n";
-          else echo "<h1>error purging thumbnails</h1>\n<p>An error occurred. <a href=\"admin.php\">Admin options</a></p>\n";
-        else sgShowAdminOptions();
-        break;
-    }
-  } else sgShowAdminOptions();
-} elseif(isset($_REQUEST["action"]) && $_REQUEST["action"]=="login") {
-  if(sgLogin()) sgShowAdminOptions();
-  else {
-    echo "<h1>login error</h1>\n";
-    echo "<p>Sorry, unrecognised username or password.</p>\n";
-    sgLoginForm();
+        $includeFile = "view";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+        $includeFile = "view";
+      } else {
+        $confirmTitle = $sg->_g("delete gallery");
+        $confirmMessage = $sg->_g("Gallery %s is not empty.\nAre you sure you want to irretrievably delete it and all subgalleries and images it contains?", "<em>".$sg->gallery->name."</em>");
+        $includeFile = "confirm";
+      }
+      break;
+    case "changethumbnail" :
+      $sg->selectGallery();
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK")) {
+        if($sg->saveGalleryThumbnail())
+          $adminMessage = $sg->_g("Thumbnail changed");
+        else
+          $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editgallery";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+        $includeFile = "editgallery";
+      } else {
+        $includeFile = "changethumbnail";
+      }
+      break;
+    case "newimage" :
+      $sg->selectGallery();
+      $includeFile = "newimage";
+      break;
+    case "addimage" :
+      $sg->selectGallery();
+      if($sg->addImage()) {
+        $adminMessage = $sg->_g("Image added");
+        $includeFile = "editimage";
+      } else {
+        $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "newimage";
+      }
+      break;
+    case "editimage" :
+      $sg->selectGallery();
+      $includeFile = "editimage";
+      break;
+    case "saveimage" :
+      $sg->selectGallery();
+      if($sg->saveImage()) {
+        $adminMessage = $sg->_g("Image saved successfully");
+        $includeFile = "view";
+      } else {
+        $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "view";
+      }
+      break;
+    case "deleteimage" :
+      $sg->selectGallery();
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK")) {
+        if($sg->deleteImage())
+          $adminMessage = $sg->_g("Image deleted");
+        else
+          $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "view";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+        $includeFile = "view";
+      } else {
+        $confirmTitle = $sg->_g("delete image");
+        $confirmMessage = $sg->_g("Are you sure you want to irretrievably delete image %s from gallery %s?","<em>".$sg->imageName().$sg->imageByArtist()."</em>","<em>".$sg->gallery->name."</em>");
+        $includeFile = "confirm";
+      }
+      break;
+    case "showgalleryhits" :
+      $sg->selectGallery();
+      $sg->loadGalleryHits();
+      $includeFile = "galleryhits";
+      break;
+    case "showimagehits" :
+      $sg->selectGallery();
+      $sg->loadImageHits();
+      $includeFile = "imagehits";
+      break;
+    case "purgecache" :
+      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|OK")) {
+        if($sg->purgeCache())
+          $adminMessage = $sg->_g("Thumbnail cache purged");
+        else
+          $adminMessage = $sg->_g("An error occurred:")." ".$sg->getLastError();
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->__g("confirm|Cancel")) {
+        $includeFile = "menu";
+      } else {
+        $confirmTitle = $sg->_g("purge cached thumbnails");
+        $dir = $sg->getListing($sg->config->pathto_cache,"all");
+        $confirmMessage = $sg->_g("Are you sure you want to delete all %s cached thumbnails?",count($dir->files));
+        $includeFile = "confirm";
+      }
+      break;
+    case "menu" :
+    default :
+      $includeFile = "menu";
   }
-} else {
-  echo "<h1>admin login</h1>\n";
-  sgLoginForm();
-}
+else //not logged in
+  $includeFile = "login";
 
-//include footer file
-include $GLOBALS["sgConfig"]->pathto_footer;
+if(empty($includeFile)) $includeFile = "menu";
+
+//pass control over to template
+include $sg->config->pathto_admin_template."index.tpl.php";
+
 
 ?>

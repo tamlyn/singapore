@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>singapore tools</title>
+<link rel="stylesheet" type="text/css" href="tools.css" />
+</head>
+
+<body>
+
+<h1>singapore tools</h1>
+
+<p>This is a collection of tools for use with the singapore image gallery. They 
+must be located in a child directory of the main singapore directory 
+(<code>tools/</code> by default). Since they are PHP scripts they must be run 
+on a PHP enabled web server</p>
+
+<h1>language tools</h1>
+
+<p>These tools are to aid translators. They require GNU Gettext to be available 
+on the host system but do not require the Gettext PHP extension. Please 
+see the <a href="../docs/Translation.hltm">translation</a> readme for more 
+information.</p>
+
+<ol>
+  <li><a href="extract.php">Extractor</a> - for developers only. Extracts 
+  translatable strings from singapore files and current template and creates
+  PO template files. Unless you have edited text in the sources you do not need 
+  to execute this.</li>
+  <li><a href="merger.php">Merger</a> - for translators. Merges new strings from
+  the PO templates with all currently available PO files.</li>
+  <li><a href="compile.php">Compiler</a> - for translators. Compiles all 
+  currently available PO files into PHP serialized objects for use with singapore.</li>
+</ol>
+
+<p><a href="../">Return</a> to singapore.</p>
+
+</body>
+</html>
