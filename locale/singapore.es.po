@@ -23,7 +23,7 @@ msgstr "Pagina creada en  %s segundos"
 # File: ../includes/singapore.class.php, line: 340
 #, c-format
 msgid "singapore|Powered by %s"
-msgstr "singapore|Powered by %s"
+msgstr "Powered by %s"
 #
 # File: ../includes/singapore.class.php, line: 345
 msgid "All rights reserved."
@@ -43,21 +43,21 @@ msgstr "Admin"
 #
 # File: ../includes/singapore.class.php, line: 490
 msgid "crumb line|You are here:"
-msgstr "crumb line|Estás aquí:"
+msgstr "Estás aquí:"
 #
 # File: ../includes/singapore.class.php, line: 530
 #, c-format
 msgid "%s gallery"
 msgid_plural "%s galleries"
 msgstr[0] "%s galería"
-msgstr[1] "%s galeríaa"
+msgstr[1] "%s galerías"
 #
 # File: ../includes/singapore.class.php, line: 559
 #, c-format
 msgid "%s image"
 msgid_plural "%s images"
-msgstr[0] "%s imagen"
-msgstr[1] "%s imagenes"
+msgstr[0] "%s imágen"
+msgstr[1] "%s imágenes"
 #
 # File: ../includes/singapore.class.php, line: 603
 # File: ../includes/singapore.class.php, line: 613
@@ -79,37 +79,37 @@ msgstr "Mostrando %s-%s de %s"
 #
 # File: ../includes/singapore.class.php, line: 659
 msgid "gallery|Up"
-msgstr "gallery|Arriba"
+msgstr "Arriba"
 #
 # File: ../includes/singapore.class.php, line: 659
 msgid "gallery|Up one level"
-msgstr "gallery|Subir un nivel"
+msgstr "Subir un nivel"
 #
 # File: ../includes/singapore.class.php, line: 683
 # File: ../includes/singapore.class.php, line: 752
 msgid "gallery|Previous"
-msgstr "gallery|Previa"
+msgstr "Previa"
 #
 # File: ../includes/singapore.class.php, line: 684
 #, fuzzy
 msgid "gallery|First"
-msgstr "gallery|Siguiente"
+msgstr "Siguiente"
 #
 # File: ../includes/singapore.class.php, line: 687
 # File: ../includes/singapore.class.php, line: 740
 msgid "gallery|Next"
-msgstr "gallery|Siguiente"
+msgstr "Siguiente"
 #
 # File: ../includes/singapore.class.php, line: 688
 #, fuzzy
 msgid "gallery|Last"
-msgstr "gallery|Siguiente"
+msgstr "Siguiente"
 #
 # File: ../includes/singapore.class.php, line: 760
 # File: ../includes/singapore.class.php, line: 991
 #, c-format
 msgid "artist name|by %s"
-msgstr "artist name|por %s"
+msgstr "por %s"
 #
 # File: ../includes/singapore.class.php, line: 836
 # File: ../includes/singapore.class.php, line: 838
@@ -140,8 +140,8 @@ msgstr "Visitada"
 #, fuzzy, c-format
 msgid "viewed|%s time"
 msgid_plural "viewed|%s times"
-msgstr[0] "viewed|%s veces"
-msgstr[1] "viewed|%s veces"
+msgstr[0] "%s vez"
+msgstr[1] "%s veces"
 #
 # File: ../includes/singapore.class.php, line: 959
 msgid "Add a comment"
@@ -149,25 +149,23 @@ msgstr ""
 #
 # File: ../includes/singapore.class.php, line: 1068
 msgid "image|Previous"
-msgstr "image|Previa"
+msgstr "Previa"
 #
 # File: ../includes/singapore.class.php, line: 1079
-#, fuzzy
 msgid "image|First"
-msgstr "imagen|Siguiente"
+msgstr ""
 #
 # File: ../includes/singapore.class.php, line: 1096
 msgid "image|Thumbnails"
-msgstr "image|Vistas previas"
+msgstr "Vistas previas"
 #
 # File: ../includes/singapore.class.php, line: 1107
 msgid "image|Next"
-msgstr "imagen|Siguiente"
+msgstr "Siguiente"
 #
 # File: ../includes/singapore.class.php, line: 1118
-#, fuzzy
 msgid "image|Last"
-msgstr "imagen|Siguiente"
+msgstr ""
 #
 # File: ../includes/singapore.class.php, line: 1142
 msgid "Location"

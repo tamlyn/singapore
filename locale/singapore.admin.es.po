@@ -53,7 +53,7 @@ msgstr "Información de la galería guardada"
 # File: ../admin.php, line: 159
 # File: ../admin.php, line: 184
 msgid "confirm|OK"
-msgstr "confirmar|OK"
+msgstr "OK"
 #
 # File: ../admin.php, line: 102
 msgid "Gallery deleted"
@@ -64,7 +64,7 @@ msgstr "Galería borrada"
 # File: ../admin.php, line: 165
 # File: ../admin.php, line: 189
 msgid "confirm|Cancel"
-msgstr "confirmar|Cancelar"
+msgstr "Cancelar"
 #
 # File: ../admin.php, line: 110
 msgid "delete gallery"
@@ -77,7 +77,8 @@ msgid ""
 "Are you sure you want to irretrievably delete it and all subgalleries and "
 "images it contains?"
 msgstr ""
-"La galería %s no está vacía¿Estás seguro que quieres eliminarla "
+"La galería %s no está vacía\n"
+"¿Estás seguro que quieres eliminarla "
 "permanentemente junto con todas las subgalerías e imagenes que contiene?"
 #
 # File: ../admin.php, line: 119
@@ -121,43 +122,43 @@ msgstr "Estas seguro que quieres vaciar  %s vistas previas del cache?"
 #
 # File: ../includes/admin.class.php, line: 178
 msgid "admin bar|Back"
-msgstr "barra de admin.|Atrás"
+msgstr "Atrás"
 #
 # File: ../includes/admin.class.php, line: 180
 msgid "admin bar|Admin"
-msgstr "barra de admin.|Admin"
+msgstr "Admin"
 #
 # File: ../includes/admin.class.php, line: 181
 msgid "admin bar|Galleries"
-msgstr "barra de admin.|Galerías"
+msgstr "Galerías"
 #
 # File: ../includes/admin.class.php, line: 182
 msgid "admin bar|Log out"
-msgstr "barra de admin.|Salir"
+msgstr "Salir"
 #
 # File: ../includes/admin.class.php, line: 184
 msgid "admin bar|Edit gallery"
-msgstr "barra de admin.|Editar galería"
+msgstr "Editar galería"
 #
 # File: ../includes/admin.class.php, line: 185
 msgid "admin bar|Delete gallery"
-msgstr "barra de admin.|Eliminar galería"
+msgstr "Eliminar galería"
 #
 # File: ../includes/admin.class.php, line: 186
 msgid "admin bar|New subgallery"
-msgstr "barra de admin.|Nueva subgalería"
+msgstr "Nueva subgalería"
 #
 # File: ../includes/admin.class.php, line: 188
 msgid "admin bar|Edit image"
-msgstr "barra de admin.|Editar imagen"
+msgstr "Editar imagen"
 #
 # File: ../includes/admin.class.php, line: 189
 msgid "admin bar|Delete image"
-msgstr "barra de admin.|Eliminar imagen"
+msgstr "Eliminar imagen"
 #
 # File: ../includes/admin.class.php, line: 191
 msgid "admin bar|New image"
-msgstr "barra de admin.|Nueva imagen"
+msgstr "Nueva imagen"
 #
 # File: ../includes/admin.class.php, line: 215
 msgid "There was an error saving the new password."
@@ -239,10 +240,10 @@ msgstr "Escoge el archivo de la imagen para representar esta galería."
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 9
 msgid "thumbnail|None"
-msgstr "vista previa|Ninguna"
+msgstr "Ninguna"
 #
 # File: ../templates/admin_default/changethumbnail.tpl.php, line: 10
-msgid "thumbnail|Random"
+msgid "Random"
 msgstr "vista previa|Aleatoria"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 1
@@ -261,7 +262,7 @@ msgstr "Vista previa aleatoria\n"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 23
 msgid "thumbnail|Change..."
-msgstr "vista previa |Cambiar..."
+msgstr "Cambiar..."
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 27
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 22
@@ -311,7 +312,7 @@ msgstr "Confirmar contraseña:"
 #
 # File: ../templates/admin_default/footer.tpl.php, line: 3
 msgid "singapore|Powered by"
-msgstr "singapore|Powered by"
+msgstr "Powered by"
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 22
 # File: ../templates/admin_default/imagehits.tpl.php, line: 22

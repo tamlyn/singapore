@@ -21,7 +21,7 @@ msgstr "Страница создана в"
 # File: ../includes/singapore.class.php, line: 340
 #, c-format
 msgid "singapore|Powered by %s"
-msgstr "singapore|Powered by %s"
+msgstr "Powered by %s"
 #
 # File: ../includes/singapore.class.php, line: 345
 msgid "All rights reserved."
@@ -41,13 +41,13 @@ msgstr "Вход админ."
 #
 # File: ../includes/singapore.class.php, line: 490
 msgid "crumb line|You are here:"
-msgstr "crumb line|Вы здесь"
+msgstr "Вы здесь"
 #
 # File: ../includes/singapore.class.php, line: 530
 #, fuzzy, c-format
 msgid "%s gallery"
 msgid_plural "%s galleries"
-msgstr[0] "gallery|Пред."
+msgstr[0] "Пред."
 #
 # File: ../includes/singapore.class.php, line: 559
 #, c-format
@@ -76,37 +76,37 @@ msgstr "показ. %s-%s из %s"
 #
 # File: ../includes/singapore.class.php, line: 659
 msgid "gallery|Up"
-msgstr "gallery|Пред."
+msgstr "Пред."
 #
 # File: ../includes/singapore.class.php, line: 659
 msgid "gallery|Up one level"
-msgstr "gallery|Пред. Галерея"
+msgstr "Пред. Галерея"
 #
 # File: ../includes/singapore.class.php, line: 683
 # File: ../includes/singapore.class.php, line: 752
 msgid "gallery|Previous"
-msgstr "gallery|Пред."
+msgstr "Пред."
 #
 # File: ../includes/singapore.class.php, line: 684
 #, fuzzy
 msgid "gallery|First"
-msgstr "gallery|След."
+msgstr "След."
 #
 # File: ../includes/singapore.class.php, line: 687
 # File: ../includes/singapore.class.php, line: 740
 msgid "gallery|Next"
-msgstr "gallery|След."
+msgstr "След."
 #
 # File: ../includes/singapore.class.php, line: 688
 #, fuzzy
 msgid "gallery|Last"
-msgstr "gallery|След."
+msgstr "След."
 #
 # File: ../includes/singapore.class.php, line: 760
 # File: ../includes/singapore.class.php, line: 991
 #, c-format
 msgid "artist name|by %s"
-msgstr "artist name|автор : %s"
+msgstr "автор : %s"
 #
 # File: ../includes/singapore.class.php, line: 836
 # File: ../includes/singapore.class.php, line: 838
@@ -137,7 +137,7 @@ msgstr "Видна"
 #, fuzzy, c-format
 msgid "viewed|%s time"
 msgid_plural "viewed|%s times"
-msgstr[0] "viewed|%s раз(а)"
+msgstr[0] "%s раз(а)"
 #
 # File: ../includes/singapore.class.php, line: 959
 msgid "Add a comment"
@@ -145,25 +145,25 @@ msgstr ""
 #
 # File: ../includes/singapore.class.php, line: 1068
 msgid "image|Previous"
-msgstr "image|Пред."
+msgstr "Пред."
 #
 # File: ../includes/singapore.class.php, line: 1079
 #, fuzzy
 msgid "image|First"
-msgstr "image|След."
+msgstr "След."
 #
 # File: ../includes/singapore.class.php, line: 1096
 msgid "image|Thumbnails"
-msgstr "image|Thumbnails"
+msgstr "Thumbnails"
 #
 # File: ../includes/singapore.class.php, line: 1107
 msgid "image|Next"
-msgstr "image|След."
+msgstr "След."
 #
 # File: ../includes/singapore.class.php, line: 1118
 #, fuzzy
 msgid "image|Last"
-msgstr "image|След."
+msgstr "След."
 #
 # File: ../includes/singapore.class.php, line: 1142
 msgid "Location"
@@ -192,12 +192,3 @@ msgstr "Студийная переработка   "
 # File: ../includes/singapore.class.php, line: 1156
 msgid "Digital manipulation"
 msgstr "Цифровая переработка"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "viewed|%s times"
-#~ msgstr "viewed|%s раз(а)"
