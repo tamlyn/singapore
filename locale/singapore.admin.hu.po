@@ -1,76 +1,76 @@
-# Singapore-Versión español (mexicano)
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Attila Nagy <nagyattila@datatrans.hu>, 2003.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.6\n"
-"POT-Creation-Date: 2003-11-01 14:13+0000\n"
+"Project-Id-Version: singapore 0.9.7\n"
+"POT-Creation-Date: 2003-12-28 17:34+0000\n"
 "PO-Revision-Date: 2003-10-26 19:00+1GMT\n"
-"Last-Translator: Kemie Guaida <kemie@pixilate.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Attila Nagy <nagyattila@datatrans.hu>\n"
+"Language-Team: Hungarian <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
-# File: ../admin.php, line: 44
+# File: ../admin.php, line: 43
 msgid "Welcome to singapore admin!"
 msgstr "Isten hozott a singapore adminisztrációs felületen!"
 #
-# File: ../admin.php, line: 47
-# File: ../admin.php, line: 56
-# File: ../admin.php, line: 65
-# File: ../admin.php, line: 80
-# File: ../admin.php, line: 94
-# File: ../admin.php, line: 105
-# File: ../admin.php, line: 122
-# File: ../admin.php, line: 140
-# File: ../admin.php, line: 154
-# File: ../admin.php, line: 164
-# File: ../admin.php, line: 189
+# File: ../admin.php, line: 46
+# File: ../admin.php, line: 55
+# File: ../admin.php, line: 64
+# File: ../admin.php, line: 79
+# File: ../admin.php, line: 93
+# File: ../admin.php, line: 104
+# File: ../admin.php, line: 121
+# File: ../admin.php, line: 139
+# File: ../admin.php, line: 153
+# File: ../admin.php, line: 163
+# File: ../admin.php, line: 188
 msgid "An error occurred:"
 msgstr "Hiba lépett fel:"
 #
-# File: ../admin.php, line: 53
+# File: ../admin.php, line: 52
 msgid "Thank you and goodbye!"
 msgstr "Kösz és viszlát"
 #
-# File: ../admin.php, line: 63
+# File: ../admin.php, line: 62
 msgid "Password saved"
 msgstr "Jelszó mentve"
 #
-# File: ../admin.php, line: 77
+# File: ../admin.php, line: 76
 msgid "Gallery added"
 msgstr "Galéria hozzáadva"
 #
-# File: ../admin.php, line: 91
+# File: ../admin.php, line: 90
 msgid "Gallery info saved"
 msgstr "Galéria-információk elmentve"
 #
-# File: ../admin.php, line: 100
-# File: ../admin.php, line: 118
-# File: ../admin.php, line: 160
-# File: ../admin.php, line: 185
+# File: ../admin.php, line: 99
+# File: ../admin.php, line: 117
+# File: ../admin.php, line: 159
+# File: ../admin.php, line: 184
 msgid "confirm|OK"
 msgstr "Rendben"
 #
-# File: ../admin.php, line: 103
+# File: ../admin.php, line: 102
 msgid "Gallery deleted"
 msgstr "Galéria törölve"
 #
-# File: ../admin.php, line: 108
-# File: ../admin.php, line: 124
-# File: ../admin.php, line: 166
-# File: ../admin.php, line: 190
+# File: ../admin.php, line: 107
+# File: ../admin.php, line: 123
+# File: ../admin.php, line: 165
+# File: ../admin.php, line: 189
 msgid "confirm|Cancel"
 msgstr "Mégsem"
 #
-# File: ../admin.php, line: 111
+# File: ../admin.php, line: 110
 msgid "delete gallery"
 msgstr "Galéria törlése"
 #
-# File: ../admin.php, line: 112
+# File: ../admin.php, line: 111
 #, c-format
 msgid ""
 "Gallery %s is not empty.\n"
@@ -78,148 +78,151 @@ msgid ""
 "images it contains?"
 msgstr ""
 "A galéria nem üres.\n"
-"Biztos, hogy visszavonhatatlanul törlöd a benne levõ al-galériákkal és képekkel együtt?"
+"Biztos, hogy visszavonhatatlanul törlöd a benne levõ al-galériákkal és "
+"képekkel együtt?"
 #
-# File: ../admin.php, line: 120
+# File: ../admin.php, line: 119
 msgid "Thumbnail changed"
 msgstr "Elõnézet megváltozott"
 #
-# File: ../admin.php, line: 137
+# File: ../admin.php, line: 136
 msgid "Image added"
 msgstr "Kép hozzáadva"
 #
-# File: ../admin.php, line: 151
+# File: ../admin.php, line: 150
 msgid "Image saved successfully"
 msgstr "Kép sikeres mentése"
 #
-# File: ../admin.php, line: 162
+# File: ../admin.php, line: 161
 msgid "Image deleted"
 msgstr "Kép törölve"
 #
-# File: ../admin.php, line: 169
+# File: ../admin.php, line: 168
 msgid "delete image"
 msgstr "Kép törlése"
 #
-# File: ../admin.php, line: 170
+# File: ../admin.php, line: 169
 #, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
-msgstr "Biztos, hogy visszavonhatatlanul törlöd a %2$s galériában található %1$s képet?"
+msgstr ""
+"Biztos, hogy visszavonhatatlanul törlöd a %2$s galériában található %1$s "
+"képet?"
 #
-# File: ../admin.php, line: 187
+# File: ../admin.php, line: 186
 msgid "Thumbnail cache purged"
 msgstr "Elõnézet tár törölve"
 #
-# File: ../admin.php, line: 193
+# File: ../admin.php, line: 192
 msgid "purge cached thumbnails"
 msgstr "Tárolt elõnézetek törlése"
 #
-# File: ../admin.php, line: 195
+# File: ../admin.php, line: 194
 #, c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr "Biztos, hogy törlöd az összes (%s) tárolt elõnézetet?"
 #
-# File: ../includes/admin.class.php, line: 163
+# File: ../includes/admin.class.php, line: 178
 msgid "admin bar|Back"
 msgstr "Vissza"
 #
-# File: ../includes/admin.class.php, line: 165
+# File: ../includes/admin.class.php, line: 180
 msgid "admin bar|Admin"
 msgstr "Adminisztráció"
 #
-# File: ../includes/admin.class.php, line: 166
+# File: ../includes/admin.class.php, line: 181
 msgid "admin bar|Galleries"
 msgstr "Galériák"
 #
-# File: ../includes/admin.class.php, line: 167
+# File: ../includes/admin.class.php, line: 182
 msgid "admin bar|Log out"
 msgstr "Kijelentkezés"
 #
-# File: ../includes/admin.class.php, line: 169
+# File: ../includes/admin.class.php, line: 184
 msgid "admin bar|Edit gallery"
 msgstr "Galéria szerkesztése"
 #
-# File: ../includes/admin.class.php, line: 170
+# File: ../includes/admin.class.php, line: 185
 msgid "admin bar|Delete gallery"
 msgstr "Galéria törlése"
 #
-# File: ../includes/admin.class.php, line: 171
+# File: ../includes/admin.class.php, line: 186
 msgid "admin bar|New subgallery"
 msgstr "Új al-galéria"
 #
-# File: ../includes/admin.class.php, line: 173
+# File: ../includes/admin.class.php, line: 188
 msgid "admin bar|Edit image"
 msgstr "Kép szerkesztése"
 #
-# File: ../includes/admin.class.php, line: 174
+# File: ../includes/admin.class.php, line: 189
 msgid "admin bar|Delete image"
 msgstr "Kép törlése"
 #
-# File: ../includes/admin.class.php, line: 176
+# File: ../includes/admin.class.php, line: 191
 msgid "admin bar|New image"
 msgstr "Új kép"
 #
-# File: ../includes/admin.class.php, line: 200
+# File: ../includes/admin.class.php, line: 215
 msgid "There was an error saving the new password."
 msgstr "Hiba jelszó mentése közben."
 #
-# File: ../includes/admin.class.php, line: 203
+# File: ../includes/admin.class.php, line: 218
 msgid "New password must be between 6 and 16 characters long."
 msgstr "Az új jelszó hosszúságának 6 és 16 karakter közé kell esnie."
 #
-# File: ../includes/admin.class.php, line: 205
+# File: ../includes/admin.class.php, line: 220
 msgid "The new passwords you entered do not match."
 msgstr "A megadott jelszavak nem egyeznek."
 #
-# File: ../includes/admin.class.php, line: 207
+# File: ../includes/admin.class.php, line: 222
 msgid ""
 "The current password you entered does not match the one in the database."
 msgstr "A megadott jelszó nem egyezik az adatbázisban levõvel."
 #
-# File: ../includes/admin.class.php, line: 210
+# File: ../includes/admin.class.php, line: 225
 msgid "The username specified was not found in the database."
 msgstr "A megadott felhasználónév nem szerepel az adatbázisban."
 #
-# File: ../includes/admin.class.php, line: 246
+# File: ../includes/admin.class.php, line: 261
 msgid "Username and/or password incorrect"
 msgstr "Érvénytelen felhasználónév és/vagy jelszó"
 #
-# File: ../includes/admin.class.php, line: 249
+# File: ../includes/admin.class.php, line: 264
 msgid "You must enter a username and password"
 msgstr "Meg kell adnod a felhasználónevet és a jelszót"
 #
-# File: ../includes/admin.class.php, line: 274
+# File: ../includes/admin.class.php, line: 289
 msgid "Gallery already exists"
 msgstr "A galéria már létezik"
 #
-# File: ../includes/admin.class.php, line: 281
+# File: ../includes/admin.class.php, line: 296
 msgid "Could not create directory"
 msgstr "A könyvtár nem hozható létre"
 #
-# File: ../includes/admin.class.php, line: 305
+# File: ../includes/admin.class.php, line: 327
 msgid "Could not save gallery info"
 msgstr "Nem menthetõk a galéria-információk"
 #
-# File: ../includes/admin.class.php, line: 323
+# File: ../includes/admin.class.php, line: 345
 msgid "Cannot delete the top level directory"
 msgstr "A legelsõbb szintû könyvtár nem törölhetõ"
 #
-# File: ../includes/admin.class.php, line: 364
+# File: ../includes/admin.class.php, line: 386
 msgid "File already exists"
 msgstr "Már létezõ fájl"
 #
-# File: ../includes/admin.class.php, line: 374
+# File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
 msgstr "Hibás helymeghatározás"
 #
-# File: ../includes/admin.class.php, line: 393
+# File: ../includes/admin.class.php, line: 415
 msgid "Could not add image to gallery"
 msgstr "A kép nem adható a galériához"
 #
-# File: ../includes/admin.class.php, line: 426
+# File: ../includes/admin.class.php, line: 448
 msgid "Could not save image information"
 msgstr "A kép-információ nem menthetõ"
 #
-# File: ../includes/admin.class.php, line: 448
+# File: ../includes/admin.class.php, line: 470
 msgid "Could not delete image"
 msgstr "A kép nem törölhetõ"
 #
@@ -251,7 +254,8 @@ msgstr "Galéria elõnézet:"
 msgid ""
 "Random\n"
 "thumbnail"
-msgstr "Véletlen\n"
+msgstr ""
+"Véletlen\n"
 "elõnézet"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 23
@@ -306,6 +310,10 @@ msgstr "Jelszó megerõsítése:"
 msgid "singapore|Powered by"
 msgstr "Fejlesztve:"
 #
+# File: ../templates/admin_default/header.tpl.php, line: 39
+msgid "Admin message:"
+msgstr ""
+#
 # File: ../templates/admin_default/loggedout.tpl.php, line: 1
 msgid "Return to galleries."
 msgstr "Vissza a galériákhoz"
@@ -359,7 +367,7 @@ msgid "new gallery"
 msgstr "Új galéria"
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 9
-# File: ../templates/admin_default/newimage.tpl.php, line: 27
+# File: ../templates/admin_default/newimage.tpl.php, line: 28
 msgid "Identifier:"
 msgstr "Azonosító:"
 #
@@ -367,32 +375,41 @@ msgstr "Azonosító:"
 msgid "new image"
 msgstr "Új kép"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 11
+# File: ../templates/admin_default/newimage.tpl.php, line: 3
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
+msgstr ""
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 12
 msgid "Remote file"
 msgstr "Távoli fájl"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 15
+# File: ../templates/admin_default/newimage.tpl.php, line: 16
 msgid "URL of image:"
 msgstr "Kép URL-je:"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 19
+# File: ../templates/admin_default/newimage.tpl.php, line: 20
 msgid "Local file"
 msgstr "Helyi fájl"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 23
+# File: ../templates/admin_default/newimage.tpl.php, line: 24
 msgid "Image file to upload:"
 msgstr "Feltöltendõ állomány:"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 29
+# File: ../templates/admin_default/newimage.tpl.php, line: 30
 msgid "Use filename of uploaded file."
 msgstr "A feltöltött fájl nevének megtartása."
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 30
+# File: ../templates/admin_default/newimage.tpl.php, line: 31
 msgid "Specify different filename:"
 msgstr "Eltérõ fájlnév használata:"
 #
-msgid "Could no upload file"
-msgstr "Fájl-feltöltési hiba"
+#
+#
+#~ msgid "Could no upload file"
+#~ msgstr "Fájl-feltöltési hiba"
+#
+#
 #
 #
 #
@@ -401,8 +418,12 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Artist name:"
 #~ msgstr "detalles de la galería|Nombre del artista:"
+#
+#
 #
 #
 #
@@ -411,8 +432,12 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Copyright holder:"
 #~ msgstr "detalles de la galería|Dueño del copyright:"
+#
+#
 #
 #
 #
@@ -421,8 +446,12 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "image details|Image:"
 #~ msgstr "detalles de la imagen|Imagen:"
+#
+#
 #
 #
 #
@@ -431,8 +460,12 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "image details|Artist name:"
 #~ msgstr "detalles de la imagen|Nombre del artista:"
+#
+#
 #
 #
 #
@@ -441,8 +474,12 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "image details|Location:"
 #~ msgstr "detalles de la imagen|Locación:"
+#
+#
 #
 #
 #
@@ -451,8 +488,12 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "image details|Copyright holder:"
 #~ msgstr "detalles de la imagen|Dueño del copyright:"
+#
+#
 #
 #
 #
@@ -461,8 +502,12 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "image details|Camera info:"
 #~ msgstr "detalles de la imagen|Información de la cámara:"
+#
+#
 #
 #
 #
@@ -471,13 +516,19 @@ msgstr "Fájl-feltöltési hiba"
 #
 #
 #
+#
+#
 #~ msgid "image details|Film info:"
 #~ msgstr "detalles de la imagen|Información de la película:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Darkroom manipulation:"
 #~ msgstr "detalles de la imagen|Manipulación en el cuarto obscuro:"
+#
+#
 #
 #
 #

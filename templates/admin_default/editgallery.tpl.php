@@ -41,7 +41,7 @@
 </tr>
 <tr>
   <td><?php echo $sg->_g("Description") ?></td>
-  <td><textarea name="sgGalleryDesc" cols="70" rows="8"><?php echo str_replace("<br />","\n",$sg->gallery->desc) ?></textarea></td>
+  <td><textarea name="sgGalleryDesc" cols="70" rows="8"><?php echo $sg->galleryDescriptionStripped() ?></textarea></td>
 </tr>
 <tr>
   <td></td>

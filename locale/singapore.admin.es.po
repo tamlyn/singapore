@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: singapore 0.9.6\n"
-"POT-Creation-Date: 2003-11-01 14:13+0000\n"
+"POT-Creation-Date: 2003-12-28 17:34+0000\n"
 "PO-Revision-Date: 2003-10-26 19:00+1GMT\n"
 "Last-Translator: Kemie Guaida <kemie@pixilate.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,63 +14,63 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
-# File: ../admin.php, line: 44
+# File: ../admin.php, line: 43
 msgid "Welcome to singapore admin!"
 msgstr ""
 #
-# File: ../admin.php, line: 47
-# File: ../admin.php, line: 56
-# File: ../admin.php, line: 65
-# File: ../admin.php, line: 80
-# File: ../admin.php, line: 94
-# File: ../admin.php, line: 105
-# File: ../admin.php, line: 122
-# File: ../admin.php, line: 140
-# File: ../admin.php, line: 154
-# File: ../admin.php, line: 164
-# File: ../admin.php, line: 189
+# File: ../admin.php, line: 46
+# File: ../admin.php, line: 55
+# File: ../admin.php, line: 64
+# File: ../admin.php, line: 79
+# File: ../admin.php, line: 93
+# File: ../admin.php, line: 104
+# File: ../admin.php, line: 121
+# File: ../admin.php, line: 139
+# File: ../admin.php, line: 153
+# File: ../admin.php, line: 163
+# File: ../admin.php, line: 188
 msgid "An error occurred:"
 msgstr "Ha ocurrido un error:"
 #
-# File: ../admin.php, line: 53
+# File: ../admin.php, line: 52
 msgid "Thank you and goodbye!"
 msgstr "¡Gracias y hasta luego!"
 #
-# File: ../admin.php, line: 63
+# File: ../admin.php, line: 62
 msgid "Password saved"
 msgstr "Contraseña guardada"
 #
-# File: ../admin.php, line: 77
+# File: ../admin.php, line: 76
 msgid "Gallery added"
 msgstr "Galería añadida"
 #
-# File: ../admin.php, line: 91
+# File: ../admin.php, line: 90
 msgid "Gallery info saved"
 msgstr "Información de la galería guardada"
 #
-# File: ../admin.php, line: 100
-# File: ../admin.php, line: 118
-# File: ../admin.php, line: 160
-# File: ../admin.php, line: 185
+# File: ../admin.php, line: 99
+# File: ../admin.php, line: 117
+# File: ../admin.php, line: 159
+# File: ../admin.php, line: 184
 msgid "confirm|OK"
 msgstr "confirmar|OK"
 #
-# File: ../admin.php, line: 103
+# File: ../admin.php, line: 102
 msgid "Gallery deleted"
 msgstr "Galería borrada"
 #
-# File: ../admin.php, line: 108
-# File: ../admin.php, line: 124
-# File: ../admin.php, line: 166
-# File: ../admin.php, line: 190
+# File: ../admin.php, line: 107
+# File: ../admin.php, line: 123
+# File: ../admin.php, line: 165
+# File: ../admin.php, line: 189
 msgid "confirm|Cancel"
 msgstr "confirmar|Cancelar"
 #
-# File: ../admin.php, line: 111
+# File: ../admin.php, line: 110
 msgid "delete gallery"
 msgstr "borrar galería"
 #
-# File: ../admin.php, line: 112
+# File: ../admin.php, line: 111
 #, c-format
 msgid ""
 "Gallery %s is not empty.\n"
@@ -80,147 +80,147 @@ msgstr ""
 "La galería %s no está vacía¿Estás seguro que quieres eliminarla "
 "permanentemente junto con todas las subgalerías e imagenes que contiene?"
 #
-# File: ../admin.php, line: 120
+# File: ../admin.php, line: 119
 msgid "Thumbnail changed"
 msgstr "Vista previa cambiada"
 #
-# File: ../admin.php, line: 137
+# File: ../admin.php, line: 136
 msgid "Image added"
 msgstr "Imagen añadida"
 #
-# File: ../admin.php, line: 151
+# File: ../admin.php, line: 150
 msgid "Image saved successfully"
 msgstr "Imagen guardada exitosamente"
 #
-# File: ../admin.php, line: 162
+# File: ../admin.php, line: 161
 msgid "Image deleted"
 msgstr "Imagen eliminada"
 #
-# File: ../admin.php, line: 169
+# File: ../admin.php, line: 168
 msgid "delete image"
 msgstr "Eliminar imagen"
 #
-# File: ../admin.php, line: 170
+# File: ../admin.php, line: 169
 #, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
 msgstr ""
 "Estás seguro que quieres borrar imagen  %s de la galería %s permanentemente?"
 #
-# File: ../admin.php, line: 187
+# File: ../admin.php, line: 186
 msgid "Thumbnail cache purged"
 msgstr "Cache de vistas previas vaciado"
 #
-# File: ../admin.php, line: 193
+# File: ../admin.php, line: 192
 msgid "purge cached thumbnails"
 msgstr "Vaciar vistas previas del cache"
 #
-# File: ../admin.php, line: 195
+# File: ../admin.php, line: 194
 #, c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr "Estas seguro que quieres vaciar  %s vistas previas del cache?"
 #
-# File: ../includes/admin.class.php, line: 163
+# File: ../includes/admin.class.php, line: 178
 msgid "admin bar|Back"
 msgstr "barra de admin.|Atrás"
 #
-# File: ../includes/admin.class.php, line: 165
+# File: ../includes/admin.class.php, line: 180
 msgid "admin bar|Admin"
 msgstr "barra de admin.|Admin"
 #
-# File: ../includes/admin.class.php, line: 166
+# File: ../includes/admin.class.php, line: 181
 msgid "admin bar|Galleries"
 msgstr "barra de admin.|Galerías"
 #
-# File: ../includes/admin.class.php, line: 167
+# File: ../includes/admin.class.php, line: 182
 msgid "admin bar|Log out"
 msgstr "barra de admin.|Salir"
 #
-# File: ../includes/admin.class.php, line: 169
+# File: ../includes/admin.class.php, line: 184
 msgid "admin bar|Edit gallery"
 msgstr "barra de admin.|Editar galería"
 #
-# File: ../includes/admin.class.php, line: 170
+# File: ../includes/admin.class.php, line: 185
 msgid "admin bar|Delete gallery"
 msgstr "barra de admin.|Eliminar galería"
 #
-# File: ../includes/admin.class.php, line: 171
+# File: ../includes/admin.class.php, line: 186
 msgid "admin bar|New subgallery"
 msgstr "barra de admin.|Nueva subgalería"
 #
-# File: ../includes/admin.class.php, line: 173
+# File: ../includes/admin.class.php, line: 188
 msgid "admin bar|Edit image"
 msgstr "barra de admin.|Editar imagen"
 #
-# File: ../includes/admin.class.php, line: 174
+# File: ../includes/admin.class.php, line: 189
 msgid "admin bar|Delete image"
 msgstr "barra de admin.|Eliminar imagen"
 #
-# File: ../includes/admin.class.php, line: 176
+# File: ../includes/admin.class.php, line: 191
 msgid "admin bar|New image"
 msgstr "barra de admin.|Nueva imagen"
 #
-# File: ../includes/admin.class.php, line: 200
+# File: ../includes/admin.class.php, line: 215
 msgid "There was an error saving the new password."
 msgstr "Hubo un error al guardar la nueva contraseña."
 #
-# File: ../includes/admin.class.php, line: 203
+# File: ../includes/admin.class.php, line: 218
 msgid "New password must be between 6 and 16 characters long."
 msgstr "La nueva contraseña debe de tener entre 6 y 16 caracteres."
 #
-# File: ../includes/admin.class.php, line: 205
+# File: ../includes/admin.class.php, line: 220
 msgid "The new passwords you entered do not match."
 msgstr "Las nuevas contraseñas no coinciden."
 #
-# File: ../includes/admin.class.php, line: 207
+# File: ../includes/admin.class.php, line: 222
 msgid ""
 "The current password you entered does not match the one in the database."
 msgstr "La contraseña actual no coincide con la que está en la base de datos."
 #
-# File: ../includes/admin.class.php, line: 210
+# File: ../includes/admin.class.php, line: 225
 msgid "The username specified was not found in the database."
 msgstr "El nombre de usuario especificado no se encontró en la base de datos."
 #
-# File: ../includes/admin.class.php, line: 246
+# File: ../includes/admin.class.php, line: 261
 msgid "Username and/or password incorrect"
 msgstr "Usuario y/o contraseña incorrectos"
 #
-# File: ../includes/admin.class.php, line: 249
+# File: ../includes/admin.class.php, line: 264
 msgid "You must enter a username and password"
 msgstr "Debes escribir un nombre de usuario y contraseña."
 #
-# File: ../includes/admin.class.php, line: 274
+# File: ../includes/admin.class.php, line: 289
 msgid "Gallery already exists"
 msgstr "La galería ya existe"
 #
-# File: ../includes/admin.class.php, line: 281
+# File: ../includes/admin.class.php, line: 296
 msgid "Could not create directory"
 msgstr "No se pudo crear el directorio"
 #
-# File: ../includes/admin.class.php, line: 305
+# File: ../includes/admin.class.php, line: 327
 msgid "Could not save gallery info"
 msgstr "No se pudo guardar la información de la galería."
 #
-# File: ../includes/admin.class.php, line: 323
+# File: ../includes/admin.class.php, line: 345
 msgid "Cannot delete the top level directory"
 msgstr "No se puede borrar el directorio principal"
 #
-# File: ../includes/admin.class.php, line: 364
+# File: ../includes/admin.class.php, line: 386
 msgid "File already exists"
 msgstr "El archivo ya existe"
 #
-# File: ../includes/admin.class.php, line: 374
+# File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
 msgstr "Localización inválida"
 #
-# File: ../includes/admin.class.php, line: 393
+# File: ../includes/admin.class.php, line: 415
 msgid "Could not add image to gallery"
 msgstr "No se pudo añadir la imagen a la galería"
 #
-# File: ../includes/admin.class.php, line: 426
+# File: ../includes/admin.class.php, line: 448
 msgid "Could not save image information"
 msgstr "No se pudo guardar la información de la imagen."
 #
-# File: ../includes/admin.class.php, line: 448
+# File: ../includes/admin.class.php, line: 470
 msgid "Could not delete image"
 msgstr "No se pudo borrar la imagen."
 #
@@ -306,6 +306,10 @@ msgstr "Confirmar contraseña:"
 msgid "singapore|Powered by"
 msgstr "singapore|Powered by"
 #
+# File: ../templates/admin_default/header.tpl.php, line: 39
+msgid "Admin message:"
+msgstr ""
+#
 # File: ../templates/admin_default/loggedout.tpl.php, line: 1
 msgid "Return to galleries."
 msgstr "Regresar a las galerías."
@@ -359,7 +363,7 @@ msgid "new gallery"
 msgstr "nueva galería"
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 9
-# File: ../templates/admin_default/newimage.tpl.php, line: 27
+# File: ../templates/admin_default/newimage.tpl.php, line: 28
 msgid "Identifier:"
 msgstr "Identificador:"
 #
@@ -367,29 +371,36 @@ msgstr "Identificador:"
 msgid "new image"
 msgstr "nueva imagen"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 11
+# File: ../templates/admin_default/newimage.tpl.php, line: 3
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
+msgstr ""
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 12
 msgid "Remote file"
 msgstr "Archivo remoto"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 15
+# File: ../templates/admin_default/newimage.tpl.php, line: 16
 msgid "URL of image:"
 msgstr "URL de la imagen:"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 19
+# File: ../templates/admin_default/newimage.tpl.php, line: 20
 msgid "Local file"
 msgstr "Archivo local"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 23
+# File: ../templates/admin_default/newimage.tpl.php, line: 24
 msgid "Image file to upload:"
 msgstr "Archivo de imagen a subir:"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 29
+# File: ../templates/admin_default/newimage.tpl.php, line: 30
 msgid "Use filename of uploaded file."
 msgstr "Usar el nombre del archivo subido."
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 30
+# File: ../templates/admin_default/newimage.tpl.php, line: 31
 msgid "Specify different filename:"
 msgstr "Especificar un nombre de archivo distinto:"
+#
+#
 #
 #
 #
@@ -398,8 +409,12 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Artist name:"
 #~ msgstr "detalles de la galería|Nombre del artista:"
+#
+#
 #
 #
 #
@@ -408,8 +423,12 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Copyright holder:"
 #~ msgstr "detalles de la galería|Dueño del copyright:"
+#
+#
 #
 #
 #
@@ -418,8 +437,12 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Image:"
 #~ msgstr "detalles de la imagen|Imagen:"
+#
+#
 #
 #
 #
@@ -428,8 +451,12 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Artist name:"
 #~ msgstr "detalles de la imagen|Nombre del artista:"
+#
+#
 #
 #
 #
@@ -438,8 +465,12 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Location:"
 #~ msgstr "detalles de la imagen|Locación:"
+#
+#
 #
 #
 #
@@ -448,8 +479,12 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Copyright holder:"
 #~ msgstr "detalles de la imagen|Dueño del copyright:"
+#
+#
 #
 #
 #
@@ -458,8 +493,12 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Camera info:"
 #~ msgstr "detalles de la imagen|Información de la cámara:"
+#
+#
 #
 #
 #
@@ -468,13 +507,19 @@ msgstr "Especificar un nombre de archivo distinto:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Film info:"
 #~ msgstr "detalles de la imagen|Información de la película:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Darkroom manipulation:"
 #~ msgstr "detalles de la imagen|Manipulación en el cuarto obscuro:"
+#
+#
 #
 #
 #

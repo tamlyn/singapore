@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: singapore 0.9.6\n"
-"POT-Creation-Date: 2003-11-01 14:13+0000\n"
+"POT-Creation-Date: 2003-12-28 17:34+0000\n"
 "PO-Revision-Date: 2003-08-18 09:55+0100\n"
 "Last-Translator: Jan Thorn <jan@j-thorn.dk>\n"
 "Language-Team: Swedish <LL@li.org>\n"
@@ -15,55 +15,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n==1 ? 0 : 1;\n"
 #
-# File: ../includes/singapore.class.php, line: 247
+# File: ../includes/singapore.class.php, line: 320
 #, c-format
 msgid "Page created in %s seconds"
 msgstr "Sidan skapad på %s sekunder"
 #
-# File: ../includes/singapore.class.php, line: 264
+# File: ../includes/singapore.class.php, line: 337
 #, c-format
 msgid "singapore|Powered by %s"
 msgstr "Skapat med %s"
 #
-# File: ../includes/singapore.class.php, line: 269
+# File: ../includes/singapore.class.php, line: 342
 msgid "All rights reserved."
 msgstr "All rights reserved."
 #
-# File: ../includes/singapore.class.php, line: 274
+# File: ../includes/singapore.class.php, line: 347
 msgid ""
 "Images may not be reproduced in any form without the express written "
 "permission of the copyright holder."
 msgstr ""
 "Bilder får inte användas i någon form utan tillåtelse från copyrightägaren."
 #
-# File: ../includes/singapore.class.php, line: 279
+# File: ../includes/singapore.class.php, line: 352
 msgid "Log in"
 msgstr "Logga in"
 #
-# File: ../includes/singapore.class.php, line: 407
+# File: ../includes/singapore.class.php, line: 487
 msgid "crumb line|You are here:"
 msgstr "Du är här:"
 #
-# File: ../includes/singapore.class.php, line: 447
+# File: ../includes/singapore.class.php, line: 527
 #, c-format
 msgid "%s gallery"
 msgid_plural "%s galleries"
 msgstr[0] "%s bildarkiv"
 msgstr[1] "%s bildarkiv"
 #
-# File: ../includes/singapore.class.php, line: 476
+# File: ../includes/singapore.class.php, line: 556
 #, c-format
 msgid "%s image"
 msgid_plural "%s images"
 msgstr[0] "%s bild"
 msgstr[1] "%s bilder"
 #
-# File: ../includes/singapore.class.php, line: 520
-# File: ../includes/singapore.class.php, line: 530
+# File: ../includes/singapore.class.php, line: 600
+# File: ../includes/singapore.class.php, line: 610
 msgid "Sample image from gallery"
 msgstr "Slumpa bild från galleriet"
 #
-# File: ../includes/singapore.class.php, line: 524
+# File: ../includes/singapore.class.php, line: 604
 msgid ""
 "No\n"
 "thumbnail"
@@ -71,107 +71,109 @@ msgstr ""
 "Ingen\n"
 "minibild"
 #
-# File: ../includes/singapore.class.php, line: 564
+# File: ../includes/singapore.class.php, line: 644
 #, c-format
 msgid "Showing %s-%s of %s"
 msgstr "Visar %s-%s av %s"
 #
-# File: ../includes/singapore.class.php, line: 576
+# File: ../includes/singapore.class.php, line: 656
 msgid "gallery|Up"
 msgstr "Upp"
 #
-# File: ../includes/singapore.class.php, line: 576
+# File: ../includes/singapore.class.php, line: 656
 msgid "gallery|Up one level"
 msgstr "Upp ett steg"
 #
-# File: ../includes/singapore.class.php, line: 600
+# File: ../includes/singapore.class.php, line: 680
 msgid "gallery|Next"
 msgstr "Nästa"
 #
-# File: ../includes/singapore.class.php, line: 609
+# File: ../includes/singapore.class.php, line: 689
 msgid "gallery|Previous"
 msgstr "Föregående"
 #
-# File: ../includes/singapore.class.php, line: 617
-# File: ../includes/singapore.class.php, line: 822
+# File: ../includes/singapore.class.php, line: 697
+# File: ../includes/singapore.class.php, line: 922
 #, c-format
 msgid "artist name|by %s"
 msgstr "av %s"
 #
-# File: ../includes/singapore.class.php, line: 673
-# File: ../includes/singapore.class.php, line: 675
-# File: ../includes/singapore.class.php, line: 947
-# File: ../includes/singapore.class.php, line: 949
+# File: ../includes/singapore.class.php, line: 773
+# File: ../includes/singapore.class.php, line: 775
+# File: ../includes/singapore.class.php, line: 1047
+# File: ../includes/singapore.class.php, line: 1049
 msgid "Email"
 msgstr "Artist e-mail"
 #
-# File: ../includes/singapore.class.php, line: 677
-# File: ../includes/singapore.class.php, line: 955
+# File: ../includes/singapore.class.php, line: 777
+# File: ../includes/singapore.class.php, line: 1055
 msgid "Description"
 msgstr "Beskrivning"
 #
-# File: ../includes/singapore.class.php, line: 679
-# File: ../includes/singapore.class.php, line: 681
-# File: ../includes/singapore.class.php, line: 967
-# File: ../includes/singapore.class.php, line: 969
+# File: ../includes/singapore.class.php, line: 779
+# File: ../includes/singapore.class.php, line: 781
+# File: ../includes/singapore.class.php, line: 1067
+# File: ../includes/singapore.class.php, line: 1069
 msgid "Copyright"
 msgstr "Copyright"
 #
-# File: ../includes/singapore.class.php, line: 683
-# File: ../includes/singapore.class.php, line: 971
+# File: ../includes/singapore.class.php, line: 783
+# File: ../includes/singapore.class.php, line: 1071
 msgid "Viewed"
 msgstr "Visat"
 #
-# File: ../includes/singapore.class.php, line: 683
-# File: ../includes/singapore.class.php, line: 971
+# File: ../includes/singapore.class.php, line: 783
+# File: ../includes/singapore.class.php, line: 1071
 #, fuzzy, c-format
 msgid "viewed|%s time"
 msgid_plural "viewed|%s times"
 msgstr[0] "%s gånger"
 #
-# File: ../includes/singapore.class.php, line: 796
+# File: ../includes/singapore.class.php, line: 896
 msgid "Add a comment"
 msgstr ""
 #
-# File: ../includes/singapore.class.php, line: 899
+# File: ../includes/singapore.class.php, line: 999
 msgid "image|Previous"
 msgstr "Föregående"
 #
-# File: ../includes/singapore.class.php, line: 916
+# File: ../includes/singapore.class.php, line: 1016
 msgid "image|Thumbnails"
 msgstr "Minibilder"
 #
-# File: ../includes/singapore.class.php, line: 927
+# File: ../includes/singapore.class.php, line: 1027
 msgid "image|Next"
 msgstr "Nästa"
 #
-# File: ../includes/singapore.class.php, line: 951
+# File: ../includes/singapore.class.php, line: 1051
 msgid "Location"
 msgstr "Plats"
 #
-# File: ../includes/singapore.class.php, line: 953
+# File: ../includes/singapore.class.php, line: 1053
 msgid "Date"
 msgstr "Datum"
 #
-# File: ../includes/singapore.class.php, line: 957
+# File: ../includes/singapore.class.php, line: 1057
 msgid "Camera"
 msgstr "Kamera info"
 #
-# File: ../includes/singapore.class.php, line: 959
+# File: ../includes/singapore.class.php, line: 1059
 msgid "Lens"
 msgstr "Lins"
 #
-# File: ../includes/singapore.class.php, line: 961
+# File: ../includes/singapore.class.php, line: 1061
 msgid "Film"
 msgstr "Film"
 #
-# File: ../includes/singapore.class.php, line: 963
+# File: ../includes/singapore.class.php, line: 1063
 msgid "Darkroom manipulation"
 msgstr "Mörkrumsmanipulation"
 #
-# File: ../includes/singapore.class.php, line: 965
+# File: ../includes/singapore.class.php, line: 1065
 msgid "Digital manipulation"
 msgstr "Digital manipulering"
+#
+#
 #
 #
 #

@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.7 2003/12/20 14:20:00 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.8 2003/12/28 19:27:05 tamlyn Exp $
  */
 
 /**
@@ -55,20 +55,21 @@ class sgAdmin extends Singapore
     //load config from admin template ini file (admin.ini) if present
     $this->config->loadConfig($this->config->pathto_admin_template."admin.ini");
     
-    //do not load gallery and template-specific ini files
+    //do not load gallery-specific ini files
 
-    //read the language file
+    //read the standard language file
     $this->readLanguageFile($this->config->language);
     //read extra admin language file
     $this->readLanguageFile("admin.".$this->config->language);
 
     //set character set
     if(!empty($this->languageStrings[0]["charset"]))
-      $this->config->character_set = $this->languageStrings[0]["charset"];
+      $this->character_set = $this->languageStrings[0]["charset"];
+    else
+      $this->character_set = $this->config->default_charset;
 
     //create IO handler
     $this->io = new sgIO_csv($this->config);
-    
     
     //set action to perform
     if(empty($_REQUEST["action"])) $this->action = "menu";
@@ -76,12 +77,6 @@ class sgAdmin extends Singapore
     
     //set page title
     $this->pageTitle = $this->config->gallery_name;
-    
-    //set character set
-    if(!empty($this->languageStrings[0]["charset"]))
-      $this->character_set = $this->languageStrings[0]["charset"];
-    else
-      $this->character_set = $this->config->default_charset;
   }
   
   /**
@@ -113,8 +108,10 @@ class sgAdmin extends Singapore
     $this->gallery = $this->io->getGallery($galleryId);
     
     //sort galleries and images
-    usort($this->gallery->galleries, "gallerySort");
-    usort($this->gallery->images, "imageSort");
+    $GLOBALS["temp"]["gallery_sort_order"] = $this->config->gallery_sort_order;
+    $GLOBALS["temp"]["image_sort_order"] = $this->config->image_sort_order;
+    if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","gallerySort"));
+    if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
     
     $this->startat = isset($_REQUEST["startat"]) ? $_REQUEST["startat"] : 0;
     
@@ -317,10 +314,12 @@ class sgAdmin extends Singapore
     $this->gallery->copyright = stripslashes($_REQUEST["sgCopyright"]);
     $this->gallery->desc = str_replace(array("\n","\r"),array("<br />",""),stripslashes($_REQUEST["sgGalleryDesc"]));
     
-    //recognise URLs and htmlise them
-    //$this->gallery->desc = preg_replace("{(http://|https://|mailto:|ftp://)([^ \n\r\"\<\\]+)}", '<a href="$1$2">$1$2</a>', $this->gallery->desc);  //general protocol match
-    //$this->gallery->desc = preg_replace("{www\.([^ \n\r\\\"<]+)}", '<a href="http://www.$1">www.$1</a>', $this->gallery->desc);  //web addresses starting www.*
-    //$this->gallery->desc = preg_replace("{([^ \n\r\\\"<]+)\@([^ \n\r\\\"<]+)\.([^ \n\r\\\"<]+[^ \n\r\\\"<.])}", '<a href="mailto:$2@$3.$4">$2@$3.$4</a>', $this->gallery->desc);  //email addresses *@*.*
+    if($this->config->enable_clickable_urls) {
+      //recognise URLs and htmlise them
+      $this->gallery->desc = preg_replace('{(?<!href="|href=)\b('.$this->regexps['genericURL'].')\b(?!</a>)}', '<a href="$1">$1</a>', $this->gallery->desc);  //general protocol match
+      $this->gallery->desc = preg_replace('{(?<!://)\b('.$this->regexps['wwwURL'].')\b(?!</a>)}', '<a href="http://$1">$1</a>', $this->gallery->desc);  //web addresses starting www. without path info
+      $this->gallery->desc = preg_replace('{(?<!mailto:|\.)\b('.$this->regexps['emailURL'].')\b(?!</a>)}', '<a href="mailto:$1">$1</a>', $this->gallery->desc);  //email addresses *@*.*
+    }
     
     if($this->io->putGallery($this->gallery))
       return true;

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-11-01 14:13+0000\n"
+"POT-Creation-Date: 2003-12-28 17:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,49 +14,49 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../admin.php:44
+#: ../admin.php:43
 msgid "Welcome to singapore admin!"
 msgstr ""
 
-#: ../admin.php:47 ../admin.php:56 ../admin.php:65 ../admin.php:80
-#: ../admin.php:94 ../admin.php:105 ../admin.php:122 ../admin.php:140
-#: ../admin.php:154 ../admin.php:164 ../admin.php:189
+#: ../admin.php:46 ../admin.php:55 ../admin.php:64 ../admin.php:79
+#: ../admin.php:93 ../admin.php:104 ../admin.php:121 ../admin.php:139
+#: ../admin.php:153 ../admin.php:163 ../admin.php:188
 msgid "An error occurred:"
 msgstr ""
 
-#: ../admin.php:53
+#: ../admin.php:52
 msgid "Thank you and goodbye!"
 msgstr ""
 
-#: ../admin.php:63
+#: ../admin.php:62
 msgid "Password saved"
 msgstr ""
 
-#: ../admin.php:77
+#: ../admin.php:76
 msgid "Gallery added"
 msgstr ""
 
-#: ../admin.php:91
+#: ../admin.php:90
 msgid "Gallery info saved"
 msgstr ""
 
-#: ../admin.php:100 ../admin.php:118 ../admin.php:160 ../admin.php:185
+#: ../admin.php:99 ../admin.php:117 ../admin.php:159 ../admin.php:184
 msgid "confirm|OK"
 msgstr ""
 
-#: ../admin.php:103
+#: ../admin.php:102
 msgid "Gallery deleted"
 msgstr ""
 
-#: ../admin.php:108 ../admin.php:124 ../admin.php:166 ../admin.php:190
+#: ../admin.php:107 ../admin.php:123 ../admin.php:165 ../admin.php:189
 msgid "confirm|Cancel"
 msgstr ""
 
-#: ../admin.php:111
+#: ../admin.php:110
 msgid "delete gallery"
 msgstr ""
 
-#: ../admin.php:112
+#: ../admin.php:111
 #, possible-c-format
 msgid ""
 "Gallery %s is not empty.\n"
@@ -64,146 +64,146 @@ msgid ""
 "images it contains?"
 msgstr ""
 
-#: ../admin.php:120
+#: ../admin.php:119
 msgid "Thumbnail changed"
 msgstr ""
 
-#: ../admin.php:137
+#: ../admin.php:136
 msgid "Image added"
 msgstr ""
 
-#: ../admin.php:151
+#: ../admin.php:150
 msgid "Image saved successfully"
 msgstr ""
 
-#: ../admin.php:162
+#: ../admin.php:161
 msgid "Image deleted"
 msgstr ""
 
-#: ../admin.php:169
+#: ../admin.php:168
 msgid "delete image"
 msgstr ""
 
-#: ../admin.php:170
+#: ../admin.php:169
 #, possible-c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
 msgstr ""
 
-#: ../admin.php:187
+#: ../admin.php:186
 msgid "Thumbnail cache purged"
 msgstr ""
 
-#: ../admin.php:193
+#: ../admin.php:192
 msgid "purge cached thumbnails"
 msgstr ""
 
-#: ../admin.php:195
+#: ../admin.php:194
 #, possible-c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr ""
 
-#: ../includes/admin.class.php:163
+#: ../includes/admin.class.php:178
 msgid "admin bar|Back"
 msgstr ""
 
-#: ../includes/admin.class.php:165
+#: ../includes/admin.class.php:180
 msgid "admin bar|Admin"
 msgstr ""
 
-#: ../includes/admin.class.php:166
+#: ../includes/admin.class.php:181
 msgid "admin bar|Galleries"
 msgstr ""
 
-#: ../includes/admin.class.php:167
+#: ../includes/admin.class.php:182
 msgid "admin bar|Log out"
 msgstr ""
 
-#: ../includes/admin.class.php:169
+#: ../includes/admin.class.php:184
 msgid "admin bar|Edit gallery"
 msgstr ""
 
-#: ../includes/admin.class.php:170
+#: ../includes/admin.class.php:185
 msgid "admin bar|Delete gallery"
 msgstr ""
 
-#: ../includes/admin.class.php:171
+#: ../includes/admin.class.php:186
 msgid "admin bar|New subgallery"
 msgstr ""
 
-#: ../includes/admin.class.php:173
+#: ../includes/admin.class.php:188
 msgid "admin bar|Edit image"
 msgstr ""
 
-#: ../includes/admin.class.php:174
+#: ../includes/admin.class.php:189
 msgid "admin bar|Delete image"
 msgstr ""
 
-#: ../includes/admin.class.php:176
+#: ../includes/admin.class.php:191
 msgid "admin bar|New image"
 msgstr ""
 
-#: ../includes/admin.class.php:200
+#: ../includes/admin.class.php:215
 msgid "There was an error saving the new password."
 msgstr ""
 
-#: ../includes/admin.class.php:203
+#: ../includes/admin.class.php:218
 msgid "New password must be between 6 and 16 characters long."
 msgstr ""
 
-#: ../includes/admin.class.php:205
+#: ../includes/admin.class.php:220
 msgid "The new passwords you entered do not match."
 msgstr ""
 
-#: ../includes/admin.class.php:207
+#: ../includes/admin.class.php:222
 msgid ""
 "The current password you entered does not match the one in the database."
 msgstr ""
 
-#: ../includes/admin.class.php:210
+#: ../includes/admin.class.php:225
 msgid "The username specified was not found in the database."
 msgstr ""
 
-#: ../includes/admin.class.php:246
+#: ../includes/admin.class.php:261
 msgid "Username and/or password incorrect"
 msgstr ""
 
-#: ../includes/admin.class.php:249
+#: ../includes/admin.class.php:264
 msgid "You must enter a username and password"
 msgstr ""
 
-#: ../includes/admin.class.php:274
+#: ../includes/admin.class.php:289
 msgid "Gallery already exists"
 msgstr ""
 
-#: ../includes/admin.class.php:281
+#: ../includes/admin.class.php:296
 msgid "Could not create directory"
 msgstr ""
 
-#: ../includes/admin.class.php:305
+#: ../includes/admin.class.php:327
 msgid "Could not save gallery info"
 msgstr ""
 
-#: ../includes/admin.class.php:323
+#: ../includes/admin.class.php:345
 msgid "Cannot delete the top level directory"
 msgstr ""
 
-#: ../includes/admin.class.php:364
+#: ../includes/admin.class.php:386
 msgid "File already exists"
 msgstr ""
 
-#: ../includes/admin.class.php:374
+#: ../includes/admin.class.php:396
 msgid "Invalid location choice"
 msgstr ""
 
-#: ../includes/admin.class.php:393
+#: ../includes/admin.class.php:415
 msgid "Could not add image to gallery"
 msgstr ""
 
-#: ../includes/admin.class.php:426
+#: ../includes/admin.class.php:448
 msgid "Could not save image information"
 msgstr ""
 
-#: ../includes/admin.class.php:448
+#: ../includes/admin.class.php:470
 msgid "Could not delete image"
 msgstr ""
 
@@ -286,6 +286,10 @@ msgstr ""
 msgid "singapore|Powered by"
 msgstr ""
 
+#: ../templates/admin_default/header.tpl.php:39
+msgid "Admin message:"
+msgstr ""
+
 #: ../templates/admin_default/loggedout.tpl.php:1
 msgid "Return to galleries."
 msgstr ""
@@ -337,7 +341,7 @@ msgid "new gallery"
 msgstr ""
 
 #: ../templates/admin_default/newgallery.tpl.php:9
-#: ../templates/admin_default/newimage.tpl.php:27
+#: ../templates/admin_default/newimage.tpl.php:28
 msgid "Identifier:"
 msgstr ""
 
@@ -345,26 +349,31 @@ msgstr ""
 msgid "new image"
 msgstr ""
 
-#: ../templates/admin_default/newimage.tpl.php:11
+#: ../templates/admin_default/newimage.tpl.php:3
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
+msgstr ""
+
+#: ../templates/admin_default/newimage.tpl.php:12
 msgid "Remote file"
 msgstr ""
 
-#: ../templates/admin_default/newimage.tpl.php:15
+#: ../templates/admin_default/newimage.tpl.php:16
 msgid "URL of image:"
 msgstr ""
 
-#: ../templates/admin_default/newimage.tpl.php:19
+#: ../templates/admin_default/newimage.tpl.php:20
 msgid "Local file"
 msgstr ""
 
-#: ../templates/admin_default/newimage.tpl.php:23
+#: ../templates/admin_default/newimage.tpl.php:24
 msgid "Image file to upload:"
 msgstr ""
 
-#: ../templates/admin_default/newimage.tpl.php:29
+#: ../templates/admin_default/newimage.tpl.php:30
 msgid "Use filename of uploaded file."
 msgstr ""
 
-#: ../templates/admin_default/newimage.tpl.php:30
+#: ../templates/admin_default/newimage.tpl.php:31
 msgid "Specify different filename:"
 msgstr ""

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.4 2003/12/15 00:42:21 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.5 2003/12/28 19:27:05 tamlyn Exp $
  */
 
 /**
@@ -91,10 +91,10 @@ class sgIO_csv {
 
       $bits = explode("/",$gal->id);
       $temp = strtr($bits[count($bits)-1], "_", " ");
-      if(strpos($temp, " - ")) 
-        list($gal->artist,$gal->name) = explode(" - ", $temp);
-      elseif($temp == ".")
+      if($temp == ".")
         $gal->name = $this->config->gallery_name;
+      elseif($this->config->enable_iifn && strpos($temp, " - ")) 
+        list($gal->artist,$gal->name) = explode(" - ", $temp);
       else
         $gal->name = $temp;
       
@@ -109,7 +109,7 @@ class sgIO_csv {
         //trim off file extension and replace underscores with spaces
         $temp = strtr(substr($gal->images[$i]->filename, 0, strrpos($gal->images[$i]->filename,".")-strlen($gal->images[$i]->filename)), "_", " ");
         //split string in two on " - " delimiter
-        if(strpos($temp, " - ")) 
+        if($this->config->enable_iifn && strpos($temp, " - ")) 
           list($gal->images[$i]->artist,$gal->images[$i]->name) = explode(" - ", $temp);
         else
           $gal->images[$i]->name = $temp;
@@ -192,7 +192,7 @@ class sgIO_csv {
    
       $bits = explode("/",$galleryId);
       $temp = strtr($bits[count($bits)-1], "_", " ");
-      if(strpos($temp, " - ")) 
+      if($this->config->enable_iifn && strpos($temp, " - ")) 
         list($gallery->artist,$gallery->name) = explode(" - ", $temp);
       else
         $gallery->name = $temp;
@@ -208,7 +208,7 @@ class sgIO_csv {
         //trim off file extension and replace underscores with spaces
         $temp = strtr(substr($gallery->images[$i]->filename, 0, strrpos($gallery->images[$i]->filename,".")-strlen($gallery->images[$i]->filename)), "_", " ");
         //split string in two on " - " delimiter
-        if(strpos($temp, " - ")) 
+        if($this->config->enable_iifn && strpos($temp, " - ")) 
           list($gallery->images[$i]->artist,$gallery->images[$i]->name) = explode(" - ", $temp);
         else
           $gallery->images[$i]->name = $temp;

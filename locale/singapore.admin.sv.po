@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-11-01 14:13+0000\n"
+"POT-Creation-Date: 2003-12-28 17:34+0000\n"
 "PO-Revision-Date: 2003-08-18 11:37+0100\n"
 "Last-Translator: Jan Thorn <jan@j-thorn.dk>\n"
 "Language-Team: SWEDISH <LL@li.org>\n"
@@ -14,67 +14,67 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
-# File: ../admin.php, line: 44
+# File: ../admin.php, line: 43
 msgid "Welcome to singapore admin!"
 msgstr ""
 #
-# File: ../admin.php, line: 47
-# File: ../admin.php, line: 56
-# File: ../admin.php, line: 65
-# File: ../admin.php, line: 80
-# File: ../admin.php, line: 94
-# File: ../admin.php, line: 105
-# File: ../admin.php, line: 122
-# File: ../admin.php, line: 140
-# File: ../admin.php, line: 154
-# File: ../admin.php, line: 164
-# File: ../admin.php, line: 189
+# File: ../admin.php, line: 46
+# File: ../admin.php, line: 55
+# File: ../admin.php, line: 64
+# File: ../admin.php, line: 79
+# File: ../admin.php, line: 93
+# File: ../admin.php, line: 104
+# File: ../admin.php, line: 121
+# File: ../admin.php, line: 139
+# File: ../admin.php, line: 153
+# File: ../admin.php, line: 163
+# File: ../admin.php, line: 188
 msgid "An error occurred:"
 msgstr ""
 #
-# File: ../admin.php, line: 53
+# File: ../admin.php, line: 52
 msgid "Thank you and goodbye!"
 msgstr ""
 #
-# File: ../admin.php, line: 63
+# File: ../admin.php, line: 62
 #, fuzzy
 msgid "Password saved"
 msgstr "Lösenord:"
 #
-# File: ../admin.php, line: 77
+# File: ../admin.php, line: 76
 #, fuzzy
 msgid "Gallery added"
 msgstr "Bildarkiv finns redan"
 #
-# File: ../admin.php, line: 91
+# File: ../admin.php, line: 90
 msgid "Gallery info saved"
 msgstr ""
 #
-# File: ../admin.php, line: 100
-# File: ../admin.php, line: 118
-# File: ../admin.php, line: 160
-# File: ../admin.php, line: 185
+# File: ../admin.php, line: 99
+# File: ../admin.php, line: 117
+# File: ../admin.php, line: 159
+# File: ../admin.php, line: 184
 msgid "confirm|OK"
 msgstr ""
 #
-# File: ../admin.php, line: 103
+# File: ../admin.php, line: 102
 #, fuzzy
 msgid "Gallery deleted"
 msgstr "Upp en nivå"
 #
-# File: ../admin.php, line: 108
-# File: ../admin.php, line: 124
-# File: ../admin.php, line: 166
-# File: ../admin.php, line: 190
+# File: ../admin.php, line: 107
+# File: ../admin.php, line: 123
+# File: ../admin.php, line: 165
+# File: ../admin.php, line: 189
 msgid "confirm|Cancel"
 msgstr ""
 #
-# File: ../admin.php, line: 111
+# File: ../admin.php, line: 110
 #, fuzzy
 msgid "delete gallery"
 msgstr "ändra bildarkiv"
 #
-# File: ../admin.php, line: 112
+# File: ../admin.php, line: 111
 #, c-format
 msgid ""
 "Gallery %s is not empty.\n"
@@ -82,150 +82,150 @@ msgid ""
 "images it contains?"
 msgstr ""
 #
-# File: ../admin.php, line: 120
+# File: ../admin.php, line: 119
 #, fuzzy
 msgid "Thumbnail changed"
 msgstr "Ändra..."
 #
-# File: ../admin.php, line: 137
+# File: ../admin.php, line: 136
 msgid "Image added"
 msgstr ""
 #
-# File: ../admin.php, line: 151
+# File: ../admin.php, line: 150
 msgid "Image saved successfully"
 msgstr ""
 #
-# File: ../admin.php, line: 162
+# File: ../admin.php, line: 161
 #, fuzzy
 msgid "Image deleted"
 msgstr "Datum:"
 #
-# File: ../admin.php, line: 169
+# File: ../admin.php, line: 168
 #, fuzzy
 msgid "delete image"
 msgstr "ändra bild"
 #
-# File: ../admin.php, line: 170
+# File: ../admin.php, line: 169
 #, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
 msgstr ""
 #
-# File: ../admin.php, line: 187
+# File: ../admin.php, line: 186
 msgid "Thumbnail cache purged"
 msgstr ""
 #
-# File: ../admin.php, line: 193
+# File: ../admin.php, line: 192
 #, fuzzy
 msgid "purge cached thumbnails"
 msgstr "Släng sparade minibilder"
 #
-# File: ../admin.php, line: 195
+# File: ../admin.php, line: 194
 #, c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr ""
 #
-# File: ../includes/admin.class.php, line: 163
+# File: ../includes/admin.class.php, line: 178
 msgid "admin bar|Back"
 msgstr "Tillbaka"
 #
-# File: ../includes/admin.class.php, line: 165
+# File: ../includes/admin.class.php, line: 180
 msgid "admin bar|Admin"
 msgstr "Administratör"
 #
-# File: ../includes/admin.class.php, line: 166
+# File: ../includes/admin.class.php, line: 181
 msgid "admin bar|Galleries"
 msgstr "Bildarkiv"
 #
-# File: ../includes/admin.class.php, line: 167
+# File: ../includes/admin.class.php, line: 182
 msgid "admin bar|Log out"
 msgstr "Logga ut"
 #
-# File: ../includes/admin.class.php, line: 169
+# File: ../includes/admin.class.php, line: 184
 msgid "admin bar|Edit gallery"
 msgstr "Ändra bildarkiv"
 #
-# File: ../includes/admin.class.php, line: 170
+# File: ../includes/admin.class.php, line: 185
 msgid "admin bar|Delete gallery"
 msgstr "Radera bildarkiv"
 #
-# File: ../includes/admin.class.php, line: 171
+# File: ../includes/admin.class.php, line: 186
 msgid "admin bar|New subgallery"
 msgstr "Nytt underarkiv"
 #
-# File: ../includes/admin.class.php, line: 173
+# File: ../includes/admin.class.php, line: 188
 msgid "admin bar|Edit image"
 msgstr "Ändra bild"
 #
-# File: ../includes/admin.class.php, line: 174
+# File: ../includes/admin.class.php, line: 189
 msgid "admin bar|Delete image"
 msgstr "Radera bild"
 #
-# File: ../includes/admin.class.php, line: 176
+# File: ../includes/admin.class.php, line: 191
 msgid "admin bar|New image"
 msgstr "Ny bild"
 #
-# File: ../includes/admin.class.php, line: 200
+# File: ../includes/admin.class.php, line: 215
 msgid "There was an error saving the new password."
 msgstr "Fel uppstod vid sparandet av lösenordet."
 #
-# File: ../includes/admin.class.php, line: 203
+# File: ../includes/admin.class.php, line: 218
 msgid "New password must be between 6 and 16 characters long."
 msgstr "Nytt lösenord måste innehålla 6 - 16 tecken."
 #
-# File: ../includes/admin.class.php, line: 205
+# File: ../includes/admin.class.php, line: 220
 msgid "The new passwords you entered do not match."
 msgstr "Det nya lösenordet matcher inte."
 #
-# File: ../includes/admin.class.php, line: 207
+# File: ../includes/admin.class.php, line: 222
 msgid ""
 "The current password you entered does not match the one in the database."
 msgstr "Lösenordet matchar inte det i databasen."
 #
-# File: ../includes/admin.class.php, line: 210
+# File: ../includes/admin.class.php, line: 225
 msgid "The username specified was not found in the database."
 msgstr "Ditt användarnamn finns inte i databasen."
 #
-# File: ../includes/admin.class.php, line: 246
+# File: ../includes/admin.class.php, line: 261
 msgid "Username and/or password incorrect"
 msgstr "Fel användarnamn och/eller lösenord"
 #
-# File: ../includes/admin.class.php, line: 249
+# File: ../includes/admin.class.php, line: 264
 msgid "You must enter a username and password"
 msgstr "Ange användarnamn och lösenord"
 #
-# File: ../includes/admin.class.php, line: 274
+# File: ../includes/admin.class.php, line: 289
 msgid "Gallery already exists"
 msgstr "Bildarkiv finns redan"
 #
-# File: ../includes/admin.class.php, line: 281
+# File: ../includes/admin.class.php, line: 296
 msgid "Could not create directory"
 msgstr "Det gick inte att skapa en katalog"
 #
-# File: ../includes/admin.class.php, line: 305
+# File: ../includes/admin.class.php, line: 327
 msgid "Could not save gallery info"
 msgstr "Kunde inte spara informationen"
 #
-# File: ../includes/admin.class.php, line: 323
+# File: ../includes/admin.class.php, line: 345
 msgid "Cannot delete the top level directory"
 msgstr "Kunde inte att radera översta arkivet"
 #
-# File: ../includes/admin.class.php, line: 364
+# File: ../includes/admin.class.php, line: 386
 msgid "File already exists"
 msgstr "Bilden finns redan"
 #
-# File: ../includes/admin.class.php, line: 374
+# File: ../includes/admin.class.php, line: 396
 msgid "Invalid location choice"
 msgstr "Ogiltigt val av plats"
 #
-# File: ../includes/admin.class.php, line: 393
+# File: ../includes/admin.class.php, line: 415
 msgid "Could not add image to gallery"
 msgstr "Kunde inte spara bilden i arkivet"
 #
-# File: ../includes/admin.class.php, line: 426
+# File: ../includes/admin.class.php, line: 448
 msgid "Could not save image information"
 msgstr "Kunde inte spara bild information"
 #
-# File: ../includes/admin.class.php, line: 448
+# File: ../includes/admin.class.php, line: 470
 msgid "Could not delete image"
 msgstr "Kunde inte radera bilden"
 #
@@ -312,6 +312,10 @@ msgstr "Bekräfta lösenord:"
 msgid "singapore|Powered by"
 msgstr "Skapat med"
 #
+# File: ../templates/admin_default/header.tpl.php, line: 39
+msgid "Admin message:"
+msgstr ""
+#
 # File: ../templates/admin_default/loggedout.tpl.php, line: 1
 msgid "Return to galleries."
 msgstr "Tillbaka till bildarkiv."
@@ -365,7 +369,7 @@ msgid "new gallery"
 msgstr "nytt bildarkiv"
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 9
-# File: ../templates/admin_default/newimage.tpl.php, line: 27
+# File: ../templates/admin_default/newimage.tpl.php, line: 28
 msgid "Identifier:"
 msgstr "Identifiering:"
 #
@@ -373,29 +377,36 @@ msgstr "Identifiering:"
 msgid "new image"
 msgstr "Ny bild"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 11
+# File: ../templates/admin_default/newimage.tpl.php, line: 3
+msgid ""
+"This image will not be visible because this gallery contains subgalleries."
+msgstr ""
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 12
 msgid "Remote file"
 msgstr "Fjärrbild"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 15
+# File: ../templates/admin_default/newimage.tpl.php, line: 16
 msgid "URL of image:"
 msgstr "Bildens URL:"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 19
+# File: ../templates/admin_default/newimage.tpl.php, line: 20
 msgid "Local file"
 msgstr "Egen bild"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 23
+# File: ../templates/admin_default/newimage.tpl.php, line: 24
 msgid "Image file to upload:"
 msgstr "Bild som ska laddas upp:"
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 29
+# File: ../templates/admin_default/newimage.tpl.php, line: 30
 msgid "Use filename of uploaded file."
 msgstr "Använd filnamnet på bilden."
 #
-# File: ../templates/admin_default/newimage.tpl.php, line: 30
+# File: ../templates/admin_default/newimage.tpl.php, line: 31
 msgid "Specify different filename:"
 msgstr "Skriv nytt filnamn:"
+#
+#
 #
 #
 #
@@ -406,8 +417,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Artist name:"
 #~ msgstr "Artist namn:"
+#
+#
 #
 #
 #
@@ -418,8 +433,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "gallery details|Copyright holder:"
 #~ msgstr "Copyrightägare:"
+#
+#
 #
 #
 #
@@ -430,8 +449,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Image:"
 #~ msgstr "Bild:"
+#
+#
 #
 #
 #
@@ -442,8 +465,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Artist name:"
 #~ msgstr "Artist namn:"
+#
+#
 #
 #
 #
@@ -454,8 +481,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Location:"
 #~ msgstr "Plats:"
+#
+#
 #
 #
 #
@@ -466,8 +497,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Copyright holder:"
 #~ msgstr "Copyrightägare:"
+#
+#
 #
 #
 #
@@ -478,8 +513,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Camera info:"
 #~ msgstr "Kamerainfo:"
+#
+#
 #
 #
 #
@@ -490,8 +529,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Film info:"
 #~ msgstr "Filminfo:"
+#
+#
 #
 #
 #
@@ -502,8 +545,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "image details|Digital manipulation:"
 #~ msgstr "Digital manipulering"
+#
+#
 #
 #
 #
@@ -516,8 +563,12 @@ msgstr "Skriv nytt filnamn:"
 #
 #
 #
+#
+#
 #~ msgid "gallery|Up one level"
 #~ msgstr "Upp en nivå"
+#
+#
 #
 #
 #

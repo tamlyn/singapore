@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.10 2003/12/15 00:42:21 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.11 2003/12/28 19:27:05 tamlyn Exp $
  */
  
 /**
@@ -51,6 +51,17 @@ class Singapore
   
   
   var $action = null;
+  
+  /**
+   * Array of pcre regular expressions used by the script 
+   */
+  var $regexps = array( 
+    'genericURL' => '(?:http://|https://|ftp://|mailto:)(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,4}(?::[0-9]+)?(?:/[^ \n\r\"\'<]+)?',
+    'wwwURL'     => 'www\.(?:[a-zA-Z0-9\-]+\.)*[a-zA-Z]{2,4}(?:/[^ \n\r\"\'<]+)?',
+    'emailURL'   => '(?:[\w][\w\.\-]+)+@(?:[\w\-]+\.)+[a-zA-Z]{2,4}'
+  );
+    
+    
   
   /**
    * Constructor
@@ -161,6 +172,8 @@ class Singapore
       case "I" : return strcasecmp($b->name, $a->name); //case-insensitive name (reverse)
       case "a" : return strcmp($a->artist, $b->artist); //artist
       case "A" : return strcmp($b->artist, $a->artist); //artist (reverse)
+      case "f" : return strcmp($a->filename, $b->filename); //filename
+      case "F" : return strcmp($b->filename, $a->filename); //filename (reverse)
       case "d" : return strcmp($a->date, $b->date); //date
       case "D" : return strcmp($b->date, $a->date); //date (reverse)
       case "l" : return strcmp($a->location, $b->location); //location
@@ -716,6 +729,26 @@ class Singapore
       return $this->gallery->desc;
     else
       return $this->gallery->galleries[$index]->desc;
+  }
+  
+  /**
+   * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
+   * @return string the description of the gallery
+   */
+  function galleryDescriptionStripped($index = null)
+  {
+    $ret = $this->galleryDescription($index);
+    
+    $ret = str_replace("<br />","\n",$ret);
+    
+    if($this->config->enable_clickable_urls) {
+      //strip off html from autodetected URLs
+      $ret = preg_replace('{<a href="('.$this->regexps['genericURL'].')\">\1</a>}', '\1', $ret);
+      $ret = preg_replace('{<a href="http://('.$this->regexps['wwwURL'].')">\1</a>}', '\1', $ret);
+      $ret = preg_replace('{<a href="mailto:('.$this->regexps['emailURL'].')">\1</a>}', '\1', $ret);
+    }
+    
+    return $ret;
   }
   
   /**

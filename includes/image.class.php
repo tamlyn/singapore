@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.3 2003/12/14 14:39:18 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.4 2003/12/28 19:27:05 tamlyn Exp $
  */
 
 /**
@@ -57,7 +57,7 @@ class sgImage
   var $name = "";
   
   /**
-   * The name of the artist (or annyone else)
+   * The name of the artist (or anyone else)
    * @var string
    */
   var $artist = "";
