@@ -79,6 +79,15 @@ if(sgIsLoggedIn()) {
       case "savegallery" :
         sgSaveGallery($_REQUEST["gallery"]);
         break;
+      case "deletegallery" :
+        sgShowGalleryDeleteConfirmation($_REQUEST["gallery"]);
+        break;
+      case "deletegallery-confirmed" :
+        if($_REQUEST["confirm"]=="OK") 
+          if(sgDeleteGallery($_REQUEST["gallery"])) echo "<h1>gallery deleted</h1>\n";
+          else echo "<h1>error deleting gallery</h1>\n<p>An error was encountered and the gallery was not deleted.</p>\n";
+        else sgShowAdminOptions();
+        break;
       case "newimage" :
         sgNewImage($_REQUEST["gallery"]);
         break;
@@ -93,17 +102,28 @@ if(sgIsLoggedIn()) {
       case "saveimage" :
         sgSaveImage($_REQUEST["gallery"],$_REQUEST["image"]);
         break;
+      case "deleteimage" :
+        sgShowImageDeleteConfirmation($_REQUEST["gallery"],$_REQUEST["image"]);
+        break;
+      case "deleteimage-confirmed" :
+        if($_REQUEST["confirm"]=="OK") 
+          if(sgDeleteImage($_REQUEST["gallery"],$_REQUEST["image"])) echo "<h1>image deleted</h1>\n";
+          else echo "<h1>error deleting image</h1>\n<p>An error was encountered and the image was not deleted.</p>\n";
+        else sgShowAdminOptions();
+        break;
       case "showgalleryhits" :
         sgShowGalleryHits($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
         break;
       case "showimagehits" :
         sgShowImageHits($_REQUEST["gallery"],isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
         break;
-      case "confirmpurge" :
+      case "purgecache" :
         sgShowPurgeConfirmation();
         break;
-      case "dopurge" :
-        if($_REQUEST["confirm"]=="OK") sgPurgeCache();
+      case "purgecache-confirmed" :
+        if($_REQUEST["confirm"]=="OK") 
+          if(sgPurgeCache()) echo "<h1>thumbnails purged</h1>\n<p><a href=\"admin.php\">Admin options</a></p>\n";
+          else echo "<h1>error purging thumbnails</h1>\n<p>An error occurred. <a href=\"admin.php\">Admin options</a></p>\n";
         else sgShowAdminOptions();
         break;
     }

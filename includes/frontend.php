@@ -31,11 +31,13 @@ function sgShowAdminBar()
   echo "<a href=\"admin.php?action=logout\">Logout</a>\n";
   echo "<a href=\"index.php\">View galleries</a>\n";
   
-  if(isset($_REQUEST["image"])) {
+  if(isset($_REQUEST["image"]) && !(isset($_REQUEST["action"]) && $_REQUEST["action"]=="deleteimage-confirmed")) {
     echo "<a href=\"admin.php?action=editimage&amp;gallery=$_REQUEST[gallery]&amp;image=$_REQUEST[image]\">Edit image</a>\n";
+    echo "<a href=\"admin.php?action=deleteimage&amp;gallery=$_REQUEST[gallery]&amp;image=$_REQUEST[image]\">Delete image</a>\n";
     echo "<a href=\"admin.php?action=newimage&amp;gallery=$_REQUEST[gallery]\">New image</a>\n";
-  } elseif(isset($_REQUEST["gallery"])) {
+  } elseif(isset($_REQUEST["gallery"]) && !(isset($_REQUEST["action"]) && $_REQUEST["action"]=="deletegallery-confirmed")) {
     echo "<a href=\"admin.php?action=editgallery&amp;gallery=$_REQUEST[gallery]\">Edit gallery</a>\n";
+    echo "<a href=\"admin.php?action=deletegallery&amp;gallery=$_REQUEST[gallery]\">Delete gallery</a>\n";
     echo "<a href=\"admin.php?action=newimage&amp;gallery=$_REQUEST[gallery]\">New image</a>\n";
   } else {
     echo "<a href=\"admin.php?action=newgallery\">New gallery</a>\n";

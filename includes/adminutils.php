@@ -20,7 +20,9 @@
  *  Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA      *
  \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
   
-//admin functions
+//
+//authentication functions
+//
 
 function sgLogin() {
   if(isset($_POST["user"]) && isset($_POST["pass"])) {
@@ -57,6 +59,47 @@ function sgLoginForm() {
   echo "</p>\n";
   echo "</form>\n";
 } 
+
+function sgEditPass()
+{
+  echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"savepass\" />\n";
+  echo "<input type=\"hidden\" name=\"user\" value=\"{$_SESSION[user]->username}\" />\n";
+  echo "<table>\n";
+  echo "<tr>\n  <td>Current password:</td>\n  <td><input type=\"password\" name=\"sgOldPass\" size=\"23\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td>New password:</td>\n  <td><input type=\"password\" name=\"sgNewPass1\" size=\"23\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td>Confirm password:</td>\n  <td><input type=\"password\" name=\"sgNewPass2\" size=\"23\" /></td>\n</tr>\n";
+  echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
+  echo "</table>\n";
+  echo "</form>\n";
+}
+
+function sgSavePass()
+{
+  $users = sgGetUsers();
+  
+  $found = false;
+  for($i=1;$i < count($users);$i++)
+    if($_POST["user"] == $users[$i]->username) {
+      $found = true;
+      if(md5($_POST["sgOldPass"]) == $users[$i]->userpass)
+        if($_POST["sgNewPass1"]==$_POST["sgNewPass2"])
+          if(strlen($_POST["sgNewPass1"]) >= 6 && strlen($_POST["sgNewPass1"]) <= 16) { 
+            $users[$i]->userpass = md5($_POST["sgNewPass1"]);
+            if(sgPutUsers($users)) echo "<h1>password changed</h1>\n<p><a href=\"admin.php\">Admin options</a>.</p>";
+            else echo "<h1>password error</h1>\n<p>There was an error saving the new password. Password not changed. <a href=\"admin.php\">Admin options</a>.</p>";
+          } else { echo "<h1>password error</h1>\n<p>New password must be between 6 and 16 characters long.</p>"; sgEditPass(); }
+        else { echo "<h1>password error</h1>\n<p>The new passwords you entered do not match.</p>"; sgEditPass(); }
+      else { echo "<h1>password error</h1>\n<p>The current password you entered does not match the one in the database.</p>"; sgEditPass(); }
+		}
+    
+  if(!$found) { echo "<h1>password error</h1>\n<p>The username specified was not found in the database.</p>"; sgEditPass(); }
+}
+
+
+//
+//gallery handling functions
+//
 
 function sgNewGallery() {
   echo "<h1>new gallery</h1>\n";
@@ -143,6 +186,40 @@ function sgSaveGallery($gallery)
   //"  <li><a href=\"admin.php?action=editimage&amp;gallery=$gallery&amp;image=$_REQUEST[sgPrevImage]\">Edit previous image</a></li>\n".
   "</ul>\n";
 }
+
+function sgShowGalleryDeleteConfirmation($gallery)
+{
+  $gal = sgGetGallery($gallery);
+
+  echo "<h1>delete gallery</h1>\n";
+  
+  echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"deletegallery-confirmed\" />\n";
+  echo "<input type=\"hidden\" name=\"gallery\" value=\"$gallery\" />\n";
+  echo "<p>Are you sure you want to irretrievable delete gallery <em>$gal->name</em>";
+  if(count($gal->img)>0) echo " and all ".count($gal->img)." images contained therein";
+  echo "?</p>\n";
+  echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
+  echo "<input type=\"submit\" class=\"button\" name=\"confirm\" value=\"Cancel\"></p>";
+  echo "</form>\n";
+ 
+}
+
+function sgDeleteGallery($gallery)
+{
+  //checks that there are no "../" references in the gallery name
+  //this ensures that the gallery being deleted reall is a 
+  //subdirectory of the galleries directory 
+  if(strpos($gallery,"../") !== false) return false;
+  
+  //remove the offending directory and all contained therein
+  return rmdir_all(sgGetConfig("pathto_galleries").$gallery);
+}
+
+
+//
+//image handling functions
+//
 
 function sgNewImage($gallery) {
   echo "<h1>new image</h1>\n";
@@ -265,54 +342,39 @@ function sgSaveImage($gallery, $image)
   
 }
 
-function sgShowAdminOptions()
+function sgShowImageDeleteConfirmation($gallery, $image)
 {
-  echo "<h1>admin options</h1>\n";
-  echo "<p>Welcome to the admin section of singapore.</p>\n";
-  echo "<ul>\n";
-  echo "  <li><a href=\"index.php\">Browse galleries</a></li>\n";
-  echo "  <li><a href=\"admin.php?action=showgalleryhits\">Show viewing statistics</a></li>\n";
-  echo "  <li><a href=\"admin.php?action=confirmpurge\">Purge cached thumbnails</a></li>\n";
-  echo "  <li><a href=\"admin.php?action=editpass\">Change password</a></li>\n";
-  echo "  <li><a href=\"admin.php?action=logout\">Logout</a></li>\n";
-  echo "</ul>\n";
-}
+  $img = sgGetImage($gallery, $image);
 
-function sgEditPass()
-{
-  echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
-  echo "<input type=\"hidden\" name=\"action\" value=\"savepass\" />\n";
-  echo "<input type=\"hidden\" name=\"user\" value=\"{$_SESSION[user]->username}\" />\n";
-  echo "<table>\n";
-  echo "<tr>\n  <td>Current password:</td>\n  <td><input type=\"password\" name=\"sgOldPass\" size=\"23\" /></td>\n</tr>\n";
-  echo "<tr>\n  <td>New password:</td>\n  <td><input type=\"password\" name=\"sgNewPass1\" size=\"23\" /></td>\n</tr>\n";
-  echo "<tr>\n  <td>Confirm password:</td>\n  <td><input type=\"password\" name=\"sgNewPass2\" size=\"23\" /></td>\n</tr>\n";
-  echo "<tr>\n  <td></td>\n  <td><input type=\"submit\" class=\"button\" value=\"Save Changes\" /></td>\n</tr>\n";
-  echo "</table>\n";
-  echo "</form>\n";
-}
-
-function sgSavePass()
-{
-  $users = sgGetUsers();
+  echo "<h1>delete image</h1>\n";
   
-  $found = false;
-  for($i=1;$i < count($users);$i++)
-    if($_POST["user"] == $users[$i]->username) {
-      $found = true;
-      if(md5($_POST["sgOldPass"]) == $users[$i]->userpass)
-        if($_POST["sgNewPass1"]==$_POST["sgNewPass2"])
-          if(strlen($_POST["sgNewPass1"]) >= 6 && strlen($_POST["sgNewPass1"]) <= 16) { 
-            $users[$i]->userpass = md5($_POST["sgNewPass1"]);
-            if(sgPutUsers($users)) echo "<h1>password changed</h1>\n<p><a href=\"admin.php\">Admin options</a>.</p>";
-            else echo "<h1>password error</h1>\n<p>There was an error saving the new password. Password not changed. <a href=\"admin.php\">Admin options</a>.</p>";
-          } else { echo "<h1>password error</h1>\n<p>New password must be between 6 and 16 characters long.</p>"; sgEditPass(); }
-        else { echo "<h1>password error</h1>\n<p>The new passwords you entered do not match.</p>"; sgEditPass(); }
-      else { echo "<h1>password error</h1>\n<p>The current password you entered does not match the one in the database.</p>"; sgEditPass(); }
-		}
-    
-  if(!$found) { echo "<h1>password error</h1>\n<p>The username specified was not found in the database.</p>"; sgEditPass(); }
+  echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"deleteimage-confirmed\" />\n";
+  echo "<input type=\"hidden\" name=\"gallery\" value=\"$gallery\" />\n";
+  echo "<input type=\"hidden\" name=\"image\" value=\"$img->filename\" />\n";
+  echo "<p>Are you sure you want to irretrievable delete image <em>'$img->name'";
+  if($img->author) echo " by $img->author";
+  echo "</em> from gallery <em>$img->galname</em>?</p>\n";
+  echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
+  echo "<input type=\"submit\" class=\"button\" name=\"confirm\" value=\"Cancel\"></p>";
+  echo "</form>\n";
+ 
 }
+
+function sgDeleteImage($gallery, $image)
+{
+  $gal = sgGetGallery($gallery);
+  
+  for($i=0;$i<count($gal->img);$i++)
+    if($gal->img[$i]->filename == $image)
+      array_splice($gal->img,$i,1);
+  return (unlink(sgGetConfig("pathto_galleries")."$gallery/$image") && sgPutGallery($gal));
+}
+
+
+//
+//other functions
+//
 
 function sgShowImageHits($gallery, $startat = 0)
 {
@@ -411,7 +473,7 @@ function sgShowPurgeConfirmation()
   echo "<h1>purge thumbnails</h1>\n";
   
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
-  echo "<input type=\"hidden\" name=\"action\" value=\"dopurge\" />\n";
+  echo "<input type=\"hidden\" name=\"action\" value=\"purgecache-confirmed\" />\n";
   echo "<p>Are you sure you want to delete ".count($dir->files)." cached thumbnail images?</p>";
   echo "<p><input type=\"submit\" class=\"button\" name=\"confirm\" value=\"OK\">\n";
   echo "<input type=\"submit\" class=\"button\" name=\"confirm\" value=\"Cancel\"></p>";
@@ -424,15 +486,26 @@ function sgPurgeCache()
   $dir = sgGetListing(sgGetConfig("pathto_cache"),"jpegs");
   
   $success = true;
-  
   for($i=0;$i<count($dir->files);$i++) {
     $success &= unlink($dir->path.$dir->files[$i]);
   }
   
-  if($success) echo "<h1>thumbnails purged</h1>\n";
-
-  echo "<p><a href=\"admin.php\">Admin options</a></p>\n";
+  return $success;
 }
+
+function sgShowAdminOptions()
+{
+  echo "<h1>admin options</h1>\n";
+  echo "<p>Welcome to the admin section of singapore.</p>\n";
+  echo "<ul>\n";
+  echo "  <li><a href=\"index.php\">Browse galleries</a></li>\n";
+  echo "  <li><a href=\"admin.php?action=showgalleryhits\">Show viewing statistics</a></li>\n";
+  echo "  <li><a href=\"admin.php?action=purgecache\">Purge cached thumbnails</a></li>\n";
+  echo "  <li><a href=\"admin.php?action=editpass\">Change password</a></li>\n";
+  echo "  <li><a href=\"admin.php?action=logout\">Logout</a></li>\n";
+  echo "</ul>\n";
+}
+
 
 
 ?>

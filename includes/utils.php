@@ -32,7 +32,7 @@ function sgGetListing($wd, $type = ""){
   switch($type) {
     case "" :
     case "dirs" :
-      while($entry = readdir($dp))
+      while(false !== ($entry = readdir($dp)))
         if(
           is_dir($wd.$entry) && 
           $entry != "." && 
@@ -42,7 +42,7 @@ function sgGetListing($wd, $type = ""){
       if($dir->dirs!=null) sort($dir->dirs);
       break;
     case "jpegs" :
-      while($entry = readdir($dp))
+      while(false !== ($entry = readdir($dp)))
         if(
           strpos(strtolower($entry),".jpg") || 
           strpos(strtolower($entry),".jpeg")
@@ -50,20 +50,37 @@ function sgGetListing($wd, $type = ""){
       if($dir->files!=null) sort($dir->files);
       break;
     case "all" :
-      while($entry = readdir($dp))
+      while(false !== ($entry = readdir($dp)))
         if(is_dir($wd.$entry)) $dir->dirs[] = $entry;
         else $dir->files[] = $entry;
       if($dir->dirs!=null) sort($dir->dirs);
       if($dir->files!=null) sort($dir->files);
       break;
     default :
-      while($entry = readdir($dp))
+      while(false !== ($entry = readdir($dp)))
         if(strpos(strtolower($entry),$type)) 
           $dir->files[] = $entry;
       if($dir->files!=null) sort($dir->files);
   }
   closedir($dp);
   return $dir;
+}
+
+
+//this function recursively deletes all subdirectories and 
+//files in specified directory. USE WITH EXTREME CAUTION!! 
+function rmdir_all($wd)
+{
+  if(!$dp = opendir($wd)) return false;
+  $success = true;
+  while(false !== ($entry = readdir($dp))) {
+    if($entry == "." || $entry == "..") continue;
+    if(is_dir("$wd/$entry")) $success &= rmdir_all("$wd/$entry");
+    else $success &= unlink("$wd/$entry");
+  }
+  closedir($dp);
+  $success &= rmdir($wd);
+  return $success;
 }
 
 function sgGetImage($gallery, $image) {
@@ -74,6 +91,7 @@ function sgGetImage($gallery, $image) {
       for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i>$j) $gal->img[$i]->prev[$j] = $gal->img[$i-$j-1];
       for($j=0;$j<sgGetConfig("preview_thumb_number");$j++) if($i<count($gal->img)-$j-1) $gal->img[$i]->next[$j] = $gal->img[$i+$j+1];
       $gal->img[$i]->index = $i;
+      $gal->img[$i]->galname = $gal->name;
       return $gal->img[$i];
     }
   return false;
