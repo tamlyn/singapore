@@ -222,33 +222,3 @@ div.sgThumbnail table {
 .borderTR { margin: -1px -1px 0px 0px; }
 .borderBL { margin: -5px 0px 0px 0px; }
 .borderBR { margin: -5px 0px 0px 0px; }
-/* IE5-5.5/win needs the border scooted to the left or right by an
-additional 3px! Why? */
-.borderTL {
-    margin-left: -4px;
-    ma\rgin-left: -1px;
-}
-html>body .borderTL {
-    margin-left: -1px;
-}
-.borderTR {
-    margin-right: -4px;
-    ma\rgin-right: -1px;
-}
-html>body .borderTR {
-    margin-right: -1px;
-}
-.borderBL {
-    margin-left: -3px;
-    ma\rgin-left: 0px;
-}
-html>body .borderBL {
-    margin-left: 0px;
-}
-.borderBR {
-    margin-right: -3px;
-    ma\rgin-right: 0px;
-}
-html>body .borderBR {
-    margin-right: 0px;
-} 
