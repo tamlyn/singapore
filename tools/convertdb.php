@@ -149,7 +149,7 @@ function convertDirectory ($path)
     $gallery = getGallery($path);
     echo "<ul><li>Checking $path<br />\n";
     if($gallery) {
-      if($gallery->summary != "" && !empty($_REQUEST["convertOverwrite"]))
+      if($gallery->summary != "" && empty($_REQUEST["convertOverwrite"]))
         echo "Did NOT overwrite non-empty summary in $path<br />\n";
       else {
         if($_REQUEST["convertType"]!='none')
@@ -198,12 +198,12 @@ function convertDirectory ($path)
 <?php 
 if(isset($_REQUEST["convertType"])) { 
 
-  include "includes/config.class.php";
-  include "includes/gallery.class.php";
-  include "includes/image.class.php";
-  $config = new sgConfig("singapore.ini");
+  include "../includes/config.class.php";
+  include "../includes/gallery.class.php";
+  include "../includes/image.class.php";
+  $config = new sgConfig("../singapore.ini");
   
-  $config->base_path = "";
+  $config->base_path = "../";
   
   //echo "<ul>\n";
   convertDirectory($config->base_path.$config->pathto_galleries);
@@ -212,7 +212,7 @@ if(isset($_REQUEST["convertType"])) {
   echo "<p>All operations complete.</p>\n";
 
 } else { ?>
-<p>This will convert all your metadata files for singapore 0.9.10.</p>
+<p>This will convert all your metadata files from singapore 0.9.6, 0.9.7, 0.9.8 or 0.9.9 to 0.9.10.</p>
 
 <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
 <h3>summary field</h3>
@@ -276,4 +276,3 @@ it is highly recommended that you create your own backups for added security.</p
 
 </body>
 </html>
-

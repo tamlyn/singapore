@@ -3,14 +3,15 @@
 /**
  * Admin interface file.
  *
- * Checks the selected 'action', calls the appropriate methods and sets the 
- * required include file. Finally it includes the admin template's index file.
+ * Checks the selected 'action', checks user permissions, calls the appropriate 
+ * methods and sets the required include file. Finally it includes the admin 
+ * template's index file.
  * 
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.26 2004/09/13 09:22:39 tamlyn Exp $
+ * @version $Id: admin.php,v 1.27 2004/09/27 07:29:26 tamlyn Exp $
  */
 
 //include main class
@@ -172,7 +173,11 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "editimage";
       break;
     case "editpass" :
-      $includeFile = "editpass";
+      if($sg->isGuest()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } else
+        $includeFile = "editpass";
       break;
     case "editpermissions" :
       $sg->selectGallery();
@@ -183,14 +188,14 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "editpermissions";
       break;
     case "edituser" :
-      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username) {
+      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username || $sg->isGuest()) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else
         $includeFile = "edituser";
       break;
     case "login" :
-      if($sg->login()) {
+      if($sg->doLogin()) {
         $adminMessage = $sg->i18n->_g("Welcome to singapore admin!");
         $includeFile = "menu";
       } else {
@@ -201,7 +206,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
     case "logout" :
       $sg->logout();
       $adminMessage = $sg->i18n->_g("Thank you and goodbye!");
-      $includeFile = "loggedout";
+      $includeFile = "login";
       break;
     case "manageusers" :
       if(!$sg->isAdmin()) {
@@ -244,7 +249,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "purgecache" :
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
+      if(!$sg->isAdmin()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
         if($sg->purgeCache())
           $adminMessage = $sg->i18n->_g("Thumbnail cache purged");
         else
@@ -296,7 +304,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "savepass" :
-      if($sg->savePass()) {
+      if($sg->isGuest()) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } elseif($sg->savePass()) {
         $adminMessage = $sg->i18n->_g("Password saved");
         $includeFile = "menu";
       } else {
@@ -318,12 +329,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "saveuser" :
-      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username) {
+      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username || $sg->isGuest()) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-        break;
-      }
-      if($sg->saveUser()) {
+      } elseif($sg->saveUser()) {
         $adminMessage = $sg->i18n->_g("User info saved");
         $includeFile = $sg->isAdmin() ? "manageusers" : "menu";
       } else {
@@ -355,9 +364,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       if(!$sg->isAdmin()) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-        break;
-      }
-      if($sg->suspendUser())
+      } elseif($sg->suspendUser())
         $adminMessage = $sg->i18n->_g("User info saved");
       else
         $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();

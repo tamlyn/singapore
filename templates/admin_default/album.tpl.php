@@ -3,7 +3,7 @@
 
 <div class="sgContainer">
   <div class="sgTab"><?php echo $sg->galleryTab()?></div>
-  <div class="sgContent"><table><tr><td>
+  <div class="sgContent">
     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
     <input type="hidden" name="action" value="multiimage" />
     <input type="hidden" name="gallery" value="<?php echo $sg->galleryIdEncoded(); ?>" />
@@ -21,8 +21,9 @@
         <?php echo $sg->imageThumbnailLinked($index) ?> 
       </td></tr></table>
     </div>
-    <?php endfor; ?> 
-  </td></tr></table></div>
+    <?php endfor; ?>
+    <div class="stretcher"></div>
+  </div>
   </form>
 </div>  
   

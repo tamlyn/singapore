@@ -22,7 +22,7 @@
   echo "<tr><td>".$sg->i18n->_g("Email").'</td><td><input type="input" name="sgEmail" value="'.$user->email."\" /></td></tr>\n";
   echo "<tr><td>".$sg->i18n->_g("Full name").'</td><td><input type="input" name="sgFullname" value="'.$user->fullname."\" /></td></tr>\n";
   echo "<tr><td>".$sg->i18n->_g("Description").'</td><td><input type="input" name="sgDescription" value="'.$user->description."\" /></td></tr>\n";
-  if($sg->isAdmin())
+  if($sg->isAdmin() && !$sg->isGuest($user))
     echo "<tr><td>".$sg->i18n->_g("Password").'</td><td><input type="input" name="sgPassword" value="**********" /></td></tr>'."\n";
   
 ?>

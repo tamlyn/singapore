@@ -204,6 +204,10 @@ div.sgThumbnail table {
   vertical-align: middle;
 }
 
+div.stretcher {
+  clear: both;
+}
+
 img.sgImage {
   border: 1px solid #000;
 }

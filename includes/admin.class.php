@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.20 2004/09/13 09:22:40 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.21 2004/09/27 07:29:28 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -23,7 +23,7 @@ define("SG_ADMIN",     1024);
 define("SG_SUSPENDED", 2048);
 
 /**
- * Provides administration functions.
+ * Provides gallery, image and user administration functions.
  * 
  * @uses Singapore
  * @package singapore
@@ -271,7 +271,7 @@ class sgAdmin extends Singapore
    * 
    * @return boolean true on success; false otherwise
    */
-  function login() 
+  function doLogin() 
   {
     if(isset($_POST["sgUsername"]) && isset($_POST["sgPassword"])) {
   	  $users = $this->io->getUsers();
@@ -375,9 +375,23 @@ class sgAdmin extends Singapore
    * 
    * @return bool true on success; false otherwise
    */
-  function isAdmin()
+  function isAdmin($usr = null)
   {
-    return $_SESSION["sgUser"]->permissions & SG_ADMIN;
+    if($usr == null)
+      $usr = $_SESSION["sgUser"];
+    return $usr->permissions & SG_ADMIN;
+  }
+  
+  /**
+   * Checks if currently logged in user is a guest.
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function isGuest($usr = null)
+  {
+    if($usr == null)
+      $usr = $_SESSION["sgUser"];
+    return $usr->username == "guest";
   }
   
   /**
@@ -432,6 +446,11 @@ class sgAdmin extends Singapore
   {
     if($user == null)
       $user = $_REQUEST["user"];
+      
+    if($user == "admin" || $user == "guest") {
+      $this->lastError = $this->i18n->_g("Cannot delete built in accounts");
+      return false;
+    }
       
   	$users = $this->io->getUsers();
     for($i=0; $i<count($users); $i++)
