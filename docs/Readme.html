@@ -436,27 +436,37 @@ simply by including index.php as in: <code>&lt;?php include("path/to/singapore/i
   <dd>an installation of singapore is contained within a website. It is usually 
   in its own separate directory and contains one gallery: the root gallery.</dd>
   
-<dt>Gallery</dt>
-  <dd>a gallery is contained within an installation (if it is the root gallery) 
-  or another gallery (in which case it is a subgallery and the containing 
-  gallery is called the parent). Galleries may contain more galleries and also 
-  images.</dd>
-
-<dt>Album</dt>
-  <dd>an album is a special case of gallery in that it contains exactly zero
-  subgalleries and zero or more images.</dd>
-
-<dt>Image</dt>
-  <dd>an image is contained within an album or a gallery.</dd>
-
 <dt>Root gallery</dt>
   <dd>There is only one root gallery and it is not contained within any other 
   galleries. It is located directly in the directory specified by the 
-  <code>pathto_galleries</code> option. It is sometimes referred to with a 
-  single dot (.).</dd>
+  <code>pathto_galleries</code> option. It is usually referred to in URLs with a 
+  single dot (as in <code>?gallery=.</code>).</dd>
   
-<dt>Subgallery, Parent gallery</dt>
-  <dd>these are relative terms.</dd>
+<dt>Gallery</dt>
+  <dd>a gallery is contained within another gallery (except the root gallery 
+  which is contained in an installation). Galleries may contain more galleries 
+  and also images.</dd>
+
+<dt>Album</dt>
+  <dd>an album is a special case of gallery that it contains exactly zero
+  galleries and zero or more images. In other words a gallery is called an 
+  album when it does not have any child galleries. So an album is a gallery
+  but a gallery is not an album in much the same way that a kitchen is a room 
+  but a room is not a kitchen.</dd>
+
+<dt>Image</dt>
+  <dd>an image is contained within an album or a gallery. Due to the way 
+  singapore operates, images will only be displayed if they are in albums since
+  any images in non-album galleries will be hidden.</dd>
+
+<dt>Child gallery (also known as subgallery)</dt>
+  <dd>this is a relative term. A child gallery is one contained within the 
+  gallery currently being viewed or edited. There may be zero or more.</dd>
+  
+<dt>Parent gallery</dt>
+  <dd>this is a relative term. The parent gallery is the one which contains the 
+  gallery currently being viewed or edited. There is always exactly one (except 
+  in the case of the root gallery which has no parent).</dd>
   
 </dl>
 
@@ -671,7 +681,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2004/10/11 05:24:11 $</em></p>
+<p><em>$Date: 2004/10/14 02:06:10 $</em></p>
 
 </body>
 </html>
