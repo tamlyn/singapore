@@ -231,9 +231,12 @@ function sgGetUsers() {
 
 function sgPutUsers($users) {
   $fp = fopen("includes/adminusers.csv","w");
+  if(!$fp) return false;
+  $success = true;
   for($i=0;$i<count($users);$i++) 
-    fwrite($fp,$users[$i]->username.",".$users[$i]->userpass.",".$users[$i]->permissions.",\"".$users[$i]->fullname."\",\"".$users[$i]->description."\",\"".$users[$i]->stats."\"\n");
+    $success &= fwrite($fp,$users[$i]->username.",".$users[$i]->userpass.",".$users[$i]->permissions.",\"".$users[$i]->fullname."\",\"".$users[$i]->description."\",\"".$users[$i]->stats."\"\n");
   fclose($fp);
+  return $success;
 }
 
 

@@ -64,7 +64,7 @@ function sgEditPass()
 {
   echo "<form action=\"$_SERVER[PHP_SELF]\" method=\"post\">\n";
   echo "<input type=\"hidden\" name=\"action\" value=\"savepass\" />\n";
-  echo "<input type=\"hidden\" name=\"user\" value=\"{$_SESSION[user]->username}\" />\n";
+  echo "<input type=\"hidden\" name=\"user\" value=\"{$_SESSION['user']->username}\" />\n";
   echo "<table>\n";
   echo "<tr>\n  <td>Current password:</td>\n  <td><input type=\"password\" name=\"sgOldPass\" size=\"23\" /></td>\n</tr>\n";
   echo "<tr>\n  <td>New password:</td>\n  <td><input type=\"password\" name=\"sgNewPass1\" size=\"23\" /></td>\n</tr>\n";
