@@ -234,7 +234,7 @@ function sgPutUsers($users) {
   if(!$fp) return false;
   $success = true;
   for($i=0;$i<count($users);$i++) 
-    $success &= fwrite($fp,$users[$i]->username.",".$users[$i]->userpass.",".$users[$i]->permissions.",\"".$users[$i]->fullname."\",\"".$users[$i]->description."\",\"".$users[$i]->stats."\"\n");
+    $success &= (bool) fwrite($fp,$users[$i]->username.",".$users[$i]->userpass.",".$users[$i]->permissions.",\"".$users[$i]->fullname."\",\"".$users[$i]->description."\",\"".$users[$i]->stats."\"\n");
   fclose($fp);
   return $success;
 }
