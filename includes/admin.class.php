@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.16 2004/09/06 16:30:21 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.17 2004/09/07 19:09:06 tamlyn Exp $
  */
 
 /**
@@ -326,9 +326,9 @@ class sgAdmin extends Singapore
     
     if($this->config->enable_clickable_urls) {
       //recognise URLs and htmlise them
-      $this->gallery->desc = preg_replace('{(?<!href="|href=)\b('.$this->regexps['genericURL'].')\b(?!</a>)}', '<a href="$1">$1</a>', $this->gallery->desc);  //general protocol match
-      $this->gallery->desc = preg_replace('{(?<!://)\b('.$this->regexps['wwwURL'].')\b(?!</a>)}', '<a href="http://$1">$1</a>', $this->gallery->desc);  //web addresses starting www. without path info
-      $this->gallery->desc = preg_replace('{(?<!mailto:|\.)\b('.$this->regexps['emailURL'].')\b(?!</a>)}', '<a href="mailto:$1">$1</a>', $this->gallery->desc);  //email addresses *@*.*
+      $this->gallery->desc = preg_replace('{(?<!href="|href=)\b('.SG_REGEXP_PROTOCOLURL.')\b(?!</a>)}', '<a href="$1">$1</a>', $this->gallery->desc);  //general protocol match
+      $this->gallery->desc = preg_replace('{(?<!://)\b('.SG_REGEXP_WWWURL.')\b(?!</a>)}', '<a href="http://$1">$1</a>', $this->gallery->desc);  //web addresses starting www. without path info
+      $this->gallery->desc = preg_replace('{(?<!mailto:|\.)\b('.SG_REGEXP_EMAILURL.')\b(?!</a>)}', '<a href="mailto:$1">$1</a>', $this->gallery->desc);  //email addresses *@*.*
     }
     
     if($this->io->putGallery($this->gallery))

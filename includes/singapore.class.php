@@ -4,16 +4,22 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.27 2004/09/06 16:30:23 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.28 2004/09/07 19:09:06 tamlyn Exp $
  */
 
 //define constants for request variables
+//you may change these if there is a conflict
 define('SG_LANG', 'lang');
 define('SG_TEMPLATE', 'template');
-//define('SG_GALLERY', 'gallery');
-//define('SG_IMAGE', 'image');
-//define('SG_ACTION', 'action');
-//define('SG_STARTAT', 'startat');
+define('SG_GALLERY', 'gallery');
+define('SG_IMAGE', 'image');
+define('SG_ACTION', 'action');
+define('SG_STARTAT', 'startat');
+//define constants for regular expressions
+define('SG_REGEXP_PROTOCOLURL', '(?:http://|https://|ftp://|mailto:)(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,4}(?::[0-9]+)?(?:/[^ \n\r\"\'<]+)?');
+define('SG_REGEXP_WWWURL', 'www\.(?:[a-zA-Z0-9\-]+\.)*[a-zA-Z]{2,4}(?:/[^ \n\r\"\'<]+)?');
+define('SG_REGEXP_EMAILURL', '(?:[\w][\w\.\-]+)+@(?:[\w\-]+\.)+[a-zA-Z]{2,4}');
+
  
 /**
  * Provides functions for handling galleries and images
@@ -67,17 +73,6 @@ class Singapore
   var $action = null;
   
   /**
-   * Array of pcre regular expressions used by the script 
-   */
-  var $regexps = array( 
-    'genericURL' => '(?:http://|https://|ftp://|mailto:)(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,4}(?::[0-9]+)?(?:/[^ \n\r\"\'<]+)?',
-    'wwwURL'     => 'www\.(?:[a-zA-Z0-9\-]+\.)*[a-zA-Z]{2,4}(?:/[^ \n\r\"\'<]+)?',
-    'emailURL'   => '(?:[\w][\w\.\-]+)+@(?:[\w\-]+\.)+[a-zA-Z]{2,4}'
-  );
-    
-    
-  
-  /**
    * Constructor
    * @param string the path to the base singapore directory
    */
@@ -98,7 +93,7 @@ class Singapore
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
     if(empty($galleryId)) 
-      $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
+      $galleryId = isset($_REQUEST[SG_GALLERY]) ? $_REQUEST[SG_GALLERY] : ".";
     
     //load config from current directory
     $this->config = new sgConfig("singapore.ini");
@@ -142,7 +137,7 @@ class Singapore
       $this->character_set = $this->config->default_charset;
     
     //temporary code
-    if(isset($_REQUEST["action"])) $this->action = $_REQUEST["action"];
+    if(isset($_REQUEST[SG_ACTION])) $this->action = $_REQUEST[SG_ACTION];
   }
   
   /**
@@ -151,7 +146,7 @@ class Singapore
    */
   function selectGallery($galleryId = "")
   {
-    if(empty($galleryId)) $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
+    if(empty($galleryId)) $galleryId = isset($_REQUEST[SG_GALLERY]) ? $_REQUEST[SG_GALLERY] : ".";
     
     //try to validate gallery id
     if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
@@ -175,7 +170,7 @@ class Singapore
     if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
     
     //if startat is set the cast to int otherwise startat 0
-    $this->startat = isset($_REQUEST["startat"]) ? (int)$_REQUEST["startat"] : 0;
+    $this->startat = isset($_REQUEST[SG_STARTAT]) ? (int)$_REQUEST[SG_STARTAT] : 0;
     
 
     //encode the gallery name
@@ -190,13 +185,13 @@ class Singapore
       $this->gallery->parentName = $this->config->gallery_name;
     
     //do the logging stuff and select the image (if any)
-    if(empty($_REQUEST["image"])) {
+    if(empty($_REQUEST[SG_IMAGE])) {
       if($this->config->track_views) $hits = $this->logGalleryView();
       if($this->config->show_views) $this->gallery->hits = $hits;
       //set page title
       $this->pageTitle = $this->gallery->name;
     } else {
-      $this->selectImage($_REQUEST["image"]);
+      $this->selectImage($_REQUEST[SG_IMAGE]);
       if($this->config->track_views) $hits = $this->logImageView();
       if($this->config->show_views) $this->image->hits = $hits;
       //set page title
@@ -310,7 +305,7 @@ class Singapore
       if($image)   $ret .= rawurlencode($image);
       
       $query = array();
-      if($action)  $query[] = "action=".$action;
+      if($action)  $query[] = SG_ACTION."=".$action;
       if($this->language != $this->config->default_language) $query[] = SG_LANG.'='.$this->language;
       if($this->template != $this->config->default_template) $query[] = SG_TEMPLATE.'='.$this->template;
       
@@ -319,10 +314,10 @@ class Singapore
     } else {
       //format plain url
       $ret  = $this->config->base_url.$this->config->base_file;
-      $ret .= "gallery=".$gallery;
-      if($startat) $ret .= "&amp;startat=".$startat;
-      if($image)   $ret .= "&amp;image=".rawurlencode($image);
-      if($action)  $ret .= "&amp;action=".$action;
+      $ret .= SG_GALLERY."=".$gallery;
+      if($startat) $ret .= "&amp;".SG_STARTAT."=".$startat;
+      if($image)   $ret .= "&amp;".SG_IMAGE."=".rawurlencode($image);
+      if($action)  $ret .= "&amp;".SG_ACTION."=".$action;
       if($this->language != $this->config->default_language) $ret .= '&amp;'.SG_LANG.'='.$this->language;
       if($this->template != $this->config->default_template) $ret .= '&amp;'.SG_TEMPLATE.'='.$this->template;
     }
@@ -673,8 +668,12 @@ class Singapore
       $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\">\n";
     $ret .= '<select name="'.SG_LANG."\">\n";
     $ret .= '  <option value="'.$this->config->default_language.'">'.$this->i18n->_g("Select language...")."</option>\n";
-    foreach($availableLanguages as $code => $name)
-      $ret .= '  <option value="'.$code.'">'.htmlentities($name)."</option>\n";
+    foreach($availableLanguages as $code => $name) {
+      $ret .= '  <option value="'.$code.'"';
+      if($code == $this->language && $this->language != $this->config->default_language)
+        $ret .= 'selected="true" ';
+      $ret .= '>'.htmlentities($name)."</option>\n";
+    }
     $ret .= "</select>\n";
     $ret .= '<input type="submit" class="button" value="Go">';
     $ret .= "</form></div>\n";
@@ -701,8 +700,12 @@ class Singapore
     $ret .= '  <option value="'.$this->config->default_template.'">'.$this->i18n->_g("Select template...")."</option>\n";
     foreach($templates->dirs as $name)
       //do not list admin template(s)
-      if(strpos($name, "admin_")===false)
-        $ret .= '  <option value="'.$name.'">'.$name."</option>\n";
+      if(strpos($name, "admin_")===false) {
+        $ret .= '  <option value="'.$name.'"';
+        if($name == $this->template && $this->template != $this->config->default_template)
+          $ret .= 'selected="true" ';
+        $ret .= '>'.$name."</option>\n";
+      }
     $ret .= "</select>\n";
     $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\">\n";
     $ret .= "</form></div>\n";
@@ -1045,9 +1048,9 @@ class Singapore
     
     if($this->config->enable_clickable_urls) {
       //strip off html from autodetected URLs
-      $ret = preg_replace('{<a href="('.$this->regexps['genericURL'].')\">\1</a>}', '\1', $ret);
-      $ret = preg_replace('{<a href="http://('.$this->regexps['wwwURL'].')">\1</a>}', '\1', $ret);
-      $ret = preg_replace('{<a href="mailto:('.$this->regexps['emailURL'].')">\1</a>}', '\1', $ret);
+      $ret = preg_replace('{<a href="('.SG_REGEXP_PROTOCOLURL.')\">\1</a>}', '\1', $ret);
+      $ret = preg_replace('{<a href="http://('.SG_REGEXP_WWWURL.')">\1</a>}', '\1', $ret);
+      $ret = preg_replace('{<a href="mailto:('.SG_REGEXP_EMAILURL.')">\1</a>}', '\1', $ret);
     }
     
     return $ret;
