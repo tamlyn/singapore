@@ -7,7 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.24 2004/04/23 17:28:28 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.25 2004/05/13 01:20:32 tamlyn Exp $
  */
 
 //require config class
@@ -15,11 +15,11 @@ require_once "includes/config.class.php";
 
 //remove slashes
 if(get_magic_quotes_gpc())
-  showThumb(stripslashes($_REQUEST["gallery"]),stripslashes($_REQUEST["image"]), stripslashes($_REQUEST["size"]));
+  showThumb(stripslashes($_REQUEST["gallery"]),stripslashes($_REQUEST["image"]), $_REQUEST["width"], $_REQUEST["height"], isset($_REQUEST["force"]));
 else
-  showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
+  showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["width"], $_REQUEST["height"], isset($_REQUEST["force"]));
 
-function showThumb($gallery, $image, $maxsize) {
+function showThumb($gallery, $image, $width, $height, $forceAspect) {
   //create config object
   $config = new sgConfig();
 
@@ -29,7 +29,7 @@ function showThumb($gallery, $image, $maxsize) {
   if($isRemoteFile) $imagePath = $image;
   else $imagePath = $config->pathto_galleries."$gallery/$image";
   
-  $thumbPath = $config->pathto_cache.$maxsize.strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = $config->pathto_cache.$width."x".$height.strtr("-$gallery-$image",":/?\\","----");
   
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
@@ -56,13 +56,36 @@ function showThumb($gallery, $image, $maxsize) {
   }
   //otherwise thumbnail is out of date or doesn't exist so create new one
   
+  
+  
+  //if aspect ratio is to be constrained set crop size
+  if($forceAspect) {
+    $newAspect = $width/$height;
+    $oldAspect = $imageWidth/$imageHeight;
+    if($newAspect > $oldAspect) {
+      $cropWidth = $imageWidth;
+      $cropHeight = round($imageHeight*($oldAspect/$newAspect));
+    } else {
+      $cropWidth = round($imageWidth*($newAspect/$oldAspect));
+      $cropHeight = $imageHeight;
+    }
+  //else crop size is image size
+  } else {
+    $cropWidth = $imageWidth;
+    $cropHeight = $imageHeight;
+  }
+  
+  //set cropping offset
+  $cropX = ($imageWidth-$cropWidth)/2;
+  $cropY = ($imageHeight-$cropHeight)/2;
+    
   //compute width and height of thumbnail to create
-  if($imageWidth < $imageHeight && ($imageWidth>$maxsize || $imageHeight>$maxsize)) {
-    $thumbWidth = round($imageWidth/$imageHeight * $maxsize);
-    $thumbHeight = $maxsize;
-  } elseif($imageWidth>$maxsize || $imageHeight>$maxsize) {
-    $thumbWidth = $maxsize;
-    $thumbHeight = round($imageHeight/$imageWidth * $maxsize);
+  if($cropWidth < $cropHeight && ($cropWidth>$width || $cropHeight>$height)) {
+    $thumbWidth = round($cropWidth/$cropHeight * $width);
+    $thumbHeight = $height;
+  } elseif($cropWidth > $width || $cropHeight > $height) {
+    $thumbWidth = $width;
+    $thumbHeight = round($cropHeight/$cropWidth * $width);
   } else {
     //image is smaller than required dimensions so output it and exit
     readfile($imagePath);
@@ -76,7 +99,7 @@ function showThumb($gallery, $image, $maxsize) {
   if($isRemoteFile) {
     $ip = fopen($imagePath, "rb");
     $tp = fopen($thumbPath, "wb");
-    while(fwrite($tp,fread($ip, 4096)));
+    while(fwrite($tp,fread($ip, 4095)));
     fclose($tp);
     fclose($ip);
     $imagePath = $thumbPath;
@@ -86,6 +109,7 @@ function showThumb($gallery, $image, $maxsize) {
   switch($config->thumbnail_software) {
   case "im" : //use ImageMagick  
     $cmd  = '"'.$config->pathto_convert.'"';
+    if($forceAspect) $cmd .= " -crop {$cropWidth}x{$cropHeight}+$cropX+$cropY";
     $cmd .= " -geometry {$thumbWidth}x{$thumbHeight}";
     if($imageType == 2) $cmd .= " -quality $thumbQuality";
     if($config->progressive_thumbs) $cmd .= " -interlace Plane";
@@ -112,14 +136,20 @@ function showThumb($gallery, $image, $maxsize) {
       //create blank truecolor image
       $thumb = ImageCreateTrueColor($thumbWidth,$thumbHeight);
       //resize image with resampling
-      ImageCopyResampled($thumb,$image,0,0,0,0,$thumbWidth,$thumbHeight,$imageWidth,$imageHeight);
+      ImageCopyResampled(
+        $thumb,                    $image,
+        0,           0,            $cropX,     $cropY,
+        $thumbWidth, $thumbHeight, $cropWidth, $cropHeight);
       break;
     case "gd1" :
     default :
       //create blank 256 color image
       $thumb = ImageCreate($thumbWidth,$thumbHeight);
       //resize image
-      ImageCopyResized($thumb,$image,0,0,0,0,$thumbWidth,$thumbHeight,$imageWidth,$imageHeight);
+      ImageCopyResized(
+        $thumb,                    $image,
+        0,           0,            $cropX,     $cropY,
+        $thumbWidth, $thumbHeight, $cropWidth, $cropHeight);
       break;
     }
     

@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.20 2004/04/11 14:45:07 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.21 2004/05/13 01:20:30 tamlyn Exp $
  */
  
 /**
@@ -279,26 +279,21 @@ class Singapore
   function formatURL($gallery, $image = null, $startat = null, $action = null)
   {
     if($this->config->use_mod_rewrite) {
+      //format url for use with mod_rewrite
       $ret  = $this->config->base_url.$gallery;
-      if($startat != null)
-        $ret .= ','.$startat;
+      if($startat) $ret .= ','.$startat;
       $ret .= '/';
-      if($image != null)
-        $ret .= rawurlencode($image);
-      if($action != null)
-        $ret .= "?acton=".$action;
+      if($image)   $ret .= rawurlencode($image);
+      if($action)  $ret .= "?acton=".$action;
     } else {
-    $ret  = $this->config->base_url.$this->config->base_file;
-    $ret .= "gallery=".$gallery;
-    if($startat != null)
-      $ret .= "&amp;startat=".$startat;
-    if($image != null)
-      $ret .= "&amp;image=".rawurlencode($image);
-    if($action != null)
-      $ret .= "&amp;acton=".$action;
+      //format plain url
+      $ret  = $this->config->base_url.$this->config->base_file;
+      $ret .= "gallery=".$gallery;
+      if($startat) $ret .= "&amp;startat=".$startat;
+      if($image)   $ret .= "&amp;image=".rawurlencode($image);
+      if($action)  $ret .= "&amp;acton=".$action;
     }
     
-
     return $ret;
   }
   
@@ -308,18 +303,17 @@ class Singapore
    *
    * @author   Adam Sissman <adam at bluebinary dot com>
    */
-  function thumbnailURL($gallery, $image, $size)
+  function thumbnailURL($gallery, $image, $width, $height, $forceSize)
   {
     $ret = $this->config->base_url;
     $ret .= "thumb.php";
-    $ret .= "?gallery=".$gallery;
-    $ret .= "&amp;image=".rawurlencode($image);
-    $ret .= "&amp;size=".$size;
+    $ret .= "?gallery=".$gallery."&amp;image=".rawurlencode($image);
+    $ret .= "&amp;width=".$width."&amp;height=".$height;
+    if($forceSize) $ret .= "&amp;force=1";
 
     return $ret;
   }
 
-  
   /**
    * @return int|null the number of image hits or null
    */
@@ -386,11 +380,19 @@ class Singapore
   }
   
   /**
-   * @return bool true if this is an image thumbnail page; false otherwise
+   * @return bool true if this is a non-album gallery page; false otherwise
+   */
+  function isGallery($index = null)
+  {
+    return $this->galleryHasSubGalleries($index);
+  }
+  
+  /**
+   * @return bool true if this is an album page; false otherwise
    */
   function isAlbum($index = null)
   {
-    return !$this->galleryHasSubGalleries($index) && !$this->isImage();
+    return !$this->isGallery($index) && !$this->isImage();
   }
   
   /**
@@ -524,7 +526,7 @@ class Singapore
    * @returns boolean true if the user is logged in; false otherwise
    * @static
    */
-  function isLoggedIn() 
+  function isLoggedIn()
   {
     if(isset($_SESSION["sgUser"]) && $_SESSION["sgUser"]->check == md5($_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["sgUser"]->loginTime < 1800)) {
   	  $_SESSION["sgUser"]->loginTime = time();
@@ -587,7 +589,7 @@ class Singapore
   
   function imageMap()
   {
-    if(!$this->config->enable_image_navigation) return;
+    if(!$this->config->imagemap_navigation) return;
     
     $imageWidth = $this->imageWidth();
     $imageHeight = $this->imageHeight();
@@ -612,8 +614,8 @@ class Singapore
   
   
   /**
-   * If the specified gallery is a gallery then it returns the number
-   * of images contained otherwise the number of galleries is returned
+   * If the specified gallery is an album then it returns the number of 
+   * images contained otherwise the number of sub-galleries is returned
    * @param int the index of the sub gallery to count (optional)
    * @return string the contents of the specified gallery
    */
@@ -728,10 +730,11 @@ class Singapore
         srand(time());
         $image = $gal->images[rand(0,count($gal->images)-1)]->filename;
     default :
-      $ret  = "<img src=\"".$this->thumbnailURL($this->encodeId($gal->id),
-                                              $image,
-                                            $this->config->gallery_thumb_size);
-        $ret .= '" class="sgGallery"'; 
+        $ret  = "<img src=\"".$this->thumbnailURL(rawurlencode($gal->id), $image,
+                                          $this->config->thumb_width_gallery,
+                                          $this->config->thumb_height_gallery,
+                                          $this->config->thumb_force_size_gallery);
+        $ret .= '" class="sgGallery" '; 
         $ret .= '"alt="'.$this->i18n->_g("Sample image from gallery").'" />';
 
     }
@@ -756,10 +759,10 @@ class Singapore
   {
     if($this->isAlbum()) {
       $total = $this->imageCount();
-      $perPage = $this->config->main_thumb_number;
+      $perPage = $this->config->thumb_number_album;
     } else {
       $total = $this->galleryCount();
-      $perPage = $this->config->gallery_thumb_number;
+      $perPage = $this->config->thumb_number_gallery;
     }
     
     if($this->startat+$perPage > $total)
@@ -820,9 +823,9 @@ class Singapore
    */
   function galleryPageCount() {
     if($this->isAlbum())
-      return intval($this->imageCount()/$this->config->main_thumb_number)+1;
+      return intval($this->imageCount()/$this->config->thumb_number_album)+1;
     else
-      return intval($this->galleryCount()/$this->config->gallery_thumb_number)+1;
+      return intval($this->galleryCount()/$this->config->thumb_number_gallery)+1;
   }
   
   /** 
@@ -831,7 +834,7 @@ class Singapore
   function lastPageIndex() {
     if($this->isAlbum())
       return ($this->galleryPageCount()-1)*
-        ($this->isAlbum()?$this->config->main_thumb_number:$this->config->gallery_thumb_number);
+        ($this->isAlbum()?$this->config->thumb_number_album:$this->config->thumb_number_gallery);
   }
   
   /**
@@ -839,9 +842,9 @@ class Singapore
    */
   function galleryHasNext() {
     if($this->isAlbum())
-      return count($this->gallery->images)>$this->startat+$this->config->main_thumb_number;
+      return count($this->gallery->images)>$this->startat+$this->config->thumb_number_album;
     else
-      return count($this->gallery->galleries)>$this->startat+$this->config->gallery_thumb_number;
+      return count($this->gallery->galleries)>$this->startat+$this->config->thumb_number_gallery;
   }
   
   /**
@@ -856,7 +859,7 @@ class Singapore
    */
   function galleryNextURL() {
     return $this->formatURL($this->gallery->idEncoded, null, ($this->startat+
-      ($this->isAlbum()?$this->config->main_thumb_number:$this->config->gallery_thumb_number)));
+      ($this->isAlbum()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
   }
   
   function galleryNextLink() {
@@ -868,7 +871,7 @@ class Singapore
    */
   function galleryPrevURL() {
     return $this->formatURL($this->gallery->idEncoded, null, ($this->startat-
-      ($this->isAlbum()?$this->config->main_thumb_number:$this->config->gallery_thumb_number)));
+      ($this->isAlbum()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
   }
   
   function galleryPrevLink() {
@@ -981,7 +984,7 @@ class Singapore
    */
   function gallerySelectedImagesArray()
   {
-    return array_slice($this->gallery->images, $this->startat, $this->config->main_thumb_number);
+    return array_slice($this->gallery->images, $this->startat, $this->config->thumb_number_album);
   }
   
   /**
@@ -997,7 +1000,7 @@ class Singapore
    */
   function gallerySelectedGalleriesArray()
   {
-    return array_slice($this->gallery->galleries, $this->startat, $this->config->gallery_thumb_number);
+    return array_slice($this->gallery->galleries, $this->startat, $this->config->thumb_number_gallery);
   }
   
   /**
@@ -1017,53 +1020,87 @@ class Singapore
    */
   function imageThumbnailImage()
   {
-    list($thumbWidth, $thumbHeight) = $this->thumbnailSize($this->imageWidth(), $this->imageHeight(), $this->config->main_thumb_size);
-    $ret  = "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded,
-                                          $this->image->filename,
-                                          $this->config->main_thumb_size);
-    $ret .= "\" class=\"sgThumbnail\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" ";
-    $ret .= "alt=\"".$this->imageName().$this->imageByArtist()."\" title=\"".$this->imageName().$this->imageByArtist()."\" />";
+    $ret  = '<img src="'.$this->thumbnailURL(
+                           $this->gallery->idEncoded, $this->image->filename,
+                           $this->config->thumb_width_album,
+                           $this->config->thumb_height_album,
+                           $this->config->thumb_force_size_album).'" ';
+    $ret .= 'width="'.$this->thumbnailWidth(
+                           $this->imageWidth(), $this->imageHeight(),
+                           $this->config->thumb_width_album,
+                           $this->config->thumb_height_album,
+                           $this->config->thumb_force_size_album).'" ';
+    $ret .= 'height="'.$this->thumbnailHeight(
+                           $this->imageWidth(), $this->imageHeight(),
+                           $this->config->thumb_width_album,
+                           $this->config->thumb_height_album,
+                           $this->config->thumb_force_size_album).'" ';
+    $ret .= 'alt="'.$this->imageName().$this->imageByArtist().'" ';
+    $ret .= 'title="'.$this->imageName().$this->imageByArtist().'" />';
+    
     return $ret;
   }
   
-  function thumbnailSize($imageWidth, $imageHeight, $maxsize)
+  function thumbnailWidth($imageWidth, $imageHeight, $width, $height, $forceSize)
   {
-    if($imageWidth < $imageHeight && ($imageWidth>$maxsize || $imageHeight>$maxsize)) {
-      $thumbWidth = floor($imageWidth/$imageHeight * $maxsize);
-      $thumbHeight = $maxsize;
-    } elseif($imageWidth>$maxsize || $imageHeight>$maxsize) {
-      $thumbWidth = $maxsize;
-      $thumbHeight = floor($imageHeight/$imageWidth * $maxsize);
-    } elseif($imageWidth == 0 || $imageHeight == 0) {
-      $thumbWidth = $maxsize;
-      $thumbHeight = $maxsize;
+    if($forceSize || ($width > $imageWidth && $height > $imageHeight)) 
+      return $width;
+    else
+      if($imageWidth < $imageHeight)
+        return floor($imageWidth/$imageHeight * $width);
+      else
+        return $width;
+  }
+  
+  function thumbnailHeight($imageWidth, $imageHeight, $width, $height, $forceSize)
+  {
+    if($forceSize || ($width > $imageWidth && $height > $imageHeight)) 
+      return $height;
+    else
+      if($imageWidth > $imageHeight)
+        return floor($imageHeight/$imageWidth * $height);
+      else
+        return $height;
+  }
+  
+  function imageWidth($index = null)
+  {
+    if($index === null) {
+      $imageWidth  = $this->image->width;
+      $imageHeight = $this->image->height;
     } else {
-      $thumbWidth = $imageWidth;
-      $thumbHeight = $imageHeight;
+      $imageWidth  = $this->gallery->images[$index]->width;
+      $imageHeight = $this->gallery->images[$index]->height;
     }
-    return array($thumbWidth, $thumbHeight);
+  
+    if(!$this->config->full_image_resize || $this->config->thumb_force_size_image
+       || ($this->config->thumb_width_image > $imageWidth && $this->config->thumb_image_height > $imageHeight)) 
+      return $imageWidth;
+    else
+      if($imageWidth < $imageHeight)
+        return floor($imageWidth/$imageHeight * $this->config->thumb_width_image);
+      else
+        return $this->config->thumb_width_image;
   }
   
-  function imageWidth()
+  function imageHeight($index = null)
   {
-    if(!$this->config->max_image_size || ($this->config->max_image_size > $this->image->width && $this->config->max_image_size > $this->image->height)) 
-      return $this->image->width;
-    else
-      if($this->image->width < $this->image->height)
-        return floor($this->image->width/$this->image->height * $this->config->max_image_size);
-      else
-        return $this->config->max_image_size;
-  }
+    if($index === null) {
+      $imageWidth  = $this->image->width;
+      $imageHeight = $this->image->height;
+    } else {
+      $imageWidth  = $this->gallery->images[$index]->width;
+      $imageHeight = $this->gallery->images[$index]->height;
+    }
   
-  function imageHeight()
-  {
-    if(!$this->config->max_image_size || ($this->config->max_image_size > $this->image->width && $this->config->max_image_size > $this->image->height)) 
-      return $this->image->height;
+    if(!$this->config->full_image_resize || $this->config->thumb_force_size_image 
+       || ($this->config->thumb_width_image > $imageWidth && $this->config->thumb_image_height > $imageHeight)) 
+      return $imageHeight;
     else
-      if($this->image->width > $this->image->height)
-        return floor($this->image->height/$this->image->width * $this->config->max_image_size);
+      if($imageWidth > $imageHeight)
+        return floor($imageHeight/$this->image->width * $this->config->thumb_height_image);
       else
-        return $this->config->max_image_size;
+        return $this->config->thumb_height_image;
   }
   
   
@@ -1121,7 +1158,7 @@ class Singapore
     $ret = "<img src=\"".$this->imageURL()."\" ";
     if($this->imageWidth() && $this->imageHeight())
       $ret .= "width=\"".$this->imageWidth()."\" height=\"".$this->imageHeight()."\" ";
-    if($this->config->enable_image_navigation)
+    if($this->config->imagemap_navigation)
       $ret .= 'usemap="#sgNavMap" border="0" ';
     $ret .= "alt=\"".$this->imageName().$this->imageByArtist()."\" />\n";
     return $ret;
@@ -1132,8 +1169,11 @@ class Singapore
    */
   function imageURL()
   {
-    if($this->config->max_image_size)
-      return $this->thumbnailURL($this->gallery->idEncoded, $this->image->filename, $this->config->max_image_size);
+    if($this->config->full_image_resize)
+      return $this->thumbnailURL($this->gallery->idEncoded, $this->image->filename,
+                                 $this->config->thumb_width_image,
+                                 $this->config->thumb_height_image,
+                                 $this->config->thumb_force_size_image);
     
     //check if image is local (filename does not start with 'http://')
     if(substr($this->image->filename,0,7)!="http://") 
@@ -1149,34 +1189,31 @@ class Singapore
   function imagePreviewThumbnails()
   {
     $ret = "";
-    for($i=$this->config->preview_thumb_number;$i>0;$i--) {
-      if(isset($this->gallery->images[$this->image->index-$i])) 
-        $temp = $this->gallery->images[$this->image->index-$i];
-      else
+    for($i = $this->image->index - $this->config->thumb_number_preview; $i <= $this->image->index + $this->config->thumb_number_preview; $i++) {
+      if(!isset($this->gallery->images[$i])) 
         continue;
       
-      list($thumbWidth, $thumbHeight) = $this->thumbnailSize($temp->width, $temp->height, $this->config->preview_thumb_size);
-      $ret .= "<a href=\"".$this->formatURL($this->gallery->idEncoded, $temp->filename)."\">";
-      $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, $temp->filename, $this->config->preview_thumb_size);
-      $ret .= "\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$temp->name."\" title=\"".$temp->name."\" />";
+      $ret .= '<a href="'.$this->formatURL($this->gallery->idEncoded, $this->gallery->images[$i]->filename).'">';
+      $ret .= '<img src="'.$this->thumbnailURL(
+                             $this->gallery->idEncoded, $this->gallery->images[$i]->filename,
+                             $this->config->thumb_width_preview,
+                             $this->config->thumb_height_preview,
+                             $this->config->thumb_force_size_preview).'" ';
+      $ret .= 'width="'.$this->thumbnailWidth(
+                             $this->imageWidth($i), $this->imageHeight($i),
+                             $this->config->thumb_width_preview,
+                             $this->config->thumb_height_preview,
+                             $this->config->thumb_force_size_preview).'" ';
+      $ret .= 'height="'.$this->thumbnailHeight(
+                             $this->imageWidth($i), $this->imageHeight($i),
+                             $this->config->thumb_width_preview,
+                             $this->config->thumb_height_preview,
+                             $this->config->thumb_force_size_preview).'" ';
+      $ret .= 'alt="'.$this->imageName($i).$this->imageByArtist($i).'" ';
+      $ret .= 'title="'.$this->imageName($i).$this->imageByArtist($i).'" />';
       $ret .= "</a>\n";
     }
     
-    list($thumbWidth, $thumbHeight) = $this->thumbnailSize($this->image->width, $this->image->height, $this->config->preview_thumb_size);
-    $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, $this->image->filename, $this->config->preview_thumb_size);
-    $ret .= "\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$this->imageName()."\" title=\"".$this->imageName()."\" />\n";
-    
-    for($i=1;$i<=$this->config->preview_thumb_number;$i++) {
-      if(isset($this->gallery->images[$this->image->index+$i])) 
-        $temp = $this->gallery->images[$this->image->index+$i];
-      else
-        continue;
-      list($thumbWidth, $thumbHeight) = $this->thumbnailSize($temp->width, $temp->height, $this->config->preview_thumb_size);
-      $ret .= "<a href=\"".$this->formatURL($this->gallery->idEncoded, $temp->filename)."\">";
-      $ret .= "<img src=\"".$this->thumbnailURL($this->gallery->idEncoded, $temp->filename, $this->config->preview_thumb_size);
-      $ret .= "\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$temp->name."\" title=\"".$temp->name."\" />";
-      $ret .= "</a>\n";
-    }
     return $ret;
   }
   
@@ -1236,7 +1273,7 @@ class Singapore
   
   function imageParentURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, null, (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number));
+    return $this->formatURL($this->gallery->idEncoded, null, (floor($this->image->index/$this->config->thumb_number_album)*$this->config->thumb_number_album));
   }
   
   function imageNextURL()
