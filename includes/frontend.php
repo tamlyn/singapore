@@ -56,10 +56,6 @@ function sgShowIndex($path, $startat)
   
   //container frame bottom
   echo $code->bottom;
-  
-  //"All rights reserved" message
-  echo "<p class=\"center\">".sgGetConfig("copyright_message")."</p>\n";
-  
 }
 
 function sgShowThumbnails($gallery, $startat) 
@@ -117,12 +113,6 @@ function sgShowThumbnails($gallery, $startat)
   //contaner frame bottom
   echo $code->bottom;
   
-  //"All rights reserved" message
-  echo "<p class=\"center\">".sgGetConfig("copyright_message")."</p>\n";
-  
-  
-
-  
   //log gallery hit
   if(sgGetConfig("track_views")) sgLogView($gallery);
 }
@@ -159,8 +149,8 @@ function sgShowImage($gallery, $image)
   echo "</p></div>\n\n";
   
   //heading with image name and artist
-  echo "<h1 style=\"margin-bottom: 0px;\">$img->name</h1>\n";
-  if(!empty($img->artist)) echo "<p style=\"margin-bottom: 40px;\">by $img->artist</p>\n\n";
+  echo "<h1 style=\"margin-bottom: 0;\">$img->name</h1>\n";
+  if(!empty($img->artist)) echo "<p style=\"margin-bottom: 40px; margin-top: 0;\">by $img->artist</p>\n\n";
   
   //container frame top
   echo $code->top;
@@ -200,10 +190,6 @@ function sgShowImage($gallery, $image)
   if($img->copyright) echo "<strong>Copyright:</strong> $img->copyright<br />\n";
   elseif($img->artist) echo "<strong>Copyright:</strong> $img->artist<br />\n";
   echo "</p>\n";
-  
-  //"All rights reserved" message
-  echo "<p class=\"center\">".sgGetConfig("copyright_message")."</p>\n";
-  
 }
 
 function sgShowAdmin()

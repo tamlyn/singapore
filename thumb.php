@@ -33,7 +33,7 @@ function showThumb($gallery, $image, $maxsize) {
   //then prepend filename with path to current gallery
   if(substr($img->filename,0,7)!="http://") $imagePath = sgGetConfig("gallery_root")."$gallery/$image";
   else $imagePath = $image;
-  $thumbPath = sgGetConfig("thumbnail_cache").strtr("$maxsize-$gallery-$image","\\/?:;<>","-------");
+  $thumbPath = sgGetConfig("thumbnail_cache").$maxsize.strtr("-$gallery-",":/?\\","----").$image;
   $imageModified = filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
   

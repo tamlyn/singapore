@@ -45,10 +45,12 @@ require "includes/backend.php";
 <title>singapore</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" type="text/css" href="styles/main.css" />
-<link rel="stylesheet" type="text/css" href="styles/extra.css" />
+<link rel="stylesheet" type="text/css" href="styles/cornflower.css" />
 </head>
 
 <body>
+
+<div id="header"><img src="images/cornflower-header.gif" alt="singapore" /></div>
 
 <?php 
 
@@ -57,12 +59,17 @@ elseif(isset($_REQUEST["gallery"])) sgShowThumbnails($_REQUEST["gallery"],isset(
 else {
   echo("<h1>singapore</h1>\n");
   
-  echo "<p><a href=\"admin.php\">Admin functions</a>.</p>";
-  
   sgShowIndex(sgGetConfig("gallery_root"),isset($_REQUEST["startat"])?$_REQUEST["startat"]:0);
 }
 
 ?>
+
+<div id="footer"><p>
+  All rights reserved. Images may not be reproduced in any form
+  without the express written consent of the copyright holder.<br />
+  Powered by <a href="http://singapore.sourceforge.net/">singapore v0.9</a> | 
+  <a href=\"admin.php\">admin</a>.
+</p></div>
 
 
 </body>

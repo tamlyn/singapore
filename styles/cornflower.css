@@ -1,0 +1,28 @@
+body {
+  margin: 2em;
+  font: x-small sans-serif;
+  color: #000;
+  background-color: #fff;
+}
+
+#header {
+  
+}
+
+h1, h2, h3, h4 {
+  color: #f60;
+}
+
+a:link, a:visited {
+  color: #09f;
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+#footer {
+  text-align: center;
+  
+}
