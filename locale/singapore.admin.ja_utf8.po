@@ -1,0 +1,417 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: v0.9.8\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2004-02-03 16:53+0900\n"
+"Last-Translator: Mitsuhiro Yoshida <mits@mitstek.com>\n"
+"Language-Team: Japanese <mits@mitstek.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../admin.php:43
+msgid "Welcome to singapore admin!"
+msgstr "singapore管理画面へようこそ!"
+
+#: ../admin.php:46
+#: ../admin.php:55
+#: ../admin.php:64
+#: ../admin.php:79
+#: ../admin.php:93
+#: ../admin.php:104
+#: ../admin.php:121
+#: ../admin.php:139
+#: ../admin.php:153
+#: ../admin.php:163
+#: ../admin.php:188
+msgid "An error occurred:"
+msgstr "エラーが発生しました:"
+
+#: ../admin.php:52
+msgid "Thank you and goodbye!"
+msgstr "Thank you and goodbye!"
+
+#: ../admin.php:62
+msgid "Password saved"
+msgstr "パスワードが保存されました"
+
+#: ../admin.php:76
+msgid "Gallery added"
+msgstr "ギャラリーが追加されました"
+
+#: ../admin.php:90
+msgid "Gallery info saved"
+msgstr "ギャラリー情報が保存されました"
+
+#: ../admin.php:99
+#: ../admin.php:117
+#: ../admin.php:159
+#: ../admin.php:184
+msgid "confirm|OK"
+msgstr "OK"
+
+#: ../admin.php:102
+msgid "Gallery deleted"
+msgstr "ギャラリーが削除されました"
+
+#: ../admin.php:107
+#: ../admin.php:123
+#: ../admin.php:165
+#: ../admin.php:189
+msgid "confirm|Cancel"
+msgstr "キャンセル"
+
+#: ../admin.php:110
+msgid "delete gallery"
+msgstr "ギャラリーの削除"
+
+#: ../admin.php:111
+#, possible-c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and images it contains?"
+msgstr ""
+"ギャラリー %s は空ではありません。\n"
+"本当にギャラリー及びサブギャラリーに含まれる画像を完全に削除してもよろしいですか?"
+
+#: ../admin.php:119
+msgid "Thumbnail changed"
+msgstr "サムネイルが変更されました"
+
+#: ../admin.php:136
+msgid "Image added"
+msgstr "画像が追加されました"
+
+#: ../admin.php:150
+msgid "Image saved successfully"
+msgstr "画像が正常に保存されました"
+
+#: ../admin.php:161
+msgid "Image deleted"
+msgstr "画像が削除されました"
+
+#: ../admin.php:168
+msgid "delete image"
+msgstr "画像の削除"
+
+#: ../admin.php:169
+#, possible-c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "本当に画像 %s をギャラリー %s より完全に削除してもよろしいですか?"
+
+#: ../admin.php:186
+msgid "Thumbnail cache purged"
+msgstr "サムネイルキャッシュが消去されました"
+
+#: ../admin.php:192
+msgid "purge cached thumbnails"
+msgstr "サムネイルキャッシュの消去"
+
+#: ../admin.php:194
+#, possible-c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "本当に %s のサムネイルキャッシュを削除してもよろしいですか?"
+
+#: ../includes/admin.class.php:178
+msgid "admin bar|Back"
+msgstr "戻る"
+
+#: ../includes/admin.class.php:180
+msgid "admin bar|Admin"
+msgstr "管理画面"
+
+#: ../includes/admin.class.php:181
+msgid "admin bar|Galleries"
+msgstr "ギャラリー"
+
+#: ../includes/admin.class.php:182
+msgid "admin bar|Log out"
+msgstr "ログアウト"
+
+#: ../includes/admin.class.php:184
+msgid "admin bar|Edit gallery"
+msgstr "ギャラリーの編集"
+
+#: ../includes/admin.class.php:185
+msgid "admin bar|Delete gallery"
+msgstr "ギャラリーの削除"
+
+#: ../includes/admin.class.php:186
+msgid "admin bar|New subgallery"
+msgstr "サブギャラリーの作成"
+
+#: ../includes/admin.class.php:188
+msgid "admin bar|Edit image"
+msgstr "admin bar|画像の編集"
+
+#: ../includes/admin.class.php:189
+msgid "admin bar|Delete image"
+msgstr "画像の削除"
+
+#: ../includes/admin.class.php:191
+msgid "admin bar|New image"
+msgstr "画像の登録"
+
+#: ../includes/admin.class.php:215
+msgid "There was an error saving the new password."
+msgstr "新しいパスワードの保存中にエラーが発生しました。"
+
+#: ../includes/admin.class.php:218
+msgid "New password must be between 6 and 16 characters long."
+msgstr "新しいパスワードは半角6～16文字の長さにしてください。"
+
+#: ../includes/admin.class.php:220
+msgid "The new passwords you entered do not match."
+msgstr "新しいパスワードが合致しません。"
+
+#: ../includes/admin.class.php:222
+msgid "The current password you entered does not match the one in the database."
+msgstr "入力された現在のパスワードがデータベースの内容と一致しません。"
+
+#: ../includes/admin.class.php:225
+msgid "The username specified was not found in the database."
+msgstr "指定されたユーザ名はデータベースに登録されていません。"
+
+#: ../includes/admin.class.php:261
+msgid "Username and/or password incorrect"
+msgstr "ユーザ名またはパスワードが正しくありません"
+
+#: ../includes/admin.class.php:264
+msgid "You must enter a username and password"
+msgstr "ユーザ名とパスワードを入力してください"
+
+#: ../includes/admin.class.php:289
+msgid "Gallery already exists"
+msgstr "ギャラリーが既に存在します"
+
+#: ../includes/admin.class.php:296
+msgid "Could not create directory"
+msgstr "ディレクトリを作成出来ませんでした"
+
+#: ../includes/admin.class.php:327
+msgid "Could not save gallery info"
+msgstr "ギャラリー情報を保存出来ませんでした"
+
+#: ../includes/admin.class.php:345
+msgid "Cannot delete the top level directory"
+msgstr "トップレベルのディレクトリは削除出来ません"
+
+#: ../includes/admin.class.php:386
+msgid "File already exists"
+msgstr "ファイルが既に存在します"
+
+#: ../includes/admin.class.php:391
+msgid "Could not upload file"
+msgstr "ファイルをアップロード出来ませんでした"
+
+#: ../includes/admin.class.php:396
+msgid "Invalid location choice"
+msgstr "ロケーションの指定に誤りがあります"
+
+#: ../includes/admin.class.php:415
+msgid "Could not add image to gallery"
+msgstr "ギャラリーに画像を追加出来ませんでした"
+
+#: ../includes/admin.class.php:448
+msgid "Could not save image information"
+msgstr "画像情報を保存できませんでした"
+
+#: ../includes/admin.class.php:470
+msgid "Could not delete image"
+msgstr "画像を削除出来ませんでした"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:1
+msgid "choose thumbnail"
+msgstr "サムネイルの選択"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "このギャラリーを表現する画像名を選択してください。"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:9
+msgid "thumbnail|None"
+msgstr "無し"
+
+#: ../templates/admin_default/changethumbnail.tpl.php:10
+msgid "thumbnail|Random"
+msgstr "ランダム"
+
+#: ../templates/admin_default/editgallery.tpl.php:1
+msgid "edit gallery"
+msgstr "ギャラリーの編集"
+
+#: ../templates/admin_default/editgallery.tpl.php:14
+msgid "Gallery thumbnail:"
+msgstr "ギャラリーサムネイル:"
+
+#: ../templates/admin_default/editgallery.tpl.php:18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr ""
+"ランダム\n"
+"サムネイル"
+
+#: ../templates/admin_default/editgallery.tpl.php:23
+msgid "thumbnail|Change..."
+msgstr "変更"
+
+#: ../templates/admin_default/editgallery.tpl.php:27
+#: ../templates/admin_default/galleryhits.tpl.php:22
+msgid "Gallery name"
+msgstr "ギャラリー名"
+
+#: ../templates/admin_default/editgallery.tpl.php:31
+#: ../templates/admin_default/editimage.tpl.php:22
+msgid "Artist name"
+msgstr "アーティスト名"
+
+#: ../templates/admin_default/editimage.tpl.php:1
+msgid "edit image"
+msgstr "画像の編集"
+
+#: ../templates/admin_default/editimage.tpl.php:14
+msgid "Image"
+msgstr "画像"
+
+#: ../templates/admin_default/editimage.tpl.php:18
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "Image name"
+msgstr "画像名"
+
+#: ../templates/admin_default/editpass.tpl.php:1
+msgid "change password"
+msgstr "パスワードの変更"
+
+#: ../templates/admin_default/editpass.tpl.php:2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "新しいパスワードを半角6～16文字で入力してください。"
+
+#: ../templates/admin_default/editpass.tpl.php:9
+msgid "Current password:"
+msgstr "現在のパスワード:"
+
+#: ../templates/admin_default/editpass.tpl.php:13
+msgid "New password:"
+msgstr "新しいパスワード:"
+
+#: ../templates/admin_default/editpass.tpl.php:17
+msgid "Confirm password:"
+msgstr "パスワードをもう一度:"
+
+#: ../templates/admin_default/footer.tpl.php:3
+msgid "singapore|Powered by"
+msgstr "Powered by"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Graph"
+msgstr "グラフ"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Hits"
+msgstr "ヒット"
+
+#: ../templates/admin_default/galleryhits.tpl.php:22
+#: ../templates/admin_default/imagehits.tpl.php:22
+msgid "hits table|Last hit"
+msgstr "最新ヒット"
+
+#: ../templates/admin_default/header.tpl.php:39
+msgid "Admin message:"
+msgstr "管理画面メッセージ:"
+
+#: ../templates/admin_default/loggedout.tpl.php:1
+msgid "Return to galleries."
+msgstr "ギャラリーに戻る"
+
+#: ../templates/admin_default/login.tpl.php:1
+msgid "log in"
+msgstr "ログイン"
+
+#: ../templates/admin_default/login.tpl.php:3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr ""
+"管理者のみが管理画面へログインすることが出来ます。\n"
+"管理者名及びパスワードを入力してください。"
+
+#: ../templates/admin_default/login.tpl.php:8
+msgid "Username:"
+msgstr "ユーザ名:"
+
+#: ../templates/admin_default/login.tpl.php:9
+msgid "Password:"
+msgstr "パスワード:"
+
+#: ../templates/admin_default/menu.tpl.php:1
+msgid "Please choose an option:"
+msgstr "オプションを選択してください:"
+
+#: ../templates/admin_default/menu.tpl.php:4
+msgid "Manage galleries and images"
+msgstr "ギャラリーと画像の管理"
+
+#: ../templates/admin_default/menu.tpl.php:5
+msgid "View gallery hits"
+msgstr "ギャラリーのヒット数を表示"
+
+#: ../templates/admin_default/menu.tpl.php:6
+msgid "Purge cached thumbnails"
+msgstr "サムネイルキャッシュの消去"
+
+#: ../templates/admin_default/menu.tpl.php:7
+msgid "Change password"
+msgstr "パスワードの変更"
+
+#: ../templates/admin_default/menu.tpl.php:8
+msgid "Log out of admin"
+msgstr "管理画面よりログアウトする"
+
+#: ../templates/admin_default/newgallery.tpl.php:1
+msgid "new gallery"
+msgstr "新規ギャラリー"
+
+#: ../templates/admin_default/newgallery.tpl.php:9
+#: ../templates/admin_default/newimage.tpl.php:28
+msgid "Identifier:"
+msgstr "ファイル名:"
+
+#: ../templates/admin_default/newimage.tpl.php:1
+msgid "new image"
+msgstr "新規画像"
+
+#: ../templates/admin_default/newimage.tpl.php:3
+msgid "This image will not be visible because this gallery contains subgalleries."
+msgstr "サブギャラリーが含まれている為、この画像は表示されません。"
+
+#: ../templates/admin_default/newimage.tpl.php:12
+msgid "Remote file"
+msgstr "リモートファイル"
+
+#: ../templates/admin_default/newimage.tpl.php:16
+msgid "URL of image:"
+msgstr "画像のURL:"
+
+#: ../templates/admin_default/newimage.tpl.php:20
+msgid "Local file"
+msgstr "ローカルファイル"
+
+#: ../templates/admin_default/newimage.tpl.php:24
+msgid "Image file to upload:"
+msgstr "アップロード画像:"
+
+#: ../templates/admin_default/newimage.tpl.php:30
+msgid "Use filename of uploaded file."
+msgstr "アップロードするファイル名を使用する(半角英数字):"
+
+#: ../templates/admin_default/newimage.tpl.php:31
+msgid "Specify different filename:"
+msgstr "他のファイル名を設定する(半角英数字):"
