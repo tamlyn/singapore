@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.6 2003/11/17 02:14:44 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.7 2003/11/17 02:18:11 tamlyn Exp $
  */
  
 /**
@@ -21,7 +21,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.7PRE";
+  var $version = "0.9.7";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
