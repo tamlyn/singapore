@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.39 2004/12/02 12:02:48 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.40 2004/12/08 10:57:36 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -77,8 +77,6 @@ class Singapore
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/user.class.php";
-    require_once $basePath."includes/io.class.php";
-    require_once $basePath."includes/io_sql.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();

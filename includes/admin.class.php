@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.31 2004/12/02 12:02:48 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.32 2004/12/08 10:57:36 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -50,8 +50,6 @@ class sgAdmin extends Singapore
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
     require_once $basePath."includes/user.class.php";
-    require_once $basePath."includes/io.class.php";
-    require_once $basePath."includes/io_sql.class.php";
     
     //start execution timer
     $this->scriptStartTime = microtime();
@@ -850,28 +848,29 @@ class sgAdmin extends Singapore
       $this->gallery->images[count($this->gallery->images)] = $img;
     }
     
-    //add any directories as subgalleries
-    foreach($contents->dirs as $gallery) {
-      $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery;
-
-      if(file_exists($path))
-        switch($this->config->upload_overwrite) {
-          case 1 : //overwrite
-            $this->deleteGallery($this->gallery->id.'/'.$gallery);
-            break;
-          case 2 : //generate unique
-            for($i=0;file_exists($path);$i++)
-              $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery.'-'.$i;
-            break;
-          case 0 : //raise error
-          default :
-            $this->lastError = $this->i18n->_g("File already exists");
-            $success = false;
-            continue;
-        }
-
-      rename($wd.'/'.$gallery,$path);
-    }
+    //add any directories as subgalleries, if allowed
+    if($this->config->allow_dir_upload == 1 && !$this->isGuest($_SESSION["sgUser"]->username) 
+    || $this->config->allow_dir_upload == 2 &&  $this->isAdmin($_SESSION["sgUser"]->username))
+      foreach($contents->dirs as $gallery) {
+        $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery;
+  
+        if(file_exists($path))
+          switch($this->config->upload_overwrite) {
+            case 1 : //overwrite
+              $this->deleteGallery($this->gallery->id.'/'.$gallery);
+              break;
+            case 2 : //generate unique
+              for($i=0;file_exists($path);$i++)
+                $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery.'-'.$i;
+              break;
+            case 0 : //raise error
+            default :
+              $success = false;
+              continue;
+          }
+  
+        rename($wd.'/'.$gallery,$path);
+      }
     
     //if images were added save metadata
     if(!empty($contents->files))

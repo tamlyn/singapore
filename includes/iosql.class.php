@@ -4,16 +4,19 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_sql.class.php,v 1.1 2004/12/01 23:55:27 tamlyn Exp $
+ * @version $Id: iosql.class.php,v 1.1 2004/12/08 10:57:36 tamlyn Exp $
  */
 
+//include the base IO class
+require_once dirname(__FILE__)."/io.class.php";
+ 
 /**
  * Class used to read and write data to and from a MySQL database.
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @copyright (c)2004 Tamlyn Rhodes
  */
-class sgIO_sql extends sgIO
+class sgIOsql extends sgIO
 {
   
   /**
@@ -25,7 +28,7 @@ class sgIO_sql extends sgIO
   function num_rows($res) { }
   function error()
   {
-    return "Unknown error";
+    return "unknown error";
   }
   
   /**

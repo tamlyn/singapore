@@ -4,10 +4,13 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.16 2004/12/01 23:55:27 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.17 2004/12/08 10:57:36 tamlyn Exp $
  */
 
-/**
+//include the base IO class
+require_once dirname(__FILE__)."/io.class.php";
+ 
+ /**
  * Class used to read and write data to and from CSV files.
  * @see sgIO_iifn
  * @package singapore
@@ -18,6 +21,38 @@ class sgIO_csv extends sgIO
 {
   //constructor provided by parent class
   
+  /**
+   * Name of IO backend.
+   */
+  function getName()
+  {
+    return "CSV";
+  }
+
+  /**
+   * Version of IO backend.
+   */
+  function getVersion()
+  {
+    return "$Ver: $";
+  }
+
+  /**
+   * Author of IO backend.
+   */
+  function getAuthor()
+  {
+    return "Tamlyn Rhodes";
+  }
+
+  /**
+   * Brief description of IO backend and it's requirements.
+   */
+  function getDescription()
+  {
+    return "Uses comma separated value files. Does not require a database.";
+  }
+
   /**
    * Fetches gallery info for the specified gallery and immediate children.
    * @param string  gallery id

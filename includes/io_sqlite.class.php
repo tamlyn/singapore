@@ -4,16 +4,19 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_sqlite.class.php,v 1.1 2004/12/01 23:55:27 tamlyn Exp $
+ * @version $Id: io_sqlite.class.php,v 1.2 2004/12/08 10:57:36 tamlyn Exp $
  */
 
+//include the generic SQL class
+require_once dirname(__FILE__)."/iosql.class.php";
+ 
 /**
  * Class used to read and write data to and from a SQLite database.
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @copyright (c)2004 Tamlyn Rhodes
  */
-class sgIO_sqlite extends sgIO_sql
+class sgIO_sqlite extends sgIOsql
 {
   /**
    * Database resource pointer
@@ -28,6 +31,38 @@ class sgIO_sqlite extends sgIO_sql
   {
     $this->config =& $config;
     $this->db = sqlite_open($this->config->base_path.$this->config->pathto_data_dir."sqlite.dat");
+  }
+
+  /**
+   * Name of IO backend.
+   */
+  function getName()
+  {
+    return "SQLite";
+  }
+
+  /**
+   * Version of IO backend.
+   */
+  function getVersion()
+  {
+    return "$Ver: $";
+  }
+
+  /**
+   * Author of IO backend.
+   */
+  function getAuthor()
+  {
+    return "Tamlyn Rhodes";
+  }
+
+  /**
+   * Brief description of IO backend and it's requirements.
+   */
+  function getDescription()
+  {
+    return "Uses a SQLite database. Requires only the SQLite PHP extension which incorporates the database server.";
   }
 
   function query($query)

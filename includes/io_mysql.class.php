@@ -4,16 +4,19 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_mysql.class.php,v 1.4 2004/12/01 23:55:27 tamlyn Exp $
+ * @version $Id: io_mysql.class.php,v 1.5 2004/12/08 10:57:36 tamlyn Exp $
  */
 
+//include the base IO class and generic SQL class
+require_once dirname(__FILE__)."/iosql.class.php";
+ 
 /**
  * Class used to read and write data to and from a MySQL database.
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @copyright (c)2004 Tamlyn Rhodes
  */
-class sgIO_mysql extends sgIO_sql
+class sgIO_mysql extends sgIOsql
 {
   /**
    * @param sgConfig pointer to a {@link sgConfig} object representing 
@@ -24,6 +27,38 @@ class sgIO_mysql extends sgIO_sql
     $this->config =& $config;
     mysql_connect($this->config->sql_host, $this->config->sql_user, $this->config->sql_pass);
     mysql_select_db($this->config->sql_database);
+  }
+
+  /**
+   * Name of IO backend.
+   */
+  function getName()
+  {
+    return "MySQL";
+  }
+
+  /**
+   * Version of IO backend.
+   */
+  function getVersion()
+  {
+    return "$Ver: $";
+  }
+
+  /**
+   * Author of IO backend.
+   */
+  function getAuthor()
+  {
+    return "Tamlyn Rhodes";
+  }
+
+  /**
+   * Brief description of IO backend and it's requirements.
+   */
+  function getDescription()
+  {
+    return "Uses a MySQL database. Requires a MySQL database server and the MySQL PHP extension.";
   }
 
   function query($query)

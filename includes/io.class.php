@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.3 2004/12/01 23:55:27 tamlyn Exp $
+ * @version $Id: io.class.php,v 1.4 2004/12/08 10:57:36 tamlyn Exp $
  */
 
 /**
@@ -25,12 +25,44 @@ class sgIO
   var $config;
   
   /**
-   * Constructor.
+   * Constructor. Can be over-ridden by subclass but does not need to be.
    * @param sgConfig  pointer to current script configuration object
    */
   function sgIO(&$config)
   {
     $this->config =& $config;
+  }
+  
+  /**
+   * Pseudo-abstract method to be over-ridden in subclasses.
+   */
+  function getName()
+  {
+    return "undefined";
+  }
+
+  /**
+   * Pseudo-abstract method to be over-ridden in subclasses.
+   */
+  function getVersion()
+  {
+    return "undefined";
+  }
+
+  /**
+   * Pseudo-abstract method to be over-ridden in subclasses.
+   */
+  function getAuthor()
+  {
+    return "undefined";
+  }
+
+  /**
+   * Pseudo-abstract method to be over-ridden in subclasses.
+   */
+  function getDescription()
+  {
+    return "undefined";
   }
 
   /**
