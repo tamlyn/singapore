@@ -1,0 +1,183 @@
+# singapore Danish language file
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Mads Buus Jensen <debian@buus.net>, 2004.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore v0.9.8\n"
+"POT-Creation-Date: 2004-01-10 19:42+0001\n"
+"PO-Revision-Date: 2004-01-10 19:42+0001\n"
+"Last-Translator: Mads Buus Jensen <debian@buus.net>\n"
+"Language-Team: Danish <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n==1 ? 0 : 1;\n"
+
+#: ../includes/singapore.class.php:323
+#, possible-c-format
+msgid "Page created in %s seconds"
+msgstr "Siden lavet på; %s sekunder"
+
+#: ../includes/singapore.class.php:340
+#, possible-c-format
+msgid "singapore|Powered by %s"
+msgstr "Lavet med %s"
+
+
+#: ../includes/singapore.class.php:345
+msgid "All rights reserved."
+msgstr "Alle rettigheder haves."
+
+#: ../includes/singapore.class.php:350
+msgid ""
+"Images may not be reproduced in any form without the express written "
+"permission of the copyright holder."
+msgstr ""
+"Billeder må ikke reproduceres i nogen form uden skriftlig tilladelse af rettighedsindehaveren. "
+
+#: ../includes/singapore.class.php:355
+msgid "Log in"
+msgstr "Log ind"
+
+#: ../includes/singapore.class.php:490
+msgid "crumb line|You are here:"
+msgstr "Du er her:"
+
+#: ../includes/singapore.class.php:530
+#, possible-c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] "%s galleri"
+msgstr[1] "%s gallerier"
+
+#: ../includes/singapore.class.php:559
+#, possible-c-format
+msgid "%s image"
+msgid_plural "%s images"
+msgstr[0] "%s billede"
+msgstr[1] "%s billeder"
+
+#: ../includes/singapore.class.php:603 ../includes/singapore.class.php:613
+msgid "Sample image from gallery"
+msgstr "Eksempel billede fra galleri"
+
+#: ../includes/singapore.class.php:607
+msgid ""
+"No\n"
+"thumbnail"
+msgstr ""
+"Ingen\n"
+"miniature"
+
+#: ../includes/singapore.class.php:647
+#, possible-c-format
+msgid "Showing %s-%s of %s"
+msgstr "Viser %s-%s af %s"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up"
+msgstr "Op"
+
+#: ../includes/singapore.class.php:659
+msgid "gallery|Up one level"
+msgstr "Et niveau op"
+
+#: ../includes/singapore.class.php:683 ../includes/singapore.class.php:752
+msgid "gallery|Previous"
+msgstr "Forrige"
+
+#: ../includes/singapore.class.php:684
+msgid "gallery|First"
+msgstr "Første"
+
+#: ../includes/singapore.class.php:687 ../includes/singapore.class.php:740
+msgid "gallery|Next"
+msgstr "Næste"
+
+#: ../includes/singapore.class.php:688
+msgid "gallery|Last"
+msgstr "Sidste"
+
+#: ../includes/singapore.class.php:760 ../includes/singapore.class.php:991
+#, possible-c-format
+msgid "artist name|by %s"
+msgstr "af %s"
+
+#: ../includes/singapore.class.php:836 ../includes/singapore.class.php:838
+#: ../includes/singapore.class.php:1138 ../includes/singapore.class.php:1140
+msgid "Email"
+msgstr "E-mail"
+
+#: ../includes/singapore.class.php:840 ../includes/singapore.class.php:1146
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: ../includes/singapore.class.php:842 ../includes/singapore.class.php:844
+#: ../includes/singapore.class.php:1158 ../includes/singapore.class.php:1160
+msgid "Copyright"
+msgstr ""
+
+#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
+msgid "Viewed"
+msgstr "Set"
+
+#: ../includes/singapore.class.php:846 ../includes/singapore.class.php:1162
+#, possible-c-format
+msgid "viewed|%s time"
+msgid_plural "viewed|%s times"
+msgstr[0] "%s gang"
+msgstr[1] "%s gange"
+
+#: ../includes/singapore.class.php:959
+msgid "Add a comment"
+msgstr "Tilføj kommentar"
+
+#: ../includes/singapore.class.php:1068
+msgid "image|Previous"
+msgstr "Forrige"
+
+#: ../includes/singapore.class.php:1079
+msgid "image|First"
+msgstr "Første"
+
+#: ../includes/singapore.class.php:1096
+msgid "image|Thumbnails"
+msgstr "Miniaturer"
+
+#: ../includes/singapore.class.php:1107
+msgid "image|Next"
+msgstr "Næste"
+
+#: ../includes/singapore.class.php:1118
+msgid "image|Last"
+msgstr "Sidste"
+
+#: ../includes/singapore.class.php:1142
+msgid "Location"
+msgstr "Placering"
+
+#: ../includes/singapore.class.php:1144
+msgid "Date"
+msgstr "Dato"
+
+#: ../includes/singapore.class.php:1148
+msgid "Camera"
+msgstr "Kamera"
+
+#: ../includes/singapore.class.php:1150
+msgid "Lens"
+msgstr "Optik"
+
+#: ../includes/singapore.class.php:1152
+msgid "Film"
+msgstr ""
+
+#: ../includes/singapore.class.php:1154
+msgid "Darkroom manipulation"
+msgstr "Mørkerums manupulation"
+
+#: ../includes/singapore.class.php:1156
+msgid "Digital manipulation"
+msgstr "Digital manipulation"
