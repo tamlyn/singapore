@@ -221,7 +221,7 @@ function sgPutHits($hits) {
 }
 
 function sgGetUsers() {
-  $fp = fopen("includes/adminusers.csv","r");
+  $fp = fopen($GLOBALS["sgConfig"]->pathto_data_dir."adminusers.csv","r");
   for($i=0;$entry = fgetcsv($fp,1000,",");$i++) 
     list($users[$i]->username,$users[$i]->userpass,$users[$i]->permissions,$users[$i]->fullname,$users[$i]->description,$users[$i]->stats) = $entry;
   fclose($fp);
@@ -229,7 +229,7 @@ function sgGetUsers() {
 }
 
 function sgPutUsers($users) {
-  $fp = fopen("includes/adminusers.csv","w");
+  $fp = fopen($GLOBALS["sgConfig"]->pathto_data_dir."adminusers.csv","w");
   if(!$fp) return false;
   $success = true;
   for($i=0;$i<count($users);$i++) 
