@@ -18,6 +18,7 @@
   <li><a href="#hiding">Hiding galleries</a></li>
   <li><a href="#modrewrite">Using Apache mod_rewrite</a></li>
   <li><a href="#including">Including singapore into another page</a></li>
+  <li><a href="#popup">Opening images in a popup</a></li>
   <li><a href="Readme.html">General readme</a></li>
   <li><a href="Development.html">Developer documentation</a></li>
   <li><a href="Translation.html">Translating singapore</a></li>
@@ -140,18 +141,22 @@ then there might be a problem with the rewrite rules. If you get unstyled
 singapore pages with no images then then your base_path is probably wrong. If do 
 get images but the pages are still unstyled then your template probably needs 
 adapting to use the base_url config option. See the default template for an 
-example. If you still can't work out what's wrong then just give up.</p>
+example. If you still can't work out what's wrong then just give up :P</p>
 
-<h2><a name="including"><code>Include</code>ing singapore into another page</a></h2>
+<h2><a name="including">Including singapore into another page</a></h2>
 
 <p>Since v0.9.10 it has been possible to include singapore into your web design
-simply by including index.php as in: <code>&lt;?php include("path/to/singapore/index.php"); 
-?&gt;</code>. There are, however, a few things that need to be noted:</p>
+using external.php. Just place this code where you want singapore to appear: 
+<code>&lt;?php include("path/to/singapore/external.php");?&gt;</code> (supplying 
+the correct relative or absolute path to singapore instead of 
+'/path/to/singapore'). There are, however, a few things that need to be noted:</p>
 
 <ul>
   <li>You will almost certainly need to edit your chosen template in order that
   the HTML generated is still valid. For example you do not want two &lt;html&gt; 
-  start tags, two &lt;head&gt; sections etc..</li>
+  start tags, two &lt;head&gt; sections etc. Alternatively you can use the 
+  <em>external</em> template (available to download from the website) which is 
+  the default template with the unnecessary (X)HTML removed.</li>
   <li>If the file into which you are including singapore is named something 
   other than index.php or it requires additional GET variables (such as page etc.)
   then you will need to change index_file_url to reflect this. For example if 
@@ -162,21 +167,34 @@ simply by including index.php as in: <code>&lt;?php include("path/to/singapore/i
   <code>singapore.local.ini</code> in the same directory as the including file. 
   If found, this file will be loaded after singapore.ini but before gallery.ini 
   and template.ini. It can thus be used to provide local settings such as index_file_url
-  mantioned above. Note that base_file and base_url are automatically calculated 
+  mentioned above. Note that base_file and base_url are automatically calculated 
   and should not need to be specified.</li>
-  <li>If there is any content on the including page <em>before</em> index.php is
-  included then singapore will not be able to send any headers. Possible solutions:
-  <ul>
-    <li>turn on output buffering before any content is printed and do not flush 
-    it until after index.php is included (<a href="http://uk.php.net/manual/en/ref.outcontrol.php">About output control</a>.</li>
-    <li>Remove the lines from index.php which try to send header information. 
-    Doing this will prevent you from using languages with non-default character 
-    sets.</li>
-  </ul>
-  </li>
-  <li>Finally note that currently mod_rewrite doesn't work with such included 
-  installations of singapore.</li>
+  <li>If there is any content on the including page <em>before</em> external.php is
+  included then singapore will not be able to send any headers which will 
+  prevent you from using languages with non-default character sets. The 
+  recommended solution is to turn on output buffering before any content is 
+  output and do not flush it until after external.php is included. Essentially 
+  a call to <code>ob_start()</code> at the beginning of the including file is 
+  all that is needed. <a href="http://uk.php.net/manual/en/ref.outcontrol.php">About 
+  output control</a>.</li>
+  <li>Currently mod_rewrite doesn't work with such included installations of singapore.</li>
 </ul>
+
+<h2><a name="popup">Opening images in a popup</a></h2>
+
+<p>Firstly I must say how much I disapprove of popups. If someone wants to open 
+something in a new window THEY WILL DO IT THEMSELVES! Why do you think so many 
+people have popup blockers? POPUPS ARE BAD! However I have been asked how to 
+make singapore open images in popup windows so often that I finally yielded and 
+wrote a little bit of JavaScript to do it neatly.</p>
+
+<p>Open album.tpl.php in the directory of your current template (e.g. 
+templates/default/album.tpl.php) and replace <code>$sg-&gt;imageThumbnailLinked</code>
+with <code>$sg-&gt;imageThumbnailPopup</code>. But don't do it. It's bad.<p>
+
+<p>Evil I tell you...</p>
+
+<p><em>$Date: 2004/10/22 13:21:53 $</em></p>
 
 </body>
 </html>
