@@ -27,13 +27,14 @@
 <h2><a name="intro">Introduction</a></h2>
 
 <p>Thank you for taking an interest in open source development!
-Translating <strong>singapore</strong> is a matter of editing a single file and 
+Translating singapore is a matter of editing a single file and 
 then running a script on it. What could be simpler?</p>
 
 <p>Language strings are stored in standard GNU Gettext PO (portable object) 
-files which means you can use all currently available PO editors such as 
-<a href="http://poedit.sourceforge.net/">poEdit</a> (or even a simple text 
-editor) to make your translations.</p>
+files which means you can (at least in theory <a href="#foot1" name="note1"><sup>1</sup></a>) 
+use all currently available PO editors such as 
+<a href="http://poedit.sourceforge.net/">poEdit</a> to make your 
+translations.</p>
 
 <p>For added convenience strings for each language are split into two sections:
 one for normal gallery operation and another for strings that are only used in
@@ -48,6 +49,12 @@ mailing list</a>. Use this, the
 and the 
 <a href="http://sourceforge.net/tracker/?atid=611769&group_id=77687">translations tracker</a>
 to interact with other translators and developers.</p>
+
+<p class="boxed"><a href="#note1" name="foot1">1</a>The reason for the "in theory" is that many PO editors (including 
+poEdit) do not support the plural forms that singapore makes use of - even 
+though they are defined and supported by GNU Gettext. For this reason it is 
+strongly recommended that you use a standard text editor to make your 
+translations.</p>
 
 <h2><a name="requirements">Requirements</a></h2>
 
@@ -69,13 +76,14 @@ need to edit anything.</p>
 First make sure you have the latest available translation (the 
 <a href="http://sourceforge.net/tracker/?atid=611769&group_id=77687">translations tracker</a>
 is a good place to check for this). Now you need to merge in the new untranslated 
-strings and remove the obsolete ones. Place the old PO file in the locale 
+strings and remove the obsolete ones (this may have already been done 
+but there's no harm in doing it again). Place the old PO file in the locale 
 directory of an installation of the latest version of singapore and use the 
 <a href="../tools/merge.php">merge</a> script provided.</p>
 
-<p>Now proceed translating the strings as normal and attach the updated PO file
-to the tracker appropriate tracker item making sure to state which version of
-singapore it is for.</p>
+<p>Now proceed translating the strings as described below. Finally, attach the 
+updated PO file to the appropriate tracker item making sure to state which 
+version of singapore it is for.</p>
 
 
 <h2><a name="new">Starting a new translation</a></h2>
@@ -139,10 +147,9 @@ header</a>. You may do this at any stage of the translation.</p>
   
   <li>Strings with plurals<br />
   You must correctly specify the <a href="#plurals">Plural-forms</a> header field
-  in order to make use of plural forms. If you are using a PO editor then it 
-  should take care of organising the plurals for you. If not then you must put 
-  each plural in its own <code>msgstr[<em>x</em>]</code> where x is a number 
-  between 0 (inclusive) and the nplurals number you specified in the header.</li>
+  in order to make use of plural forms. Put each plural in its own 
+  <code>msgstr[<em>x</em>]</code> where x is a number between 0 (inclusive) and 
+  the nplurals number you specified in the header (see examples below).</li>
 
   <li>Using a text-editor<br />
   When translating an entry you must leave the English language strings 
@@ -156,7 +163,7 @@ header</a>. You may do this at any stage of the translation.</p>
   in the previous version but do not in the current version) are placed at the 
   end of the PO file and prepended by <code>#~</code>. There is no need to 
   translate these entries as they are ignored by the compiler.</li>
-  </ol>
+</ol>
 
 <p>Once you have translated all the strings and filled in the header, you need 
 to compile the PO file into a PHP serialized object file for use with
@@ -196,7 +203,24 @@ when translated into Italian becomes
 # File: ../includes/admin.class.php, line: 173
 msgid "admin bar|Edit image"
 msgstr "Modifica l'immagine"
+</pre>
 
+and the following string
+<pre class="boxed">
+# File: ../includes/singapore.class.php, line: 530
+#, c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] ""
+</pre>
+when translated into Spanish becomes
+<pre class="boxed">
+# File: ../includes/singapore.class.php, line: 530
+#, c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] "%s galería"
+msgstr[1] "%s galerías"
 </pre>
 
 </p>
@@ -492,7 +516,7 @@ the value of <code>nplurals</code>.</p>
 </ul>
 
 
-<p><em>$Date: 2003/12/20 14:19:59 $</em></p>
+<p><em>$Date: 2004/01/06 23:01:48 $</em></p>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.11 2003/12/28 19:27:05 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.12 2004/01/06 23:01:48 tamlyn Exp $
  */
  
 /**
@@ -134,6 +134,9 @@ class Singapore
     
     //find the parent
     $this->gallery->parent = substr($this->gallery->idEncoded, 0, strrpos($this->gallery->idEncoded, "/"));
+    $this->gallery->parentName = urldecode(substr($this->gallery->parent,strrpos($this->gallery->parent,"/")+1));
+    if($this->gallery->parentName == "")
+      $this->gallery->parentName = $this->config->gallery_name;
     
     //set character set
     if(!empty($this->languageStrings[0]["charset"]))
@@ -660,6 +663,57 @@ class Singapore
     return $ret;
   }
   
+  function navigationLinks() {
+    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->config->base_url."gallery=.\">\n";
+    
+    if($this->isImage()) {
+      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."\">\n";
+      if ($this->imageHasPrev()) {
+        $ret .= "<link rel=\"Prev\" title=\"".$this->imageName($this->image->index-1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->image->index-1]->filename)."\">\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->imageName(0)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[0]->filename)."\">\n";
+      }
+      if ($this->imageHasNext()) {
+        $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->image->index+1]->filename)."\">\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->imageCount()-1)."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->gallery->images[$this->imageCount()-1]->filename)."\">\n";
+      }
+    } else {
+      if($this->gallery->id != ".")
+        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parentName."\" href=\"".$this->config->base_url."gallery=".$this->gallery->parent."\">\n";
+      if($this->galleryHasPrev()) {
+        $ret .= "<link rel=\"Prev\" title=\"".$this->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\">\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->_g("gallery|First")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=0\">\n";
+      }
+      if($this->galleryHasNext()) {
+        $ret .= "<link rel=\"Next\" title=\"".$this->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\">\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->_g("gallery|Last")."\" href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".$this->lastPageIndex()."\">\n";
+      } 
+    }
+    return $ret;
+  }
+  
+  
+  /** 
+   * @return int the number of 'pages' or 'screen-fulls'
+   */
+  function galleryPageCount() {
+    if($this->isGallery())
+      return intval($this->imageCount()/$this->config->main_thumb_number)+1;
+    else
+      return intval($this->galleryCount()/$this->config->gallery_thumb_number)+1;
+  }
+  
+  /** 
+   * @return int
+   */
+  function lastPageIndex() {
+    if($this->isGallery())
+      return ($this->galleryPageCount()-1)*
+        ($this->isGallery()?$this->config->main_thumb_number:$this->config->gallery_thumb_number);
+  }
+  
+  /**
+   * @return bool true if there is at least one more page
+   */
   function galleryHasNext() {
     if($this->isGallery())
       return count($this->gallery->images)>$this->startat+$this->config->main_thumb_number;
@@ -667,10 +721,16 @@ class Singapore
       return count($this->gallery->galleries)>$this->startat+$this->config->gallery_thumb_number;
   }
   
+  /**
+   * @return bool true if there is at least one previous page
+   */
   function galleryHasPrev() {
     return $this->startat>0;
   }
   
+  /**
+   * @return string the URL of the next page
+   */
   function galleryNextURL() {
     return $this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".($this->startat+
       ($this->isGallery()?$this->config->main_thumb_number:$this->config->gallery_thumb_number));
@@ -680,6 +740,9 @@ class Singapore
     return "<a href=\"".$this->galleryNextURL()."\">".$this->_g("gallery|Next")."</a>";
   }
   
+  /**
+   * @return string the URL of the previous page
+   */
   function galleryPrevURL() {
     return $this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".($this->startat-
       ($this->isGallery()?$this->config->main_thumb_number:$this->config->gallery_thumb_number));
@@ -838,7 +901,7 @@ class Singapore
     $ret  = "<img src=\"thumb.php?gallery=".$this->gallery->idEncoded."&amp;image=";
     $ret .= urlencode($this->image->filename)."&amp;size=".$this->config->main_thumb_size."\" ";
     $ret .= "class=\"sgThumbnail\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" ";
-    $ret .= "alt=\"".$this->image->name.$this->imageByArtist()."\" />";
+    $ret .= "alt=\"".$this->imageName().$this->imageByArtist()."\" title=\"".$this->imageName().$this->imageByArtist()."\" />";
     return $ret;
   }
   
@@ -899,17 +962,23 @@ class Singapore
   /**
    * @return string the name of the image
    */
-  function imageName()
+  function imageName($index = null)
   {
-    return $this->image->name;
+    if($index===null)
+      return $this->image->name;
+    else
+      return $this->gallery->images[$index]->name;
   }
   
   /**
    * @return string the name of the image's artist
    */
-  function imageArtist()
+  function imageArtist($index = null)
   {
-    return $this->image->artist;
+    if($index===null)
+      return $this->image->artist;
+    else
+      return $this->gallery->images[$index]->artist;
   }
   
   /**
@@ -917,9 +986,9 @@ class Singapore
    * by the artist name; otherwise it returns and empty string
    * @return string
    */
-  function imageByArtist()
+  function imageByArtist($index = null)
   {
-    if(!empty($this->image->artist)) return " ".$this->_g("artist name|by %s",$this->image->artist);
+    if($this->imageArtist($index)!="") return " ".$this->_g("artist name|by %s",$this->imageArtist($index));
     else return "";
   }
   
@@ -966,13 +1035,13 @@ class Singapore
       list($thumbWidth, $thumbHeight) = $this->thumbnailSize($temp->width, $temp->height, $this->config->preview_thumb_size);
       $ret .= "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($temp->filename)."\">";
       $ret .= "<img src=\"thumb.php?gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($temp->filename)."&amp;";
-      $ret .= "size=".$this->config->preview_thumb_size."\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"$temp->name\" />";
+      $ret .= "size=".$this->config->preview_thumb_size."\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$temp->name."\" title=\"".$temp->name."\" />";
       $ret .= "</a>\n";
     }
     
     list($thumbWidth, $thumbHeight) = $this->thumbnailSize($this->image->width, $this->image->height, $this->config->preview_thumb_size);
     $ret .= "<img src=\"thumb.php?gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($this->image->filename)."&amp;";
-    $ret .= "size=".$this->config->preview_thumb_size."\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$this->imageName()."\" />\n";
+    $ret .= "size=".$this->config->preview_thumb_size."\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$this->imageName()."\" title=\"".$this->imageName()."\" />\n";
     
     for($i=1;$i<=$this->config->preview_thumb_number;$i++) {
       if(isset($this->gallery->images[$this->image->index+$i])) 
@@ -982,7 +1051,7 @@ class Singapore
       list($thumbWidth, $thumbHeight) = $this->thumbnailSize($temp->width, $temp->height, $this->config->preview_thumb_size);
       $ret .= "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($temp->filename)."\">";
       $ret .= "<img src=\"thumb.php?gallery=".$this->gallery->idEncoded."&amp;image=".urlencode($temp->filename)."&amp;";
-      $ret .= "size=".$this->config->preview_thumb_size."\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"$temp->name\" />";
+      $ret .= "size=".$this->config->preview_thumb_size."\" width=\"".$thumbWidth."\" height=\"".$thumbHeight."\" alt=\"".$temp->name."\" title=\"".$temp->name."\" />";
       $ret .= "</a>\n";
     }
     return $ret;
@@ -990,13 +1059,24 @@ class Singapore
   
   /**
    * @uses imageHasPrev
-   * @return string
+   * @return string html link to the previous image if one exists
    */
   function imagePrevLink()
   {
     if($this->imageHasPrev())
       return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             urlencode($this->gallery->images[$this->image->index-1]->filename)."\">".$this->_g("image|Previous")."</a> | \n";
+             urlencode($this->gallery->images[$this->image->index-1]->filename)."\" title=\"".$this->imageName($this->image->index-1)."\">".$this->_g("image|Previous")."</a> | \n";
+  }
+
+  /**
+   * @uses imageHasPrev
+   * @return string html link to the first image if not already first
+   */
+  function imageFirstLink()
+  {
+    if($this->imageHasPrev())
+      return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
+             urlencode($this->gallery->images[0]->filename)."\" title=\"".$this->imageName(0)."\">".$this->_g("image|First")."</a> | \n";
   }
 
   /**
@@ -1013,18 +1093,29 @@ class Singapore
   function imageParentLink()
   {
     return "<a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;startat=".
-           (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number)."\">".$this->_g("image|Thumbnails")."</a>\n";
+           (floor($this->image->index/$this->config->main_thumb_number)*$this->config->main_thumb_number)."\" title=\"".$this->galleryName()."\">".$this->_g("image|Thumbnails")."</a>\n";
   }
   
   /**
    * @uses imageHasNext
-   * @return string
+   * @return string html link to the next image if one exists
    */
   function imageNextLink()
   {
     if($this->imageHasNext())
       return " | <a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
-             urlencode($this->gallery->images[$this->image->index+1]->filename)."\">".$this->_g("image|Next")."</a>\n";
+             urlencode($this->gallery->images[$this->image->index+1]->filename)."\" title=\"".$this->imageName($this->image->index+1)."\">".$this->_g("image|Next")."</a>\n";
+  }
+  
+  /**
+   * @uses imageHasNext
+   * @return string html link to the last image if not already last
+   */
+  function imageLastLink()
+  {
+    if($this->imageHasNext())
+      return " | <a href=\"".$this->config->base_url."gallery=".$this->gallery->idEncoded."&amp;image=".
+             urlencode($this->gallery->images[$this->imageCount()-1]->filename)."\" title=\"".$this->imageName($this->imageCount()-1)."\">".$this->_g("image|Last")."</a>\n";
   }
   
   /**

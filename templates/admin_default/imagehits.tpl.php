@@ -1,4 +1,4 @@
-<h1 style="margin-bottom: 0px"><?php echo $sg->galleryName()?></h1>
+<h1><?php echo $sg->galleryName()?></h1>
 
 <div class="sgShadow"><table class="sgShadow" cellspacing="0">
   <tr>
@@ -19,7 +19,7 @@
     <td class="ml"><img src="<?php echo $sg->config->pathto_admin_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
     <table class="sgList">
-      <tr><th>Image</th><th>Hits</th><th>Last hit</th><th>Graph</th></tr>
+      <tr><th><?php echo $sg->_g("Image name") ?></th><th><?php echo $sg->_g("hits table|Hits") ?></th><th><?php echo $sg->_g("hits table|Last hit") ?></th><th><?php echo $sg->_g("hits table|Graph") ?></th></tr>
       <?php foreach($sg->galleryImagesArray() as $index => $img): ?>
       <tr>
         <tr class="sgRow<?php echo $index%2 ?>"><td><a href="admin.php?action=view&amp;gallery=<?php echo $sg->gallery->idEncoded ?>&amp;image=<?php echo rawurlencode($img->filename) ?>"><?php echo $img->name ?></a></td>

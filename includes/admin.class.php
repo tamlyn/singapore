@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.8 2003/12/28 19:27:05 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.9 2004/01/06 23:01:48 tamlyn Exp $
  */
 
 /**
@@ -388,7 +388,7 @@ class sgAdmin extends Singapore
       }
       
       if(!move_uploaded_file($_FILES["sgImageFile"]["tmp_name"],$path)) {
-        $this->lastError = "Could not upload file"; 
+        $this->lastError = $this->_g("Could not upload file"); 
         return false;
       }
       
