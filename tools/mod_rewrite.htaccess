@@ -16,7 +16,7 @@ RewriteEngine On
 # url must end in / and gallery names must not contain commas (,)
 # example: /singapore/gallery/subgallery,20/
 # becomes: /singapore/index.php?gallery=gallery/subgallery&startat=20
-RewriteRule ^([^,]+)(,([0-9]+))?/$ /singapore/index.php?gallery=$1&startat=$3 [ne] 
+RewriteRule ^([^,]+)(,([0-9]+))?/$ /singapore/index.php?gallery=$1&startat=$3&%{QUERY_STRING} [ne] 
  
 # rewrite images 
 # do not rewrite requests to the following directories
@@ -29,4 +29,4 @@ RewriteCond %{REQUEST_URI} !/tools/
 
 # example: /singapore/gallery/subgallery/myphoto.jpeg
 # becomes: /singapore/index.php?gallery=gallery/subgallery&image=myphoto.jpeg
-RewriteRule ^((.*)/)?([^/]+\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff))$ /singapore/index.php?gallery=$2&image=$3 [ne,nc] 
+RewriteRule ^((.*)/)?([^/]+\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff))$ /singapore/index.php?gallery=$2&image=$3&%{QUERY_STRING} [ne,nc] 
