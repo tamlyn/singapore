@@ -4,11 +4,11 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.8 2004/04/11 14:45:07 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.9 2004/08/08 14:03:46 tamlyn Exp $
  */
 
 /**
- * Static (but instantiable) class used to read and write data to and from CSV files.
+ * Class used to read and write data to and from CSV files.
  * @see sgIO_iifn
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
@@ -23,16 +23,32 @@ class sgIO_csv {
    */
   var $config;
   
+  /**
+   * @param sgConfig pointer to a {@link sgConfig} object representing 
+   *   the current script configuration
+   */
   function sgIO_csv(&$config)
   {
     $this->config =& $config;
   }
 
-  function getGallery($galleryId) 
+  /**
+   * Fetches gallery info for the specified gallery and immediate children.
+   * @param string gallery id
+   * @param string language code spec for this request (optional)
+   */
+  function getGallery($galleryId, $language = null) 
   {
     $gal = new sgGallery($galleryId);
 
-    $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$galleryId."/metadata.csv","r");
+    if($language == null) $language = $this->config->language;
+    
+    //try to open language specific metadata
+    $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$galleryId."/metadata.$language.csv","r");
+    
+    //if fail then try to open generic metadata
+    if(!$fp) 
+      $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$galleryId."/metadata.csv","r");
     if($fp) {
 
       while($temp[] = fgetcsv($fp,2048));
@@ -131,7 +147,7 @@ class sgIO_csv {
     $dir = Singapore::getListing($this->config->pathto_galleries.$gal->id."/", "dirs");
 
     foreach($dir->dirs as $gallery) 
-      $gal->galleries[] = $this->getSubGallery($this->config->base_path.$this->config->pathto_galleries, $gal->id."/".$gallery);
+      $gal->galleries[] = $this->getSubGallery($this->config->base_path.$this->config->pathto_galleries, $gal->id."/".$gallery, $language);
     
     return $gal;
   }
@@ -139,12 +155,14 @@ class sgIO_csv {
   /**
    * @private
    */
-  function getSubGallery($path, $galleryId)
+  function getSubGallery($path, $galleryId, $language)
   {
     
     $gallery = new sgGallery($galleryId);
     
-    $fp = @fopen($path.$galleryId."/metadata.csv","r");
+    $fp = @fopen($path.$galleryId."/metadata.$language.csv","r");
+    if(!$fp) 
+      $fp = @fopen($path.$galleryId."/metadata.csv","r");
     
     if($fp) { //get info from metadata file
 
