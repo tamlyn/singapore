@@ -6,17 +6,17 @@ require_once('DB.php');
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_db.class.php,v 1.2 2004/05/23 16:57:30 tamlyn Exp $
+ * @version $Id: io_db.class.php,v 1.3 2004/11/01 08:58:22 tamlyn Exp $
  */
 
 /**
  * Class used to read and write data to and from a database using PEAR::DB files.
- * @see sgIO_csv
  * @package singapore
  * @author Joel Sjögren <joel dot sjogren at nonea dot se>
  * @copyright (c)2003, 2004 Tamlyn Rhodes
  */
-class sgIO_db {
+class sgIO_db extends sgIO
+{
 
     /**
      * instance of a {@link sgConfig} object representing the current 
@@ -40,7 +40,8 @@ class sgIO_db {
     }
 
     /**
-     * creates a database object, opens a database connection, and initializes
+     * Creates a database object, opens a database connection, and initializes
+     * @private
      */
     function init ()
     {
@@ -70,6 +71,9 @@ class sgIO_db {
         if (@$this->config->db_table_imageinfo) $this->tableImageInfo = $this->config->db_table_imageinfo;
     }
 
+    /**
+     * @private
+     */
     function checkTables ($die = true)
     {
         if ($this->tablesChecked) return true;
@@ -87,6 +91,9 @@ class sgIO_db {
         return true;
     }
 
+    /**
+     * @private
+     */
     function executeFile ($file)
     {
         if (!file_exists($file)) die(sprintf("File %s doesn't exists.", $file));
@@ -111,7 +118,13 @@ class sgIO_db {
         }
     }
 
-    function &getGallery ($galleryId, $getImages = true, $getSubGalleries = 2)
+    /**
+     * Fetches gallery info for the specified gallery and immediate children.
+     * @param string  gallery id
+     * @param string  language code spec for this request (optional)
+     * @param int     number of levels of child galleries to fetch (optional)
+     */
+    function &getGallery ($galleryId, $getImages = true, $getSubGalleries = 1)
     {
         // Make sure database tables are correct
         $this->checkTables();
@@ -177,23 +190,20 @@ class sgIO_db {
                     }
                 }
             }
-        } else {
-            // Gallery couldn't be found in database. Use fallback IO
-            $exists = sgIO_fallback::getGallery($gal, $this->config->pathto_galleries.$gal->id);
-            // If gallery doesn't exists, don't bother getting subgalleries
-            if (!$exists) $getSubGalleries = 0;
-            // Root gallery not in database - force addition
-            if ($galleryId == '.') {
-                $this->putGallery($gal);
-            }
-        }
+        } else
+          //no info found so use iifn method implemented in parent class
+          return parent::getGallery($galleryId, '', $getChildGalleries-1);
     
-        // Get subgalleries
-        if ($getSubGalleries) {
-            $subGalleries = sgIO_fallback::getSubGalleries($gal->id, $this->config->pathto_galleries);
-            foreach ($subGalleries as $gallery) $gal->galleries[] = $this->getGallery($gallery, true, $getSubGalleries-1);
-        }
-    
+        //discover child galleries
+        $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
+        if($getChildGalleries)
+          //but only fetch their info if required too
+          foreach($dir->dirs as $gallery) 
+            $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1);
+        else
+          //otherwise just copy their names in so they can be counted
+          $gal->galleries = $dir->dirs;
+        
         // Return
         return $gal;
     }
@@ -366,17 +376,16 @@ class sgIO_db {
         // Loop
         if (!DB::isError($res)) {
             while ($row = $res->fetchRow()) {
-                $tmp->username     = $row['username'];
-                $tmp->userpass     = $row['userpass'];
+                $tmp = new sgUser($row['username'], $row['userpass']);
+                $tmp->groups       = $row['groups'];
                 $tmp->permissions  = $row['permissions'];
                 $tmp->fullname     = $row['fullname'];
+                $tmp->email        = $row['email'];
                 $tmp->description  = $row['description'];
                 $tmp->stats        = $row['stats'];
                 $users[] = &$tmp;
             }
         }
-        // No users? Get default admin user from IO fallback
-        if (!count($users)) $users = sgIO_fallback::getUsers();
         // Return
         return $users;
     }
@@ -388,7 +397,7 @@ class sgIO_db {
         // Clear database
         $this->db->query("DELETE FROM !", $this->tableUsers);
         // Create query
-        $sql = "INSERT INTO ! (username, userpass, permissions, fullnamn, description, stats) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO ! (username, userpass, permissions, fullname, description, stats, groups, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         // Loop
         for ($i = 0; $i < count($users); $i++) {
             $res = $this->db->query($sql, array(
@@ -399,6 +408,8 @@ class sgIO_db {
                 $users[$i]->fullname,
                 $users[$i]->description,
                 $users[$i]->stats,
+                $users[$i]->groups,
+                $users[$i]->email
             ));
             $success &= !DB::isError($res);
         }

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_mysql.class.php,v 1.2 2004/11/01 08:17:33 tamlyn Exp $
+ * @version $Id: io_mysql.class.php,v 1.3 2004/11/01 08:58:22 tamlyn Exp $
  */
 
 /**
@@ -31,8 +31,9 @@ class sgIO_mysql extends sgIO
    * Fetches gallery info for the specified gallery and immediate children.
    * @param string gallery id
    * @param string language code spec for this request (optional)
+   * @param int     number of levels of child galleries to fetch (optional)
    */
-  function getGallery($galleryId, $language = null, $getChildGalleries = true) 
+  function getGallery($galleryId, $language = null, $getChildGalleries = 1) 
   {
     $gal = new sgGallery($galleryId);
 
@@ -104,7 +105,7 @@ class sgIO_mysql extends sgIO
         
     } else
       //no record found so use iifn method implemented in parent class
-      return parent::getGallery($galleryId, $language);
+      return parent::getGallery($galleryId, $language, $getChildGalleries-1);
     
     
     //discover child galleries
@@ -112,7 +113,7 @@ class sgIO_mysql extends sgIO
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
-        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, false);
+        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1);
     else
       //otherwise just copy their names in so they can be counted
       $gal->galleries = $dir->dirs;
