@@ -6,8 +6,8 @@
  * 
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.34 2005/02/27 06:47:09 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: thumb.php,v 1.35 2005/03/22 21:46:57 tamlyn Exp $
  */
 
 //require config class
@@ -102,9 +102,6 @@ function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
     exit;
   }
 
-  //set default files permissions
-  umask($config->umask);
-  
   //if file is remote then copy locally first
   if($isRemoteFile) {
     $ip = fopen($imagePath, "rb");
@@ -182,6 +179,7 @@ function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
     }
     ImageDestroy($image);
     ImageDestroy($thumb);
+    @chmod($thumbPath, octdec($config->file_mode));
   }
 
 }

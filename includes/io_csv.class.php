@@ -3,8 +3,8 @@
 /**
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.18 2004/12/15 17:04:56 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: io_csv.class.php,v 1.19 2005/03/22 21:46:52 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.18 $";
+    return "$Revision: 1.19 $";
   }
 
   /**
@@ -93,37 +93,43 @@ class sgIO_csv extends sgIO
       ) = $temp[1];
       
       
-      for($i=0;$i<count($temp)-3;$i++) {
-        $gal->images[$i] = new sgImage();
-        list(
-          $gal->images[$i]->filename,
-          $gal->images[$i]->thumbnail,
-          $gal->images[$i]->owner,
-          $gal->images[$i]->groups,
-          $gal->images[$i]->permissions,
-          $gal->images[$i]->categories,
-          $gal->images[$i]->name,
-          $gal->images[$i]->artist,
-          $gal->images[$i]->email,
-          $gal->images[$i]->copyright,
-          $gal->images[$i]->desc,
-          $gal->images[$i]->location,
-          $gal->images[$i]->date,
-          $gal->images[$i]->camera,
-          $gal->images[$i]->lens,
-          $gal->images[$i]->film,
-          $gal->images[$i]->darkroom,
-          $gal->images[$i]->digital
-        ) = $temp[$i+2];
-      
-        //get image size and type
-        list(
-          $gal->images[$i]->width, 
-          $gal->images[$i]->height, 
-          $gal->images[$i]->type
-        ) = substr($gal->images[$i]->filename, 0, 7)=="http://"
-            ? @GetImageSize($gal->images[$i]->filename)
-            : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+      //only fetch individual images if child galleries are required
+      if($getChildGalleries) {
+        for($i=0;$i<count($temp)-3;$i++) {
+          $gal->images[$i] = new sgImage();
+          list(
+            $gal->images[$i]->filename,
+            $gal->images[$i]->thumbnail,
+            $gal->images[$i]->owner,
+            $gal->images[$i]->groups,
+            $gal->images[$i]->permissions,
+            $gal->images[$i]->categories,
+            $gal->images[$i]->name,
+            $gal->images[$i]->artist,
+            $gal->images[$i]->email,
+            $gal->images[$i]->copyright,
+            $gal->images[$i]->desc,
+            $gal->images[$i]->location,
+            $gal->images[$i]->date,
+            $gal->images[$i]->camera,
+            $gal->images[$i]->lens,
+            $gal->images[$i]->film,
+            $gal->images[$i]->darkroom,
+            $gal->images[$i]->digital
+          ) = $temp[$i+2];
+        
+          //get image size and type
+          list(
+            $gal->images[$i]->width, 
+            $gal->images[$i]->height, 
+            $gal->images[$i]->type
+          ) = substr($gal->images[$i]->filename, 0, 7)=="http://"
+              ? @GetImageSize($gal->images[$i]->filename)
+              : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+        }
+      //otherwise just create an empty array of the appropriate length
+      } else {
+        $gal->images = array_fill(0, count($temp), "");
       }
         
     } else
@@ -148,9 +154,9 @@ class sgIO_csv extends sgIO
    * @param sgGallery  instance of gallery object to be stored
    */
   function putGallery($gallery) {
-    
-    $fp = fopen($this->config->base_path.$this->config->pathto_galleries.$gallery->id."/metadata.csv","w");
-    
+    $dataFile = $this->config->base_path.$this->config->pathto_galleries.$gallery->id."/metadata.csv";
+    $fp = fopen($dataFile,"w");
+    chmod($dataFile, $this->config->file_mode);
     if(!$fp)
       return false;
     
@@ -242,9 +248,10 @@ class sgIO_csv extends sgIO
    * @param sgStdClass  instance of object holding hit data
    */
   function putHits($galleryId, $hits) {
-  
-    $fp = fopen($this->config->base_path.$this->config->pathto_logs.strtr("views".$galleryId,":/?\\","----").".log","w");
+    $logfile = $this->config->base_path.$this->config->pathto_logs.strtr("views".$galleryId,":/?\\","----").".log";
+    $fp = fopen($logfile,"w");
     if(!$fp) return false;
+    chmod($logfile, $this->config->file_mode);
     
     fwrite($fp, ",".
       $hits->hits.",".

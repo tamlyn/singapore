@@ -3,8 +3,8 @@
 /**
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.44 2005/02/27 06:47:07 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: singapore.class.php,v 1.45 2005/03/22 21:46:53 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -27,7 +27,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.11CVS";
+  var $version = "0.9.12CVS";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -109,18 +109,15 @@ class Singapore
     $this->config->pathto_current_template = $this->config->pathto_templates.$this->template.'/';
     //load config from template ini file (template.ini) if present
     $this->config->loadConfig($basePath.$this->config->pathto_current_template."template.ini");
-    
-    
+        
     //set runtime values
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
     $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
     $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
     
-    
     //convert octal strings to integers
     if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
-    if(isset($this->config->umask) && is_string($this->config->umask)) $this->config->umask = octdec($this->config->umask);
-    
+    if(isset($this->config->file_mode) && is_string($this->config->file_mode)) $this->config->file_mode = octdec($this->config->file_mode);
     
     //set current language from request vars or config
     if(!empty($_REQUEST[$this->config->url_lang]))
@@ -139,7 +136,7 @@ class Singapore
     $this->i18n = new Translator($basePath.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     
     //set the UMASK
-    umask($this->config->umask);
+    umask(0);
     
     //include IO handler class and create instance
     require_once $basePath."includes/io_".$this->config->io_handler.".class.php";
@@ -197,13 +194,19 @@ class Singapore
     
     $this->gallery->idEntities = htmlspecialchars($this->gallery->id);
     
-    //find the parent
-    $this->gallery->parent = substr($this->gallery->idEncoded, 0, strrpos($this->gallery->idEncoded, "/"));
-    $this->gallery->parentName = urldecode(substr($this->gallery->parent,strrpos($this->gallery->parent,"/")+1));
-    if($this->gallery->parentName == "") {
-      $this->gallery->parentName = $this->config->gallery_name;
-      $this->gallery->parent = ".";
-    }
+    //find all ancestors to current gallery
+    $this->ancestors = array();
+    $ancestors = explode("/", $this->gallery->id);
+    $numberOfAncestors = count($ancestors)-1;
+    
+    //construct fully qualified gallery ids
+    $ancestorIds[0] = ".";
+    for($i=0; $i<$numberOfAncestors; $i++)
+      $ancestorIds[$i+1] = $ancestorIds[$i]."/".$ancestors[$i+1];
+    
+    //fetch gallery names in reverse order so first element of array is parent
+    for($i=0; $i<$numberOfAncestors; $i++)
+      $this->ancestors[$i] = $this->io->getGallery($ancestorIds[$numberOfAncestors-$i-1], $this->language, 0);
     
     //do the logging stuff and select the image (if any)
     if(empty($_REQUEST[$this->config->url_image])) {
@@ -254,6 +257,8 @@ class Singapore
       case "N" : return strcmp($b->name, $a->name); //name (reverse)
       case "i" : return strcasecmp($a->name, $b->name); //case-insensitive name
       case "I" : return strcasecmp($b->name, $a->name); //case-insensitive name (reverse)
+      case "d" : return strcmp($a->date, $b->date); //date
+      case "D" : return strcmp($b->date, $a->date); //date (reverse)
     }
   }
   
@@ -627,31 +632,12 @@ class Singapore
    */
   function crumbLineArray()
   {
-    $crumb[0] = new stdClass;
-    $crumb[0]->id = ".";
-    $crumb[0]->path = ".";
-    $crumb[0]->name = $this->config->gallery_name;
+    $crumb = array_reverse($this->ancestors);
     
-    if(!isset($this->gallery->id))
-      return $crumb;
+    $crumb[] = $this->gallery;
     
-    $galleries = explode("/",$this->gallery->id);
-    $currentPath = ".";
-    
-    for($i=1;$i<count($galleries);$i++) {
-      $crumb[$i] = new stdClass;
-      $crumb[$i]->id = $galleries[$i];
-      $currentPath .= "/".$galleries[$i];
-      $crumb[$i]->path = $this->encodeId($currentPath);
-      $crumb[$i]->name = $galleries[$i];
-    }
-    
-    if($this->isImage()) {
-      $crumb[$i] = new stdClass;
-      $crumb[$i]->id = "";
-      $crumb[$i]->path = "";
-      $crumb[$i]->name = $this->image->name;
-    }
+    if($this->isImage())
+      $crumb[] = $this->image;
     
     return $crumb;
   }
@@ -662,9 +648,10 @@ class Singapore
   function crumbLineText()
   {
     $crumbArray = $this->crumbLineArray();
+    
     $ret = "";
     for($i=0;$i<count($crumbArray)-1;$i++) {
-      $ret .= "<a href=\"".$this->formatURL($crumbArray[$i]->path)."\">".$crumbArray[$i]->name."</a> &gt;\n";
+      $ret .= "<a href=\"".$this->formatURL($this->encodeId($crumbArray[$i]->id))."\">".$crumbArray[$i]->name."</a> &gt;\n";
     }
     $ret .= $crumbArray[$i]->name;
     return $ret;
@@ -961,7 +948,7 @@ class Singapore
     if($this->galleryHasPrev()) 
       $ret .= $this->galleryPrevLink()." ";
     if($this->gallery->id != ".") 
-      $ret .= "<a href=\"".$this->formatURL($this->gallery->parent)."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
+      $ret .= "<a href=\"".$this->formatURL($this->encodeId($this->ancestors[0]->id))."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
     if($this->galleryHasNext()) 
       $ret .= " ".$this->galleryNextLink();
         
@@ -983,7 +970,7 @@ class Singapore
       }
     } else {
       if($this->gallery->id != ".")
-        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parentName."\" href=\"".$this->formatURL($this->gallery->parent)."\" />\n";
+        $ret .= "<link rel=\"Up\" title=\"".$this->ancestors[0]->name."\" href=\"".$this->formatURL($this->encodeId($this->ancestors[0]->id))."\" />\n";
       if($this->galleryHasPrev()) {
         $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\" />\n";
         $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->formatURL($this->gallery->idEncoded, null, 0)."\" />\n";
@@ -1564,6 +1551,18 @@ class Singapore
     }
     
     return $ret;
+  }
+  
+  /**
+   * @return css-background cache of next image
+   * @author rossh
+   */
+  function imagePreloadNext()
+  {
+    if($this->imageHasNext())
+      return "<div style=\"position: absolute; left:0px; background-image:url(".$this->imageURL($this->image->index+2).");\"></div>";
+    else
+      return $this->imageURL(); //just so it returns something
   }
   
   /**

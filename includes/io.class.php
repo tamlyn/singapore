@@ -3,8 +3,8 @@
 /**
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.4 2004/12/08 10:57:36 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: io.class.php,v 1.5 2005/03/22 21:46:52 tamlyn Exp $
  */
 
 /**
@@ -91,23 +91,30 @@ class sgIO
       //set gallery thumbnail to first image in gallery (if any)
       if(isset($dir->files[0])) $gal->filename = $dir->files[0];
       
-      for($i=0;$i<count($dir->files);$i++) {
-        $gal->images[$i] = new sgImage();
-        $gal->images[$i]->filename = $dir->files[$i];
-        //trim off file extension and replace underscores with spaces
-        $temp = strtr(substr($gal->images[$i]->filename, 0, strrpos($gal->images[$i]->filename,".")-strlen($gal->images[$i]->filename)), "_", " ");
-        //split string in two on " - " delimiter
-        if($this->config->enable_iifn && strpos($temp, " - ")) 
-          list($gal->images[$i]->artist,$gal->images[$i]->name) = explode(" - ", $temp);
-        else
-          $gal->images[$i]->name = $temp;
-      
-        //get image size and type
-        list(
-          $gal->images[$i]->width, 
-          $gal->images[$i]->height, 
-          $gal->images[$i]->type
-        ) = @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+      //only fetch individual images if child galleries are required
+      if($getChildGalleries) {
+        for($i=0;$i<count($dir->files);$i++) {
+          $gal->images[$i] = new sgImage();
+        
+          $gal->images[$i]->filename = $dir->files[$i];
+          //trim off file extension and replace underscores with spaces
+          $temp = strtr(substr($gal->images[$i]->filename, 0, strrpos($gal->images[$i]->filename,".")-strlen($gal->images[$i]->filename)), "_", " ");
+          //split string in two on " - " delimiter
+          if($this->config->enable_iifn && strpos($temp, " - ")) 
+            list($gal->images[$i]->artist,$gal->images[$i]->name) = explode(" - ", $temp);
+          else
+            $gal->images[$i]->name = $temp;
+        
+          //get image size and type
+          list(
+            $gal->images[$i]->width, 
+            $gal->images[$i]->height, 
+            $gal->images[$i]->type
+          ) = @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+        }
+      //otherwise just create an empty array of the appropriate length
+      } else {
+        $gal->images = $dir->files;
       }
     } else {
       //selected gallery does not exist

@@ -5,8 +5,8 @@
  * 
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.33 2004/12/09 22:50:31 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: admin.class.php,v 1.34 2005/03/22 21:46:52 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -87,8 +87,7 @@ class sgAdmin extends Singapore
 
     //convert octal strings to integers
     if(isset($this->config->directory_mode) && is_string($this->config->directory_mode)) $this->config->directory_mode = octdec($this->config->directory_mode);
-    if(isset($this->config->umask) && is_string($this->config->umask)) $this->config->umask = octdec($this->config->umask);
-    
+    if(isset($this->config->file_mode) && is_string($this->config->file_mode)) $this->config->file_mode = octdec($this->config->file_mode);
     
     //set current language from request vars or config
     $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
@@ -201,7 +200,7 @@ class sgAdmin extends Singapore
   function galleryHitsTab()
   {
     $showing = $this->galleryTabShowing();
-    if($this->gallery->id != ".") $links = "<a href=\"".$this->formatAdminURL("showgalleryhits",$this->gallery->parent)."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
+    if($this->gallery->id != ".") $links = "<a href=\"".$this->formatAdminURL("showgalleryhits",$this->encodeId($this->ancestors[0]->id))."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
     if(empty($links)) return $showing;
     else return $showing." | ".$links;
   }
@@ -736,6 +735,12 @@ class sgAdmin extends Singapore
         $this->lastError = $this->i18n->_g("Could not upload file"); 
         return false;
       }
+      
+      // try to change file-permissions
+      if(!@chmod($path, $this->config->file_mode)) {
+        $this->lastError = $this->i18n->_g("Could not change file permissions");
+        return false;
+      } 
       
     }
     
