@@ -5,9 +5,6 @@
 <input type="hidden" name="gallery" value="<?php echo htmlspecialchars($sg->gallery->id) ?>" />
 <input type="hidden" name="image" value="<?php echo htmlspecialchars($sg->image->filename) ?>" />
 <input type="hidden" name="sgThumbnail" value="<?php echo $sg->image->thumbnail ?>" />
-<input type="hidden" name="sgOwner" value="<?php echo $sg->image->owner ?>" />
-<input type="hidden" name="sgGroups" value="<?php echo $sg->image->groups ?>" />
-<input type="hidden" name="sgPermissions" value="<?php echo $sg->image->permissions ?>" />
 <input type="hidden" name="sgCategories" value="<?php echo $sg->image->categories ?>" />
 <table class="formTable">
 <tr>

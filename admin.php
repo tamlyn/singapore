@@ -10,7 +10,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.24 2004/09/12 21:39:00 tamlyn Exp $
+ * @version $Id: admin.php,v 1.25 2004/09/13 05:15:07 tamlyn Exp $
  */
 
 //include main class
@@ -36,7 +36,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
   switch($sg->action) {
     case "addgallery" :
       $sg->selectGallery();
-      if($sg->addGallery()) {
+      if(!$sg->checkPermissions($sg->gallery,"add")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } elseif($sg->addGallery()) {
         $sg->selectGallery($sg->gallery->id."/".$_REQUEST["newgallery"]);
         $adminMessage = $sg->i18n->_g("Gallery added");
         $includeFile = "editgallery";
@@ -47,6 +50,11 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "addimage" :
       $sg->selectGallery();
+      if(!$sg->checkPermissions($sg->gallery,"add")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+        break;
+      } 
       switch($_REQUEST["sgLocationChoice"]) {
         case "remote" :
         case "single" :
@@ -74,7 +82,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "changethumbnail" :
       $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
+      if(!$sg->checkPermissions($sg->gallery,"edit")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
         if($sg->saveGalleryThumbnail())
           $adminMessage = $sg->i18n->_g("Thumbnail changed");
         else
@@ -88,7 +99,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "deletegallery" :
       $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
+      if(!$sg->checkPermissions($sg->gallery,"delete")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
         if($sg->deleteGallery()) {
           $sg->selectGallery(rawurldecode($sg->gallery->parent));
           $adminMessage = $sg->i18n->_g("Gallery deleted");
@@ -106,7 +120,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "deleteimage" :
       $sg->selectGallery();
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
+      if(!$sg->checkPermissions($sg->gallery,"delete")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
         if($sg->deleteImage())
           $adminMessage = $sg->i18n->_g("Image deleted");
         else
@@ -122,11 +139,9 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "deleteuser" :
       if(!$sg->isAdmin()) {
-        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-        break;
-      }
-      if(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
+      } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK")) {
         if($sg->deleteUser())
           $adminMessage = $sg->i18n->_g("User deleted");
         else
@@ -142,22 +157,37 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "editgallery" :
       $sg->selectGallery();
-      $includeFile = "editgallery";
+      if(!$sg->checkPermissions($sg->gallery,"edit")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } else
+        $includeFile = "editgallery";
       break;
     case "editimage" :
       $sg->selectGallery();
-      $includeFile = "editimage";
+      if(!$sg->checkPermissions($sg->gallery,"edit")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } else
+        $includeFile = "editimage";
       break;
     case "editpass" :
       $includeFile = "editpass";
       break;
+    case "editpermissions" :
+      $sg->selectGallery();
+      if(!$sg->isAdmin() && !$sg->isOwner($sg->gallery)) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } else
+        $includeFile = "editpermissions";
+      break;
     case "edituser" :
       if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username) {
-        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-        break;
-      }
-      $includeFile = "edituser";
+      } else
+        $includeFile = "edituser";
       break;
     case "login" :
       if($sg->login()) {
@@ -175,11 +205,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "manageusers" :
       if(!$sg->isAdmin()) {
-        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-        break;
-      }
-      $includeFile = "manageusers";
+      } else
+        $includeFile = "manageusers";
       break;
     case "multigallery" :
     case "multiimage" :
@@ -189,19 +218,25 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "newgallery" :
       $sg->selectGallery();
-      $includeFile = "newgallery";
+      if(!$sg->checkPermissions($sg->gallery,"add")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } else
+        $includeFile = "newgallery";
       break;
     case "newimage" :
       $sg->selectGallery();
-      $includeFile = "newimage";
+      if(!$sg->checkPermissions($sg->gallery,"add")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } else
+        $includeFile = "newimage";
       break;
     case "newuser" :
       if(!$sg->isAdmin()) {
-        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
-        break;
-      }
-      if($sg->addUser())
+      } elseif($sg->addUser())
         $includeFile = "edituser";
       else {
         $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
@@ -226,13 +261,20 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "reindex" :
       $sg->selectGallery();
-      $imagesAdded = $sg->reindexGallery();
-      $adminMessage = $sg->i18n->_g("Gallery re-indexed. %s images added.",$imagesAdded);
+      if(!$sg->checkPermissions($sg->gallery,"edit"))
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+      else {
+        $imagesAdded = $sg->reindexGallery();
+        $adminMessage = $sg->i18n->_g("Gallery re-indexed. %s images added.",$imagesAdded);
+      }
       $includeFile = "view";
       break;
     case "savegallery" :
       $sg->selectGallery();
-      if($sg->saveGallery()) {
+      if(!$sg->checkPermissions($sg->gallery,"edit")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } elseif($sg->saveGallery()) {
         $adminMessage = $sg->i18n->_g("Gallery info saved");
         $includeFile = "view";
       } else {
@@ -242,7 +284,10 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "saveimage" :
       $sg->selectGallery();
-      if($sg->saveImage()) {
+      if(!$sg->checkPermissions($sg->gallery,"edit")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } elseif($sg->saveImage()) {
         $adminMessage = $sg->i18n->_g("Image saved successfully");
         $includeFile = "view";
       } else {
@@ -259,9 +304,22 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "editpass";
       }
       break;
+    case "savepermissions" :
+      $sg->selectGallery();
+      if(!$sg->isAdmin() && !$sg->isOwner($sg->gallery)) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "view";
+      } elseif($sg->savePermissions()) {
+        $adminMessage = $sg->i18n->_g("Permissions saved");
+        $includeFile = "view";
+      } else {
+        $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
+        $includeFile = "editpermissions";
+      }
+      break;
     case "saveuser" :
       if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username) {
-        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
         break;
       }
@@ -275,17 +333,27 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "showgalleryhits" :
       $sg->selectGallery();
-      $sg->loadGalleryHits();
-      $includeFile = "galleryhits";
+      if(!$sg->checkPermissions($sg->gallery,"read")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } else {
+        $sg->loadGalleryHits();
+        $includeFile = "galleryhits";
+      }
       break;
     case "showimagehits" :
       $sg->selectGallery();
-      $sg->loadImageHits();
-      $includeFile = "imagehits";
+      if(!$sg->checkPermissions($sg->gallery,"read")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } else {
+        $sg->loadImageHits();
+        $includeFile = "imagehits";
+      }
       break;
     case "suspenduser" :
       if(!$sg->isAdmin()) {
-        $adminMessage = $sg->i18n->_g("You do not have permission to access this area.");
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
         break;
       }
@@ -297,7 +365,11 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "view" :
       $sg->selectGallery();
-      $includeFile = "view";
+      if(!$sg->checkPermissions($sg->gallery,"read")) {
+        $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
+        $includeFile = "menu";
+      } else
+        $includeFile = "view";
       break;
     case "menu" :
     default :

@@ -6,13 +6,22 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.18 2004/09/12 21:39:02 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.19 2004/09/13 05:15:09 tamlyn Exp $
  */
 
-define("SG_ADMIN",    0x0001);
-define("SG_SUSPENDED", 0x0002);
-define("SG_X", 0x0004);
- 
+//permissions bit flags
+define("SG_GRP_READ",   1);
+define("SG_GRP_EDIT",   2);
+define("SG_GRP_ADD",    4);
+define("SG_GRP_DELETE", 8);
+define("SG_WLD_READ",   16);
+define("SG_WLD_EDIT",   32);
+define("SG_WLD_ADD",    64);
+define("SG_WLD_DELETE", 128);
+
+define("SG_ADMIN",     1024);
+define("SG_SUSPENDED", 2048);
+
 /**
  * Provides administration functions.
  * 
@@ -197,6 +206,7 @@ class sgAdmin extends Singapore
     $ret[0][$this->i18n->_g("admin bar|Log out")] = $this->formatAdminURL("logout");
     if(isset($this->gallery)) {
       $ret[1][$this->i18n->_g("admin bar|Edit gallery")] = $this->formatAdminURL("editgallery",$this->gallery->idEncoded);
+      $ret[1][$this->i18n->_g("admin bar|Edit permissions")] = $this->formatAdminURL("editpermissions",$this->gallery->idEncoded);
       $ret[1][$this->i18n->_g("admin bar|Delete gallery")] = $this->formatAdminURL("deletegallery",$this->gallery->idEncoded);
       $ret[1][$this->i18n->_g("admin bar|New subgallery")] = $this->formatAdminURL("newgallery",$this->gallery->idEncoded);
       $ret[1][$this->i18n->_g("admin bar|Re-index gallery")] = $this->formatAdminURL("reindex",$this->gallery->idEncoded);
@@ -228,7 +238,7 @@ class sgAdmin extends Singapore
             if(strlen($_POST["sgNewPass1"]) >= 6 && strlen($_POST["sgNewPass1"]) <= 16) { 
               $users[$i]->userpass = md5($_POST["sgNewPass1"]);
               if($this->io->putUsers($users)) return true;
-              else $this->lastError = $this->i18n->_g("There was an error saving the new password.");
+              else $this->lastError = $this->i18n->_g("Could not save user info");
             }
             else 
               $this->lastError = $this->i18n->_g("New password must be between 6 and 16 characters long.");
@@ -268,7 +278,7 @@ class sgAdmin extends Singapore
       for($i=0;$i < count($users);$i++)
         if($_POST["sgUsername"] == $users[$i]->username && md5($_POST["sgPassword"]) == $users[$i]->userpass){
           if($users[$i]->permissions & SG_SUSPENDED) {
-            $this->lastError = $this->i18n->_g("Your account has been temporarily suspended");
+            $this->lastError = $this->i18n->_g("Your account has been suspended");
             return false;
           } else { 
             $_SESSION["sgUser"] = $users[$i];
@@ -297,14 +307,101 @@ class sgAdmin extends Singapore
   	return true;
   }
   
+  
+  function checkPermissions($obj, $action, $user = null, $gallery = null, $image = null, $user = null)
+  {
+    if($user === null)
+      $usr = $_SESSION["sgUser"];
+    else {
+      $users = $this->io->getUsers();
+      for($i=0; $i<count($users); $i++)
+        if($users[$i]->username == $user) {
+          $usr = $users[$i];
+          break;
+        }
+      if(!isset($usr)) 
+        return false;
+    }
+    
+    if($this->isAdmin())
+      return true;
+    
+    switch($action) {
+      case "read" :
+        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_READ 
+           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_READ);
+      case "edit" :
+        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_EDIT 
+           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_EDIT);
+      case "add" :
+        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_ADD 
+           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_ADD);
+      case "delete" :
+        return $usr->username == $obj->owner || $obj->permissions & SG_WLD_DELETE 
+           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_DELETE);
+    }
+  }
+  
+  function savePermissions()
+  {
+    if($this->isImage())
+      $obj =& $this->image;
+    else
+      $obj =& $this->gallery;
+    
+    $perms = 0;
+    if(!empty($_POST["sgGrpRead"]))   $perms |= SG_GRP_READ;
+    if(!empty($_POST["sgGrpEdit"]))   $perms |= SG_GRP_EDIT;
+    if(!empty($_POST["sgGrpAdd"]))    $perms |= SG_GRP_ADD;
+    if(!empty($_POST["sgGrpDelete"])) $perms |= SG_GRP_DELETE;
+    if(!empty($_POST["sgWldRead"]))   $perms |= SG_WLD_READ;
+    if(!empty($_POST["sgWldEdit"]))   $perms |= SG_WLD_EDIT;
+    if(!empty($_POST["sgWldAdd"]))    $perms |= SG_WLD_ADD;
+    if(!empty($_POST["sgWldDelete"])) $perms |= SG_WLD_DELETE;
+    
+    $obj->permissions |= $perms;
+    $obj->permissions &= $perms;
+    
+    if($this->isAdmin() || $obj->owner == $_SESSION["sgUser"]->username)
+      $obj->groups = $_POST["sgGroups"];
+    if($this->isAdmin())
+      $obj->owner = $_POST["sgOwner"];
+    
+    if($this->io->putGallery($this->gallery))
+      return true;
+    
+    $this->lastError = $this->i18n->_g("Could not save gallery info");
+    return false;
+  }
+  
   /**
    * Checks if currently logged in user is an administrator.
    * 
-   * @return bool
+   * @return bool true on success; false otherwise
    */
   function isAdmin()
   {
     return $_SESSION["sgUser"]->permissions & SG_ADMIN;
+  }
+  
+  /**
+   * Checks if at least one group name in $groups1 is also in $groups2
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function isOwner($obj)
+  {
+    return $obj->owner == $_SESSION["sgUser"]->username;
+  }
+  
+  /**
+   * Checks if at least one group name in $groups1 is also in $groups2
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function isInGroup($groups1,$groups2)
+  {
+    return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2));
   }
   
   /**
@@ -471,9 +568,6 @@ class sgAdmin extends Singapore
    */
   function saveGallery()
   {
-    $this->gallery->owner = $_REQUEST["sgOwner"];
-    $this->gallery->groups = $_REQUEST["sgGroups"];
-    $this->gallery->permissions = $_REQUEST["sgPermissions"];
     $this->gallery->categories = $_REQUEST["sgCategories"];
     $this->gallery->name = stripslashes($_REQUEST["sgGalleryName"]);
     $this->gallery->artist = stripslashes($_REQUEST["sgArtistName"]);
@@ -585,6 +679,7 @@ class sgAdmin extends Singapore
     $img->filename = $image;
     $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
     list($img->width, $img->height) = GetImageSize($path);
+    $img->owner = $_SESSION["sgUser"]->username;
     
     $this->gallery->images[count($this->gallery->images)] = $img;
     
@@ -676,6 +771,7 @@ class sgAdmin extends Singapore
       $img->filename = $image;
       $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
       list($img->width, $img->height) = GetImageSize($path);
+      $img->owner = $_SESSION["sgUser"]->username;
       
       $this->gallery->images[count($this->gallery->images)] = $img;
     }
@@ -729,9 +825,6 @@ class sgAdmin extends Singapore
   {
     $this->image->filename = $_REQUEST['image'];
     $this->image->thumbnail = $_REQUEST["sgThumbnail"];
-    $this->image->owner = $_REQUEST["sgOwner"];
-    $this->image->groups = $_REQUEST["sgGroups"];
-    $this->image->permissions = $_REQUEST["sgPermissions"];
     $this->image->categories = $_REQUEST["sgCategories"];
     $this->image->name = stripslashes($_REQUEST["sgImageName"]);
     $this->image->artist = stripslashes($_REQUEST["sgArtistName"]);

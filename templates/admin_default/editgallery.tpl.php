@@ -3,15 +3,12 @@
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <input type="hidden" name="action" value="savegallery" />
 <input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities ?>" />
-<input type="hidden" name="sgOwner" value="<?php echo $sg->gallery->owner ?>" />
-<input type="hidden" name="sgGroups" value="<?php echo $sg->gallery->groups ?>" />
-<input type="hidden" name="sgPermissions" value="<?php echo $sg->gallery->permissions ?>" />
 <input type="hidden" name="sgCategories" value="<?php echo $sg->gallery->categories ?>" />
 
   
 <table class="formTable">
 <tr>
-  <td><?php echo $sg->i18n->_g("Gallery thumbnail:") ?></td>
+  <td><?php echo $sg->i18n->_g("Thumbnail") ?></td>
   <td><div class="inputbox sgImageInput">
   <?php 
     if($sg->gallery->filename == "__random__")

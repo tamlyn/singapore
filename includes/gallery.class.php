@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.5 2004/04/11 14:45:07 tamlyn Exp $
+ * @version $Id: gallery.class.php,v 1.6 2004/09/13 05:15:09 tamlyn Exp $
  */
 
 /**
@@ -28,29 +28,29 @@ class sgGallery
   /**
    * Filename of the image used to represent this gallery.
    * Special values:
-   * - <code>__none__</code> no thumbnail is displayed
-   * - <code>__random__</code> a random image is chosen every time
+   * - __none__ no thumbnail is displayed
+   * - __random__ a random image is chosen every time
    * @var string
    */
   var $filename = "__none__";
   
   /**
-   * Name of the user to which the gallery belongs (not used)
+   * Username of the user to which the gallery belongs
    * @var string
    */
   var $owner = "__nobody__";
   
   /**
-   * Space-separated list of groups to which the gallery belongs (not used)
+   * Space-separated list of groups to which the gallery belongs
    * @var string
    */
-  var $groups = "__nogroup__";
+  var $groups = "";
   
   /**
-   * Bit-field of permissions (not used)
+   * Bit-field of permissions
    * @var int
    */
-  var $permissions = 4095;
+  var $permissions = 0;
   
   /**
    * Space-separated list of categories to which the gallery belongs (not used)
@@ -65,7 +65,7 @@ class sgGallery
   var $name = "";
   
   /**
-   * The name of the gallery owner (or annyone else)
+   * The name of the gallery owner (or anyone else)
    * @var string
    */
   var $artist = "";

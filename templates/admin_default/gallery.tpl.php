@@ -14,6 +14,7 @@
       <select name="sgMoveTo">
         <option value=""><?php echo $sg->i18n->_g("Select gallery..."); ?></option>
       </select>
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->i18n->_g("Re-index selected"); ?>" />
     </div>
     <?php for($index = $sg->startat; $index < $sg->gallerySelectedGalleriesCount()+$sg->startat; $index++): ?> 
     <div class="sgGallery"><table>

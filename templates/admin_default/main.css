@@ -97,7 +97,7 @@ table.formTable td {
   vertical-align: top;
 }
 
-table.formTable input.radio, table.formTable input.radio {
+table.formTable input.radio, table.formTable input.checkbox {
   width: auto;
   height: auto;
 }
