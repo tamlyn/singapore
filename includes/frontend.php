@@ -125,11 +125,11 @@ function sgShowThumbnails($gallery, $startat)
     echo "    <img class=\"borderTR\" src=\"".$GLOBALS["sgConfig"]->pathto_current_theme."images/slide-tr.gif\" alt=\"\" />\n";
     
     echo "    <table><tr><td>\n";
-    echo "      <a href=\"index.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">\n";
-    echo "        <img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}&amp;size=";
+    echo "      <a href=\"index.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}\">";
+    echo "<img src=\"thumb.php?gallery=$gal->id&amp;image={$gal->img[$i]->filename}&amp;size=";
     echo $GLOBALS["sgConfig"]->main_thumb_size."\" class=\"sgThumbnail\" alt=\"{$gal->img[$i]->name}";
     if(!empty($gal->img[$i]->artist)) echo " by {$gal->img[$i]->artist}";
-    echo "\" />\n      </a>\n";
+    echo "\" /></a>\n";
     echo "    </td></tr></table>\n";
     
     echo "    <div class=\"roundedCornerSpacer\">&nbsp;</div>\n";
