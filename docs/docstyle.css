@@ -1,0 +1,44 @@
+body {
+  color: #000;
+  background-color: #fff;
+  font: small sans-serif;
+}
+
+p, pre {
+  margin-left: 4em;
+  margin-right: 2em;
+}
+
+li {
+  margin-left: 5em;
+  margin-right: 2em;
+}
+
+ul.things > li {
+  margin-top: 0.75em;
+}
+
+code {
+  color: #006;
+}
+
+h1 {
+  margin-left: 0.5em;
+}
+
+h2 {
+  margin-left: 1em;
+}
+
+h3, h4 {
+  margin-left: 2em;
+}
+
+.note {
+  color: #d00;
+}
+
+.boxed {
+  border: 1px dashed #ccc;
+  padding: 0.5em;
+}
