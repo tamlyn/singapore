@@ -31,10 +31,11 @@ showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
 function showThumb($gallery, $image, $maxsize) {
   header("Content-type: image/jpeg");
   
-  //if image is local (filename does not start with 'http://')
-  //then prepend filename with path to current gallery
-  if(substr($image,0,7)!="http://") $imagePath = $GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image";
-  else $imagePath = $image;
+  //check if image is remote (filename starts with 'http://')
+  $isRemoteFile = substr($image,0,7)=="http://";
+  
+  if($isRemoteFile) $imagePath = $image;
+  else $imagePath = $GLOBALS["sgConfig"]->pathto_galleries."$gallery/$image";
   $thumbPath = $GLOBALS["sgConfig"]->pathto_cache.$maxsize.strtr("-$gallery-$image",":/?\\","----");
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
@@ -61,6 +62,16 @@ function showThumb($gallery, $image, $maxsize) {
   
   switch($GLOBALS["sgConfig"]->thumbnail_software) {
   case "im" : //use ImageMagick
+    
+    //IM doesn't handle remote files so copy locally
+    if($isRemoteFile) {
+      $ip = fopen($imagePath, "rb");
+      $tp = fopen($thumbPath, "wb");
+      while(fwrite($tp,fread($ip, 4096)));
+      fclose($tp);
+      fclose($ip);
+      $imagePath = $thumbPath;
+    }
     
     exec("convert -geometry {$x}x{$y} -quality $thumbQuality \"".escapeshellcmd($imagePath).'" "'.escapeshellcmd($thumbPath).'"');
     readfile($thumbPath);
