@@ -223,18 +223,22 @@ function sgSavePass()
 {
   $users = sgGetUsers();
   
+  $found = false;
   for($i=1;$i < count($users);$i++)
-    if($_POST["user"] == $users[$i]->username)
+    if($_POST["user"] == $users[$i]->username) {
+      $found = true;
       if(md5($_POST["sgOldPass"]) == $users[$i]->userpass)
         if($_POST["sgNewPass1"]==$_POST["sgNewPass2"])
           if(strlen($_POST["sgNewPass1"]) >= 6 && strlen($_POST["sgNewPass1"]) <= 16) { 
             $users[$i]->userpass = md5($_POST["sgNewPass1"]);
             sgPutUsers($users);
-            echo "<p>Password changed successfully.</p>";
-          } else { echo "<p>New password must be between 6 and 16 characters long.</p>"; sgEditPass(); }
-        else { echo "<p>The new passwords you entered do not match.</p>"; sgEditPass(); }
-      else { echo "<p>The current password you entered does not match the one in the database.</p>"; sgEditPass(); }
-		else { echo "<p>The username specified was not found in the database.</p>"; sgEditPass(); }
+            echo "<h1>password changed</h1>\n<p><a href=\"admin.php\">Admin options</a></p>";
+          } else { echo "<h1>password error</h1>\n<p>New password must be between 6 and 16 characters long.</p>"; sgEditPass(); }
+        else { echo "<h1>password error</h1>\n<p>The new passwords you entered do not match.</p>"; sgEditPass(); }
+      else { echo "<h1>password error</h1>\n<p>The current password you entered does not match the one in the database.</p>"; sgEditPass(); }
+		}
+    
+  if(!$found) { echo "<h1>password error</h1>\n<p>The username specified was not found in the database.</p>"; sgEditPass(); }
 }
 
 function sgShowImageHits($gallery, $startat = 0)

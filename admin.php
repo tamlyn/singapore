@@ -60,7 +60,6 @@ if(sgIsLoggedIn()) {
         sgEditPass();
         break;
       case "savepass" :
-        echo "<h1>change password</h1>\n";
         sgSavePass();
         break;
       case "newgallery" :
