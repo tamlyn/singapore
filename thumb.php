@@ -34,6 +34,7 @@ function showThumb($gallery, $image, $maxsize) {
   $thumbPath = sgGetConfig("pathto_cache").$maxsize.strtr("-$gallery-$image",":/?\\","----");
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);
+  $thumbQuality = sgGetConfig("thumbnail_quality");
   
   if($imageModified<$thumbModified) { //if thumbnail is newer than image output cached thumbnail
     header("Last-Modified: ".gmdate("D, d M Y H:i:s",$thumbModified)." GMT");
@@ -51,11 +52,21 @@ function showThumb($gallery, $image, $maxsize) {
     }
   
     $image = ImageCreateFromJPEG($imagePath);
+    
+    /* If you have PHP >= 4.0.6 and GD >= 2.0.1 then you will
+     * get nicer thumbnails by uncommenting the two lines commented
+     * out below. See Readme for more information.
+     */
+    
     $thumb = ImageCreate($x,$y);
+    //$thumb = ImageCreateTrueColor($x,$y);
   
     ImageCopyResized($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
-    ImageJPEG($thumb,"",50);
-    ImageJPEG($thumb,$thumbPath,50);
+    //ImageCopyResampled($thumb,$image,0,0,0,0,$x,$y,$imgSize[0],$imgSize[1]);
+    
+    
+    ImageJPEG($thumb,"",$thumbQuality);
+    ImageJPEG($thumb,$thumbPath,$thumbQuality);
     ImageDestroy($image);
     ImageDestroy($thumb);
   }
