@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.2 2003/09/09 17:10:37 tamlyn Exp $
+ * @version $Id: extract.php,v 1.3 2003/10/25 00:23:30 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -99,6 +99,7 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   // Get all files matching pattern in current template
   $files = parseDirectory("../".$config->pathto_admin_template);
   $files[count($files)] = "../includes/admin.class.php";
+  $files[count($files)] = "../admin.php";
   fwrite($fp, implode("\n", $files));
   
   // Close tempfile
