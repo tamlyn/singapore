@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.8 2003/11/24 20:07:04 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.9 2003/12/14 14:39:18 tamlyn Exp $
  */
  
 /**
@@ -21,7 +21,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.9.7";
+  var $version = "0.9.8CVS";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -32,7 +32,7 @@ class Singapore
   
   /**
    * instance of the currently selected IO handler object
-   * @var sgIO_csv|sgIO_iifn
+   * @var sgIO_csv
    */
   var $io;
   
@@ -69,7 +69,7 @@ class Singapore
     
     //remove slashes
     if(get_magic_quotes_gpc())
-      $_REQUEST = array_map("stripslashes", $_REQUEST);
+      $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
     $galleryId = !empty($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
@@ -168,6 +168,17 @@ class Singapore
     }
   }
     
+  /**
+   * Callback function for recursively stripping slashes
+   * @static
+   */
+  function arraystripslashes($toStrip)
+  {
+    if(is_array($toStrip))
+      return array_map(array("Singapore","arraystripslashes"), $toStrip);
+    else
+      return stripslashes($toStrip);
+  }
   
   /**
    * @return int|null the number of image hits or null

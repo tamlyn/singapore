@@ -17,6 +17,7 @@
   <li><a href="#history">Changes</a></li>
   <li><a href="#license">License information</a></li>
   <li><a href="#install">Installation</a></li>
+  <li><a href="#upgrade">Upgrading</a></li>
   <li><a href="#managing">Gallery management</a></li>
   <li><a href="#iifn">Info in filename</a></li>
   <li><a href="#permissions">Help with file permissions</a></li>
@@ -124,6 +125,24 @@ been merged in at odd places. This needs to be addressed by the translators.</p>
   documentation on this topic but anyone with a grasp of PHP should be able to 
   work it out.</li>
 </ul>
+
+
+<h2><a name="upgrade">Upgrading</a></h2>
+
+<p>Always back-up first!</p>
+
+<p>Upgrading is usually just a matter of unzipping the new version over the old. 
+Your galleries, images, metadata, logs and cache will not be affected but the 
+admin password will be reset and the root ini file (singapore.ini) will be 
+overwritten. Unless otherwise stated you can keep your old adminusers.csv file. 
+When new configuration options are added you will need to either add these 
+to your old singapore.ini or re-edit the new singapore.ini in order to keep your 
+personal settings. You may want to use 
+<a href="http://winmerge.sourceforge.net">WinMerge</a> to merge the differences.</p>
+
+<p>The default templates will also be overwritten in an upgrade. For this reason 
+it is advisable to start a new template (in a separate directory) when making 
+customisations.</p>
 
 
 <h2><a name="uninstall">Uninstallation</a></h2>
@@ -237,6 +256,7 @@ o changed
 <p>
 * use htmlspecialchars instead of htmlentities<br />
 + do not process directories starting with dot (.)<br />
+* fixed using special chars in filenames when magic_quotes_gpc is on (again)<br />
 </p>
 
 <h3>0.9.7 - 2003-11-17</h3>
@@ -377,7 +397,7 @@ o first release under GPL<br />
 + everything
 </p>
 
-<p><em>$Date: 2003/11/24 20:07:00 $</em></p>
+<p><em>$Date: 2003/12/14 14:39:18 $</em></p>
 
 </body>
 </html>

@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: config.class.php,v 1.2 2003/09/09 17:10:36 tamlyn Exp $
+ * @version $Id: config.class.php,v 1.3 2003/12/14 14:39:18 tamlyn Exp $
  */
 
 /**
@@ -16,7 +16,6 @@
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @copyright (c)2003 Tamlyn Rhodes
- * @version 0.9.6
  */
 class sgConfig
 {

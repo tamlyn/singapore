@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.4 2003/11/24 01:29:53 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.5 2003/12/14 14:39:18 tamlyn Exp $
  */
 
 /**
@@ -41,8 +41,13 @@ class sgAdmin extends Singapore
 
     //remove slashes
     if(get_magic_quotes_gpc()) {
-      $_REQUEST = array_map("stripslashes", $_REQUEST);
-      $_FILES   = array_map("stripslashes", $_FILES);
+      $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
+      
+      //as if magic_quotes_gpc wasn't insane enough, php doesn't add slashes 
+      //to the tmp_name variable so I have to add them manually. Grrrr.
+      if(isset($_FILES["sgImageFile"]["tmp_name"])) 
+        $_FILES["sgImageFile"]["tmp_name"] = addslashes($_FILES["sgImageFile"]["tmp_name"]);
+      $_FILES   = array_map(array("Singapore","arraystripslashes"), $_FILES);
     }
     
     //load config from default ini file (singapore.ini)

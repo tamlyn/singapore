@@ -7,13 +7,17 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.18 2003/11/17 02:14:44 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.19 2003/12/14 14:39:16 tamlyn Exp $
  */
 
 //require config class
 require_once "includes/config.class.php";
 
-showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
+//remove slashes
+if(get_magic_quotes_gpc())
+  showThumb(stripslashes($_REQUEST["gallery"]),stripslashes($_REQUEST["image"]), stripslashes($_REQUEST["size"]));
+else
+  showThumb($_REQUEST["gallery"],$_REQUEST["image"], $_REQUEST["size"]);
 
 function showThumb($gallery, $image, $maxsize) {
   //create config object

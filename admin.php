@@ -10,8 +10,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.18 2003/11/17 02:12:50 tamlyn Exp $
- * @version 0.9.6
+ * @version $Id: admin.php,v 1.19 2003/12/14 14:39:16 tamlyn Exp $
  */
 
 //include main class

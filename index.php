@@ -7,8 +7,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot org>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003 Tamlyn Rhodes
- * @version $Id: index.php,v 1.13 2003/09/09 17:10:36 tamlyn Exp $
- * @version 0.9.6
+ * @version $Id: index.php,v 1.14 2003/12/14 14:39:16 tamlyn Exp $
  */
 
 //include main class
