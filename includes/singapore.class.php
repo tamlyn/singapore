@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.22 2004/05/14 02:03:17 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.23 2004/05/14 14:03:56 tamlyn Exp $
  */
  
 /**
@@ -151,7 +151,8 @@ class Singapore
     if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","gallerySort"));
     if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
     
-    $this->startat = isset($_REQUEST["startat"]) ? $_REQUEST["startat"] : 0;
+    //if startat is set the cast to int otherwise startat 0
+    $this->startat = isset($_REQUEST["startat"]) ? (int)$_REQUEST["startat"] : 0;
     
 
     //encode the gallery name
