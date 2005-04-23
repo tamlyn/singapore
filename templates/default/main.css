@@ -180,17 +180,17 @@ p.sgTopNavBar, p.sgBottomNavBar {
 
 /* wraps the thumbnail and rounded-corner code on an album page */
 div.sgThumbnail {
-  width:  120px;
-  height: 120px;
-  margin: 10px 5px 10px 5px;
+  width:  124px;
+  height: 124px;
+  margin: 10px 5px;
   float: left;
 	padding: 0px;
   text-align: center;
 }
 
 div.sgThumbnail table {
-  width:  116px;
-  height: 116px;
+  width:  114px;
+  height: 114px;
   margin: 0px;
   text-align: center;
   vertical-align: middle;
