@@ -5,8 +5,8 @@
  * 
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: install.inc.php,v 1.2 2005/03/23 14:20:11 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: install.inc.php,v 1.3 2005/04/23 02:17:52 tamlyn Exp $
  */
 
 /**

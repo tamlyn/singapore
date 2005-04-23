@@ -1,16 +1,18 @@
 <?php
 
 /**
- * Alternate file to drive the gallery. Designed to be included within another 
- * page. This page will only send content-type headers if they have not already
+ * Alternate file to drive the gallery designed to be included within another 
+ * page. 
+ * 
+ * This page will only send content-type headers if they have not already
  * been sent. Placing a call to ob_start() within the including page before any
- * content has been output will allow singapore to use non-western charsets.
+ * content has been output will allow singapore to use non-default charsets.
  * 
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: external.php,v 1.1 2004/10/15 17:24:47 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: external.php,v 1.2 2005/04/23 02:17:52 tamlyn Exp $
  */
 
 //you may leave this blank as it will be automatically detected

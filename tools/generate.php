@@ -10,7 +10,7 @@
  * 
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2004 Tamlyn Rhodes
+ * @copyright (c)2004-2005 Tamlyn Rhodes
  * @version 0.1
  */
 
