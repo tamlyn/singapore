@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.6 2004/10/26 04:32:36 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.7 2005/04/23 02:17:31 tamlyn Exp $
  */
 
 /**
@@ -120,6 +120,11 @@ class sgImage
    * @var int
    */
   var $index = -1;
+  
+  function sgImage($filename)
+  {
+    $this->filename = $filename;
+  }
   
 }
 
