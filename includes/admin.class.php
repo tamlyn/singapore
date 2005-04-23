@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.36 2005/03/23 14:19:55 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.37 2005/04/23 02:14:37 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -268,18 +268,7 @@ class sgAdmin extends Singapore
     return false;
   }
   
-  /**
-   * @return boolean true if user is logged in; false otherwise
-   */
-  function isLoggedIn()
-  {
-    if(isset($_SESSION["sgUser"]) && $_SESSION["sgUser"]->check == md5($_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["sgUser"]->loginTime < 1800)) {
-      $_SESSION["sgUser"]->loginTime = time();
-      return true;
-    }
-    return false;
-  }
-
+  
   /**
    * Attempts to log a registered user into admin.
    * 
@@ -294,7 +283,7 @@ class sgAdmin extends Singapore
           if($users[$i]->permissions & SG_SUSPENDED) {
             $this->lastError = $this->i18n->_g("Your account has been suspended");
             return false;
-          } else { 
+          } else {
             $_SESSION["sgUser"] = $users[$i];
             $_SESSION["sgUser"]->check = md5($_SERVER["REMOTE_ADDR"]);
             $_SESSION["sgUser"]->ip = $_SERVER["REMOTE_ADDR"];
