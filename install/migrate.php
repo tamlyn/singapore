@@ -94,7 +94,7 @@ switch($setupStep) {
             setupMessage("This step completed successfully");
           } else {
             setupHeader("Oops!");
-            setupError('There was a problem. Please fix it and <a href="index.php?step=database">retry this step</a>');
+            setupError('There was a problem. Please fix it and <a href="migrate.php?step=database">retry this step</a>');
           }
           break;
           
@@ -108,7 +108,7 @@ switch($setupStep) {
           } else {
             setupError("Unable to delete database file '".$basePath.$config->pathto_data_dir."sqlite.dat'");
             setupHeader("Oops!");
-            setupError('There was a problem. Please fix it and <a href="index.php?step=database">retry this step</a>');
+            setupError('There was a problem. Please fix it and <a href="migrate.php?step=database">retry this step</a>');
           }
           break;
         default :

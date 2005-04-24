@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: uninstall.php,v 1.1 2004/12/02 12:01:59 tamlyn Exp $
+ * @version $Id: uninstall.php,v 1.2 2005/04/24 14:59:57 tamlyn Exp $
  */
 
 //path to singapore root
@@ -78,7 +78,7 @@ switch($setupStep) {
             setupMessage("This step completed successfully");
           } else {
             setupHeader("Oops!");
-            setupError('There was a problem. Please fix it and <a href="index.php?step=database">retry this step</a>');
+            setupError('There was a problem. Please fix it and <a href="uninstall.php?step=database">retry this step</a>');
           }
           break;
           
@@ -92,7 +92,7 @@ switch($setupStep) {
           } else {
             setupError("Unable to delete database file '".$basePath.$config->pathto_data_dir."sqlite.dat'");
             setupHeader("Oops!");
-            setupError('There was a problem. Please fix it and <a href="index.php?step=database">retry this step</a>');
+            setupError('There was a problem. Please fix it and <a href="uninstall.php?step=database">retry this step</a>');
           }
           break;
         default :

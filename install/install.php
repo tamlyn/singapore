@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: install.php,v 1.2 2004/12/15 17:04:56 tamlyn Exp $
+ * @version $Id: install.php,v 1.3 2005/04/24 14:59:57 tamlyn Exp $
  */
 
 //path to singapore root
@@ -58,7 +58,7 @@ switch($setupStep) {
       setupMessage("All tests completed successfully");
     } else {
       setupHeader("Oops!");
-      setupError("One or more problems were encountered. You may want to fix them and <a href=\"index.php?step=test\">retry this step</a>");
+      setupError("One or more problems were encountered. You may want to fix them and <a href=\"install.php?step=test\">retry this step</a>");
     }
     echo '<br /><a href="index.html">&lt;&lt; Previous: welcome</a>';
     echo ' | <a href="install.php?step=phpinfo">View PHP configuration</a>';
@@ -80,7 +80,7 @@ switch($setupStep) {
       setupMessage("This step completed successfully");
     } else {
       setupHeader("Oops!");
-      setupError('There was a problem. Please fix it and <a href="index.php?step=directories">retry this step</a>');
+      setupError('There was a problem. Please fix it and <a href="install.php?step=directories">retry this step</a>');
     }
     echo '<br /><a href="install.php?step=test">&lt;&lt; Previous: test server</a>';
     echo ' | <a href="install.php?step=database">Next: setup database &gt;&gt;</a>';
@@ -112,7 +112,7 @@ switch($setupStep) {
             setupMessage("This step completed successfully");
           } else {
             setupHeader("Oops!");
-            setupError('There was a problem. Please fix it and <a href="index.php?step=database">retry this step</a>');
+            setupError('There was a problem. Please fix it and <a href="install.php?step=database">retry this step</a>');
           }
           break;
           
@@ -130,7 +130,7 @@ switch($setupStep) {
             setupMessage("This step completed successfully");
           } else {
             setupHeader("Oops!");
-            setupError('There was a problem. Please fix it and <a href="index.php?step=database">retry this step</a>');
+            setupError('There was a problem. Please fix it and <a href="install.php?step=database">retry this step</a>');
           }
           break;
         default :
