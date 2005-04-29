@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.21 2005/04/23 02:17:31 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.22 2005/04/29 06:40:31 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.21 $";
+    return "$Revision: 1.22 $";
   }
 
   /**
@@ -96,7 +96,7 @@ class sgIO_csv extends sgIO
       //only fetch individual images if child galleries are required
       if($getChildGalleries) {
         for($i=0;$i<count($temp)-3;$i++) {
-          $gal->images[$i] = new sgImage();
+          $gal->images[$i] = new sgImage($temp[$i+2][0]);
           list(
             $gal->images[$i]->filename,
             $gal->images[$i]->thumbnail,

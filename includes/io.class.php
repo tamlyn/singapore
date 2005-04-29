@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.5 2005/03/22 21:46:52 tamlyn Exp $
+ * @version $Id: io.class.php,v 1.6 2005/04/29 06:40:31 tamlyn Exp $
  */
 
 /**
@@ -94,9 +94,8 @@ class sgIO
       //only fetch individual images if child galleries are required
       if($getChildGalleries) {
         for($i=0;$i<count($dir->files);$i++) {
-          $gal->images[$i] = new sgImage();
+          $gal->images[$i] = new sgImage($dir->files[$i]);
         
-          $gal->images[$i]->filename = $dir->files[$i];
           //trim off file extension and replace underscores with spaces
           $temp = strtr(substr($gal->images[$i]->filename, 0, strrpos($gal->images[$i]->filename,".")-strlen($gal->images[$i]->filename)), "_", " ");
           //split string in two on " - " delimiter
