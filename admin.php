@@ -11,7 +11,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.28 2004/11/01 08:17:31 tamlyn Exp $
+ * @version $Id: admin.php,v 1.29 2005/05/02 02:59:39 tamlyn Exp $
  */
 
 //include main class
@@ -105,7 +105,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "view";
       } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->i18n->_g("confirm|OK") || (count($sg->gallery->images)==0 && count($sg->gallery->galleries)==0)) {
         if($sg->deleteGallery()) {
-          $sg->selectGallery(rawurldecode($sg->gallery->parent));
+          $sg->selectGallery($sg->ancestors[0]->id);
           $adminMessage = $sg->i18n->_g("Gallery deleted");
         } else {
           $adminMessage = $sg->i18n->_g("An error occurred:")." ".$sg->getLastError();
