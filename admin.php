@@ -11,7 +11,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.29 2005/05/02 02:59:39 tamlyn Exp $
+ * @version $Id: admin.php,v 1.30 2005/05/03 05:03:17 tamlyn Exp $
  */
 
 //include main class
@@ -27,6 +27,9 @@ ini_set("arg_separator.output", "&amp;");
 //start session
 session_name($sg->config->session_name);
 session_start();
+
+//load user details (must be done after session_start)
+$sg->loadUser();
 
 //send content-type and character encoding header
 header("Content-type: text/html; charset=".$sg->character_set);
@@ -195,7 +198,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "editprofile";
       break;
     case "edituser" :
-      if(!$sg->isAdmin() && $_REQUEST["user"] != $_SESSION["sgUser"]->username || $sg->isGuest()) {
+      if(!$sg->isAdmin() && $_REQUEST["user"] != $sg->user->username || $sg->isGuest()) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else
@@ -336,7 +339,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "saveprofile" :
-      if($_REQUEST["user"] != $_SESSION["sgUser"]->username || $sg->isGuest()) {
+      if($_REQUEST["user"] != $sg->user->username || $sg->isGuest()) {
         $adminMessage = $sg->i18n->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif($sg->saveUser()) {

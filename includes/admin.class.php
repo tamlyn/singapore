@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.37 2005/04/23 02:14:37 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.38 2005/05/03 05:03:29 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -81,16 +81,16 @@ class sgAdmin extends Singapore
     //load config from admin template ini file (admin.ini) if present
     $this->config->loadConfig($this->config->pathto_admin_template."admin.ini");
     
-    $this->template = isset($_REQUEST["template"]) ? $_REQUEST["template"] : $this->config->default_template;
+    $this->template = $this->config->default_template;
     
     //do not load gallery-specific ini files
 
     //set current language from request vars or config
     $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
     //read the standard language file
-    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->config->default_language.".pmo");
+    $this->i18n = new Translator($this->config->pathto_locale."singapore.".$this->language.".pmo");
     //read extra admin language file
-    $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin.".$this->config->default_language.".pmo");
+    $this->i18n->readLanguageFile($this->config->pathto_locale."singapore.admin.".$this->language.".pmo");
 
     //include IO handler class and create instance
     require_once $basePath."includes/io_".$this->config->io_handler.".class.php";
@@ -134,14 +134,12 @@ class sgAdmin extends Singapore
   {
     $ret  = $this->config->base_url."admin.php?";
     $ret .= "action=".$action;
-    if($gallery != null)
-      $ret .= "&amp;gallery=".$gallery;
-    if($image != null)
-      $ret .= "&amp;image=".$image;
-    if($startat != null)
-      $ret .= "&amp;startat=".$startat;
-    if($extra != null)
-      $ret .= $extra;
+    if($gallery != null) $ret .= "&amp;gallery=".$gallery;
+    if($image != null)   $ret .= "&amp;image=".$image;
+    if($startat != null) $ret .= "&amp;startat=".$startat;
+    if($extra != null)   $ret .= $extra;
+    if($this->language != $this->config->default_language) $ret .= '&amp;'.$this->config->url_lang.'='.$this->language;
+    if($this->template != $this->config->default_template) $ret .= '&amp;'.$this->config->url_template.'='.$this->template;
     
     return $ret;
   }
@@ -213,7 +211,7 @@ class sgAdmin extends Singapore
    */
   function adminLinksArray()
   {
-    if(!$this->isLoggedIn()) return array(0 => array($this->i18n->_g("admin bar|Back") => "."));
+    if(!$this->isLoggedIn()) return array(0 => array($this->i18n->_g("admin bar|Back to galleries") => "."));
     
     $ret[0][$this->i18n->_g("admin bar|Admin")] = $this->formatAdminURL("menu");
     $ret[0][$this->i18n->_g("admin bar|Galleries")] = $this->formatAdminURL("view", isset($this->gallery) ? $this->gallery->idEncoded : null);
@@ -274,23 +272,21 @@ class sgAdmin extends Singapore
    * 
    * @return boolean true on success; false otherwise
    */
-  function doLogin() 
+  function doLogin()
   {
-    if(isset($_POST["sgUsername"]) && isset($_POST["sgPassword"])) {
-      $users = $this->io->getUsers();
-      for($i=0;$i < count($users);$i++)
-        if($_POST["sgUsername"] == $users[$i]->username && md5($_POST["sgPassword"]) == $users[$i]->userpass){
-          if($users[$i]->permissions & SG_SUSPENDED) {
-            $this->lastError = $this->i18n->_g("Your account has been suspended");
-            return false;
-          } else {
-            $_SESSION["sgUser"] = $users[$i];
-            $_SESSION["sgUser"]->check = md5($_SERVER["REMOTE_ADDR"]);
-            $_SESSION["sgUser"]->ip = $_SERVER["REMOTE_ADDR"];
-            $_SESSION["sgUser"]->loginTime = time();
-            return true;
-          }
+    if(!empty($_POST["sgUsername"]) && !empty($_POST["sgPassword"])) {
+      if($this->loadUser($_POST["sgUsername"]) && md5($_POST["sgPassword"]) == $this->user->userpass){
+        if($this->user->permissions & SG_SUSPENDED) {
+          $this->logout();
+          $this->lastError = $this->i18n->_g("Your account has been suspended");
+          return false;
+        } else {
+          $_SESSION["sgUser"]["username"]  = $this->user->username;
+          $_SESSION["sgUser"]["ip"]        = $_SERVER["REMOTE_ADDR"];
+          $_SESSION["sgUser"]["loginTime"] = time();
+          return true;
         }
+      }
       $this->logout();
       $this->lastError = $this->i18n->_g("Username and/or password incorrect");
       return false;
@@ -322,20 +318,19 @@ class sgAdmin extends Singapore
     if($this->isAdmin() || $this->isOwner($obj))// || (!$this->isGuest() && $obj->owner == "__nobody__"))
       return true;
     
-    $usr = $_SESSION["sgUser"];
     switch($action) {
       case "read" :
         return $obj->permissions & SG_WLD_READ
-           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_READ);
+           || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_READ);
       case "edit" :
         return $obj->permissions & SG_WLD_EDIT 
-           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_EDIT);
+           || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_EDIT);
       case "add" :
         return $obj->permissions & SG_WLD_ADD 
-           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_ADD);
+           || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_ADD);
       case "delete" :
         return $obj->permissions & SG_WLD_DELETE 
-           || ($this->isInGroup($usr->groups, $obj->groups) && $obj->permissions & SG_GRP_DELETE);
+           || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_DELETE);
       default :
         return false;
     }
@@ -361,7 +356,7 @@ class sgAdmin extends Singapore
     $obj->permissions |= $perms;
     $obj->permissions &= $perms;
     
-    if($this->isAdmin() || $obj->owner == $_SESSION["sgUser"]->username)
+    if($this->isAdmin() || $this->isOwner($obj->owner));
       $obj->groups = $_POST["sgGroups"];
     if($this->isAdmin())
       $obj->owner = $_POST["sgOwner"];
@@ -380,8 +375,7 @@ class sgAdmin extends Singapore
    */
   function isAdmin($usr = null)
   {
-    if($usr == null)
-      $usr = $_SESSION["sgUser"];
+    if($usr == null) $usr = $this->user;
     return $usr->permissions & SG_ADMIN;
   }
   
@@ -392,8 +386,7 @@ class sgAdmin extends Singapore
    */
   function isGuest($usr = null)
   {
-    if($usr == null)
-      $usr = $_SESSION["sgUser"];
+    if($usr == null) $usr = $this->user;
     return $usr->username == "guest";
   }
   
@@ -402,9 +395,10 @@ class sgAdmin extends Singapore
    * 
    * @return bool true on success; false otherwise
    */
-  function isOwner($obj)
+  function isOwner($obj, $usr = null)
   {
-    return $obj->owner == $_SESSION["sgUser"]->username;
+    if($usr == null) $usr = $this->user;
+    return $obj->owner == $usr->username;
   }
   
   /**
@@ -450,19 +444,19 @@ class sgAdmin extends Singapore
    * 
    * @return bool true on success; false otherwise
    */
-  function deleteUser($user = null)
+  function deleteUser($username = null)
   {
-    if($user == null)
-      $user = $_REQUEST["user"];
+    if($username == null)
+      $username = $_REQUEST["user"];
       
-    if($user == "admin" || $user == "guest") {
+    if($username == "admin" || $username == "guest") {
       $this->lastError = $this->i18n->_g("Cannot delete built in accounts");
       return false;
     }
       
     $users = $this->io->getUsers();
     for($i=0; $i<count($users); $i++)
-      if($users[$i]->username == $_REQUEST["user"]) {
+      if($users[$i]->username == $username) {
         
         //delete user at offset $i from $users
         array_splice($users,$i,1);
@@ -596,7 +590,7 @@ class sgAdmin extends Singapore
       $gal->permissions = SG_GRP_READ | SG_GRP_EDIT | SG_GRP_ADD | SG_GRP_DELETE
                         | SG_WLD_READ | SG_WLD_EDIT | SG_WLD_ADD | SG_WLD_DELETE;
     else
-      $gal->owner = $_SESSION["sgUser"]->username;
+      $gal->owner = $this->user->username;
     
     //save gallery metadata
     if($this->io->putGallery($gal))
@@ -742,7 +736,7 @@ class sgAdmin extends Singapore
     $img->filename = $image;
     $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
     list($img->width, $img->height, $img->type) = GetImageSize($path);
-    $img->owner = $_SESSION["sgUser"]->username;
+    $img->owner = $this->user->username;
     
     $this->gallery->images[count($this->gallery->images)] = $img;
     
@@ -837,14 +831,14 @@ class sgAdmin extends Singapore
       $img->filename = $image;
       $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
       list($img->width, $img->height, $img->type) = GetImageSize($path);
-      $img->owner = $_SESSION["sgUser"]->username;
+      $img->owner = $this->user->username;
       
       $this->gallery->images[] = $img;
     }
     
     //add any directories as subgalleries, if allowed
-    if($this->config->allow_dir_upload == 1 && !$this->isGuest($_SESSION["sgUser"]->username) 
-    || $this->config->allow_dir_upload == 2 &&  $this->isAdmin($_SESSION["sgUser"]->username))
+    if($this->config->allow_dir_upload == 1 && !$this->isGuest() 
+    || $this->config->allow_dir_upload == 2 &&  $this->isAdmin())
       foreach($contents->dirs as $gallery) {
         $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery;
   

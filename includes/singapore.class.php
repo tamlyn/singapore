@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.47 2005/03/23 14:20:03 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.48 2005/05/03 05:03:29 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -61,7 +61,28 @@ class Singapore
    */
   var $image;
   
+  /**
+   * two character code of language currently in use
+   * @var string
+   */
   var $language = null;
+  
+  /**
+   * name of template currently in use
+   * @var string
+   */
+  var $template = null;
+  
+  /**
+   * details of current user
+   * @var sgUser
+   */
+  var $user = null;
+  
+  /**
+   * name of action requested
+   * @var string
+   */
   var $action = null;
   
   /**
@@ -131,7 +152,7 @@ class Singapore
     //read the language file
     $this->i18n = new Translator($basePath.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     
-    //set the UMASK
+    //clear the UMASK
     umask(0);
     
     //include IO handler class and create instance
@@ -148,8 +169,9 @@ class Singapore
     else
       $this->character_set = $this->config->default_charset;
     
-    //temporary code
-    if(isset($_REQUEST[$this->config->url_action])) $this->action = $_REQUEST[$this->config->url_action];
+    //set action to perform
+    if(empty($_REQUEST["action"])) $this->action = "view";
+    else $this->action = $_REQUEST["action"];
   }
   
   /**
@@ -176,18 +198,17 @@ class Singapore
     }
     
     //sort galleries and images
-    $GLOBALS["temp"]["gallery_sort_order"] = $this->config->gallery_sort_order;
-    $GLOBALS["temp"]["image_sort_order"] = $this->config->image_sort_order;
-    if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","gallerySort"));
-    if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","imageSort"));
+    $GLOBALS["sgSortOrder"] = $this->config->gallery_sort_order;
+    if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","multiSort"));
+    $GLOBALS["sgSortOrder"] = $this->config->image_sort_order;
+    if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","multiSort"));
+    unset($GLOBALS["sgSortOrder"]);
     
-    //if startat is set the cast to int otherwise startat 0
+    //if startat is set then cast to int otherwise startat 0
     $this->startat = isset($_REQUEST[$this->config->url_startat]) ? (int)$_REQUEST[$this->config->url_startat] : 0;
     
-
     //encode the gallery name
     $this->gallery->idEncoded = $this->encodeId($this->gallery->id);
-    
     $this->gallery->idEntities = htmlspecialchars($this->gallery->id);
     
     //find all ancestors to current gallery
@@ -242,43 +263,28 @@ class Singapore
   }
   
   /**
-   * Callback function for sorting galleries
+   * Callback function for sorting things
    * @static
    */
-  function gallerySort($a, $b) {
-    switch($GLOBALS["temp"]["gallery_sort_order"]) {
+  function multiSort($a, $b) {
+    switch($GLOBALS["sgSortOrder"]) {
       case "p" : return strcmp($a->id, $b->id); //path
       case "P" : return strcmp($b->id, $a->id); //path (reverse)
-      case "n" : return strcmp($a->name, $b->name); //name
-      case "N" : return strcmp($b->name, $a->name); //name (reverse)
-      case "i" : return strcasecmp($a->name, $b->name); //case-insensitive name
-      case "I" : return strcasecmp($b->name, $a->name); //case-insensitive name (reverse)
-      case "d" : return strcmp($a->date, $b->date); //date
-      case "D" : return strcmp($b->date, $a->date); //date (reverse)
-    }
-  }
-  
-  /**
-   * Callback function for sorting images
-   * @static
-   */
-  function imageSort($a, $b) {
-    switch($GLOBALS["temp"]["image_sort_order"]) {
+      case "f" : return strcmp($a->filename, $b->filename); //filename
+      case "F" : return strcmp($b->filename, $a->filename); //filename (reverse)
       case "n" : return strcmp($a->name, $b->name); //name
       case "N" : return strcmp($b->name, $a->name); //name (reverse)
       case "i" : return strcasecmp($a->name, $b->name); //case-insensitive name
       case "I" : return strcasecmp($b->name, $a->name); //case-insensitive name (reverse)
       case "a" : return strcmp($a->artist, $b->artist); //artist
       case "A" : return strcmp($b->artist, $a->artist); //artist (reverse)
-      case "f" : return strcmp($a->filename, $b->filename); //filename
-      case "F" : return strcmp($b->filename, $a->filename); //filename (reverse)
       case "d" : return strcmp($a->date, $b->date); //date
       case "D" : return strcmp($b->date, $a->date); //date (reverse)
       case "l" : return strcmp($a->location, $b->location); //location
       case "L" : return strcmp($b->location, $a->location); //location (reverse)
     }
   }
-    
+  
   /**
    * Callback function for recursively stripping slashes
    * @static
@@ -291,6 +297,12 @@ class Singapore
       return stripslashes($toStrip);
   }
   
+  /**
+   * Obfuscates the given email address by replacing "." with "dot" and "@" with "at"
+   * @param string  email address to obfuscate
+   * @param boolean  override the obfuscate_email config setting (optional)
+   * @return string  obfuscated email address or HTML mailto link
+   */
   function formatEmail($email, $forceObfuscate = false)
   {
     if($this->config->obfuscate_email || $forceObfuscate)
@@ -301,8 +313,8 @@ class Singapore
 
   /**
    * rawurlencode() supplied string but preserve / character for cosmetic reasons.
-   * @param  string
-   * @return string
+   * @param  string  id to encode
+   * @return string  encoded id
    */
   function encodeId($id)
   {
@@ -525,7 +537,12 @@ class Singapore
   }
   
   /**
-   * @returns stdClass|false a data object representing the desired gallery
+   * @param string  relative or absolute path to directory
+   * @param string  type of files to return: (optional)
+   *                "images" - files with recognised_extensions
+   *                "dirs"   - directories
+   *                "all"    - all objects
+   * @returns stdClass|false  a data object representing the directory and its contents
    * @static
    */
   function getListing($wd, $type = "dirs")
@@ -610,21 +627,43 @@ class Singapore
   /**
    * Checks to see if the user is currently logged in to admin mode. Also resets
    * the login timeout to the current time.
-   * @returns boolean true if the user is logged in; false otherwise
+   * @returns boolean  true if the user is logged in; false otherwise
    * @static
    */
   function isLoggedIn()
   {
-    if(isset($_SESSION["sgUser"]) && $_SESSION["sgUser"]->check == md5($_SERVER["REMOTE_ADDR"]) && (time() - $_SESSION["sgUser"]->loginTime < 1800)) {
-  	  $_SESSION["sgUser"]->loginTime = time();
+    if(
+      isset($this->user) && 
+      $_SESSION["sgUser"]["ip"] == $_SERVER["REMOTE_ADDR"] && 
+      (time() - $_SESSION["sgUser"]["loginTime"] < 600)
+    ) {
+      //reset loginTime to current time
+  	  $_SESSION["sgUser"]["loginTime"] = time();
   	  return true;
     }
     return false;
   }
   
+  function loadUser($username = null)
+  {
+    if($username == null)
+      if(isset($_SESSION["sgUser"]))
+        $username = $_SESSION["sgUser"]["username"];
+      else
+        return false;
+    
+    $users = $this->io->getUsers();
+    foreach($users as $user)
+      if($user->username == $username) {
+        $this->user = $user;
+        return $user;
+      }
+    return false;
+  }
+  
   /**
    * Creates an array of objects each representing an item in the crumb line.
-   * @return array the items of the crumb line
+   * @return array  the items of the crumb line
    */
   function crumbLineArray()
   {
@@ -637,7 +676,7 @@ class Singapore
   }
   
   /**
-   * @return string the complete crumb line with links
+   * @return string  the complete crumb line with links
    */
   function crumbLineText()
   {
@@ -656,6 +695,10 @@ class Singapore
     return $this->i18n->_g("crumb line|You are here:")." ".$this->crumbLineText();
   }
   
+  /**
+   * Generates the HTML code for imagemap_navigation
+   * @return string imagemap HTML code
+   */
   function imageMap()
   {
     if(!$this->config->imagemap_navigation) return;
@@ -722,7 +765,7 @@ class Singapore
   }
   
   /**
-   * Generates the HTML code for the language select box
+   * Generates the HTML code for the template select box
    * @return string select box HTML code
    */
   function templateFlipper()
@@ -1039,11 +1082,14 @@ class Singapore
   }
   
   /**
-   * @return string
+   * If the current gallery has an artist specified, returns " by " followed 
+   * by the artist's name.
+   * @return string 
    */
-  function galleryByArtist()
+  function galleryByArtist($index = null)
   {
-    if(!empty($this->gallery->artist)) return " ".$this->i18n->_g("artist name|by %s",$this->gallery->artist);
+    $artist = $this->galleryArtist($index);
+    if(!empty($artist)) return " ".$this->i18n->_g("artist name|by %s",$artist);
     else return "";
   }
   
@@ -1154,7 +1200,7 @@ class Singapore
   }
   
   /**
-   * @return array array of sgImage objects
+   * @return array  array of sgImage objects
    */
   function galleryImagesArray()
   {
@@ -1162,7 +1208,7 @@ class Singapore
   }
   
   /**
-   * @return array array of {@link sgImage} objects
+   * @return array  array of {@link sgImage} objects
    */
   function gallerySelectedImagesArray()
   {
@@ -1170,7 +1216,7 @@ class Singapore
   }
   
   /**
-   * @return int number of images in current view
+   * @return int  number of images in current view
    */
   function gallerySelectedImagesCount()
   {
@@ -1178,7 +1224,7 @@ class Singapore
   }
   
   /**
-   * @return array array of {@link sgGallery} objects
+   * @return array  array of {@link sgGallery} objects
    */
   function galleryGalleriesArray()
   {
@@ -1186,7 +1232,7 @@ class Singapore
   }
   
   /**
-   * @return array array of {@link sgGallery} objects
+   * @return array  array of {@link sgGallery} objects
    */
   function gallerySelectedGalleriesArray()
   {
@@ -1194,7 +1240,7 @@ class Singapore
   }
   
   /**
-   * @return int number of galleries in current view
+   * @return int  number of galleries in current view
    */
   function gallerySelectedGalleriesCount()
   {
@@ -1203,7 +1249,7 @@ class Singapore
   
   /**
    * Image thumbnail that links to the appropriate image page
-   * @return string
+   * @return string  html
    */
   function imageThumbnailLinked($index = null)
   {
@@ -1218,7 +1264,7 @@ class Singapore
   
   /**
    * Image thumbnail that pops up a new window containing the image
-   * @return string
+   * @return string  html
    * @depreciated
    */
   function imageThumbnailPopup($index = null)
@@ -1236,7 +1282,7 @@ class Singapore
    * Creates a correctly formatted &lt;img&gt; tag to display the album 
    * thumbnail of the specified image
    * @param int index of image (optional)
-   * @return string html
+   * @return string  html
    */
   function imageThumbnailImage($index = null)
   {
@@ -1311,30 +1357,14 @@ class Singapore
    */
   function thumbnailHeight($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
   {
-    //if aspect ratio is to be constrained set crop size
-    if($forceSize) {
-      $newAspect = $maxWidth/$maxHeight;
-      $oldAspect = $imageWidth/$imageHeight;
-      if($newAspect > $oldAspect) {
-        $cropWidth = $imageWidth;
-        $cropHeight = round($oldAspect/$newAspect * $imageHeight);
-      } else {
-        $cropWidth = round($newAspect/$oldAspect * $imageWidth);
-        $cropHeight = $imageHeight;
-      }
-    //else crop size is image size
-    } else {
-      $cropWidth = $imageWidth;
-      $cropHeight = $imageHeight;
-    }
-    
-    if($cropWidth > $maxWidth && ($cropHeight <= $maxHeight || ($cropHeight > $maxHeight && round($cropWidth/$cropHeight * $maxHeight) > $maxWidth)))
-      return round($cropHeight/$cropWidth * $maxWidth);
-    elseif($cropHeight > $maxHeight)
-      return $maxHeight;
-    else
-      return $imageHeight;
+    return $this->thumbnailWidth($imageHeight, $imageWidth, $maxHeight, $maxWidth, $forceSize);
   }
+  
+  
+  
+  ///////////////////////////
+  //////image functions//////
+  ///////////////////////////
   
   /**
    * Calculates image width by supplying appropriate values to {@link thumbnailWidth()} 
@@ -1394,12 +1424,6 @@ class Singapore
       return $this->gallery->images[$index]->height;
   }
   
-  
-  
-  ///////////////////////////
-  //////image functions//////
-  ///////////////////////////
-  
   /**
    * @return string
    */
@@ -1413,7 +1437,9 @@ class Singapore
    */
   function imageCommentLink()
   {
-    return "<a href=\"".$this->formatURL($this->gallery->idEncoded, $this->image->filename, null, "addcomment")."\">".$this->i18n->_g("Add a comment")."</a>";
+    return "<a href=\"".
+      $this->formatURL($this->gallery->idEncoded, $this->image->filename, null, "addcomment").
+      "\">".$this->i18n->_g("Add a comment")."</a>";
   }
   
   /**
@@ -1445,8 +1471,10 @@ class Singapore
    */
   function imageByArtist($index = null)
   {
-    if($this->imageArtist($index)!="") return " ".$this->i18n->_g("artist name|by %s",$this->imageArtist($index));
-    else return "";
+    if($this->imageArtist($index)!="") 
+      return " ".$this->i18n->_g("artist name|by %s",$this->imageArtist($index));
+    else 
+      return "";
   }
   
   /**
