@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.48 2005/05/03 05:03:29 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.49 2005/05/28 20:43:23 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -113,8 +113,10 @@ class Singapore
     //if instantiated remotely...
     if(!empty($basePath)) {
       //...try to guess base path and relative url
-      $this->config->base_path = $basePath;
-      $this->config->base_url  = $basePath;
+      if(empty($this->config->base_path))
+        $this->config->base_path = $basePath;
+      if(empty($this->config->base_url))
+        $this->config->base_url  = $basePath;
       //...load local config if present
       //may over-ride guessed values above
       $this->config->loadConfig("singapore.local.ini");
@@ -475,6 +477,11 @@ class Singapore
   function isAlbum($index = null)
   {
     return !$this->isGallery($index) && !$this->isImage() && !empty($this->gallery);
+  }
+  
+  function galleryIsRoot()
+  {
+    return $this->gallery->id == ".";
   }
   
   /**
@@ -984,7 +991,7 @@ class Singapore
     $ret = "";
     if($this->galleryHasPrev()) 
       $ret .= $this->galleryPrevLink()." ";
-    if($this->gallery->id != ".") 
+    if(!$this->galleryIsRoot()) 
       $ret .= "<a href=\"".$this->formatURL($this->encodeId($this->ancestors[0]->id))."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
     if($this->galleryHasNext()) 
       $ret .= " ".$this->galleryNextLink();
@@ -1004,9 +1011,11 @@ class Singapore
       if ($this->imageHasNext()) {
         $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->imageNextURL()."\" />\n";
         $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->imageCount()-1)."\" href=\"".$this->imageLastURL()."\" />\n";
+        //prefetch next image
+        $ret .= "<link rel=\"Prefetch\" href=\"".$this->imageURL($this->image->index+1)."\" />\n";
       }
     } else {
-      if($this->gallery->id != ".")
+      if(!$this->galleryIsRoot())
         $ret .= "<link rel=\"Up\" title=\"".$this->ancestors[0]->name."\" href=\"".$this->formatURL($this->encodeId($this->ancestors[0]->id))."\" />\n";
       if($this->galleryHasPrev()) {
         $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\" />\n";
@@ -1377,7 +1386,7 @@ class Singapore
       return $this->thumbnailWidth(
                $this->imageRealWidth($index), $this->imageRealHeight($index), 
                $this->config->thumb_width_image, $this->config->thumb_height_image, 
-               $this->config->thumb_force_size_image);
+               false);
     else
       return $this->imageRealWidth($index);
   }
@@ -1393,7 +1402,7 @@ class Singapore
       return $this->thumbnailHeight(
                $this->imageRealWidth($index), $this->imageRealHeight($index), 
                $this->config->thumb_width_image, $this->config->thumb_height_image, 
-               $this->config->thumb_force_size_image);
+               false);
     else
       return $this->imageRealHeight($index);
   }
@@ -1512,7 +1521,7 @@ class Singapore
                                  ($index===null) ? $this->image->filename : $this->gallery->images[$index]->filename,
                                  $this->config->thumb_width_image,
                                  $this->config->thumb_height_image,
-                                 $this->config->thumb_force_size_image);
+                                 false);
     else 
       return $this->imageRealURL($index);
   }
@@ -1573,18 +1582,6 @@ class Singapore
     }
     
     return $ret;
-  }
-  
-  /**
-   * @return css-background cache of next image
-   * @author rossh
-   */
-  function imagePreloadNext()
-  {
-    if($this->imageHasNext())
-      return "<div style=\"position: absolute; left:0px; background-image:url(".$this->imageURL($this->image->index+2).");\"></div>";
-    else
-      return $this->imageURL(); //just so it returns something
   }
   
   /**
