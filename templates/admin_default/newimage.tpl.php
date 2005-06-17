@@ -1,6 +1,6 @@
 <h1><?php echo $sg->i18n->_g("new image") ?></h1>
 
-<?php if($sg->galleryHasSubGalleries()) echo "<p>".$sg->i18n->_g("This image will not be visible because this gallery is not an album: it contains child galleries.")."</p>"; ?>
+<?php if($sg->gallery->hasChildGalleries()) echo "<p>".$sg->i18n->_g("This image will not be visible because this gallery is not an album: it contains child galleries.")."</p>"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data" method="post">
 <input type="hidden" name="action" value="addimage" />

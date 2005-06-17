@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: iosql.class.php,v 1.1 2004/12/08 10:57:36 tamlyn Exp $
+ * @version $Id: iosql.class.php,v 1.2 2005/06/17 20:08:33 tamlyn Exp $
  */
 
 //include the base IO class
@@ -82,7 +82,7 @@ class sgIOsql extends sgIO
       for($i=0;$i<$this->num_rows($res);$i++) {
         $gal->images[$i] = new sgImage();
         $imginfo = $this->fetch_array($res);
-        $gal->images[$i]->filename = $imginfo['filename'];
+        $gal->images[$i]->id = $imginfo['filename'];
         $gal->images[$i]->thumbnail = $imginfo['thumbnail'];
         $gal->images[$i]->owner = $imginfo['owner'];
         $gal->images[$i]->groups = $imginfo['groups'];
@@ -154,7 +154,7 @@ class sgIOsql extends sgIO
            "email,copyright,description,location,date,camera,lens,film,darkroom,digital,".
            "width,height,type,hits,lasthit) VALUES ('".
            $this->escape_string($gal->id)."','".$language."','".
-           $this->escape_string($gal->images[$i]->filename)."','".
+           $this->escape_string($gal->images[$i]->id)."','".
            $gal->images[$i]->owner."','".$gal->images[$i]->groups."',".
            $gal->images[$i]->permissions.",'".
            $this->escape_string($gal->images[$i]->categories)."','".
@@ -199,7 +199,7 @@ class sgIOsql extends sgIO
       for($i=0;$i<$this->num_rows($res);$i++) {
         $imginfo = $this->fetch_array($res);
         $hits->images[$i] = new stdClass;
-        $hits->images[$i]->filename = $imginfo['filename'];
+        $hits->images[$i]->id = $imginfo['filename'];
         $hits->images[$i]->hits = $imginfo['hits'];
         $hits->images[$i]->lasthit = $imginfo['lasthit'];
       }
@@ -227,7 +227,7 @@ class sgIOsql extends sgIO
       $success &= (bool) $this->query("UPDATE ".$this->config->sql_prefix."images ".
              "SET hits=".$imghit->hits.", lasthit=".$imghit->lasthit." ".
              "WHERE galleryid='".$this->escape_string($galleryId)."' ".
-             "AND filename='".$this->escape_string($imghit->filename)."'");
+             "AND filename='".$this->escape_string($imghit->id)."'");
 
     return $success;
   }

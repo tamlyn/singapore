@@ -5,8 +5,8 @@
  * 
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.7 2004/10/26 04:32:36 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: gallery.class.php,v 1.8 2005/06/17 20:08:33 tamlyn Exp $
  */
 
 /**
@@ -14,17 +14,10 @@
  * 
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
- * @copyright (c)2003, 2004 Tamlyn Rhodes
+ * @copyright (c)2003-2005 Tamlyn Rhodes
  */
-class sgGallery
+class sgGallery extends sgItem
 {
-  /**
-   * The id of the gallery. 
-   * This is the path to the gallery from root and must be unique.
-   * @var string
-   */
-  var $id;
-  
   /**
    * Filename of the image used to represent this gallery.
    * Special values:
@@ -35,70 +28,10 @@ class sgGallery
   var $filename = "__none__";
   
   /**
-   * Username of the user to which the gallery belongs
-   * @var string
-   */
-  var $owner = "__nobody__";
-  
-  /**
-   * Space-separated list of groups to which the gallery belongs
-   * @var string
-   */
-  var $groups = "";
-  
-  /**
-   * Bit-field of permissions
-   * @var int
-   */
-  var $permissions = 0;
-  
-  /**
-   * Space-separated list of categories to which the gallery belongs (not used)
-   * @var string
-   */
-  var $categories = "";
-  
-  /**
-   * The name or title of the gallery
-   * @var string
-   */
-  var $name = "";
-  
-  /**
-   * The name of the gallery owner (or anyone else)
-   * @var string
-   */
-  var $artist = "";
-  
-  /**
-   * Email of the gallery owner (or anyone else)
-   * @var string
-   */
-  var $email = "";
-  
-  /**
-   * Optional copyright information
-   * @var string
-   */
-  var $copyright = "";
-  
-  /**
-   * Multiline description of the current gallery
-   * @var string
-   */
-  var $desc = "";
-  
-  /**
    * Short multiline summary of gallery contents
    * @var string
    */
   var $summary = "";
-  
-  /**
-   * Date associated with gallery
-   * @var string
-   */
-  var $date = "";
   
   /**
    * Array of {@link sgImage} objects
@@ -112,14 +45,48 @@ class sgGallery
    */
   var $galleries = array();
   
-  //non-db fields
-  var $hits = 0;
-  var $lasthit = 0;
-  
-  function sgGallery($id)
+  /**
+   * Constructor
+   * @param string  gallery id
+   * @param sgItem  pointer to the parent gallery
+   */
+  function sgGallery($id, &$parent = null)
   {
     $this->id = $id;
+    $this->parent = $parent;
   }
+  
+  /** @return bool  true if this is a non-album gallery; false otherwise  */
+  function isGallery()         { return $this->hasChildGalleries(); }
+  
+  /** @return bool  true if this is an album; false otherwise */
+  function isAlbum()           { return !$this->isGallery(); }
+  
+  /** @return bool  true if this is the root gallery; false otherwise */
+  function isRoot()            { return $this->id == "."; }
+  
+  /** @return bool  true if this gallery has child galleries; false otherwise */
+  function hasChildGalleries() { return $this->galleryCount() != 0; }
+  
+  /** @return bool  true if this gallery contains one or more images; false otherwise  */
+	function hasImages()	       { return $this->imageCount() != 0; }
+  
+  function imageCount()        { return count($this->images); }
+  function galleryCount()      { return count($this->galleries); }
+  
+  /**
+   * Caches returned value for use with repeat requests
+   * @return string  the urlencoded version of the gallery id
+   */
+  function getEncodedId()
+  {
+    return isset($this->idEncoded) ? $this->idEncoded : $this->idEncoded = sgUtils::encodeId($this->id);
+  }
+  
+  /** Accessor methods */
+  function getSummary()       { return $this->summary; }
+  
+  
 }
 
 

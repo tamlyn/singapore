@@ -7,11 +7,12 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumb.php,v 1.36 2005/03/23 14:20:11 tamlyn Exp $
+ * @version $Id: thumb.php,v 1.37 2005/06/17 20:08:39 tamlyn Exp $
  */
 
 //require config class
 require_once "includes/config.class.php";
+require_once "includes/utils.class.php";
 
 //remove slashes
 if(get_magic_quotes_gpc())
@@ -39,7 +40,7 @@ function showThumb($gallery, $image, $maxWidth, $maxHeight, $forceSize) {
   if($isRemoteFile) $imagePath = $image;
   else $imagePath = $config->pathto_galleries."$gallery/$image";
   
-  $thumbPath = $config->pathto_data_dir."cache/".$maxWidth."x".$maxHeight.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
+  $thumbPath = sgUtils::thumbnailPath($config->pathto_data_dir."cache/", $gallery, $image, $maxWidth, $maxHeight, $forceSize);
   
   $imageModified = @filemtime($imagePath);
   $thumbModified = @filemtime($thumbPath);

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.6 2005/04/29 06:40:31 tamlyn Exp $
+ * @version $Id: io.class.php,v 1.7 2005/06/17 20:08:33 tamlyn Exp $
  */
 
 /**
@@ -71,9 +71,9 @@ class sgIO
    * @param string  language code spec for this request (optional, ignored)
    * @param int     number of levels of child galleries to fetch (optional)
    */
-  function getGallery($galleryId, $language = null, $getChildGalleries = 1) 
+  function getGallery($galleryId, $language = null, $getChildGalleries = 1, &$parent = null) 
   {
-    $gal = new sgGallery($galleryId);
+    $gal = new sgGallery($galleryId, $parent);
     
     if(file_exists($this->config->base_path.$this->config->pathto_galleries.$galleryId)) { 
     
@@ -94,10 +94,10 @@ class sgIO
       //only fetch individual images if child galleries are required
       if($getChildGalleries) {
         for($i=0;$i<count($dir->files);$i++) {
-          $gal->images[$i] = new sgImage($dir->files[$i]);
+          $gal->images[$i] = new sgImage($dir->files[$i], $gal);
         
           //trim off file extension and replace underscores with spaces
-          $temp = strtr(substr($gal->images[$i]->filename, 0, strrpos($gal->images[$i]->filename,".")-strlen($gal->images[$i]->filename)), "_", " ");
+          $temp = strtr(substr($gal->images[$i]->id, 0, strrpos($gal->images[$i]->id,".")-strlen($gal->images[$i]->id)), "_", " ");
           //split string in two on " - " delimiter
           if($this->config->enable_iifn && strpos($temp, " - ")) 
             list($gal->images[$i]->artist,$gal->images[$i]->name) = explode(" - ", $temp);
@@ -109,7 +109,10 @@ class sgIO
             $gal->images[$i]->width, 
             $gal->images[$i]->height, 
             $gal->images[$i]->type
-          ) = @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+          ) = @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->id);
+          
+          //set parent link
+          $gal->images[$i]->parent = &$gal;
         }
       //otherwise just create an empty array of the appropriate length
       } else {
@@ -125,7 +128,7 @@ class sgIO
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
-        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1);
+        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1, $gal);
     else
       //otherwise just copy their names in so they can be counted
       $gal->galleries = $dir->dirs;

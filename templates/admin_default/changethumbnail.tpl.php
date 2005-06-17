@@ -6,14 +6,14 @@
 <p><?php echo $sg->i18n->_g("Choose the filename of the image used to represent this gallery.") ?></p>
   
 <p><select name="sgThumbName">
-  <option value="__none__"><?php echo $sg->i18n->_g("thumbnail|None") ?></option>
-  <option value="__random__"><?php echo $sg->i18n->_g("thumbnail|Random") ?></option>
+  <option value="__none__"<?php if($sg->gallery->filename == "__none__") echo ' selected="true"'; ?>><?php echo $sg->i18n->_g("thumbnail|None") ?></option>
+  <option value="__random__"<?php if($sg->gallery->filename == "__random__") echo ' selected="true"'; ?>><?php echo $sg->i18n->_g("thumbnail|Random") ?></option>
   <?php 
-    foreach($sg->gallery->images as $img)
-      if($sg->gallery->filename == $img->filename)
-        echo "<option value=\"$img->filename\" selected=\"true\">$img->name ($img->filename)</option>\n  ";
-      else
-        echo "<option value=\"$img->filename\">$img->name ($img->filename)</option>\n  ";
+    foreach($sg->gallery->images as $img) {
+      echo '<option value="'.$img->id.'"';
+      if($sg->gallery->filename == $img->id) echo ' selected="true"';
+      echo '>'.$img->getName().' ('.$img->id.")</option>\n  ";
+    }
   ?>
 </select></p>
 <p><input type="submit" class="button" name="confirmed" value="<?php /*"*/ echo $sg->i18n->_g("confirm|OK") ?>">

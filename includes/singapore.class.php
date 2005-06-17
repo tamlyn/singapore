@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.49 2005/05/28 20:43:23 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.50 2005/06/17 20:08:33 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -93,10 +93,12 @@ class Singapore
   {
     //import class definitions
     //io handler class included once config is loaded
+    require_once $basePath."includes/item.class.php";
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
+    require_once $basePath."includes/utils.class.php";
     require_once $basePath."includes/user.class.php";
     
     //start execution timer
@@ -190,8 +192,33 @@ class Singapore
     //detect back-references to avoid file-system walking
     if(strpos($galleryId,"../")!==false) $galleryId = ".";
     
-    //fetch the gallery and image info
-    $this->gallery = $this->io->getGallery($galleryId);
+    //find all ancestors to current gallery
+    $this->ancestors = array();
+    $ancestorNames = explode("/", $galleryId);
+    $numberOfAncestors = count($ancestorNames);
+    
+    //construct fully qualified gallery ids
+    $ancestorIds[0] = ".";
+    for($i=1; $i<$numberOfAncestors; $i++)
+      $ancestorIds[$i] = $ancestorIds[$i-1]."/".$ancestorNames[$i];
+    
+    //fetch galleries passing previous gallery as parent pointer
+    for($i=0; $i<$numberOfAncestors; $i++)
+      $this->ancestors[$i] = 
+          $this->io->getGallery(
+              $ancestorIds[$i], $this->language,
+              //only fetch children of bottom level gallery 
+              ($i==$numberOfAncestors-1) ? 1 : 0,
+              $this->ancestors[$i-1]
+          );
+    
+    //need to remove bogus parent of root gallery created by previous step
+    unset($this->ancestors[-1]);
+    
+    //set reference to current gallery
+    $this->gallery = &$this->ancestors[count($this->ancestors)-1];
+    
+    //echo "<pre>"; print_r($this->gallery); exit;
     
     //check if gallery was successfully fetched
     if($this->gallery == null) {
@@ -201,32 +228,19 @@ class Singapore
     
     //sort galleries and images
     $GLOBALS["sgSortOrder"] = $this->config->gallery_sort_order;
-    if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("Singapore","multiSort"));
+    if($this->config->gallery_sort_order!="x") usort($this->gallery->galleries, array("sgUtils","multiSort"));
     $GLOBALS["sgSortOrder"] = $this->config->image_sort_order;
-    if($this->config->image_sort_order!="x") usort($this->gallery->images, array("Singapore","multiSort"));
+    if($this->config->image_sort_order!="x") usort($this->gallery->images, array("sgUtils","multiSort"));
     unset($GLOBALS["sgSortOrder"]);
     
     //if startat is set then cast to int otherwise startat 0
     $this->startat = isset($_REQUEST[$this->config->url_startat]) ? (int)$_REQUEST[$this->config->url_startat] : 0;
     
     //encode the gallery name
-    $this->gallery->idEncoded = $this->encodeId($this->gallery->id);
     $this->gallery->idEntities = htmlspecialchars($this->gallery->id);
     
-    //find all ancestors to current gallery
-    $this->ancestors = array();
-    $ancestors = explode("/", $this->gallery->id);
-    $numberOfAncestors = count($ancestors)-1;
     
-    //construct fully qualified gallery ids
-    $ancestorIds[0] = ".";
-    for($i=0; $i<$numberOfAncestors; $i++)
-      $ancestorIds[$i+1] = $ancestorIds[$i]."/".$ancestors[$i+1];
-    
-    //fetch gallery names in reverse order so first element of array is parent
-    for($i=0; $i<$numberOfAncestors; $i++)
-      $this->ancestors[$i] = $this->io->getGallery($ancestorIds[$numberOfAncestors-$i-1], $this->language, 0);
-    
+      
     //do the logging stuff and select the image (if any)
     if(empty($_REQUEST[$this->config->url_image])) {
       if($this->config->track_views) $hits = $this->logGalleryView();
@@ -249,7 +263,7 @@ class Singapore
   {
     if(is_string($image)) {
       foreach($this->gallery->images as $index => $img)
-        if($img->filename == $image) {
+        if($img->id == $image) {
           $this->image =& $this->gallery->images[$index];
           $this->image->index = $index;
           return true;
@@ -259,32 +273,16 @@ class Singapore
       $this->image->index = $image;
       return true;
     }
-    $this->image = new sgImage();
+    $this->image = new sgImage("", $this->gallery);
     $this->image->name = $this->i18n->_g("Image not found '%s'",htmlspecialchars($image));
     return false;
   }
   
-  /**
-   * Callback function for sorting things
-   * @static
-   */
-  function multiSort($a, $b) {
-    switch($GLOBALS["sgSortOrder"]) {
-      case "p" : return strcmp($a->id, $b->id); //path
-      case "P" : return strcmp($b->id, $a->id); //path (reverse)
-      case "f" : return strcmp($a->filename, $b->filename); //filename
-      case "F" : return strcmp($b->filename, $a->filename); //filename (reverse)
-      case "n" : return strcmp($a->name, $b->name); //name
-      case "N" : return strcmp($b->name, $a->name); //name (reverse)
-      case "i" : return strcasecmp($a->name, $b->name); //case-insensitive name
-      case "I" : return strcasecmp($b->name, $a->name); //case-insensitive name (reverse)
-      case "a" : return strcmp($a->artist, $b->artist); //artist
-      case "A" : return strcmp($b->artist, $a->artist); //artist (reverse)
-      case "d" : return strcmp($a->date, $b->date); //date
-      case "D" : return strcmp($b->date, $a->date); //date (reverse)
-      case "l" : return strcmp($a->location, $b->location); //location
-      case "L" : return strcmp($b->location, $a->location); //location (reverse)
-    }
+  function conditional($conditional, $iftrue, $iffalse = null)
+  {
+    if($conditional) return sprintf($iftrue, $conditional);
+    elseif($iffalse != null) return sprintf($iffalse, $conditional);
+    else return "";
   }
   
   /**
@@ -373,10 +371,10 @@ class Singapore
    */
   function pageTitle()
   {
-    if($this->isImage() && $this->imageName()!="")
-      return $this->imageName();
-    elseif(($this->isAlbum() || $this->isGallery()) && $this->galleryName()!="")
-      return $this->galleryName();
+    if($this->isImagePage() && $this->image->getName()!="")
+      return $this->image->getName();
+    elseif(($this->isAlbumPage() || $this->isGalleryPage()) && $this->gallery->getName()!="")
+      return $this->gallery->getName();
     else
       return $this->config->gallery_name;
   }
@@ -409,7 +407,7 @@ class Singapore
     if(isset($this->gallery->hits->images)) {
       //search selected for image in existing log
       for($i=0;$i<count($this->gallery->hits->images);$i++) 
-        if($this->gallery->hits->images[$i]->filename == $this->image->filename) {
+        if($this->gallery->hits->images[$i]->id == $this->image->id) {
           $numhits = ++$this->gallery->hits->images[$i]->hits;
           $this->gallery->hits->images[$i]->lasthit = time();
           break;
@@ -421,7 +419,7 @@ class Singapore
     //if image not found then add it
     if($i == count($this->gallery->hits->images)) {
       $this->gallery->hits->images[$i] = new stdClass;
-      $this->gallery->hits->images[$i]->filename = $this->image->filename;
+      $this->gallery->hits->images[$i]->id = $this->image->id;
       $this->gallery->hits->images[$i]->hits = $numhits = 1;
       $this->gallery->hits->images[$i]->lasthit = time();
     }
@@ -458,7 +456,7 @@ class Singapore
   /**
    * @return bool true if this is an image page; false otherwise
    */
-  function isImage()
+  function isImagePage()
   {
     return !empty($this->image);
   }
@@ -466,23 +464,19 @@ class Singapore
   /**
    * @return bool true if this is a non-album gallery page; false otherwise
    */
-  function isGallery($index = null)
+  function isGalleryPage()
   {
-    return !empty($this->gallery) && $this->galleryHasSubGalleries($index);
+    return !empty($this->gallery) && $this->gallery->galleryCount()>0;;
   }
   
   /**
    * @return bool true if this is an album page; false otherwise
    */
-  function isAlbum($index = null)
+  function isAlbumPage()
   {
-    return !$this->isGallery($index) && !$this->isImage() && !empty($this->gallery);
+    return !$this->isGalleryPage() && !$this->isImagePage() && !empty($this->gallery);
   }
   
-  function galleryIsRoot()
-  {
-    return $this->gallery->id == ".";
-  }
   
   /**
    * @return int the script execution time in seconds rounded to two decimal places
@@ -674,10 +668,9 @@ class Singapore
    */
   function crumbLineArray()
   {
-    $crumb = array_reverse($this->ancestors);
+    $crumb = $this->ancestors;
     
-    if($this->isGallery() || $this->isAlbum() || $this->isImage()) $crumb[] = $this->gallery;
-    if($this->isImage()) $crumb[] = $this->image;
+    if($this->isImagePage()) $crumb[] = $this->image;
     
     return $crumb;
   }
@@ -691,9 +684,9 @@ class Singapore
     
     $ret = "";
     for($i=0;$i<count($crumbArray)-1;$i++) {
-      $ret .= "<a href=\"".$this->formatURL($this->encodeId($crumbArray[$i]->id))."\">".$crumbArray[$i]->name."</a> &gt;\n";
+      $ret .= "<a href=\"".$this->formatURL($crumbArray[$i]->getEncodedId())."\">".$crumbArray[$i]->getName()."</a> &gt;\n";
     }
-    $ret .= $crumbArray[$i]->name;
+    $ret .= $crumbArray[$i]->getName();
     return $ret;
   }
   
@@ -809,21 +802,7 @@ class Singapore
   /////////////////////////////
   
   
-  /**
-   * If the specified gallery is an album then it returns the number of 
-   * images contained otherwise the number of sub-galleries is returned
-   * @param int the index of the sub gallery to count (optional)
-   * @return string the contents of the specified gallery
-   */
-  function galleryIdEncoded($index = null)
-  {
-    if($index === null)
-      return $this->gallery->idEncoded;
-    else
-      return $this->encodeId($this->gallery->galleries[$index]->id);
-  }
-  
-	/**
+ 	/**
    * If the specified gallery is an album then it returns the number of 
    * images contained otherwise the number of sub-galleries is returned
    * @param int the index of the sub gallery to count (optional)
@@ -831,7 +810,7 @@ class Singapore
    */
   function galleryContents($index = null)
   {
-    if($this->isAlbum($index))
+    if($index===null ? $this->gallery->isAlbum() : $this->gallery->galleries[$index]->isAlbum())
       return $this->imageCountText($index);
     else
       return $this->galleryCountText($index);
@@ -859,24 +838,14 @@ class Singapore
   }
   
   /**
-   * @param int the index of the sub gallery to count (optional)
-   * @return boolean true if the specified gallery (or the current gallery 
-	 * if $index is not specified) has sub-galleries; false otherwise
-   */
-	function galleryHasSubGalleries($index = null)
-	{
-    return $this->galleryCount($index)>0;
-	}
-	
-  /**
    * @return int the number of images in the specified gallery
    */
   function imageCount($index = null)
   {
     if($index === null)
-      return count($this->gallery->images);
+      return $this->gallery->imageCount();
     else
-      return count($this->gallery->galleries[$index]->images);
+      return $this->gallery->galleries[$index]->imageCount();
   }
   
   /**
@@ -887,16 +856,6 @@ class Singapore
     return $this->i18n->_ng("%s image", "%s images", $this->imageCount($index));
   }
   
-  /**
-   * @param int the index of the sub gallery to check (optional)
-   * @return boolean true if the specified gallery (or the current gallery 
-	 * if $index is not specified) contains one or more images; false otherwise
-   */
-	function galleryHasImages($index = null)
-	{
-	  return count($this->imageCount($index))>0;
-	}
-	
   /**
    * @uses galleryThumbnailImage
    * @return string
@@ -912,9 +871,9 @@ class Singapore
   function galleryURL($index = null)
   {
     if($index === null) 
-      return $this->formatURL($this->gallery->idEncoded);
+      return $this->formatURL($this->gallery->getEncodedId());
     else 
-      return $this->formatURL($this->encodeId($this->gallery->galleries[$index]->id));
+      return $this->formatURL($this->gallery->galleries[$index]->getEncodedId());
   }
   
   /**
@@ -938,8 +897,8 @@ class Singapore
         }
         //select random image then run on to next case
         srand(time());
-        $image = $gal->images[rand(0,count($gal->images)-1)]->filename;
-    default :
+        $image = $gal->images[rand(0,count($gal->images)-1)]->id;
+      default :
         $ret  = "<img src=\"".$this->thumbnailURL(rawurlencode($gal->id), $image,
                                           $this->config->thumb_width_gallery,
                                           $this->config->thumb_height_gallery,
@@ -957,9 +916,7 @@ class Singapore
   function galleryTab()
   {
     $showing = $this->galleryTabShowing();
-    $links = $this->galleryTabLinks();
-    if(empty($links)) return $showing;
-    else return $showing." | ".$links;
+    return sgUtils::conditional($this->galleryTabLinks(), $showing." | %s", $showing);
   }
   
   /**
@@ -967,7 +924,7 @@ class Singapore
    */
   function galleryTabShowing()
   {
-    if($this->isAlbum()) {
+    if($this->isAlbumPage()) {
       $total = $this->imageCount();
       $perPage = $this->config->thumb_number_album;
     } else {
@@ -989,12 +946,12 @@ class Singapore
   function galleryTabLinks()
   {
     $ret = "";
-    if($this->galleryHasPrev()) 
-      $ret .= $this->galleryPrevLink()." ";
-    if(!$this->galleryIsRoot()) 
-      $ret .= "<a href=\"".$this->formatURL($this->encodeId($this->ancestors[0]->id))."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
-    if($this->galleryHasNext()) 
-      $ret .= " ".$this->galleryNextLink();
+    if($this->hasPrevPage())
+      $ret .= $this->prevPageLink()." ";
+    if(!$this->gallery->isRoot()) 
+      $ret .= "<a href=\"".$this->formatURL($this->gallery->parent->getEncodedId())."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
+    if($this->hasNextPage())
+      $ret .= " ".$this->nextPageLink();
         
     return $ret;
   }
@@ -1002,28 +959,28 @@ class Singapore
   function navigationLinks() {
     $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->formatURL(".")."\" />\n";
     
-    if($this->isImage()) {
-      $ret .= "<link rel=\"Up\" title=\"".$this->galleryName()."\" href=\"".$this->imageParentURL()."\" />\n";
+    if($this->isImagePage()) {
+      $ret .= "<link rel=\"Up\" title=\"".$this->image->parent->getName()."\" href=\"".$this->imageParentURL()."\" />\n";
       if ($this->imageHasPrev()) {
-        $ret .= "<link rel=\"First\" title=\"".$this->imageName(0)."\" href=\"".$this->imageFirstURL()."\" />\n";
-        $ret .= "<link rel=\"Prev\" title=\"".$this->imageName($this->image->index-1)."\" href=\"".$this->imagePrevURL()."\" />\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->gallery->images[0]->getName()."\" href=\"".$this->imageFirstURL()."\" />\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$this->image->prevImage()->getName()."\" href=\"".$this->imagePrevURL()."\" />\n";
       }
       if ($this->imageHasNext()) {
         $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->imageNextURL()."\" />\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->imageCount()-1)."\" href=\"".$this->imageLastURL()."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->gallery->imageCount()-1)."\" href=\"".$this->imageLastURL()."\" />\n";
         //prefetch next image
         $ret .= "<link rel=\"Prefetch\" href=\"".$this->imageURL($this->image->index+1)."\" />\n";
       }
     } else {
-      if(!$this->galleryIsRoot())
-        $ret .= "<link rel=\"Up\" title=\"".$this->ancestors[0]->name."\" href=\"".$this->formatURL($this->encodeId($this->ancestors[0]->id))."\" />\n";
-      if($this->galleryHasPrev()) {
-        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->galleryPrevURL()."\" />\n";
-        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->formatURL($this->gallery->idEncoded, null, 0)."\" />\n";
+      if(!$this->gallery->isRoot())
+        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parent->getName()."\" href=\"".$this->formatURL($this->gallery->parent->getEncodedId())."\" />\n";
+      if($this->hasPrevPage()) {
+        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->prevPageURL()."\" />\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->formatURL($this->gallery->getEncodedId(), null, 0)."\" />\n";
       }
-      if($this->galleryHasNext()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->galleryNextURL()."\" />\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->formatURL($this->gallery->idEncoded, null, $this->lastPageIndex())."\" />\n";
+      if($this->hasNextPage()) {
+        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->nextPageURL()."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->formatURL($this->gallery->getEncodedId(), null, $this->lastPageIndex())."\" />\n";
       } 
     }
     return $ret;
@@ -1034,7 +991,7 @@ class Singapore
    * @return int the number of 'pages' or 'screen-fulls'
    */
   function galleryPageCount() {
-    if($this->isAlbum())
+    if($this->isAlbumPage())
       return intval($this->imageCount()/$this->config->thumb_number_album)+1;
     else
       return intval($this->galleryCount()/$this->config->thumb_number_gallery)+1;
@@ -1044,50 +1001,55 @@ class Singapore
    * @return int
    */
   function lastPageIndex() {
-    if($this->isAlbum())
+    if($this->isAlbumPage())
       return ($this->galleryPageCount()-1)*
-        ($this->isAlbum()?$this->config->thumb_number_album:$this->config->thumb_number_gallery);
+        ($this->isAlbumPage()?$this->config->thumb_number_album:$this->config->thumb_number_gallery);
   }
   
   /**
    * @return bool true if there is at least one more page
    */
-  function galleryHasNext() {
-    if($this->isAlbum())
+  function hasNextPage() {
+    if($this->isAlbumPage())
       return count($this->gallery->images)>$this->startat+$this->config->thumb_number_album;
-    else
+    elseif($this->isGalleryPage())
       return count($this->gallery->galleries)>$this->startat+$this->config->thumb_number_gallery;
+    elseif($this->isImagePage())
+      return isset($this->gallery->images[$this->image->index+1]);
   }
   
   /**
    * @return bool true if there is at least one previous page
    */
-  function galleryHasPrev() {
-    return $this->startat>0;
+  function hasPrevPage() {
+    if($this->isAlbumPage() || $this->isGalleryPage())
+      return $this->startat > 0;
+    elseif($this->isImagePage())
+      return isset($this->gallery->images[$this->image->index-1]);
   }
   
   /**
    * @return string the URL of the next page
    */
-  function galleryNextURL() {
-    return $this->formatURL($this->gallery->idEncoded, null, ($this->startat+
-      ($this->isAlbum()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
+  function nextPageURL() {
+    return $this->formatURL($this->gallery->getEncodedId(), null, ($this->startat+
+      ($this->isAlbumPage()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
   }
   
-  function galleryNextLink() {
-    return "<a href=\"".$this->galleryNextURL()."\">".$this->i18n->_g("gallery|Next")."</a>";
+  function nextPageLink() {
+    return "<a href=\"".$this->nextPageURL()."\">".$this->i18n->_g("gallery|Next")."</a>";
   }
   
   /**
    * @return string the URL of the previous page
    */
-  function galleryPrevURL() {
-    return $this->formatURL($this->gallery->idEncoded, null, ($this->startat-
-      ($this->isAlbum()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
+  function prevPageURL() {
+    return $this->formatURL($this->gallery->getEncodedId(), null, ($this->startat-
+      ($this->isAlbumPage()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
   }
   
-  function galleryPrevLink() {
-    return "<a href=\"".$this->galleryPrevURL()."\">".$this->i18n->_g("gallery|Previous")."</a>";
+  function prevPageLink() {
+    return "<a href=\"".$this->prevPageURL()."\">".$this->i18n->_g("gallery|Previous")."</a>";
   }
   
   /**
@@ -1103,56 +1065,12 @@ class Singapore
   }
   
   /**
-   * @return string the name of the gallery
-   */
-  function galleryName($index = null)
-  {
-    if($index===null)
-      return $this->gallery->name;
-    else
-      return $this->gallery->galleries[$index]->name;
-  }
-  
-  /**
-   * @return string the name of the gallery's artist
-   */
-  function galleryArtist($index = null)
-  {
-    if($index===null)
-      return $this->gallery->artist;
-    else
-      return $this->gallery->galleries[$index]->artist;
-  }
-  
-  /**
-   * @return string the summary field of the gallery
-   */
-  function gallerySummary($index = null)
-  {
-    if($index===null)
-      return $this->gallery->summary;
-    else
-      return $this->gallery->galleries[$index]->summary;
-  }
-  
-  /**
    * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
    * @return string the summary of the gallery
    */
   function gallerySummaryStripped($index = null)
   {
     return str_replace("<br />","\n",$this->gallerySummary($index));
-  }
-  
-  /**
-   * @return string the description of the gallery
-   */
-  function galleryDescription($index = null)
-  {
-    if($index===null)
-      return $this->gallery->desc;
-    else
-      return $this->gallery->galleries[$index]->desc;
   }
   
   /**
@@ -1173,17 +1091,6 @@ class Singapore
     }
     
     return $ret;
-  }
-  
-  /**
-   * @return string the gallery's hits
-   */
-  function galleryViews($index = null)
-  {
-    if($index===null)
-      return $this->gallery->hits->hits;
-    else
-      return $this->gallery->galleries[$index]->hits->hits;
   }
   
   /**
@@ -1265,7 +1172,7 @@ class Singapore
     if($index === null) $img = $this->image;
     else $img = $this->gallery->images[$index];
     
-    $ret  = "<a href=\"".$this->formatURL($this->gallery->idEncoded, $img->filename)."\">";
+    $ret  = "<a href=\"".$this->formatURL($this->gallery->getEncodedId(), $img->id)."\">";
     $ret .= $this->imageThumbnailImage($index);
     $ret .= "</a>";
     return $ret;
@@ -1299,7 +1206,7 @@ class Singapore
     else $img = $this->gallery->images[$index];
     
     $ret  = '<img src="'.$this->thumbnailURL(
-                           $this->gallery->idEncoded, $img->filename,
+                           $this->gallery->getEncodedId(), $img->id,
                            $this->config->thumb_width_album,
                            $this->config->thumb_height_album,
                            $this->config->thumb_force_size_album).'" ';
@@ -1408,32 +1315,6 @@ class Singapore
   }
   
   /**
-   * Returns the size of the original image 
-   * @param int index of image (optional)
-   * @return int width of image in pixels
-   */
-  function imageRealWidth($index = null)
-  {
-    if($index === null)
-      return $this->image->width;
-    else
-      return $this->gallery->images[$index]->width;
-  }
-  
-  /**
-   * Returns the size of the original image 
-   * @param int index of image (optional)
-   * @return int height of image in pixels
-   */
-  function imageRealHeight($index = null)
-  {
-    if($index === null)
-      return $this->image->height;
-    else
-      return $this->gallery->images[$index]->height;
-  }
-  
-  /**
    * @return string
    */
   function imageViews($index = null)
@@ -1447,7 +1328,7 @@ class Singapore
   function imageCommentLink()
   {
     return "<a href=\"".
-      $this->formatURL($this->gallery->idEncoded, $this->image->filename, null, "addcomment").
+      $this->formatURL($this->gallery->getEncodedId(), $this->image->id, null, "addcomment").
       "\">".$this->i18n->_g("Add a comment")."</a>";
   }
   
@@ -1517,8 +1398,8 @@ class Singapore
   function imageURL($index = null)
   {
     if($this->config->full_image_resize)
-      return $this->thumbnailURL($this->gallery->idEncoded, 
-                                 ($index===null) ? $this->image->filename : $this->gallery->images[$index]->filename,
+      return $this->thumbnailURL($this->gallery->getEncodedId(), 
+                                 ($index===null) ? $this->image->id : $this->gallery->images[$index]->id,
                                  $this->config->thumb_width_image,
                                  $this->config->thumb_height_image,
                                  false);
@@ -1532,12 +1413,12 @@ class Singapore
    */
   function imageRealURL($index = null)
   {
-    $image = ($index===null) ? $this->image->filename : $this->gallery->images[$index]->filename;
+    $image = ($index===null) ? $this->image->id : $this->gallery->images[$index]->id;
     
     //check if image is local (filename does not start with 'http://')
     if(substr($image,0,7)!="http://") 
       return $this->config->base_url.$this->config->pathto_galleries.
-        $this->gallery->idEncoded."/".rawurlencode($image);
+        $this->gallery->getEncodedId()."/".rawurlencode($image);
     else 
       return $image;
   }
@@ -1556,9 +1437,9 @@ class Singapore
         continue;
       
       $ret .= $before;
-      $ret .= '<a href="'.$this->formatURL($this->gallery->idEncoded, $this->gallery->images[$i]->filename).'">';
+      $ret .= '<a href="'.$this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$i]->id).'">';
       $ret .= '<img src="'.$this->thumbnailURL(
-                             $this->gallery->idEncoded, $this->gallery->images[$i]->filename,
+                             $this->gallery->getEncodedId(), $this->gallery->images[$i]->id,
                              $this->config->thumb_width_preview,
                              $this->config->thumb_height_preview,
                              $this->config->thumb_force_size_preview).'" ';
@@ -1630,27 +1511,27 @@ class Singapore
   
   function imageFirstURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[0]->filename);
+    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[0]->id);
   }
   
   function imagePrevURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[$this->image->index-1]->filename);
+    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$this->image->index-1]->id);
   }
   
   function imageParentURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, null, (floor($this->image->index/$this->config->thumb_number_album)*$this->config->thumb_number_album));
+    return $this->formatURL($this->gallery->getEncodedId(), null, (floor($this->image->index/$this->config->thumb_number_album)*$this->config->thumb_number_album));
   }
   
   function imageNextURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[$this->image->index+1]->filename);
+    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$this->image->index+1]->id);
   }
   
   function imageLastURL()
   {
-    return $this->formatURL($this->gallery->idEncoded, $this->gallery->images[$this->imageCount()-1]->filename);
+    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$this->imageCount()-1]->id);
   }
   
   /**
@@ -1704,6 +1585,73 @@ class Singapore
     return $ret;
   }
 
+  
+  ///////////////////////////////
+  //////depreciated methods//////
+  ///////////////////////////////
+  
+  function isImage()                { return $this->isImagePage(); }
+  function isGallery($index = null) { return !empty($this->gallery) && ($index === null ? $this->gallery->isGallery() : $this->gallery->galleries[$index]->isGallery()); }
+  function isAlbum($index = null)   { return !empty($this->gallery) && ($index === null ? $this->gallery->isAlbum() : $this->gallery->galleries[$index]->isAlbum()); }
+  
+  function galleryIdEncoded($index = null)
+  {
+    if($index === null) return $this->gallery->getEncodedId();
+    else return $this->gallery->galleries[$index]->getEncodedId();
+  }
+  
+  function galleryHasSubGalleries($index = null) { return $index === null ? $this->gallery->hasChildGalleries() : $this->gallery->galleries[$index]->hasChildGalleries(); }
+	function galleryHasImages($index = null)       { return $index === null ? $this->gallery->hasImages() : $this->gallery->galleries[$index]->hasImages(); }
+	
+  function galleryHasNext() { return $this->hasNextPage(); }
+  function galleryHasPrev() { return $this->hasPrevPage(); }
+  function galleryNextURL() { return $this->nextPageURL(); }
+  function galleryNextLink(){ return "<a href=\"".$this->galleryNextURL()."\">".$this->i18n->_g("gallery|Next")."</a>"; }
+  function galleryPrevURL() { return $this->prevPageURL(); }
+  function galleryPrevLink(){ return "<a href=\"".$this->galleryPrevURL()."\">".$this->i18n->_g("gallery|Previous")."</a>"; }
+  
+  function galleryName($index = null)
+  {
+    if($index===null) return $this->gallery->getName();
+    else return $this->gallery->galleries[$index]->getName();
+  }
+  
+  function galleryArtist($index = null)
+  {
+    if($index===null) return $this->gallery->getArtist();
+    else return $this->gallery->galleries[$index]->getArtist();
+  }
+  
+  function gallerySummary($index = null)
+  {
+    if($index===null) return $this->gallery->getSummary();
+    else return $this->gallery->galleries[$index]->getSummary();
+  }
+  
+  function galleryDescription($index = null)
+  {
+    if($index===null) return $this->gallery->getDescription();
+    else return $this->gallery->galleries[$index]->getDescription();
+  }
+  
+  function galleryViews($index = null)
+  {
+    if($index===null) return $this->gallery->getHits();
+    else return $this->gallery->galleries[$index]->getHits();
+  }
+  
+  function imageRealWidth($index = null)
+  {
+    if($index === null) return $this->image->getWidth();
+    else return $this->gallery->images[$index]->getWidth();
+  }
+  
+  function imageRealHeight($index = null)
+  {
+    if($index === null) return $this->image->getHeight();
+    else return $this->gallery->images[$index]->getHeight();
+  }
+  
   
 }
 

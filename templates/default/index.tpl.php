@@ -15,10 +15,10 @@ switch($sg->action) {
 case "addcomment" :
   include $sg->config->base_path.$sg->config->pathto_current_template."addcomment.tpl.php";
 default :
-  if($sg->isImage()) { 
+  if($sg->isImagePage()) { 
     //this is an 'image' page so include the 'image' template file
     include $sg->config->base_path.$sg->config->pathto_current_template."image.tpl.php";
-  } elseif($sg->isAlbum()) {
+  } elseif($sg->isAlbumPage()) {
     //this is an 'album' page so include the 'album' template file
     include $sg->config->base_path.$sg->config->pathto_current_template."album.tpl.php";
   } else {

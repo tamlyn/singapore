@@ -24,14 +24,14 @@
       <td>
         <?php echo $sg->galleryName($index) ?> - <?php echo $sg->galleryContents($index) ?><br />
         <?php 
-          echo '<a href="'.$sg->formatAdminURL("view",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|View gallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("editgallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Edit gallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("editpermissions",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Edit permissions")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("deletegallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Delete gallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("newgallery",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|New subgallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("reindex",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Re-index gallery")."</a> |\n";
-          //echo '<a href="'.$sg->formatAdminURL("newimage",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|New image")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("changethumbnail",$sg->galleryIdEncoded($index)).'">'.$sg->i18n->_g("admin bar|Change thumbnail")."</a>\n";
+          echo '<a href="'.$sg->formatAdminURL("view",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|View gallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("editgallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Edit gallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("editpermissions",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Access control")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("deletegallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Delete gallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("newgallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|New subgallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("reindex",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Re-index gallery")."</a> |\n";
+          //echo '<a href="'.$sg->formatAdminURL("newimage",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|New image")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("changethumbnail",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Change thumbnail")."</a>\n";
         ?>
       </td>
     </tr>

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.22 2005/04/29 06:40:31 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.23 2005/06/17 20:08:33 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.22 $";
+    return "$Revision: 1.23 $";
   }
 
   /**
@@ -58,10 +58,11 @@ class sgIO_csv extends sgIO
    * @param string  gallery id
    * @param string  language code spec for this request (optional)
    * @param int     number of levels of child galleries to fetch (optional)
+   * @return sgGallery  the gallery object created
    */
-  function getGallery($galleryId, $language = null, $getChildGalleries = 1) 
+  function getGallery($galleryId, $language = null, $getChildGalleries = 1, &$parent = null) 
   {
-    $gal = new sgGallery($galleryId);
+    $gal = new sgGallery($galleryId, $parent);
 
     if($language == null) $language = $this->config->default_language;
     
@@ -96,9 +97,9 @@ class sgIO_csv extends sgIO
       //only fetch individual images if child galleries are required
       if($getChildGalleries) {
         for($i=0;$i<count($temp)-3;$i++) {
-          $gal->images[$i] = new sgImage($temp[$i+2][0]);
+          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal);
           list(
-            $gal->images[$i]->filename,
+            $gal->images[$i]->id,
             $gal->images[$i]->thumbnail,
             $gal->images[$i]->owner,
             $gal->images[$i]->groups,
@@ -123,26 +124,26 @@ class sgIO_csv extends sgIO
             $gal->images[$i]->width, 
             $gal->images[$i]->height, 
             $gal->images[$i]->type
-          ) = substr($gal->images[$i]->filename, 0, 7)=="http://"
-              ? @GetImageSize($gal->images[$i]->filename)
-              : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->filename);
+          ) = substr($gal->images[$i]->id, 0, 7)=="http://"
+              ? @GetImageSize($gal->images[$i]->id)
+              : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->id);
         }
       //otherwise just fill in filenames
       } else if(count($temp) > 3) {
         for($i=0;$i<count($temp)-3;$i++)
-          $gal->images[$i] = new sgImage($temp[$i+2][0]);
+          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal);
       }
         
     } else
-      //no metadata found so use iifn method implemented in parent class
-      return parent::getGallery($galleryId, $language, $getChildGalleries);
+      //no metadata found so use iifn method implemented in superclass
+      return parent::getGallery($galleryId, $language, $getChildGalleries, $parent);
     
     //discover child galleries
     $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
-        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1);
+        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1, $gal);
     else
       //otherwise just copy their names in so they can be counted
       $gal->galleries = $dir->dirs;
@@ -179,7 +180,7 @@ class sgIO_csv extends sgIO
     
     for($i=0;$i<count($gallery->images);$i++)
       $success &= (bool) fwrite($fp,"\n\"".
-        $gallery->images[$i]->filename."\",".
+        $gallery->images[$i]->id."\",".
         $gallery->images[$i]->thumbnail.",".
         $gallery->images[$i]->owner.",".
         $gallery->images[$i]->groups.",".
@@ -234,7 +235,7 @@ class sgIO_csv extends sgIO
     for($i=0;$i<count($temp)-2;$i++) {
       $hits->images[$i] = new stdClass;
       list(
-        $hits->images[$i]->filename,
+        $hits->images[$i]->id,
         $hits->images[$i]->hits,
         $hits->images[$i]->lasthit
       ) = $temp[$i+1];
@@ -261,8 +262,8 @@ class sgIO_csv extends sgIO
       
     if(isset($hits->images)) 
       for($i=0;$i<count($hits->images);$i++)
-        if(!empty($hits->images[$i]->filename)) fwrite($fp, "\n".
-          $hits->images[$i]->filename.",".
+        if(!empty($hits->images[$i]->id)) fwrite($fp, "\n".
+          $hits->images[$i]->id.",".
           $hits->images[$i]->hits.",".
           $hits->images[$i]->lasthit
         );

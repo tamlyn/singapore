@@ -3,7 +3,7 @@
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <input type="hidden" name="action" value="saveimage" />
 <input type="hidden" name="gallery" value="<?php echo htmlspecialchars($sg->gallery->id) ?>" />
-<input type="hidden" name="image" value="<?php echo htmlspecialchars($sg->image->filename) ?>" />
+<input type="hidden" name="image" value="<?php echo htmlspecialchars($sg->image->id) ?>" />
 <input type="hidden" name="sgThumbnail" value="<?php echo $sg->image->thumbnail ?>" />
 <input type="hidden" name="sgCategories" value="<?php echo $sg->image->categories ?>" />
 <table class="formTable">

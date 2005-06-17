@@ -16,7 +16,7 @@
     </div> */ ?>
     <?php for($index = $sg->startat; $index < $sg->gallerySelectedImagesCount()+$sg->startat; $index++): ?> 
     <div class="sgThumbnail">
-      <?php /* <input type="checkbox" class="sgImageCheckbox checkbox" name="sgImages[<?php echo urlencode($sg->gallery->images[$index]->filename) ?>]" /> */ ?>
+      <?php /* <input type="checkbox" class="sgImageCheckbox checkbox" name="sgImages[<?php echo urlencode($sg->gallery->images[$index]->id) ?>]" /> */ ?>
       <table><tr><td>
         <?php echo $sg->imageThumbnailLinked($index) ?> 
       </td></tr></table>
