@@ -4,7 +4,7 @@
   <div class="sgTab"><?php echo $sg->galleryHitsTab()?></div>
   <div class="sgContent">
     <table class="sgList">
-      <tr><th><?php echo $sg->i18n->_g("Gallery name") ?></th><th><?php echo $sg->i18n->_g("hits table|Hits") ?></th><th><?php echo $sg->i18n->_g("hits table|Last hit") ?></th><th><?php echo $sg->i18n->_g("hits table|Graph") ?></th></tr>
+      <tr><th><?php echo $sg->translator->_g("Gallery name") ?></th><th><?php echo $sg->translator->_g("hits table|Hits") ?></th><th><?php echo $sg->translator->_g("hits table|Last hit") ?></th><th><?php echo $sg->translator->_g("hits table|Graph") ?></th></tr>
       <?php foreach($sg->galleryGalleriesArray() as $index => $gal): ?>
       <tr class="sgRow<?php echo $index%2 ?>">
         <td><a href="<?php echo $sg->formatAdminURL($sg->isAlbum($index) ? "showimagehits": "showgalleryhits", $sg->encodeId($gal->id)) ?>"><?php echo $gal->id ?> (<?php echo $gal->id ?>)</a></td>

@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.50 2005/06/17 20:08:33 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.51 2005/09/17 14:57:46 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -12,7 +12,6 @@ define('SG_REGEXP_PROTOCOLURL', '(?:http://|https://|ftp://|mailto:)(?:[a-zA-Z0-
 define('SG_REGEXP_WWWURL',      'www\.(?:[a-zA-Z0-9\-]+\.)*[a-zA-Z]{2,4}(?:/[^ \n\r\"\'<]+)?');
 define('SG_REGEXP_EMAILURL',    '(?:[\w][\w\.\-]+)+@(?:[\w\-]+\.)+[a-zA-Z]{2,4}');
 
- 
 /**
  * Provides functions for handling galleries and images
  * @uses sgGallery
@@ -46,7 +45,7 @@ class Singapore
    * instance of a {@link Translator}
    * @var Translator
    */
-  var $i18n;
+  var $translator;
   
   /**
    * instance of a {@link sgGallery} representing the current gallery
@@ -95,6 +94,7 @@ class Singapore
     //io handler class included once config is loaded
     require_once $basePath."includes/item.class.php";
     require_once $basePath."includes/translator.class.php";
+    require_once $basePath."includes/thumbnail.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
@@ -111,6 +111,8 @@ class Singapore
     //load config from singapore root directory
     $this->config = new sgConfig($basePath."singapore.ini");
     $this->config->loadConfig($basePath."secret.ini.php");
+    //setup global variable
+    $GLOBALS["sgConfig"] =& $this->config;
     
     //if instantiated remotely...
     if(!empty($basePath)) {
@@ -154,7 +156,9 @@ class Singapore
     }
     
     //read the language file
-    $this->i18n = new Translator($basePath.$this->config->pathto_locale."singapore.".$this->language.".pmo");
+    $this->translator = new Translator($this->language);
+    //setup global variable
+    $GLOBALS["sgTranslator"] =& $this->translator;
     
     //clear the UMASK
     umask(0);
@@ -168,14 +172,16 @@ class Singapore
     $this->selectGallery($galleryId);
     
     //set character set
-    if(!empty($this->i18n->languageStrings[0]["charset"]))
-      $this->character_set = $this->i18n->languageStrings[0]["charset"];
+    if(!empty($this->translator->languageStrings[0]["charset"]))
+      $this->character_set = $this->translator->languageStrings[0]["charset"];
     else
       $this->character_set = $this->config->default_charset;
     
     //set action to perform
     if(empty($_REQUEST["action"])) $this->action = "view";
     else $this->action = $_REQUEST["action"];
+    
+    
   }
   
   /**
@@ -204,12 +210,11 @@ class Singapore
     
     //fetch galleries passing previous gallery as parent pointer
     for($i=0; $i<$numberOfAncestors; $i++)
-      $this->ancestors[$i] = 
+      $this->ancestors[$i] =& 
           $this->io->getGallery(
-              $ancestorIds[$i], $this->language,
+              $ancestorIds[$i], $this->ancestors[$i-1],
               //only fetch children of bottom level gallery 
-              ($i==$numberOfAncestors-1) ? 1 : 0,
-              $this->ancestors[$i-1]
+              ($i==$numberOfAncestors-1) ? 1 : 0
           );
     
     //need to remove bogus parent of root gallery created by previous step
@@ -222,8 +227,8 @@ class Singapore
     
     //check if gallery was successfully fetched
     if($this->gallery == null) {
-      $this->gallery = new sgGallery($galleryId);
-      $this->gallery->name = $this->i18n->_g("Gallery not found '%s'",htmlspecialchars($galleryId));
+      $this->gallery = new sgGallery($galleryId, null);
+      $this->gallery->name = $this->translator->_g("Gallery not found '%s'",htmlspecialchars($galleryId));
     }
     
     //sort galleries and images
@@ -234,13 +239,9 @@ class Singapore
     unset($GLOBALS["sgSortOrder"]);
     
     //if startat is set then cast to int otherwise startat 0
-    $this->startat = isset($_REQUEST[$this->config->url_startat]) ? (int)$_REQUEST[$this->config->url_startat] : 0;
+    $this->gallery->startat = isset($_REQUEST[$this->config->url_startat]) ? (int)$_REQUEST[$this->config->url_startat] : 0;
+    $this->startat = $this->gallery->startat; //depreciated
     
-    //encode the gallery name
-    $this->gallery->idEntities = htmlspecialchars($this->gallery->id);
-    
-    
-      
     //do the logging stuff and select the image (if any)
     if(empty($_REQUEST[$this->config->url_image])) {
       if($this->config->track_views) $hits = $this->logGalleryView();
@@ -265,36 +266,15 @@ class Singapore
       foreach($this->gallery->images as $index => $img)
         if($img->id == $image) {
           $this->image =& $this->gallery->images[$index];
-          $this->image->index = $index;
           return true;
         }
     } elseif(is_int($image) && $image >= 0 && $image < count($this->gallery->images)) {
       $this->image =& $this->gallery->images[$image];
-      $this->image->index = $image;
       return true;
     }
-    $this->image = new sgImage("", $this->gallery);
-    $this->image->name = $this->i18n->_g("Image not found '%s'",htmlspecialchars($image));
+    $this->image =& new sgImage("", $this->gallery);
+    $this->image->name = $this->translator->_g("Image not found '%s'",htmlspecialchars($image));
     return false;
-  }
-  
-  function conditional($conditional, $iftrue, $iffalse = null)
-  {
-    if($conditional) return sprintf($iftrue, $conditional);
-    elseif($iffalse != null) return sprintf($iffalse, $conditional);
-    else return "";
-  }
-  
-  /**
-   * Callback function for recursively stripping slashes
-   * @static
-   */
-  function arraystripslashes($toStrip)
-  {
-    if(is_array($toStrip))
-      return array_map(array("Singapore","arraystripslashes"), $toStrip);
-    else
-      return stripslashes($toStrip);
   }
   
   /**
@@ -306,62 +286,11 @@ class Singapore
   function formatEmail($email, $forceObfuscate = false)
   {
     if($this->config->obfuscate_email || $forceObfuscate)
-        return strtr($email,array("@" => ' <b>'.$this->i18n->_g("email|at").'</b> ', "." => ' <b>'.$this->i18n->_g("email|dot").'</b> '));
+        return strtr($email,array("@" => ' <b>'.$this->translator->_g("email|at").'</b> ', "." => ' <b>'.$this->translator->_g("email|dot").'</b> '));
       else
         return "<a href=\"mailto:".$email."\">".$email."</a>";
   }
 
-  /**
-   * rawurlencode() supplied string but preserve / character for cosmetic reasons.
-   * @param  string  id to encode
-   * @return string  encoded id
-   */
-  function encodeId($id)
-  {
-    $in = explode("/",$id);
-    $out = array();
-    for($i=1;$i<count($in);$i++)
-      $out[$i-1] = rawurlencode($in[$i]);
-    return $out ? implode("/",$out) : ".";
-  }
-  
-  /**
-   * Returns a link to the image or gallery with the correct formatting and path
-   *
-   * @author   Adam Sissman <adam at bluebinary dot com>
-   * @param string  gallery id
-   * @param string  image filename (optional)
-   * @param int  page offset (optional)
-   * @param string  action to perform (optional)
-   * @return string formatted URL
-   */
-  function formatURL($gallery, $image = null, $startat = null, $action = null)
-  {
-    if($this->config->use_mod_rewrite) { //format url for use with mod_rewrite
-      $ret  = $this->config->base_url.$gallery;
-      if($startat) $ret .= ','.$startat;
-      $ret .= '/';
-      if($image)   $ret .= rawurlencode($image);
-      
-      $query = array();
-      if($action)  $query[] = $this->config->url_action."=".$action;
-      if($this->language != $this->config->default_language) $query[] = $this->config->url_lang.'='.$this->language;
-      if($this->template != $this->config->default_template) $query[] = $this->config->url_template.'='.$this->template;
-      
-      if(!empty($query))
-        $ret .= '?'.implode('&amp;', $query);
-    } else { //format plain url
-      $ret  = $this->config->index_file_url;
-      $ret .= $this->config->url_gallery."=".$gallery;
-      if($startat) $ret .= "&amp;".$this->config->url_startat."=".$startat;
-      if($image)   $ret .= "&amp;".$this->config->url_image."=".rawurlencode($image);
-      if($action)  $ret .= "&amp;".$this->config->url_action."=".$action;
-      if($this->language != $this->config->default_language) $ret .= '&amp;'.$this->config->url_lang.'='.$this->language;
-      if($this->template != $this->config->default_template) $ret .= '&amp;'.$this->config->url_template.'='.$this->template;
-    }
-    
-    return $ret;
-  }
   
   /**
    * Returns image name for image pages and gallery name for gallery pages.
@@ -371,31 +300,15 @@ class Singapore
    */
   function pageTitle()
   {
-    if($this->isImagePage() && $this->image->getName()!="")
-      return $this->image->getName();
-    elseif(($this->isAlbumPage() || $this->isGalleryPage()) && $this->gallery->getName()!="")
-      return $this->gallery->getName();
+    if($this->isImagePage() && $this->image->name()!="")
+      return $this->image->name();
+    elseif(($this->isAlbumPage() || $this->isGalleryPage()) && $this->gallery->name()!="")
+      return $this->gallery->name();
     else
       return $this->config->gallery_name;
   }
   
   
-  /**
-   * Returns a link to thumb.php with the correct formatting and path
-   *
-   * @author   Adam Sissman <adam at bluebinary dot com>
-   */
-  function thumbnailURL($gallery, $image, $width, $height, $forceSize)
-  {
-    $ret = $this->config->base_url;
-    $ret .= "thumb.php";
-    $ret .= "?gallery=".$gallery."&amp;image=".rawurlencode($image);
-    $ret .= "&amp;width=".$width."&amp;height=".$height;
-    if($forceSize) $ret .= "&amp;force=1";
-
-    return $ret;
-  }
-
   /**
    * @return int|null the number of image hits or null
    */
@@ -502,129 +415,64 @@ class Singapore
   function scriptExecTimeText()
   {
     if($this->config->show_execution_time)
-      return $this->i18n->_g("Page created in %s seconds",$this->scriptExecTime());
+      return $this->translator->_g("Page created in %s seconds",$this->scriptExecTime());
     else
       return "";
   }
   
+  /**
+   * @depreciated
+   */  
   function versionText()
   {
-    return "singapore v".$this->version;
+    return "singapore ".$this->version;
   }
   
+  /**
+   * @depreciated
+   */  
   function versionLink()
   {
     return '<a href="http://singapore.sourceforge.net/">'.$this->versionText().'</a>';
   }
   
+  /**
+   * @depreciated
+   */  
   function poweredByVersion()
   {
-    return $this->i18n->_g("singapore|Powered by %s",$this->versionLink());
+    return $this->translator->_g("Powered by <a href=\"http://singapore.sourceforge.net/\">singapore</a>");
+  }
+  
+  function poweredByText()
+  {
+    return $this->translator->_g("Powered by <a href=\"http://singapore.sourceforge.net/\">singapore</a>");
   }
   
   function allRightsReserved()
   {
-    return $this->i18n->_g("All rights reserved.");
+    return $this->translator->_g("All rights reserved.");
   }
   
+  /**
+   * @depreciated
+   */  
   function copyrightMessage()
   {
-    return $this->i18n->_g("Images may not be reproduced in any form without the express written permission of the copyright holder.");
+    return $this->translator->_g("Images may not be reproduced in any form without the express written permission of the copyright holder.");
+  }
+  
+  function licenseText()
+  {
+    return $this->translator->_g("Images may not be reproduced in any form without the express written permission of the copyright holder.");
   }
   
   function adminLink()
   {
-    return '<a href="'.$this->config->base_url.'admin.php">'.$this->i18n->_g("Log in")."</a>";
+    return '<a href="'.$this->config->base_url.'admin.php">'.$this->translator->_g("Log in")."</a>";
   }
   
-  /**
-   * @param string  relative or absolute path to directory
-   * @param string  type of files to return: (optional)
-   *                "images" - files with recognised_extensions
-   *                "dirs"   - directories
-   *                "all"    - all objects
-   * @returns stdClass|false  a data object representing the directory and its contents
-   * @static
-   */
-  function getListing($wd, $type = "dirs")
-  {
-    $dir = new stdClass;
-    $dir->path = realpath($wd).DIRECTORY_SEPARATOR;
-    $dir->files = array();
-    $dir->dirs = array();
-    $dp = opendir($dir->path);
     
-    if(!$dp) return false;
-
-    switch($type) {
-      case "images" :
-        while(false !== ($entry = readdir($dp)))
-          if(!is_dir($entry) && preg_match("/\.(".$this->config->recognised_extensions.")$/i",$entry))
-            $dir->files[] = $entry;
-        sort($dir->files);
-        rewinddir($dp);
-        //run on and get dirs too
-      case "dirs" :
-       while(false !== ($entry = readdir($dp)))
-          if(is_dir($dir->path.$entry) && $entry{0} != '.') 
-            $dir->dirs[] = $entry;
-        sort($dir->dirs);
-        break;
-      case "all" :
-        while(false !== ($entry = readdir($dp)))
-          if(is_dir($dir->path.$entry)) $dir->dirs[] = $entry;
-          else $dir->files[] = $entry;
-        sort($dir->dirs);
-        sort($dir->files);
-        break;
-      default :
-        while(false !== ($entry = readdir($dp)))
-          if(strpos(strtolower($entry),$type)) 
-            $dir->files[] = $entry;
-        sort($dir->files);
-    }
-    closedir($dp);
-    return $dir;
-  }
-  
-  /**
-   * Recursively deletes all directories and files in the specified directory.
-   * USE WITH EXTREME CAUTION!!
-   * @returns boolean true on success; false otherwise
-   * @static
-   */
-  function rmdir_all($wd)
-  {
-    if(!$dp = opendir($wd)) return false;
-    $success = true;
-    while(false !== ($entry = readdir($dp))) {
-      if($entry == "." || $entry == "..") continue;
-      if(is_dir("$wd/$entry")) $success &= $this->rmdir_all("$wd/$entry");
-      else $success &= unlink("$wd/$entry");
-    }
-    closedir($dp);
-    $success &= rmdir($wd);
-    return $success;
-  }
-  
-  /**
-   * Returns an array of language codes specified in the Accept-Language HHTP
-   * header field of the user's browser. q= components are ignored and removed.
-   * hyphens (-) are converted to underscores (_).
-   * @return array  accepted language codes
-   * @static
-   */
-  function getBrowserLanguages()
-  {
-    $langs = array();
-    foreach(explode(",",$_SERVER["HTTP_ACCEPT_LANGUAGE"]) as $bit)
-      if($pos = strpos($bit,";"))
-        $langs[] = strtr(substr($bit,0,$pos),"-","_");
-      else
-        $langs[] = strtr($bit,"-","_");
-    return $langs;
-  }
-  
   /**
    * Checks to see if the user is currently logged in to admin mode. Also resets
    * the login timeout to the current time.
@@ -666,11 +514,11 @@ class Singapore
    * Creates an array of objects each representing an item in the crumb line.
    * @return array  the items of the crumb line
    */
-  function crumbLineArray()
+  function &crumbLineArray()
   {
-    $crumb = $this->ancestors;
+    $crumb =& $this->ancestors;
     
-    if($this->isImagePage()) $crumb[] = $this->image;
+    if($this->isImagePage()) $crumb[] =& $this->image;
     
     return $crumb;
   }
@@ -680,19 +528,19 @@ class Singapore
    */
   function crumbLineText()
   {
-    $crumbArray = $this->crumbLineArray();
+    $crumbArray =& $this->crumbLineArray();
     
     $ret = "";
-    for($i=0;$i<count($crumbArray)-1;$i++) {
-      $ret .= "<a href=\"".$this->formatURL($crumbArray[$i]->getEncodedId())."\">".$crumbArray[$i]->getName()."</a> &gt;\n";
-    }
-    $ret .= $crumbArray[$i]->getName();
+    for($i=0;$i<count($crumbArray)-1;$i++)
+      $ret .= $crumbArray[$i]->nameLink()." &gt;\n";
+      
+    $ret .= $crumbArray[$i]->name();
     return $ret;
   }
   
   function crumbLine()
   {
-    return $this->i18n->_g("crumb line|You are here:")." ".$this->crumbLineText();
+    return $this->translator->_g("crumb line|You are here:")." ".$this->crumbLineText();
   }
   
   /**
@@ -709,13 +557,13 @@ class Singapore
     $middleY = round($imageHeight/2);
     
     $ret  = "<map name=\"sgNavMap\" id=\"sgNavMap\">\n";
-    if($this->imageHasNext()) $ret .= '<area href="'.$this->imageNextURL().'" alt="'.$this->i18n->_g("image|Next").'" title="'.$this->i18n->_g("image|Next").'" shape="poly" ';
-    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
+    if($this->imageHasNext()) $ret .= '<area href="'.$this->imageNextURL().'" alt="'.$this->translator->_g("image|Next").'" title="'.$this->translator->_g("image|Next").'" shape="poly" ';
+    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->translator->_g("image|Thumbnails").'" title="'.$this->translator->_g("image|Thumbnails").'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,$imageWidth,$imageHeight,$imageWidth,0,$middleX,$middleY\" />\n";
-    if($this->imageHasPrev()) $ret .= '<area href="'.$this->imagePrevURL().'" alt="'.$this->i18n->_g("image|Previous").'" title="'.$this->i18n->_g("image|Previous").'" shape="poly" ';
-    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
+    if($this->imageHasPrev()) $ret .= '<area href="'.$this->imagePrevURL().'" alt="'.$this->translator->_g("image|Previous").'" title="'.$this->translator->_g("image|Previous").'" shape="poly" ';
+    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->translator->_g("image|Thumbnails").'" title="'.$this->translator->_g("image|Thumbnails").'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,0,$imageHeight,$middleX,$middleY\" />\n";
-    $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->i18n->_g("image|Thumbnails").'" title="'.$this->i18n->_g("image|Thumbnails").'" shape="poly" ';
+    $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->translator->_g("image|Thumbnails").'" title="'.$this->translator->_g("image|Thumbnails").'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,$imageWidth,0,$middleX,$middleY\" />\n";
     $ret .= '</map>';
     
@@ -751,7 +599,7 @@ class Singapore
     foreach($_GET as $var => $val)
       $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\" />\n";
     $ret .= '<select name="'.$this->config->url_lang."\">\n";
-    $ret .= '  <option value="'.$this->config->default_language.'">'.$this->i18n->_g("Select language...")."</option>\n";
+    $ret .= '  <option value="'.$this->config->default_language.'">'.$this->translator->_g("Select language...")."</option>\n";
     foreach($availableLanguages as $code => $name) {
       $ret .= '  <option value="'.$code.'"';
       if($code == $this->language && $this->language != $this->config->default_language)
@@ -759,7 +607,7 @@ class Singapore
       $ret .= '>'.htmlentities($name)."</option>\n";
     }
     $ret .= "</select>\n";
-    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\" />\n";
+    $ret .= '<input type="submit" class="button" value="'.$this->translator->_g("Go")."\" />\n";
     $ret .= "</form></div>\n";
     return $ret;
   }
@@ -773,7 +621,7 @@ class Singapore
     if(!$this->config->template_flipper) return "";
     
     //get list of installed templates
-    $templates = $this->getListing($this->config->base_path.$this->config->pathto_templates, "dirs");
+    $templates = sgUtils::getListing($this->config->base_path.$this->config->pathto_templates, "dirs");
     
     $ret  = '<div class="sgTemplateFlipper">';
     $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
@@ -781,7 +629,7 @@ class Singapore
     foreach($_GET as $var => $val)
       $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\" />\n";
     $ret .= '<select name="'.$this->config->url_template."\">\n";
-    $ret .= '  <option value="'.$this->config->default_template.'">'.$this->i18n->_g("Select template...")."</option>\n";
+    $ret .= '  <option value="'.$this->config->default_template.'">'.$this->translator->_g("Select template...")."</option>\n";
     foreach($templates->dirs as $name)
       //do not list admin template(s)
       if(strpos($name, "admin_")===false) {
@@ -791,124 +639,11 @@ class Singapore
         $ret .= '>'.$name."</option>\n";
       }
     $ret .= "</select>\n";
-    $ret .= '<input type="submit" class="button" value="'.$this->i18n->_g("Go")."\" />\n";
+    $ret .= '<input type="submit" class="button" value="'.$this->translator->_g("Go")."\" />\n";
     $ret .= "</form></div>\n";
     return $ret;
   }
   
-  
-  /////////////////////////////
-  //////gallery functions//////
-  /////////////////////////////
-  
-  
- 	/**
-   * If the specified gallery is an album then it returns the number of 
-   * images contained otherwise the number of sub-galleries is returned
-   * @param int the index of the sub gallery to count (optional)
-   * @return string the contents of the specified gallery
-   */
-  function galleryContents($index = null)
-  {
-    if($index===null ? $this->gallery->isAlbum() : $this->gallery->galleries[$index]->isAlbum())
-      return $this->imageCountText($index);
-    else
-      return $this->galleryCountText($index);
-  }
-  
-	/**
-   * @param int the index of the sub gallery to count (optional)
-   * @return int the number of galleries in the specified gallery
-   * or of the current gallery if $index is not specified
-   */
-  function galleryCount($index = null)
-  {
-    if($index === null)
-      return count($this->gallery->galleries);
-    else
-      return count($this->gallery->galleries[$index]->galleries);
-  }
-  
-  /**
-   * @return string the number of galleries in the specified gallery
-   */
-  function galleryCountText($index = null)
-  {
-    return $this->i18n->_ng("%s gallery", "%s galleries", $this->galleryCount($index));
-  }
-  
-  /**
-   * @return int the number of images in the specified gallery
-   */
-  function imageCount($index = null)
-  {
-    if($index === null)
-      return $this->gallery->imageCount();
-    else
-      return $this->gallery->galleries[$index]->imageCount();
-  }
-  
-  /**
-   * @return string the number of images in the specified gallery
-   */
-  function imageCountText($index = null)
-  {
-    return $this->i18n->_ng("%s image", "%s images", $this->imageCount($index));
-  }
-  
-  /**
-   * @uses galleryThumbnailImage
-   * @return string
-   */
-  function galleryThumbnailLinked($index = null)
-  {
-    $ret  = "<a href=\"".$this->galleryURL($index)."\">";
-    $ret .= $this->galleryThumbnailImage($index);
-    $ret .= "</a>";
-    return $ret;
-  }
-  
-  function galleryURL($index = null)
-  {
-    if($index === null) 
-      return $this->formatURL($this->gallery->getEncodedId());
-    else 
-      return $this->formatURL($this->gallery->galleries[$index]->getEncodedId());
-  }
-  
-  /**
-   * @return string
-   */
-  function galleryThumbnailImage($index = null)
-  {
-    if($index === null) $gal = $this->gallery;
-    else $gal = $this->gallery->galleries[$index];
-    
-    $image = $gal->filename;
-    
-    switch($gal->filename) {
-      case "__none__" :
-        $ret = nl2br($this->i18n->_g("No\nthumbnail"));
-        break;
-      case "__random__" :
-        if(count($gal->images) == 0) {
-          $ret = nl2br($this->i18n->_g("No\nthumbnail"));
-          break;
-        }
-        //select random image then run on to next case
-        srand(time());
-        $image = $gal->images[rand(0,count($gal->images)-1)]->id;
-      default :
-        $ret  = "<img src=\"".$this->thumbnailURL(rawurlencode($gal->id), $image,
-                                          $this->config->thumb_width_gallery,
-                                          $this->config->thumb_height_gallery,
-                                          $this->config->thumb_force_size_gallery);
-        $ret .= '" class="sgGalleryThumb" '; 
-        $ret .= 'alt="'.$this->i18n->_g("Sample image from gallery").'" />';
-
-    }
-    return $ret;
-  }
   
   /**
    * @return string
@@ -925,19 +660,19 @@ class Singapore
   function galleryTabShowing()
   {
     if($this->isAlbumPage()) {
-      $total = $this->imageCount();
+      $total = $this->gallery->imageCount();
       $perPage = $this->config->thumb_number_album;
     } else {
-      $total = $this->galleryCount();
+      $total = $this->gallery->galleryCount();
       $perPage = $this->config->thumb_number_gallery;
     }
     
-    if($this->startat+$perPage > $total)
+    if($this->gallery->startat+$perPage > $total)
       $last = $total;
     else
-      $last = $this->startat+$perPage;
+      $last = $this->gallery->startat+$perPage;
     
-    return $this->i18n->_g("Showing %s-%s of %s",($this->startat+1),$last,$total);
+    return $this->translator->_g("Showing %s-%s of %s",($this->gallery->startat+1),$last,$total);
   }
   
   /**
@@ -949,7 +684,7 @@ class Singapore
     if($this->hasPrevPage())
       $ret .= $this->prevPageLink()." ";
     if(!$this->gallery->isRoot()) 
-      $ret .= "<a href=\"".$this->formatURL($this->gallery->parent->getEncodedId())."\" title=\"".$this->i18n->_g("gallery|Up one level")."\">".$this->i18n->_g("gallery|Up")."</a>";
+      $ret .= "<a href=\"".$this->gallery->parent->URL()."\" title=\"".$this->translator->_g("gallery|Up one level")."\">".$this->translator->_g("gallery|Up")."</a>";
     if($this->hasNextPage())
       $ret .= " ".$this->nextPageLink();
         
@@ -957,30 +692,34 @@ class Singapore
   }
   
   function navigationLinks() {
-    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->formatURL(".")."\" />\n";
+    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->ancestors[0]->URL()."\" />\n";
     
     if($this->isImagePage()) {
-      $ret .= "<link rel=\"Up\" title=\"".$this->image->parent->getName()."\" href=\"".$this->imageParentURL()."\" />\n";
-      if ($this->imageHasPrev()) {
-        $ret .= "<link rel=\"First\" title=\"".$this->gallery->images[0]->getName()."\" href=\"".$this->imageFirstURL()."\" />\n";
-        $ret .= "<link rel=\"Prev\" title=\"".$this->image->prevImage()->getName()."\" href=\"".$this->imagePrevURL()."\" />\n";
+      $ret .= "<link rel=\"Up\" title=\"".$this->image->parent->name()."\" href=\"".$this->image->parent->URL()."\" />\n";
+      if ($this->image->hasPrev()) {
+        $first= $this->image->firstImage();
+        $prev = $this->image->prevImage();
+        $ret .= "<link rel=\"First\" title=\"".$first->name()."\" href=\"".$first->URL()."\" />\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$prev->name()."\" href=\"".$prev->URL()."\" />\n";
       }
-      if ($this->imageHasNext()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->imageName($this->image->index+1)."\" href=\"".$this->imageNextURL()."\" />\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->imageName($this->gallery->imageCount()-1)."\" href=\"".$this->imageLastURL()."\" />\n";
+      if ($this->image->hasNext()) {
+        $next = $this->image->nextImage();
+        $last = $this->image->lastImage();
+        $ret .= "<link rel=\"Next\" title=\"".$next->name()."\" href=\"".$next->URL()."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$last->name()."\" href=\"".$last->URL()."\" />\n";
         //prefetch next image
-        $ret .= "<link rel=\"Prefetch\" href=\"".$this->imageURL($this->image->index+1)."\" />\n";
+        $ret .= "<link rel=\"Prefetch\" href=\"".$next->imageURL()."\" />\n";
       }
     } else {
       if(!$this->gallery->isRoot())
-        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parent->getName()."\" href=\"".$this->formatURL($this->gallery->parent->getEncodedId())."\" />\n";
+        $ret .= "<link rel=\"Up\" title=\"".$this->gallery->parent->name()."\" href=\"".$this->gallery->parent->URL()."\" />\n";
       if($this->hasPrevPage()) {
-        $ret .= "<link rel=\"Prev\" title=\"".$this->i18n->_g("gallery|Previous")."\" href=\"".$this->prevPageURL()."\" />\n";
-        $ret .= "<link rel=\"First\" title=\"".$this->i18n->_g("gallery|First")."\" href=\"".$this->formatURL($this->gallery->getEncodedId(), null, 0)."\" />\n";
+        $ret .= "<link rel=\"Prev\" title=\"".$this->translator->_g("gallery|Previous")."\" href=\"".$this->prevPageURL()."\" />\n";
+        $ret .= "<link rel=\"First\" title=\"".$this->translator->_g("gallery|First")."\" href=\"".$this->firstPageURL()."\" />\n";
       }
       if($this->hasNextPage()) {
-        $ret .= "<link rel=\"Next\" title=\"".$this->i18n->_g("gallery|Next")."\" href=\"".$this->nextPageURL()."\" />\n";
-        $ret .= "<link rel=\"Last\" title=\"".$this->i18n->_g("gallery|Last")."\" href=\"".$this->formatURL($this->gallery->getEncodedId(), null, $this->lastPageIndex())."\" />\n";
+        $ret .= "<link rel=\"Next\" title=\"".$this->translator->_g("gallery|Next")."\" href=\"".$this->nextPageURL()."\" />\n";
+        $ret .= "<link rel=\"Last\" title=\"".$this->translator->_g("gallery|Last")."\" href=\"".$this->lastPageURL()."\" />\n";
       } 
     }
     return $ret;
@@ -992,9 +731,9 @@ class Singapore
    */
   function galleryPageCount() {
     if($this->isAlbumPage())
-      return intval($this->imageCount()/$this->config->thumb_number_album)+1;
+      return intval($this->gallery->imageCount()/$this->config->thumb_number_album)+1;
     else
-      return intval($this->galleryCount()/$this->config->thumb_number_gallery)+1;
+      return intval($this->gallery->galleryCount()/$this->config->thumb_number_gallery)+1;
   }
   
   /** 
@@ -1028,214 +767,178 @@ class Singapore
       return isset($this->gallery->images[$this->image->index-1]);
   }
   
-  /**
-   * @return string the URL of the next page
-   */
-  function nextPageURL() {
-    return $this->formatURL($this->gallery->getEncodedId(), null, ($this->startat+
-      ($this->isAlbumPage()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
+  function firstPageURL() {
+    return $this->gallery->URL(0);
   }
   
-  function nextPageLink() {
-    return "<a href=\"".$this->nextPageURL()."\">".$this->i18n->_g("gallery|Next")."</a>";
+  function firstPageLink() {
+    return "<a href=\"".$this->firstPageURL()."\">".$this->translator->_g("gallery|First")."</a>";
   }
   
   /**
    * @return string the URL of the previous page
    */
   function prevPageURL() {
-    return $this->formatURL($this->gallery->getEncodedId(), null, ($this->startat-
-      ($this->isAlbumPage()?$this->config->thumb_number_album:$this->config->thumb_number_gallery)));
+    return $this->gallery->URL($this->startat -
+      ($this->isAlbumPage()?$this->config->thumb_number_album:$this->config->thumb_number_gallery));
   }
   
   function prevPageLink() {
-    return "<a href=\"".$this->prevPageURL()."\">".$this->i18n->_g("gallery|Previous")."</a>";
+    return "<a href=\"".$this->prevPageURL()."\">".$this->translator->_g("gallery|Previous")."</a>";
   }
   
   /**
-   * If the current gallery has an artist specified, returns " by " followed 
-   * by the artist's name.
-   * @return string 
+   * @return string the URL of the next page
    */
-  function galleryByArtist($index = null)
-  {
-    $artist = $this->galleryArtist($index);
-    if(!empty($artist)) return " ".$this->i18n->_g("artist name|by %s",$artist);
-    else return "";
+  function nextPageURL() {
+    return $this->gallery->URL($this->startat +
+      ($this->isAlbumPage()?$this->config->thumb_number_album:$this->config->thumb_number_gallery));
+  }
+  
+  function nextPageLink() {
+    return "<a href=\"".$this->nextPageURL()."\">".$this->translator->_g("gallery|Next")."</a>";
+  }
+  
+  function lastPageURL() {
+    $perpage = $this->isAlbumPage() ? $this->config->thumb_number_album : $this->config->thumb_number_gallery;
+    return $this->gallery->URL(floor($this->gallery->itemCount() / $perpage) * $perpage);
+  }
+  
+  function lastPageLink() {
+    return "<a href=\"".$this->lastPageURL()."\">".$this->translator->_g("gallery|Last")."</a>";
   }
   
   /**
-   * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
-   * @return string the summary of the gallery
+   * @return string link for adding a comment to image
    */
-  function gallerySummaryStripped($index = null)
+  function imageCommentLink()
   {
-    return str_replace("<br />","\n",$this->gallerySummary($index));
+    return "<a href=\"".
+      $this->formatURL($this->gallery->idEncoded(), $this->image->id, null, "addcomment").
+      "\">".$this->translator->_g("Add a comment")."</a>";
   }
   
-  /**
-   * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
-   * @return string the description of the gallery
-   */
-  function galleryDescriptionStripped($index = null)
-  {
-    $ret = $this->galleryDescription($index);
-    
-    $ret = str_replace("<br />","\n",$ret);
-    
-    if($this->config->enable_clickable_urls) {
-      //strip off html from autodetected URLs
-      $ret = preg_replace('{<a href="('.SG_REGEXP_PROTOCOLURL.')\">\1</a>}', '\1', $ret);
-      $ret = preg_replace('{<a href="http://('.SG_REGEXP_WWWURL.')">\1</a>}', '\1', $ret);
-      $ret = preg_replace('{<a href="mailto:('.SG_REGEXP_EMAILURL.')">\1</a>}', '\1', $ret);
-    }
-    
-    return $ret;
-  }
-  
-  /**
-   * @return array array of details
-   */
-  function galleryDetailsArray()
-  {
-    $ret = array();
-    if(!empty($this->gallery->email))
-        $ret[$this->i18n->_g("Email")] = $this->formatEmail($this->gallery->email);
-    if(!empty($this->gallery->date))
-      $ret[$this->i18n->_g("Date")] = $this->gallery->date;
-    if(!empty($this->gallery->desc))
-      $ret[$this->i18n->_g("Description")] = $this->gallery->desc;
-    if(!empty($this->gallery->copyright))
-      $ret[$this->i18n->_g("Copyright")] = $this->gallery->copyright;
-    elseif(!empty($this->gallery->artist))
-      $ret[$this->i18n->_g("Copyright")] = $this->gallery->artist;
-    if($this->config->show_views && !empty($this->gallery->hits))
-      $ret[$this->i18n->_g("Viewed")] = $this->i18n->_ng("viewed|%s time", "viewed|%s times",$this->gallery->hits);
-    
-    return $ret;
-  }
-  
-  /**
+    /**
    * @return array  array of sgImage objects
    */
-  function galleryImagesArray()
+  function &previewThumbnailsArray()
   {
-    return $this->gallery->images;
-  }
-  
-  /**
-   * @return array  array of {@link sgImage} objects
-   */
-  function gallerySelectedImagesArray()
-  {
-    return array_slice($this->gallery->images, $this->startat, $this->config->thumb_number_album);
-  }
-  
-  /**
-   * @return int  number of images in current view
-   */
-  function gallerySelectedImagesCount()
-  {
-    return min(count($this->gallery->images) - $this->startat, $this->config->thumb_number_album);
-  }
-  
-  /**
-   * @return array  array of {@link sgGallery} objects
-   */
-  function galleryGalleriesArray()
-  {
-    return $this->gallery->galleries;
-  }
-  
-  /**
-   * @return array  array of {@link sgGallery} objects
-   */
-  function gallerySelectedGalleriesArray()
-  {
-    return array_slice($this->gallery->galleries, $this->startat, $this->config->thumb_number_gallery);
-  }
-  
-  /**
-   * @return int  number of galleries in current view
-   */
-  function gallerySelectedGalleriesCount()
-  {
-    return min(count($this->gallery->galleries) - $this->startat, $this->config->thumb_number_gallery);
-  }
-  
-  /**
-   * Image thumbnail that links to the appropriate image page
-   * @return string  html
-   */
-  function imageThumbnailLinked($index = null)
-  {
-    if($index === null) $img = $this->image;
-    else $img = $this->gallery->images[$index];
+    $mid = $this->config->thumb_number_preview;
+    $ret[$mid] =& $this->image;
     
-    $ret  = "<a href=\"".$this->formatURL($this->gallery->getEncodedId(), $img->id)."\">";
-    $ret .= $this->imageThumbnailImage($index);
-    $ret .= "</a>";
+    for($i = $mid; $i > 0; $i--)
+      if($ret[$i]->hasPrev())
+        $ret[$i-1] =& $ret[$i]->prevImage();
+      else
+        break;
+    
+    for($i = $mid; $i < $mid*2+1; $i++)
+      if($ret[$i]->hasNext())
+        $ret[$i+1] =& $ret[$i]->nextImage();
+      else
+        break;
+    
     return $ret;
   }
   
-  /**
-   * Image thumbnail that pops up a new window containing the image
-   * @return string  html
-   * @depreciated
-   */
-  function imageThumbnailPopup($index = null)
+  function previewThumbnails()
   {
-    $ret =  '<a href="'.$this->imageURL($index).'" onclick="';
-    $ret .= "window.open('".$this->imageURL($index)."','','toolbar=0,resizable=1,";
-    $ret .= "width=".($this->imageWidth($index)+20).",";
-    $ret .= "height=".($this->imageheight($index)+20)."');";
-    $ret .= "return false;\">".$this->imageThumbnailImage($index)."</a>";
+    $thumbs =& $this->previewThumbnailsArray();
+    $ret = "";
+    for($i = 0; $i < $this->config->thumb_number_preview*2+1 && isset($thumbs[$i]); $i++) {
+      $ret .= $thumbs[$i]->thumbnailLink()."\n";
+    }
+    return $ret;
+  }
+  
+  function imageFirstLink()
+  {
+    if($this->imageHasPrev())
+      return "<a href=\"".$this->imageFirstURL()."\" title=\"".$this->imageName(0)."\">".$this->translator->_g("image|First")."</a> | ";
+  }
 
-    return $ret;
-  }
-  
-  /**
-   * Creates a correctly formatted &lt;img&gt; tag to display the album 
-   * thumbnail of the specified image
-   * @param int index of image (optional)
-   * @return string  html
-   */
-  function imageThumbnailImage($index = null)
+  function imageLastLink()
   {
-    if($index === null) $img = $this->image;
-    else $img = $this->gallery->images[$index];
-    
-    $ret  = '<img src="'.$this->thumbnailURL(
-                           $this->gallery->getEncodedId(), $img->id,
-                           $this->config->thumb_width_album,
-                           $this->config->thumb_height_album,
-                           $this->config->thumb_force_size_album).'" ';
-    $ret .= 'width="'.$this->thumbnailWidth(
-                           $this->imageRealWidth($index), $this->imageRealHeight($index),
-                           $this->config->thumb_width_album,
-                           $this->config->thumb_height_album,
-                           $this->config->thumb_force_size_album).'" ';
-    $ret .= 'height="'.$this->thumbnailHeight(
-                           $this->imageRealWidth($index), $this->imageRealHeight($index),
-                           $this->config->thumb_width_album,
-                           $this->config->thumb_height_album,
-                           $this->config->thumb_force_size_album).'" ';
-    $ret .= 'alt="'.$this->imageName($index).$this->imageByArtist($index).'" ';
-    $ret .= 'title="'.$this->imageName($index).$this->imageByArtist($index).'" />';
-    
-    return $ret;
+    if($this->imageHasNext())
+      return " | <a href=\"".$this->imageLastURL()."\" title=\"".$this->imageName($this->gallery->imageCount()-1)."\">".$this->translator->_g("image|Last")."</a>";
   }
   
-  /**
-   * Calculates thumbnail width given:
-   * @param int original image width
-   * @param int original image height
-   * @param int required image width
-   * @param int required image height
-   * @param bool force size of thumbnail
-   * @return int width of thumbnail in pixels
-   */
-  function thumbnailWidth($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
+  function imageFirstURL()
+  {
+    return $this->formatURL($this->gallery->idEncoded(), $this->gallery->images[0]->id);
+  }
+  
+  function imageLastURL()
+  {
+    return $this->formatURL($this->gallery->idEncoded(), $this->gallery->images[$this->gallery->imageCount()-1]->id);
+  }
+  
+  ///////////////////////////////
+  //////depreciated methods//////
+  ///////////////////////////////
+  //*
+
+  function galleryURL($index = null) { return $index === null ? $this->gallery->URL() : $this->gallery->galleries[$index]->URL(); }
+  function galleryThumbnailImage($index = null) { return $index === null ? $this->gallery->thumbnailHTML() : $this->gallery->galleries[$index]->thumbnailHTML(); }
+  function galleryByArtist($index = null) { return $index === null ? $this->gallery->byArtistText() : $this->gallery->galleries[$index]->byArtistText(); }
+  function gallerySummaryStripped($index = null)     { return $index === null ? $this->gallery->summaryStripped() : $this->gallery->galleries[$index]->summaryStripped(); }
+	function galleryDescriptionStripped($index = null) { return $index === null ? $this->gallery->descriptionStripped() : $this->gallery->galleries[$index]->descriptionStripped(); }
+  function galleryImagesArray()         { return $this->gallery->images; }
+  function gallerySelectedImagesArray() { return $this->gallery->imageSelectedArray(); }
+  function gallerySelectedImagesCount() { return $this->gallery->imageCountSelected(); }
+  function galleryGalleriesArray()         { return $this->gallery->galleries; }
+  function gallerySelectedGalleriesArray() { return $this->gallery->gallerySelectedArray(); }
+  function gallerySelectedGalleriesCount() { return $this->gallery->galleryCountSelected(); }
+  function galleryIdEncoded($index = null)   { return $index===null ? $this->gallery->idEncoded() : $this->gallery->galleries[$index]->idEncoded(); }
+  function galleryName($index = null)        { return $index===null ? $this->gallery->name() : $this->gallery->galleries[$index]->name(); }
+  function galleryArtist($index = null)      { return $index===null ? $this->gallery->itemCountText() : $this->gallery->galleries[$index]->itemCountText(); }
+  function gallerySummary($index = null)     { return $index===null ? $this->gallery->summary() : $this->gallery->galleries[$index]->summary(); }
+  function galleryDescription($index = null) { return $index===null ? $this->gallery->description() : $this->gallery->galleries[$index]->description(); }
+  function galleryViews($index = null)       { return $index===null ? $this->gallery->hits() : $this->gallery->galleries[$index]->hits(); }
+  function imageRealWidth($index = null)     { return $index===null ? $this->image->realWidth() : $this->gallery->images[$index]->realWidth(); }
+  function imageRealHeight($index = null)    { return $index===null ? $this->image->realHeight() : $this->gallery->images[$index]->realHeight(); }
+  function galleryContents($index = null)    { return $index===null ? $this->gallery->itemCountText() : $this->gallery->galleries[$index]->itemCountText(); }
+  function galleryCount($index = null)       { return $index===null ? $this->gallery->galleryCount() : $this->gallery->galleries[$index]->galleryCount(); }
+  function galleryCountText($index = null)   { return $index===null ? $this->gallery->galleryCountText() : $this->gallery->galleries[$index]->galleryCountText(); }
+  function imageCount($index = null)         { return $index===null ? $this->gallery->imageCount() : $this->gallery->galleries[$index]->imageCount(); }
+  function imageCountText($index = null)     { return $index===null ? $this->gallery->imageCountText() : $this->gallery->galleries[$index]->imageCountText(); }
+  function galleryThumbnailLinked($index = null) { return $index===null ? $this->gallery->thumbnailLink() : $this->gallery->galleries[$index]->thumbnailLink(); }
+  function imageThumbnailLinked($index = null) { return $index===null ? $this->image->thumbnailLink() : $this->gallery->images[$index]->thumbnailLink(); }
+  function imageThumbnailPopup($index = null)  { return $index===null ? $this->image->thumbnailPopupHTML() : $this->gallery->images[$index]->thumbnailPopupHTML(); }
+  function imageThumbnailImage($index = null)  { return $index===null ? $this->image->thumbnailHTML() : $this->gallery->images[$index]->thumbnailHTML(); }
+  function image()  { return $this->image->imageHTML(); }
+  function imageWidth($index = null)      { return $index===null ? $this->image->width() : $this->gallery->images[$index]->width(); }
+  function imageHeight($index = null)     { return $index===null ? $this->image->height() : $this->gallery->images[$index]->height(); }
+  function imageName($index = null)       { return $index===null ? $this->image->name() : $this->gallery->images[$index]->name(); }
+  function imageArtist($index = null)     { return $index===null ? $this->image->artist() : $this->gallery->images[$index]->artist(); }
+  function imageByArtist($index = null)   { return $index===null ? $this->image->byArtistText() : $this->gallery->images[$index]->byArtistText(); }
+  function imageDescription($index = null){ return $index===null ? $this->image->desc() : $this->gallery->images[$index]->desc(); }
+  function imageURL($index = null)     { return $index===null ? $this->image->imageURL() : $this->gallery->images[$index]->imageURL(); }
+  function imageRealURL($index = null) { return $index===null ? $this->image->imageRealURL() : $this->gallery->images[$index]->imageRealURL(); }
+  function imageParentURL()  { return $this->image->parent->URL(); }
+  function imagePrevURL()    { $tmp =& $this->image->prevImage(); return $tmp->URL(); }
+  function imageNextURL()    { $tmp =& $this->image->nextImage(); return $tmp->URL(); }
+  function imageParentLink() { return ' '.$this->image->parentLink().' '; }
+  function imagePrevLink()   { return ' '.$this->image->prevLink().' '; }
+  function imageNextLink()   { return ' '.$this->image->nextLink().' '; }
+  function imageHasPrev()    { return $this->image->hasPrev(); }
+  function imageHasNext()    { return $this->image->hasNext(); }
+  function isImage()                { return $this->isImagePage(); }
+  function isGallery($index = null) { return !empty($this->gallery) && ($index === null ? $this->gallery->isGallery() : $this->gallery->galleries[$index]->isGallery()); }
+  function isAlbum($index = null)   { return !empty($this->gallery) && ($index === null ? $this->gallery->isAlbum() : $this->gallery->galleries[$index]->isAlbum()); }
+  function galleryHasSubGalleries($index = null) { return $index === null ? $this->gallery->hasChildGalleries() : $this->gallery->galleries[$index]->hasChildGalleries(); }
+	function galleryHasImages($index = null)       { return $index === null ? $this->gallery->hasImages() : $this->gallery->galleries[$index]->hasImages(); }
+  function galleryHasNext() { return $this->hasNextPage(); }
+  function galleryHasPrev() { return $this->hasPrevPage(); }
+  function galleryNextURL() { return $this->nextPageURL(); }
+  function galleryNextLink(){ return ' '.$this->nextPageLink().' '; }
+  function galleryPrevURL() { return $this->prevPageURL(); }
+  function galleryPrevLink(){ return ' '.$this->prevPageLink().' '; }
+  function imageDetailsArray()   { return $this->image->detailsArray(); }
+  function galleryDetailsArray() { return $this->gallery->detailsArray(); }
+  function imagePreviewThumbnails() { return $this->previewThumbnails(); }
+  
+  /*function thumbnailWidth($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
   {
     //if aspect ratio is to be constrained set crop size
     if($forceSize) {
@@ -1262,397 +965,40 @@ class Singapore
       return $imageWidth;
   }
   
-  /**
-   * Calculates thumbnail height given:
-   * @param int original image width
-   * @param int original image height
-   * @param int required image width
-   * @param int required image height
-   * @param bool force size of thumbnail
-   * @return int height of thumbnail in pixels
-   */
   function thumbnailHeight($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
   {
     return $this->thumbnailWidth($imageHeight, $imageWidth, $maxHeight, $maxWidth, $forceSize);
   }
   
-  
-  
-  ///////////////////////////
-  //////image functions//////
-  ///////////////////////////
-  
-  /**
-   * Calculates image width by supplying appropriate values to {@link thumbnailWidth()} 
-   * @param int index of image (optional)
-   * @return int width of image in pixels 
-   */
-  function imageWidth($index = null)
+  function formatURL($gallery, $image = null, $startat = null, $action = null)
   {
-    if($this->config->full_image_resize)
-      return $this->thumbnailWidth(
-               $this->imageRealWidth($index), $this->imageRealHeight($index), 
-               $this->config->thumb_width_image, $this->config->thumb_height_image, 
-               false);
-    else
-      return $this->imageRealWidth($index);
-  }
-  
-  /**
-   * Calculates image height by supplying appropriate values to {@link thumbnailHeight()} 
-   * @param int index of image (optional)
-   * @return int height of image in pixels
-   */
-  function imageHeight($index = null)
-  {
-    if($this->config->full_image_resize)
-      return $this->thumbnailHeight(
-               $this->imageRealWidth($index), $this->imageRealHeight($index), 
-               $this->config->thumb_width_image, $this->config->thumb_height_image, 
-               false);
-    else
-      return $this->imageRealHeight($index);
-  }
-  
-  /**
-   * @return string
-   */
-  function imageViews($index = null)
-  {
-    //todo: redo hit logging system to allow this
-  }
-  
-  /**
-   * @return string link for adding a comment to image
-   */
-  function imageCommentLink()
-  {
-    return "<a href=\"".
-      $this->formatURL($this->gallery->getEncodedId(), $this->image->id, null, "addcomment").
-      "\">".$this->i18n->_g("Add a comment")."</a>";
-  }
-  
-  /**
-   * @return string the name of the image
-   */
-  function imageName($index = null)
-  {
-    if($index===null)
-      return $this->image->name;
-    else
-      return $this->gallery->images[$index]->name;
-  }
-  
-  /**
-   * @return string the name of the image's artist
-   */
-  function imageArtist($index = null)
-  {
-    if($index===null)
-      return $this->image->artist;
-    else
-      return $this->gallery->images[$index]->artist;
-  }
-  
-  /**
-   * If there is an artist defined for this image it returns " by" followed
-   * by the artist name; otherwise it returns and empty string
-   * @return string
-   */
-  function imageByArtist($index = null)
-  {
-    if($this->imageArtist($index)!="") 
-      return " ".$this->i18n->_g("artist name|by %s",$this->imageArtist($index));
-    else 
-      return "";
-  }
-  
-  /**
-   * @return string
-   */
-  function imageDescription($index = null)
-  {
-    if($index===null)
-      return $this->image->desc;
-    else
-      return $this->gallery->images[$index]->desc;
-  }
-  
-  /**
-   * @return string the html to display the current image
-   */
-  function image()
-  {
-    $ret = '<img src="'.$this->imageURL().'" class="sgImage" ';
-    if($this->imageWidth() && $this->imageHeight())
-      $ret .= 'width="'.$this->imageWidth().'" height="'.$this->imageHeight().'" ';
-    if($this->config->imagemap_navigation)
-      $ret .= 'usemap="#sgNavMap" border="0" ';
-    $ret .= 'alt="'.$this->imageName().$this->imageByArtist().'" />';
-    return $ret;
-  }
-  
-  /**
-   * @return string the url of the current image
-   */
-  function imageURL($index = null)
-  {
-    if($this->config->full_image_resize)
-      return $this->thumbnailURL($this->gallery->getEncodedId(), 
-                                 ($index===null) ? $this->image->id : $this->gallery->images[$index]->id,
-                                 $this->config->thumb_width_image,
-                                 $this->config->thumb_height_image,
-                                 false);
-    else 
-      return $this->imageRealURL($index);
-  }
-  
-  
-  /**
-   * @return string the url of the current image unresized
-   */
-  function imageRealURL($index = null)
-  {
-    $image = ($index===null) ? $this->image->id : $this->gallery->images[$index]->id;
-    
-    //check if image is local (filename does not start with 'http://')
-    if(substr($image,0,7)!="http://") 
-      return $this->config->base_url.$this->config->pathto_galleries.
-        $this->gallery->getEncodedId()."/".rawurlencode($image);
-    else 
-      return $image;
-  }
-  
-  
-  /**
-   * @param  string  this text/html will be inserted before each linked thumbnail (optional)
-   * @param  string  this text/html will be inserted after each linked thumbnail (optional)
-   * @return string  the html to display the preview thumbnails
-   */
-  function imagePreviewThumbnails($before = '', $after = '')
-  {
-    $ret = "";
-    for($i = $this->image->index - $this->config->thumb_number_preview; $i <= $this->image->index + $this->config->thumb_number_preview; $i++) {
-      if(!isset($this->gallery->images[$i])) 
-        continue;
+    if($this->config->use_mod_rewrite) { //format url for use with mod_rewrite
+      $ret  = $this->config->base_url.$gallery;
+      if($startat) $ret .= ','.$startat;
+      $ret .= '/';
+      if($image)   $ret .= rawurlencode($image);
       
-      $ret .= $before;
-      $ret .= '<a href="'.$this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$i]->id).'">';
-      $ret .= '<img src="'.$this->thumbnailURL(
-                             $this->gallery->getEncodedId(), $this->gallery->images[$i]->id,
-                             $this->config->thumb_width_preview,
-                             $this->config->thumb_height_preview,
-                             $this->config->thumb_force_size_preview).'" ';
-      $ret .= 'width="'.$this->thumbnailWidth(
-                             $this->imageRealWidth($i), $this->imageRealHeight($i),
-                             $this->config->thumb_width_preview,
-                             $this->config->thumb_height_preview,
-                             $this->config->thumb_force_size_preview).'" ';
-      $ret .= 'height="'.$this->thumbnailHeight(
-                             $this->imageRealWidth($i), $this->imageRealHeight($i),
-                             $this->config->thumb_width_preview,
-                             $this->config->thumb_height_preview,
-                             $this->config->thumb_force_size_preview).'" ';
-      $ret .= 'alt="'.$this->imageName($i).$this->imageByArtist($i).'" ';
-      $ret .= 'title="'.$this->imageName($i).$this->imageByArtist($i).'" ';
-      if($i==$this->image->index) $ret .= 'class="sgPreviewThumbCurrent" ';
-      else $ret .= 'class="sgPreviewThumb" ';
-      $ret .= "/></a>";
-      $ret .= $after;
-      $ret .= "\n";
+      $query = array();
+      if($action)  $query[] = $this->config->url_action."=".$action;
+      if($this->language != $this->config->default_language) $query[] = $this->config->url_lang.'='.$this->language;
+      if($this->template != $this->config->default_template) $query[] = $this->config->url_template.'='.$this->template;
+      
+      if(!empty($query))
+        $ret .= '?'.implode('&amp;', $query);
+    } else { //format plain url
+      $ret  = $this->config->index_file_url;
+      $ret .= $this->config->url_gallery."=".$gallery;
+      if($startat) $ret .= "&amp;".$this->config->url_startat."=".$startat;
+      if($image)   $ret .= "&amp;".$this->config->url_image."=".rawurlencode($image);
+      if($action)  $ret .= "&amp;".$this->config->url_action."=".$action;
+      if($this->language != $this->config->default_language) $ret .= '&amp;'.$this->config->url_lang.'='.$this->language;
+      if($this->template != $this->config->default_template) $ret .= '&amp;'.$this->config->url_template.'='.$this->template;
     }
     
     return $ret;
   }
-  
-  /**
-   * @return string html link to the previous image if one exists
-   */
-  function imagePrevLink()
-  {
-    if($this->imageHasPrev())
-      return "<a href=\"".$this->imagePrevURL()."\" title=\"".$this->imageName($this->image->index-1)."\">".$this->i18n->_g("image|Previous")."</a> | ";
-  }
+  //*/
 
-  /**
-   * @return string html link to the first image if not already first
-   */
-  function imageFirstLink()
-  {
-    if($this->imageHasPrev())
-      return "<a href=\"".$this->imageFirstURL()."\" title=\"".$this->imageName(0)."\">".$this->i18n->_g("image|First")."</a> | ";
-  }
-
-  /**
-   * @return string
-   */
-  function imageParentLink()
-  {
-    return "<a href=\"".$this->imageParentURL()."\" title=\"".$this->galleryName()."\">".$this->i18n->_g("image|Thumbnails")."</a>";
-  }
-  
-  /**
-   * @return string html link to the next image if one exists
-   */
-  function imageNextLink()
-  {
-    if($this->imageHasNext())
-      return " | <a href=\"".$this->imageNextURL()."\" title=\"".$this->imageName($this->image->index+1)."\">".$this->i18n->_g("image|Next")."</a>";
-  }
-  
-  /**
-   * @return string html link to the last image if not already last
-   */
-  function imageLastLink()
-  {
-    if($this->imageHasNext())
-      return " | <a href=\"".$this->imageLastURL()."\" title=\"".$this->imageName($this->imageCount()-1)."\">".$this->i18n->_g("image|Last")."</a>";
-  }
-  
-  function imageFirstURL()
-  {
-    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[0]->id);
-  }
-  
-  function imagePrevURL()
-  {
-    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$this->image->index-1]->id);
-  }
-  
-  function imageParentURL()
-  {
-    return $this->formatURL($this->gallery->getEncodedId(), null, (floor($this->image->index/$this->config->thumb_number_album)*$this->config->thumb_number_album));
-  }
-  
-  function imageNextURL()
-  {
-    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$this->image->index+1]->id);
-  }
-  
-  function imageLastURL()
-  {
-    return $this->formatURL($this->gallery->getEncodedId(), $this->gallery->images[$this->imageCount()-1]->id);
-  }
-  
-  /**
-   * @return boolean
-   */
-  function imageHasPrev()
-  {
-    return isset($this->gallery->images[$this->image->index-1]);
-  }
-  
-  /**
-   * @return boolean
-   */
-  function imageHasNext()
-  {
-    return isset($this->gallery->images[$this->image->index+1]);
-  }
-  
-  
-  /**
-   * @return array
-   */
-  function imageDetailsArray()
-  {
-    $ret = array();
-    if(!empty($this->image->email))
-      $ret[$this->i18n->_g("Email")] = $this->formatEmail($this->image->email);
-    if(!empty($this->image->location))
-      $ret[$this->i18n->_g("Location")] = $this->image->location;
-    if(!empty($this->image->date))
-      $ret[$this->i18n->_g("Date")] = $this->image->date;
-    if(!empty($this->image->desc))
-      $ret[$this->i18n->_g("Description")] = $this->image->desc;
-    if(!empty($this->image->camera))
-      $ret[$this->i18n->_g("Camera")] = $this->image->camera;
-    if(!empty($this->image->lens))
-      $ret[$this->i18n->_g("Lens")] = $this->image->lens;
-    if(!empty($this->image->film))
-      $ret[$this->i18n->_g("Film")] = $this->image->film;
-    if(!empty($this->image->darkroom))
-      $ret[$this->i18n->_g("Darkroom manipulation")] = $this->image->darkroom;
-    if(!empty($this->image->digital))
-      $ret[$this->i18n->_g("Digital manipulation")] = $this->image->digital;
-    if(!empty($this->image->copyright))
-      $ret[$this->i18n->_g("Copyright")] = $this->image->copyright;
-    elseif(!empty($this->image->artist))
-      $ret[$this->i18n->_g("Copyright")] = $this->image->artist;
-    if($this->config->show_views && !empty($this->image->hits))
-      $ret[$this->i18n->_g("Viewed")] = $this->i18n->_ng("viewed|%s time", "viewed|%s times",$this->image->hits);
-    
-    return $ret;
-  }
-
-  
-  ///////////////////////////////
-  //////depreciated methods//////
-  ///////////////////////////////
-  
-  function isImage()                { return $this->isImagePage(); }
-  function isGallery($index = null) { return !empty($this->gallery) && ($index === null ? $this->gallery->isGallery() : $this->gallery->galleries[$index]->isGallery()); }
-  function isAlbum($index = null)   { return !empty($this->gallery) && ($index === null ? $this->gallery->isAlbum() : $this->gallery->galleries[$index]->isAlbum()); }
-  
-  function galleryIdEncoded($index = null)
-  {
-    if($index === null) return $this->gallery->getEncodedId();
-    else return $this->gallery->galleries[$index]->getEncodedId();
-  }
-  
-  function galleryHasSubGalleries($index = null) { return $index === null ? $this->gallery->hasChildGalleries() : $this->gallery->galleries[$index]->hasChildGalleries(); }
-	function galleryHasImages($index = null)       { return $index === null ? $this->gallery->hasImages() : $this->gallery->galleries[$index]->hasImages(); }
-	
-  function galleryHasNext() { return $this->hasNextPage(); }
-  function galleryHasPrev() { return $this->hasPrevPage(); }
-  function galleryNextURL() { return $this->nextPageURL(); }
-  function galleryNextLink(){ return "<a href=\"".$this->galleryNextURL()."\">".$this->i18n->_g("gallery|Next")."</a>"; }
-  function galleryPrevURL() { return $this->prevPageURL(); }
-  function galleryPrevLink(){ return "<a href=\"".$this->galleryPrevURL()."\">".$this->i18n->_g("gallery|Previous")."</a>"; }
-  
-  function galleryName($index = null)
-  {
-    if($index===null) return $this->gallery->getName();
-    else return $this->gallery->galleries[$index]->getName();
-  }
-  
-  function galleryArtist($index = null)
-  {
-    if($index===null) return $this->gallery->getArtist();
-    else return $this->gallery->galleries[$index]->getArtist();
-  }
-  
-  function gallerySummary($index = null)
-  {
-    if($index===null) return $this->gallery->getSummary();
-    else return $this->gallery->galleries[$index]->getSummary();
-  }
-  
-  function galleryDescription($index = null)
-  {
-    if($index===null) return $this->gallery->getDescription();
-    else return $this->gallery->galleries[$index]->getDescription();
-  }
-  
-  function galleryViews($index = null)
-  {
-    if($index===null) return $this->gallery->getHits();
-    else return $this->gallery->galleries[$index]->getHits();
-  }
-  
-  function imageRealWidth($index = null)
-  {
-    if($index === null) return $this->image->getWidth();
-    else return $this->gallery->images[$index]->getWidth();
-  }
-  
-  function imageRealHeight($index = null)
-  {
-    if($index === null) return $this->image->getHeight();
-    else return $this->gallery->images[$index]->getHeight();
-  }
-  
-  
 }
 
 

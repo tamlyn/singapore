@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: iosql.class.php,v 1.2 2005/06/17 20:08:33 tamlyn Exp $
+ * @version $Id: iosql.class.php,v 1.3 2005/09/17 14:57:46 tamlyn Exp $
  */
 
 //include the base IO class
@@ -37,9 +37,9 @@ class sgIOsql extends sgIO
    * @param string language code spec for this request (optional)
    * @param int     number of levels of child galleries to fetch (optional)
    */
-  function getGallery($galleryId, $language = null, $getChildGalleries = 1) 
+  function &getGallery($galleryId, &$parent, $getChildGalleries = 1, $language = null) 
   {
-    $gal = new sgGallery($galleryId);
+    $gal =& new sgGallery($galleryId, $parent);
     
     if($language == null) $language = $this->config->default_language;
     
@@ -80,9 +80,8 @@ class sgIOsql extends sgIO
         $res = $this->query("SELECT * FROM ".$this->config->sql_prefix."images ".
                "WHERE galleryid='".$this->escape_string($galleryId)."' and lang=''");
       for($i=0;$i<$this->num_rows($res);$i++) {
-        $gal->images[$i] = new sgImage();
+        $gal->images[$i] =& new sgImage($imginfo['filename'], $gal);
         $imginfo = $this->fetch_array($res);
-        $gal->images[$i]->id = $imginfo['filename'];
         $gal->images[$i]->thumbnail = $imginfo['thumbnail'];
         $gal->images[$i]->owner = $imginfo['owner'];
         $gal->images[$i]->groups = $imginfo['groups'];
@@ -109,14 +108,14 @@ class sgIOsql extends sgIO
         
     } else
       //no record found so use iifn method implemented in parent class
-      return parent::getGallery($galleryId, $language, $getChildGalleries);
+      return parent::getGallery($galleryId, $parent, $getChildGalleries, $language);
     
     //discover child galleries
-    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
+    $dir = sgUtils::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/");
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
-        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1);
+        $gal->galleries[] =& $this->getGallery($galleryId."/".$gallery, $gal, $getChildGalleries-1, $language);
     else
       //otherwise just copy their names in so they can be counted
       $gal->galleries = $dir->dirs;

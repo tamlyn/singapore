@@ -9,12 +9,12 @@
     <input type="hidden" name="action" value="multigallery" />
     <input type="hidden" name="gallery" value="<?php echo $sg->galleryIdEncoded(); ?>" />
     <div class="sgGallery">
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->i18n->_g("Delete selected"); ?>" />
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->i18n->_g("Move selected"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete selected"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move selected"); ?>" />
       <select name="sgMoveTo">
-        <option value=""><?php echo $sg->i18n->_g("Select gallery..."); ?></option>
+        <option value=""><?php echo $sg->translator->_g("Select gallery..."); ?></option>
       </select>
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->i18n->_g("Re-index selected"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Re-index selected"); ?>" />
     </div> */ ?>
     <?php for($index = $sg->startat; $index < $sg->gallerySelectedGalleriesCount()+$sg->startat; $index++): ?> 
     <div class="sgGallery"><table>
@@ -24,14 +24,14 @@
       <td>
         <?php echo $sg->galleryName($index) ?> - <?php echo $sg->galleryContents($index) ?><br />
         <?php 
-          echo '<a href="'.$sg->formatAdminURL("view",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|View gallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("editgallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Edit gallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("editpermissions",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Access control")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("deletegallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Delete gallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("newgallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|New subgallery")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("reindex",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Re-index gallery")."</a> |\n";
-          //echo '<a href="'.$sg->formatAdminURL("newimage",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|New image")."</a> |\n";
-          echo '<a href="'.$sg->formatAdminURL("changethumbnail",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->i18n->_g("admin bar|Change thumbnail")."</a>\n";
+          echo '<a href="'.$sg->formatAdminURL("view",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|View gallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("editgallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|Edit gallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("editpermissions",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|Access control")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("deletegallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|Delete gallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("newgallery",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|New subgallery")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("reindex",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|Re-index gallery")."</a> |\n";
+          //echo '<a href="'.$sg->formatAdminURL("newimage",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|New image")."</a> |\n";
+          echo '<a href="'.$sg->formatAdminURL("changethumbnail",$sg->gallery->galleries[$index]->getEncodedId()).'">'.$sg->translator->_g("admin bar|Change thumbnail")."</a>\n";
         ?>
       </td>
     </tr>

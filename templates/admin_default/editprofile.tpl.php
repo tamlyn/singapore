@@ -1,4 +1,4 @@
-<h1><?php echo $sg->i18n->_g("my profile"); ?></h1>
+<h1><?php echo $sg->translator->_g("my profile"); ?></h1>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <table class="formTable">
@@ -13,23 +13,23 @@
     }
 ?>  
 <tr>
-  <td><?php echo $sg->i18n->_g("Username"); ?></td>
+  <td><?php echo $sg->translator->_g("Username"); ?></td>
   <td><strong><?php echo $user->username; ?></strong></td>
 </tr>
 <tr>
-  <td><?php echo $sg->i18n->_g("Email"); ?></td>
+  <td><?php echo $sg->translator->_g("Email"); ?></td>
   <td><input type="input" name="sgEmail" value="<?php echo $user->email; ?>" /></td>
 </tr>
 <tr>
-  <td><?php echo $sg->i18n->_g("Full name"); ?></td>
+  <td><?php echo $sg->translator->_g("Full name"); ?></td>
   <td><input type="input" name="sgFullname" value="<?php echo $user->fullname; ?>" /></td>
 </tr>
-  <tr><td><?php echo $sg->i18n->_g("Description"); ?></td>
+  <tr><td><?php echo $sg->translator->_g("Description"); ?></td>
   <td><input type="input" name="sgDescription" value="<?php echo $user->description; ?>" /></td>
 </tr>
 <tr>
   <td></td>
-  <td><input type="submit" class="button" value="<?php /*"*/ echo $sg->i18n->_g("Save Changes") ?>" /></td>
+  <td><input type="submit" class="button" value="<?php /*"*/ echo $sg->translator->_g("Save Changes") ?>" /></td>
 </tr>
 </table>
 </form>

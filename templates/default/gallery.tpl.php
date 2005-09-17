@@ -1,5 +1,5 @@
-<h2 class="sgTitle"><?php echo $sg->galleryName(); ?></h2>
-<h4 class="sgSubTitle"><?php echo $sg->galleryByArtist(); ?></h4>
+<h2 class="sgTitle"><?php echo $sg->gallery->name(); ?></h2>
+<h4 class="sgSubTitle"><?php echo $sg->gallery->byArtistText(); ?></h4>
 
 <div class="sgShadow"><table class="sgShadow" cellspacing="0">
   <tr>
@@ -19,16 +19,16 @@
   <tr>
     <td class="ml"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
-    <?php for($index = $sg->startat; $index < $sg->gallerySelectedGalleriesCount()+$sg->startat; $index++): ?> 
+    <?php for($index = $sg->gallery->startat; $index < $sg->gallery->galleryCountSelected()+$sg->gallery->startat; $index++): ?> 
     <div class="sgGallery"><table class="sgGallery">
     <tr valign="top">
       <td class="sgGalleryThumb">
-        <?php echo $sg->galleryThumbnailLinked($index); ?> 
+        <?php echo $sg->gallery->galleries[$index]->thumbnailLink(); ?> 
       </td>
       <td>
-        <p><strong><a href="<?php echo $sg->galleryURL($index) ?>"><?php echo $sg->galleryName($index); ?></a></strong></p>
-        <p><?php echo $sg->gallerySummary($index); ?></p>
-        <p>[<?php echo $sg->galleryContents($index); ?>]</p>
+        <p><strong><?php echo $sg->gallery->galleries[$index]->nameLink(); ?></strong></p>
+        <p><?php echo $sg->gallery->galleries[$index]->summary(); ?></p>
+        <p>[<?php echo $sg->gallery->galleries[$index]->itemCountText(); ?>]</p>
       </td>
     </tr>
     </table>
@@ -46,7 +46,7 @@
   
   
 <p class="sgDetailsList">
-<?php foreach($sg->galleryDetailsArray() as $key => $value): ?>
+<?php foreach($sg->gallery->detailsArray() as $key => $value): ?>
 <strong><?php echo $key; ?>:</strong> <?php echo $value; ?><br />
 <?php endforeach; ?>
 </p>

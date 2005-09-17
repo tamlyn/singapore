@@ -8,10 +8,10 @@
     <input type="hidden" name="action" value="multiimage" />
     <input type="hidden" name="gallery" value="<?php echo $sg->galleryIdEncoded(); ?>" />
     <div class="sgGallery">
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->i18n->_g("Delete selected"); ?>" />
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->i18n->_g("Move selected"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete selected"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move selected"); ?>" />
       <select name="sgMoveTo">
-        <option value=""><?php echo $sg->i18n->_g("Select gallery..."); ?></option>
+        <option value=""><?php echo $sg->translator->_g("Select gallery..."); ?></option>
       </select>
     </div> */ ?>
     <?php for($index = $sg->startat; $index < $sg->gallerySelectedImagesCount()+$sg->startat; $index++): ?> 

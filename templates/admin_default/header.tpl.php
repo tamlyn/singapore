@@ -36,7 +36,7 @@
 <?php if(isset($adminMessage)): ?>
 <div id="sgAdminMessages">
   <?php 
-    echo $sg->i18n->_g("Admin message:");
+    echo $sg->translator->_g("Admin message:");
     echo "<br />\n&nbsp;&nbsp;";
     echo $adminMessage; 
   ?>

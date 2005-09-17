@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: user.class.php,v 1.2 2004/10/26 04:32:36 tamlyn Exp $
+ * @version $Id: user.class.php,v 1.3 2005/09/17 14:57:46 tamlyn Exp $
  */
 
 /**
@@ -49,7 +49,7 @@ class sgUser
   var $email = "";
   
   /**
-   * The name or title of the image
+   * The name or title of the user
    * @var string
    */
   var $fullname = "";
@@ -67,7 +67,7 @@ class sgUser
   var $stats = "";
   
   /**
-   * Constructor forces username and userpass to have values
+   * Constructor ensures username and userpass have values
    */
   function sgUser($username, $userpass)
   {

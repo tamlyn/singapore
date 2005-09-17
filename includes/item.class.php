@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.1 2005/06/17 20:08:34 tamlyn Exp $
+ * @version $Id: item.class.php,v 1.2 2005/09/17 14:57:46 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -111,21 +111,147 @@ class sgItem
    * Pointer to the parent sgItem
    * @var sgItem
    */
-  var $parent = null;
+  var $parent;
+  
+  
+  /**
+   * Reference to the current config object
+   * @var sgConfig
+   */
+  var $config;
+  
+  /**
+   * Reference to the current translator object
+   * @var sgTranslator
+   */
+  var $translator;
+  
+  /**
+   * Thumbnail representation of the item
+   * @var sgThumbnail
+   */
+  var $thumbnail = null;
   
   /** Accessor methods */
-  function getName()        { return $this->name; }
-  function getArtist()      { return $this->artist; }
-  function getDate()        { return $this->date; }
-  function getLocation()    { return $this->location; }
-  function getDescription() { return $this->desc; }
+  function name()        { return $this->name; }
+  function artist()      { return $this->artist; }
+  function date()        { return $this->date; }
+  function location()    { return $this->location; }
+  function description() { return $this->desc; }
   
-  function canEdit() { }
+  function canEdit()     { return false; }
+  
+  /**
+   * If the current item has an artist specified, returns " by " followed 
+   * by the artist's name. Otherwise returns an empty string.
+   * @return string 
+   */
+  function byArtistText() 
+  {
+    if(empty($this->artist))
+      return "";
+    else
+      return " ".$this->translator->_g("artist name|by %s",$this->artist);
+  }
+  
+  /**
+   * Obfuscates the given email address by replacing "." with "dot" and "@" with "at"
+   * @param boolean  override the obfuscate_email config setting (optional)
+   * @return string  obfuscated email address or HTML mailto link
+   */
+  function emailLink($forceObfuscate = false)
+  {
+    if($this->config->obfuscate_email || $forceObfuscate)
+        return strtr($this->email,array("@" => ' <b>'.$this->translator->_g("email|at").'</b> ', "." => ' <b>'.$this->translator->_g("email|dot").'</b> '));
+      else
+        return "<a href=\"mailto:".$this->email."\">".$this->email."</a>";
+  }
+
+  function nameLink()
+  {
+    return '<a href="'.$this->URL().'">'.$this->name().'</a>';
+  }
+  
+  function thumbnailLink()
+  {
+    return '<a href="'.$this->URL().'">'.$this->thumbnailHTML().'</a>';
+  }
+  
+  /**
+   * @return array  associative array of item properties in the form "name" => "value"
+   */
+  function detailsArray() 
+  {
+    $ret = array();
+    
+    //generic properties
+    if(!empty($this->date))      $ret[$this->translator->_g("Date")] = $this->date;
+    if(!empty($this->location))  $ret[$this->translator->_g("Location")] = $this->location;
+    if(!empty($this->desc))      $ret[$this->translator->_g("Description")] = $this->desc;
+    if(!empty($this->email))     $ret[$this->translator->_g("Email")] = $this->emailLink();
+    
+    //image properties
+    if(!empty($this->camera))    $ret[$this->translator->_g("Camera")] = $this->camera;
+    if(!empty($this->lens))      $ret[$this->translator->_g("Lens")] = $this->lens;
+    if(!empty($this->film))      $ret[$this->translator->_g("Film")] = $this->film;
+    if(!empty($this->darkroom))  $ret[$this->translator->_g("Darkroom manipulation")] = $this->darkroom;
+    if(!empty($this->digital))   $ret[$this->translator->_g("Digital manipulation")] = $this->digital;
+    
+    //special properties
+    if(!empty($this->copyright)) $ret[$this->translator->_g("Copyright")] = $this->copyright;
+    elseif(!empty($this->artist))$ret[$this->translator->_g("Copyright")] = $this->artist;
+    if($this->config->show_views && !empty($this->hits))
+      $ret[$this->translator->_g("Viewed")] = $this->translator->_ng("viewed|%s time", "viewed|%s times",$this->hits);
+    
+    return $ret;
+  }
   
   function isAlbum()   { return false; }
   function isGallery() { return false; }
   function isImage()   { return false; }
-}
+
+  /**
+   * Returns a link to the image or gallery with the correct formatting and path
+   *
+   * @param int  page offset (optional)
+   * @param string  action to perform (optional)
+   * @return string formatted URL
+   */
+  function URL($startat = null, $action = null)
+  {
+    $query = array();
+    if($this->config->use_mod_rewrite) { //format url for use with mod_rewrite
+      $ret  = $this->config->base_url;
+      $ret .= $this->isImage() ? $this->parent->idEncoded() : $this->idEncoded();
+      if($startat) $ret .= ','.$startat;
+      $ret .= '/';
+      if($this->isImage())   $ret .= $this->idEncoded();
+      
+      if($action)  $query[] = $this->config->url_action."=".$action;
+      if($this->translator->language != $this->config->default_language) $query[] = $this->config->url_lang.'='.$this->translator->language;
+      if($GLOBALS["sg"]->template != $this->config->default_template) $query[] = $this->config->url_template.'='.$GLOBALS["sg"]->template;
+      
+      if(!empty($query))
+        $ret .= '?'.implode(ini_get('arg_separator.output'), $query);
+    
+    } else { //format plain url
+      
+      $query[] = $this->config->url_gallery."=".($this->isImage() ? $this->parent->idEncoded() : $this->idEncoded());
+      if($this->isImage()) $query[] = $this->config->url_image."=".$this->idEncoded();
+      if($startat)         $query[] = $this->config->url_startat."=".$startat;
+      if($action)          $query[] = $this->config->url_action."=".$action;
+      if($this->translator->language != $this->config->default_language)
+                           $query[] = $this->config->url_lang.'='.$this->translator->language;
+      if($GLOBALS["sg"]->template != $this->config->default_template)
+                           $query[] = $this->config->url_template.'='.$GLOBALS["sg"]->template;
+                           
+      $ret = $this->config->index_file_url.implode(ini_get('arg_separator.output'), $query);
+    }
+    
+    return $ret;
+  }
+  
+  }
 
 
 ?>

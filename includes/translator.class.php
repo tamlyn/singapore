@@ -3,8 +3,8 @@
 /**
  * Translation class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: translator.class.php,v 1.2 2004/02/02 16:36:04 tamlyn Exp $
+ * @copyright (c)2003-2005 Tamlyn Rhodes
+ * @version $Id: translator.class.php,v 1.3 2005/09/17 14:57:46 tamlyn Exp $
  */
  
 /**
@@ -24,13 +24,27 @@ class Translator
    */
   var $languageStrings = array();
   
+  var $language = "en";
+  
+  /**
+   * Reference to the current config object
+   * @var sgConfig
+   */
+  var $config;
+  
   /**
    * Constructor
    * @param string  file to load
    */
-  function Translator($languageFile)
+  function Translator($language, $loadAdmin = false)
   {
-    $this->readLanguageFile($languageFile);
+    $this->language = $language;
+    $this->config =& $GLOBALS["sgConfig"];
+    
+    $this->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.".$this->language.".pmo");
+    if($loadAdmin)
+      $this->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.admin.".$this->language.".pmo");
+    
   }
   
   /**

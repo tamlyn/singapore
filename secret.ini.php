@@ -10,5 +10,6 @@
 ; You may ignore these if you are not using this backend.
 ;
 
-sql_user = 
-sql_pass = 
+sql_user = ""
+sql_pass = ""
+

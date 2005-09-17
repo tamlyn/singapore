@@ -1,13 +1,12 @@
-<p class="sgTopNavBar">
-<?php echo $sg->imagePreviewThumbnails();?>
+<p class="sgNavBar sgTopNavBar">
+<?php echo $sg->previewThumbnails();?>
 <br />
-<?php echo $sg->imagePrevLink(); ?> 
-<?php echo $sg->imageParentLink(); ?> 
-<?php echo $sg->imageNextLink(); ?> 
+<?php echo sgUtils::conditional($sg->image->prevLink(),"%s | "); ?> 
+<?php echo $sg->image->parentLink(); ?> 
+<?php echo sgUtils::conditional($sg->image->nextLink()," | %s"); ?> 
 </p>
-  
-<h2 class="sgTitle"><?php echo $sg->imageName(); ?></h2>
-<h4 class="sgSubTitle"><?php echo $sg->imageByArtist(); ?></h4>
+<h2 class="sgTitle"><?php echo $sg->image->name(); ?></h2>
+<h4 class="sgSubTitle"><?php echo $sg->image->byArtistText(); ?></h4>
   
 <div class="sgShadow"><table class="sgShadow" cellspacing="0">
   <tr>
@@ -19,7 +18,7 @@
     <td class="ml"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
     <td class="mm">
   
-    <?php echo $sg->image() ?> 
+    <?php echo $sg->image->imageHTML() ?> 
   
     </td>
     <td class="mr"><img src="<?php echo $sg->config->base_url.$sg->config->pathto_current_template ?>images/blank.gif" alt="" /></td>
@@ -31,16 +30,16 @@
   </tr>
 </table></div>
   
-<p class="sgBottomNavBar">
-<?php echo $sg->imagePrevLink(); ?> 
-<?php echo $sg->imageParentLink(); ?> 
-<?php echo $sg->imageNextLink(); ?> 
+<p class="sgNavBar sgBottomNavBar">
+<?php echo sgUtils::conditional($sg->image->prevLink(),"%s | "); ?> 
+<?php echo $sg->image->parentLink(); ?> 
+<?php echo sgUtils::conditional($sg->image->nextLink()," | %s"); ?> 
 </p>
 
-<h4 class="sgNameByArtist"><em><?php echo $sg->imageName() ?></em><?php echo $sg->imageByArtist() ?></h4>
+<h4 class="sgNameByArtist"><em><?php echo $sg->image->name() ?></em><?php echo $sg->image->byArtistText() ?></h4>
   
 <p class="sgDetailsList">
-<?php foreach($sg->imageDetailsArray() as $key => $value): ?>
+<?php foreach($sg->image->detailsArray() as $key => $value): ?>
 <strong><?php echo $key ?>:</strong> <?php echo $value ?><br />
 <?php endforeach; ?>
 </p>

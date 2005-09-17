@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.23 2005/06/17 20:08:33 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.24 2005/09/17 14:57:46 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.23 $";
+    return "$Revision: 1.24 $";
   }
 
   /**
@@ -60,11 +60,11 @@ class sgIO_csv extends sgIO
    * @param int     number of levels of child galleries to fetch (optional)
    * @return sgGallery  the gallery object created
    */
-  function getGallery($galleryId, $language = null, $getChildGalleries = 1, &$parent = null) 
+  function &getGallery($galleryId, &$parent, $getChildGalleries = 1, $language = null) 
   {
-    $gal = new sgGallery($galleryId, $parent);
+    $gal =& new sgGallery($galleryId, $parent);
 
-    if($language == null) $language = $this->config->default_language;
+    if($language == null) $language = $GLOBALS["sgTranslator"]->language;
     
     //try to open language specific metadata
     $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$galleryId."/metadata.$language.csv","r");
@@ -97,7 +97,7 @@ class sgIO_csv extends sgIO
       //only fetch individual images if child galleries are required
       if($getChildGalleries) {
         for($i=0;$i<count($temp)-3;$i++) {
-          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal);
+          $gal->images[$i] =& new sgImage($temp[$i+2][0], $gal, $this->config);
           list(
             $gal->images[$i]->id,
             $gal->images[$i]->thumbnail,
@@ -131,19 +131,19 @@ class sgIO_csv extends sgIO
       //otherwise just fill in filenames
       } else if(count($temp) > 3) {
         for($i=0;$i<count($temp)-3;$i++)
-          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal);
+          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal, $this->config);
       }
         
     } else
       //no metadata found so use iifn method implemented in superclass
-      return parent::getGallery($galleryId, $language, $getChildGalleries, $parent);
+      return parent::getGallery($galleryId, $parent, $getChildGalleries, $language);
     
     //discover child galleries
-    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
+    $dir = sgUtils::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
-        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $language, $getChildGalleries-1, $gal);
+        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $gal, $getChildGalleries-1, $language);
     else
       //otherwise just copy their names in so they can be counted
       $gal->galleries = $dir->dirs;

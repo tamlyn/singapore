@@ -4,7 +4,7 @@
  * Static class providing utility methods
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: utils.class.php,v 1.1 2005/06/17 20:08:34 tamlyn Exp $
+ * @version $Id: utils.class.php,v 1.2 2005/09/17 14:57:46 tamlyn Exp $
  */
 
 
@@ -58,96 +58,13 @@ class sgUtils
       return stripslashes($toStrip);
   }
   
-  /**
-   * Obfuscates the given email address by replacing "." with "dot" and "@" with "at"
-   * @param string  email address to obfuscate
-   * @param boolean  override the obfuscate_email config setting (optional)
-   * @return string  obfuscated email address or HTML mailto link
-   */
-  function formatEmail($email, $forceObfuscate = false)
-  {
-    if($this->config->obfuscate_email || $forceObfuscate)
-        return strtr($email,array("@" => ' <b>'.$this->i18n->_g("email|at").'</b> ', "." => ' <b>'.$this->i18n->_g("email|dot").'</b> '));
-      else
-        return "<a href=\"mailto:".$email."\">".$email."</a>";
-  }
-
-  /**
-   * rawurlencode() supplied string but preserve / character for cosmetic reasons.
-   * @param  string  id to encode
-   * @return string  encoded id
-   */
-  function encodeId($id)
-  {
-    $in = explode("/",$id);
-    $out = array();
-    for($i=1;$i<count($in);$i++)
-      $out[$i-1] = rawurlencode($in[$i]);
-    return $out ? implode("/",$out) : ".";
-  }
-  
-  /**
-   * Returns a link to the image or gallery with the correct formatting and path
-   *
-   * @author   Adam Sissman <adam at bluebinary dot com>
-   * @param string  gallery id
-   * @param string  image filename (optional)
-   * @param int  page offset (optional)
-   * @param string  action to perform (optional)
-   * @return string formatted URL
-   */
-  function formatURL($gallery, $image = null, $startat = null, $action = null)
-  {
-    if($this->config->use_mod_rewrite) { //format url for use with mod_rewrite
-      $ret  = $this->config->base_url.$gallery;
-      if($startat) $ret .= ','.$startat;
-      $ret .= '/';
-      if($image)   $ret .= rawurlencode($image);
-      
-      $query = array();
-      if($action)  $query[] = $this->config->url_action."=".$action;
-      if($this->language != $this->config->default_language) $query[] = $this->config->url_lang.'='.$this->language;
-      if($this->template != $this->config->default_template) $query[] = $this->config->url_template.'='.$this->template;
-      
-      if(!empty($query))
-        $ret .= '?'.implode('&amp;', $query);
-    } else { //format plain url
-      $ret  = $this->config->index_file_url;
-      $ret .= $this->config->url_gallery."=".$gallery;
-      if($startat) $ret .= "&amp;".$this->config->url_startat."=".$startat;
-      if($image)   $ret .= "&amp;".$this->config->url_image."=".rawurlencode($image);
-      if($action)  $ret .= "&amp;".$this->config->url_action."=".$action;
-      if($this->language != $this->config->default_language) $ret .= '&amp;'.$this->config->url_lang.'='.$this->language;
-      if($this->template != $this->config->default_template) $ret .= '&amp;'.$this->config->url_template.'='.$this->template;
-    }
-    
-    return $ret;
-  }
-  
-  /**
-   * Returns a link to thumb.php with the correct formatting and path
-   *
-   * @author   Adam Sissman <adam at bluebinary dot com>
-   */
-  function thumbnailURL($gallery, $image, $width, $height, $forceSize)
-  {
-    $ret = $this->config->base_url;
-    $ret .= "thumb.php";
-    $ret .= "?gallery=".$gallery."&amp;image=".rawurlencode($image);
-    $ret .= "&amp;width=".$width."&amp;height=".$height;
-    if($forceSize) $ret .= "&amp;force=1";
-
-    return $ret;
-  }
-
-
-  function thumbnailPath($base, $gallery, $image, $width, $height, $forceSize, $mode = 0)
+  function thumbnailPath($gallery, $image, $width, $height, $forceSize, $mode = 1)
   {
     switch($mode) {
       case 0 :
-        return $base.$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
+        return $GLOBALS["sgConfig"]->pathto_data_dir."cache/".$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
       case 1 :
-        return $base."_thumbs/".$width."x".$height.($forceSize?"f":"").strtr("-$image",":/?\\","----");
+        return $GLOBALS["sgConfig"]->pathto_galleries.$gallery."/_thumbs/".$width."x".$height.($forceSize?"f":"").strtr("-$image",":/?\\","----");
     }
   }
   
@@ -164,8 +81,8 @@ class sgUtils
     $dir->path = realpath($wd)."/";
     $dir->files = array();
     $dir->dirs = array();
-    $dp = opendir($dir->path);
     
+    $dp = opendir($dir->path);
     if(!$dp) return false;
 
     while(false !== ($entry = readdir($dp)))
@@ -173,6 +90,7 @@ class sgUtils
         $dir->dirs[] = $entry;
       elseif(!is_dir($entry) && ($mask == null || preg_match("/\.($mask)$/i",$entry)))
         $dir->files[] = $entry;
+    
     sort($dir->files);
     sort($dir->dirs);
     closedir($dp);
@@ -218,6 +136,37 @@ class sgUtils
   }
   
     
+  function print_array($array)
+  {
+    echo "<pre>Array (\n";
+    
+    foreach($array as $key => $value)
+      if(is_object($value))
+        switch(get_class($value)) {
+          case "sgimage" :
+            echo "  $key => sgImage ({$value->id})\n";
+            break;
+          case "sggallery" :
+            echo "  $key => sgGallery ({$value->id})\n";
+            break;
+          default :
+            echo "  $key => Object (".get_class($value).")\n";
+        }
+      elseif(is_array($value))
+        echo "  $key => ".sgUtils::print_array($value);
+      else
+        echo "  $key => $value\n";
+        
+    echo ")</pre>";
+  }
+  
+  /**
+   * Wrapper for mkdir() implementing the safe-mode hack
+   */
+  function mkdir($path)
+  {
+    mkdir($path, $GLOBALS["sgConfig"]->directory_mode);
+  }
     
 }
 
