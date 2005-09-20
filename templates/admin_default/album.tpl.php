@@ -1,34 +1,39 @@
-<h2 class="sgTitle"><?php echo $sg->galleryName(); ?></h2>
-<h4 class="sgSubTitle"><?php echo $sg->galleryByArtist(); ?></h4>
+<p class="sgNavBar sgTopNavBar">
+<?php if($sg->gallery->hasPrev()) echo $sg->gallery->prevLink()." | "; ?> 
+<?php if(!$sg->gallery->isRoot()) echo $sg->gallery->parentLink(); ?> 
+<?php if($sg->gallery->hasNext()) echo " | ".$sg->gallery->nextLink(); ?>
+</p>
+
+<h2 class="sgTitle"><?php echo $sg->gallery->name(); ?></h2>
 
 <div class="sgContainer">
   <div class="sgTab"><?php echo $sg->galleryTab()?></div>
   <div class="sgContent">
-    <?php /* <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="get">
     <input type="hidden" name="action" value="multiimage" />
-    <input type="hidden" name="gallery" value="<?php echo $sg->galleryIdEncoded(); ?>" />
+    <input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities(); ?>" />
     <div class="sgGallery">
       <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete selected"); ?>" />
       <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move selected"); ?>" />
       <select name="sgMoveTo">
         <option value=""><?php echo $sg->translator->_g("Select gallery..."); ?></option>
       </select>
-    </div> */ ?>
-    <?php for($index = $sg->startat; $index < $sg->gallerySelectedImagesCount()+$sg->startat; $index++): ?> 
+    </div>
+    <?php for($index = $sg->gallery->startat; $index < $sg->gallery->imageCountSelected()+$sg->gallery->startat; $index++): ?> 
     <div class="sgThumbnail">
-      <?php /* <input type="checkbox" class="sgImageCheckbox checkbox" name="sgImages[<?php echo urlencode($sg->gallery->images[$index]->id) ?>]" /> */ ?>
+      <input type="checkbox" class="sgImageCheckbox checkbox" name="sgImages[<?php echo $sg->gallery->images[$index]->idEntities(); ?>]" />
       <table><tr><td>
-        <?php echo $sg->imageThumbnailLinked($index) ?> 
+        <?php echo $sg->gallery->images[$index]->thumbnailLink() ?> 
       </td></tr></table>
     </div>
     <?php endfor; ?>
     <div class="stretcher"></div>
   </div>
-  <?php /* </form> */ ?>
+  </form>
 </div>  
   
 <p>
-<?php foreach($sg->galleryDetailsArray() as $key => $value): ?>
+<?php foreach($sg->gallery->detailsArray() as $key => $value): ?>
   <strong><?php echo $key ?>:</strong> <?php echo $value ?><br />
 <?php endforeach; ?>
 </p>

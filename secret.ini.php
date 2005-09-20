@@ -13,3 +13,11 @@
 sql_user = ""
 sql_pass = ""
 
+[FTP]
+;
+; settings used by the safe_mode hack.
+; You may ignore these if your server is not running in safe_mode.
+;
+
+ftp_user = ""
+ftp_pass = ""

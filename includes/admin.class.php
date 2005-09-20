@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.40 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.41 2005/09/20 22:48:09 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -37,6 +37,7 @@ class sgAdmin extends Singapore
     //io handler class included once config is loaded
     require_once $basePath."includes/item.class.php";
     require_once $basePath."includes/translator.class.php";
+    require_once $basePath."includes/thumbnail.class.php";
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
@@ -48,7 +49,7 @@ class sgAdmin extends Singapore
 
     //remove slashes
     if(get_magic_quotes_gpc()) {
-      $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
+      $_REQUEST = array_map(array("sgUtils","arraystripslashes"), $_REQUEST);
       
       //as if magic_quotes_gpc wasn't insane enough, php doesn't add slashes 
       //to the tmp_name variable so I have to add them manually. Grrrr.
@@ -56,14 +57,17 @@ class sgAdmin extends Singapore
         $_FILES["sgImageFile"]["tmp_name"] = addslashes($_FILES["sgImageFile"]["tmp_name"]);
       if(isset($_FILES["sgArchiveFile"]["tmp_name"])) 
         $_FILES["sgArchiveFile"]["tmp_name"] = addslashes($_FILES["sgArchiveFile"]["tmp_name"]);
-      $_FILES   = array_map(array("Singapore","arraystripslashes"), $_FILES);
+      $_FILES   = array_map(array("sgUtils","arraystripslashes"), $_FILES);
     }
     
     $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
     //load config from default ini file (singapore.ini)
-    $this->config = new sgConfig("singapore.ini");
-    $this->config->loadConfig("secret.ini.php");
+    $this->config = new sgConfig($basePath."singapore.ini");
+    $this->config->loadConfig($basePath."secret.ini.php");
+    //setup global variable
+    $GLOBALS["sgConfig"] =& $this->config;
+    
     //set runtime values
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
     $this->config->pathto_cache = $this->config->pathto_data_dir."cache/";
@@ -71,7 +75,7 @@ class sgAdmin extends Singapore
     $this->config->pathto_admin_template = $this->config->pathto_templates.$this->config->admin_template_name."/";
     
     //load config from admin template ini file (admin.ini) if present
-    $this->config->loadConfig($this->config->pathto_admin_template."admin.ini");
+    $this->config->loadConfig($basePath.$this->config->pathto_admin_template."admin.ini");
     
     $this->template = $this->config->default_template;
     
@@ -208,19 +212,19 @@ class sgAdmin extends Singapore
     if(!$this->isLoggedIn()) return array(0 => array($this->translator->_g("admin bar|Back to galleries") => "."));
     
     $ret[0][$this->translator->_g("admin bar|Admin")] = $this->formatAdminURL("menu");
-    $ret[0][$this->translator->_g("admin bar|Galleries")] = $this->formatAdminURL("view", isset($this->gallery) ? $this->gallery->getEncodedId() : null);
+    $ret[0][$this->translator->_g("admin bar|Galleries")] = $this->formatAdminURL("view", isset($this->gallery) ? $this->gallery->idEncoded() : null);
     $ret[0][$this->translator->_g("admin bar|Log out")] = $this->formatAdminURL("logout");
     if($this->isGalleryPage() || $this->isAlbumPage() || $this->isImagePage()) {
-      $ret[1][$this->translator->_g("admin bar|Edit gallery")] = $this->formatAdminURL("editgallery",$this->gallery->getEncodedId());
-      $ret[1][$this->translator->_g("admin bar|Access control")] = $this->formatAdminURL("editpermissions",$this->gallery->getEncodedId());
-      $ret[1][$this->translator->_g("admin bar|Delete gallery")] = $this->formatAdminURL("deletegallery",$this->gallery->getEncodedId());
-      $ret[1][$this->translator->_g("admin bar|New subgallery")] = $this->formatAdminURL("newgallery",$this->gallery->getEncodedId());
-      $ret[1][$this->translator->_g("admin bar|Re-index gallery")] = $this->formatAdminURL("reindex",$this->gallery->getEncodedId());
+      $ret[1][$this->translator->_g("admin bar|Edit gallery")] = $this->formatAdminURL("editgallery",$this->gallery->idEncoded());
+      $ret[1][$this->translator->_g("admin bar|Access control")] = $this->formatAdminURL("editpermissions",$this->gallery->idEncoded());
+      $ret[1][$this->translator->_g("admin bar|Delete gallery")] = $this->formatAdminURL("deletegallery",$this->gallery->idEncoded());
+      $ret[1][$this->translator->_g("admin bar|New subgallery")] = $this->formatAdminURL("newgallery",$this->gallery->idEncoded());
+      $ret[1][$this->translator->_g("admin bar|Re-index gallery")] = $this->formatAdminURL("reindex",$this->gallery->idEncoded());
       if($this->isImagePage()) {
-        $ret[2][$this->translator->_g("admin bar|Edit image")] = $this->formatAdminURL("editimage",$this->gallery->getEncodedId(),$this->image->id);
-        $ret[2][$this->translator->_g("admin bar|Delete image")] = $this->formatAdminURL("deleteimage",$this->gallery->getEncodedId(),$this->image->id);
+        $ret[2][$this->translator->_g("admin bar|Edit image")] = $this->formatAdminURL("editimage",$this->gallery->idEncoded(),$this->image->id);
+        $ret[2][$this->translator->_g("admin bar|Delete image")] = $this->formatAdminURL("deleteimage",$this->gallery->idEncoded(),$this->image->id);
       }
-      $ret[2][$this->translator->_g("admin bar|New image")] = $this->formatAdminURL("newimage",$this->gallery->getEncodedId());
+      $ret[2][$this->translator->_g("admin bar|New image")] = $this->formatAdminURL("newimage",$this->gallery->idEncoded());
     }
     return $ret;
   }
@@ -309,7 +313,7 @@ class sgAdmin extends Singapore
    */
   function checkPermissions($obj, $action, $gallery = null, $image = null, $ancestor = 0)
   {
-    if($this->isAdmin() || $this->isOwner($obj))// || (!$this->isGuest() && $obj->owner == "__nobody__"))
+    if($this->user->isAdmin() || $this->user->isOwner($obj))// || (!$this->user->isGuest() && $obj->owner == "__nobody__"))
       return true;
     
     //print_r($obj);
@@ -346,10 +350,7 @@ class sgAdmin extends Singapore
   
   function savePermissions()
   {
-    if($this->isImage())
-      $obj =& $this->image;
-    else
-      $obj =& $this->gallery;
+    $obj =& $this->gallery;
     
     $perms = 0;
     
@@ -384,9 +385,9 @@ class sgAdmin extends Singapore
     $obj->permissions |= $perms;
     $obj->permissions &= $perms;
     
-    if($this->isAdmin() || $this->isOwner($obj->owner));
+    if($this->user->isAdmin() || $this->user->isOwner($obj));
       $obj->groups = $_POST["sgGroups"];
-    if($this->isAdmin())
+    if($this->user->isAdmin())
       $obj->owner = $_POST["sgOwner"];
     
     if($this->io->putGallery($this->gallery))
@@ -397,49 +398,6 @@ class sgAdmin extends Singapore
   }
   
   /**
-   * Checks if currently logged in user is an administrator.
-   * 
-   * @return bool true on success; false otherwise
-   */
-  function isAdmin($usr = null)
-  {
-    if($usr == null) $usr = $this->user;
-    return $usr->permissions & SG_ADMIN;
-  }
-  
-  /**
-   * Checks if currently logged in user is a guest.
-   * 
-   * @return bool true on success; false otherwise
-   */
-  function isGuest($usr = null)
-  {
-    if($usr == null) $usr = $this->user;
-    return $usr->username == "guest";
-  }
-  
-  /**
-   * Checks if at least one group name in $groups1 is also in $groups2
-   * 
-   * @return bool true on success; false otherwise
-   */
-  function isOwner($obj, $usr = null)
-  {
-    if($usr == null) $usr = $this->user;
-    return $obj->owner == $usr->username;
-  }
-  
-  /**
-   * Checks if at least one group name in $groups1 is also in $groups2
-   * 
-   * @return bool true on success; false otherwise
-   */
-  function isInGroup($groups1,$groups2)
-  {
-    return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2));
-  }
-  
-  /**
    * Creates a new user.
    * 
    * @return bool true on success; false otherwise
@@ -447,18 +405,18 @@ class sgAdmin extends Singapore
   function addUser()
   {
     $users = $this->io->getUsers();
-    for($i=0; $i<count($users); $i++)
-      if($users[$i]->username == $_REQUEST["user"]) {
+    foreach($users as $usr)
+      if($usr->username == $_REQUEST["user"]) {
         $this->lastError = $this->translator->_g("Username already exists");
         return false;
       }
     
-    if(!preg_match("/[a-zA-Z0-9_]{3,}/",$_REQUEST["user"])) {
+    if(!preg_match("/^[a-zA-Z0-9_]{3,}$/",$_REQUEST["user"])) {
       $this->lastError = $this->translator->_g("Username must be at least 3 characters long and contain only alphanumeric characters");
       return false;
     }
     
-    $users[$i] = new sgUser($_REQUEST["user"], md5("password"));
+    $users[count($users)] = new sgUser($_REQUEST["user"], md5("password"));
     
     if($this->io->putUsers($users))
       return true;
@@ -483,8 +441,8 @@ class sgAdmin extends Singapore
     }
       
     $users = $this->io->getUsers();
-    for($i=0; $i<count($users); $i++)
-      if($users[$i]->username == $username) {
+    foreach($users as $i => $usr)
+      if($usr->username == $username) {
         
         //delete user at offset $i from $users
         array_splice($users,$i,1);
@@ -512,7 +470,7 @@ class sgAdmin extends Singapore
         $users[$i]->email = $this->prepareText($_REQUEST["sgEmail"]);
         $users[$i]->fullname = $this->prepareText($_REQUEST["sgFullname"]);
         $users[$i]->description = $this->prepareText($_REQUEST["sgDescription"]);
-        if($this->isAdmin() && $_REQUEST["action"] == "saveuser") {
+        if($this->user->isAdmin() && $_REQUEST["action"] == "saveuser") {
           $users[$i]->groups = $this->prepareText($_REQUEST["sgGroups"]);
           $users[$i]->permissions = ($_REQUEST["sgType"] == "admin") ? $users[$i]->permissions | SG_ADMIN : $users[$i]->permissions & ~SG_ADMIN;
           if(isset($_REQUEST["sgPassword"]) && $_REQUEST["sgPassword"] != "**********")
@@ -613,7 +571,7 @@ class sgAdmin extends Singapore
     $gal->name = $_REQUEST["newgallery"];
     
     //set full permissions on guest-created objects
-    if($this->isGuest())
+    if($this->user->isGuest())
       $gal->permissions = SG_GRP_READ | SG_GRP_EDIT | SG_GRP_ADD | SG_GRP_DELETE
                         | SG_WLD_READ | SG_WLD_EDIT | SG_WLD_ADD | SG_WLD_DELETE;
     else
@@ -862,8 +820,8 @@ class sgAdmin extends Singapore
     }
     
     //add any directories as subgalleries, if allowed
-    if($this->config->allow_dir_upload == 1 && !$this->isGuest() 
-    || $this->config->allow_dir_upload == 2 &&  $this->isAdmin())
+    if($this->config->allow_dir_upload == 1 && !$this->user->isGuest() 
+    || $this->config->allow_dir_upload == 2 &&  $this->user->isAdmin())
       foreach($contents->dirs as $gallery) {
         $path = $this->config->pathto_galleries.$this->gallery->id."/".$gallery;
   

@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.2 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: item.class.php,v 1.3 2005/09/20 22:48:09 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -127,10 +127,10 @@ class sgItem
   var $translator;
   
   /**
-   * Thumbnail representation of the item
-   * @var sgThumbnail
+   * Array in which the various sized thumbnails representing this item are stored
+   * @var array
    */
-  var $thumbnail = null;
+  var $thumbnails = array();
   
   /** Accessor methods */
   function name()        { return $this->name; }
@@ -140,6 +140,26 @@ class sgItem
   function description() { return $this->desc; }
   
   function canEdit()     { return false; }
+  
+  function idEntities() { return htmlspecialchars($this->id); }
+  
+  /**
+   * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
+   * @return string the description of the item
+   */
+  function descriptionStripped()
+  {
+    $ret = str_replace("<br />","\n",$this->description());
+    
+    if($this->config->enable_clickable_urls) {
+      //strip off html from autodetected URLs
+      $ret = preg_replace('{<a href="('.SG_REGEXP_PROTOCOLURL.')\">\1</a>}', '\1', $ret);
+      $ret = preg_replace('{<a href="http://('.SG_REGEXP_WWWURL.')">\1</a>}', '\1', $ret);
+      $ret = preg_replace('{<a href="mailto:('.SG_REGEXP_EMAILURL.')">\1</a>}', '\1', $ret);
+    }
+    
+    return $ret;
+  }
   
   /**
    * If the current item has an artist specified, returns " by " followed 
@@ -172,9 +192,10 @@ class sgItem
     return '<a href="'.$this->URL().'">'.$this->name().'</a>';
   }
   
-  function thumbnailLink()
+  function parentLink()
   {
-    return '<a href="'.$this->URL().'">'.$this->thumbnailHTML().'</a>';
+    $perpage = $this->parent->isAlbum() ? $this->config->thumb_number_album : $this->config->thumb_number_gallery;
+    return '<a href="'.$this->parent->URL(floor($this->index() / $perpage) * $perpage).'">'.$this->translator->_g("gallery|Up").'</a>';
   }
   
   /**
@@ -251,7 +272,7 @@ class sgItem
     return $ret;
   }
   
-  }
+}
 
 
 ?>

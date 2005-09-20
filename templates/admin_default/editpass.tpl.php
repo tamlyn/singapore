@@ -1,9 +1,9 @@
-<h1><?php echo $sg->translator->_g("change password") ?></h1>
+<h1><?php echo $sg->translator->_g("Change Password") ?></h1>
 <p><?php echo $sg->translator->_g("Please choose a new password between 6 and 16 characters in length.") ?></p>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <input type="hidden" name="action" value="savepass" />
-<input type="hidden" name="sgUsername" value="<?php echo $_SESSION['sgUser']->username ?>" />
+<input type="hidden" name="sgUsername" value="<?php echo $sg->user->username ?>" />
 <table>
 <tr>
   <td><?php echo $sg->translator->_g("Current password:") ?></td>

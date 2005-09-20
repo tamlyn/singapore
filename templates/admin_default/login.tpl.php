@@ -1,4 +1,4 @@
-<h1><?php echo $sg->translator->_g("log in") ?></h1>
+<h1><?php echo $sg->translator->_g("Log In") ?></h1>
 
 <p><?php echo $sg->translator->_g("Please enter your admin username and password below.") ?></p>
 
@@ -20,4 +20,3 @@
     <input type="submit" class="button" value="<?php /*"*/ echo $sg->translator->_g("Log in as guest"); ?>" />
   </p>
 </form>
-<p></p>

@@ -1,3 +1,9 @@
+<p class="sgNavBar sgTopNavBar">
+<?php if($sg->gallery->hasPrev()) echo $sg->gallery->prevLink()." | "; ?> 
+<?php if(!$sg->gallery->isRoot()) echo $sg->gallery->parentLink(); ?> 
+<?php if($sg->gallery->hasNext()) echo " | ".$sg->gallery->nextLink(); ?>
+</p>
+
 <h2 class="sgTitle"><?php echo $sg->gallery->name(); ?></h2>
 <h4 class="sgSubTitle"><?php echo $sg->gallery->byArtistText(); ?></h4>
 

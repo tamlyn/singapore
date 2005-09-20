@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.9 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.10 2005/09/20 22:48:09 tamlyn Exp $
  */
 
 /**
@@ -17,8 +17,6 @@
  */
 class sgImage extends sgItem
 {
-  var $thumbnail = "";
-  
   /**
    * Width in pixels of the image
    * @var int
@@ -38,7 +36,6 @@ class sgImage extends sgItem
   var $type;
   
   
-    
   /**
    * Configurable field
    */
@@ -47,12 +44,6 @@ class sgImage extends sgItem
   var $film = "";
   var $darkroom = "";
   var $digital = "";
-  
-  /**
-   * Position of image within ->images[] array
-   * @var int
-   */
-  var $index = -1;
   
   /**
    * Constructor
@@ -71,13 +62,13 @@ class sgImage extends sgItem
   
   function hasPrev() 
   {
-    return (bool) $this->parentPosition();
+    return (bool) $this->index();
   }
   
   function hasNext() 
   {
-    $pp = $this->parentPosition();
-    return $pp !== false && $pp < $this->parent->imageCount()-1; 
+    $index = $this->index();
+    return $index !== false && $index < $this->parent->imageCount()-1; 
   }
   
   function &firstImage() 
@@ -87,12 +78,12 @@ class sgImage extends sgItem
   
   function &prevImage() 
   {
-    return $this->parent->images[$this->parentPosition()-1];
+    return $this->parent->images[$this->index()-1];
   }
   
   function &nextImage() 
   {
-    return $this->parent->images[$this->parentPosition()+1];
+    return $this->parent->images[$this->index()+1];
   }
   
   function &lastImage() 
@@ -100,13 +91,15 @@ class sgImage extends sgItem
     return $this->parent->images[count($this->parent->images)-1];
   }
   
-  function nextLink()
+  
+  
+  function firstLink()
   {
-    if(!$this->hasNext())
+    if(!$this->hasPrev())
       return "";
     
-    $tmp =& $this->nextImage(); 
-    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|Next").'</a>';
+    $tmp =& $this->firstImage(); 
+    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|First").'</a>';
   }
   
   function prevLink()
@@ -118,12 +111,34 @@ class sgImage extends sgItem
     return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|Previous").'</a>';
   }
   
-  function parentLink()
+  function nextLink()
   {
-    return '<a href="'.$this->parent->URL().'">'.$this->translator->_g("image|Thumbnails").'</a>';
+    if(!$this->hasNext())
+      return "";
+    
+    $tmp =& $this->nextImage(); 
+    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|Next").'</a>';
+  }
+  
+  function lastLink()
+  {
+    if(!$this->hasNext())
+      return "";
+    
+    $tmp =& $this->lastImage(); 
+    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|Last").'</a>';
   }
   
   function imageURL()
+  {
+    if($this->config->full_image_resize) {
+      $img = $this->thumbnail("image");
+      return $img->URL();
+    } else
+      return $this->realURL();
+  }
+  
+  function realURL()
   {
     if($this->isRemote())
       return $this->id;
@@ -131,39 +146,44 @@ class sgImage extends sgItem
       return $this->config->pathto_galleries.$this->parent->idEncoded()."/".$this->idEncoded();
   }
   
-  function imageHTML()
+  function imageHTML($class = "sgImage")
   {
-    $ret  = "<img src=\"".$this->imageURL().'" class="sgImage" '; 
+    $ret  = "<img src=\"".$this->imageURL().'" '; 
+    $ret .= 'class="'.$class.'" '; 
     $ret .= 'width="'.$this->width().'" height="'.$this->height().'" ';
     $ret .= 'alt="'.$this->name().$this->byArtistText().'" />';
     
     return $ret;
   }
   
-  function thumbnailURL()
+  function thumbnailURL($type = "album")
   {
-    $this->loadThumbnail();
-    return $this->thumbnail->URL();
+    $thumb = $this->thumbnail($type);
+    return $thumb->URL();
   }
   
-  function thumbnailHTML()
+  function thumbnailHTML($class = "sgThumbnailAlbum", $type = "album")
   {
-    $this->loadThumbnail();
-    $ret  = "<img src=\"".$this->thumbnail->URL().'" class="sgAlbumThumb" '; 
-    $ret .= 'width="'.$this->thumbnail->width().'" height="'.$this->thumbnail->height().'" ';
+    $thumb = $this->thumbnail($type);
+    $ret  = "<img src=\"".$thumb->URL().'" ';
+    $ret .= 'class="'.$class.'" '; 
+    $ret .= 'width="'.$thumb->width().'" height="'.$thumb->height().'" ';
     $ret .= 'alt="'.$this->name().$this->byArtistText().'" />';
-    
     return $ret;
   }
   
-  function thumbnailPopupHTML()
+  function thumbnailLink($class = "sgThumbnailAlbum", $type = "album")
   {
-    $this->loadThumbnail();
+    return '<a href="'.$this->URL().'">'.$this->thumbnailHTML($class, $type).'</a>';
+  }
+  
+  function thumbnailPopupLink($class = "sgThumbnailAlbum", $type = "album")
+  {
     $ret =  '<a href="'.$this->URL().'" onclick="';
     $ret .= "window.open('".$this->imageURL()."','','toolbar=0,resizable=1,";
     $ret .= "width=".($this->width()+20).",";
     $ret .= "height=".($this->height()+20)."');";
-    $ret .= "return false;\">".$this->thumbnailHTML($index)."</a>";
+    $ret .= "return false;\">".$this->thumbnailHTML($class, $type)."</a>";
   }
   
   /**
@@ -193,23 +213,28 @@ class sgImage extends sgItem
     return rawurlencode($this->id);
   }
   
-  function width()  { return $this->width; }
-  function height() { return $this->height; }
+  function width()
+  {
+    if($this->config->full_image_resize) {
+      $img = $this->thumbnail("image");
+      return $img->width();
+    } else
+      return $this->width;
+  }
   
-  function imageRealURL() { return $this->imageURL(); }
-  
-  /** Accessor methods */
-  function realWidth()  { return $this->width; }
-  function realHeight() { return $this->height; }
-  function type()   { return $this->type; }
-  
-  
-  /* Private methods */
+  function height()
+  {
+    if($this->config->full_image_resize) {
+      $img = $this->thumbnail("image");
+      return $img->height();
+    } else
+      return $this->height; 
+  }
   
   /**
    * finds position of current image in parent array
    */
-  function parentPosition()
+  function index()
   {
     foreach($this->parent->images as $key => $img)
       if($this->id == $img->id)
@@ -218,16 +243,21 @@ class sgImage extends sgItem
     return false;
   }
   
-  function loadThumbnail()
+  /** Accessor methods */
+  function realWidth()  { return $this->width; }
+  function realHeight() { return $this->height; }
+  function type()       { return $this->type; }
+  
+  
+  /* Private methods */
+  
+  function &thumbnail($type)
   {
-    //if thumbnail already exists, return
-    if($this->thumbnail != null) return;
+    //only create thumbnail if it doesn't already exist
+    if(!isset($this->thumbnails[$type])) 
+      $this->thumbnails[$type] =& new sgThumbnail($this, $type);
     
-    //create thumbnail
-    $this->thumbnail = new sgThumbnail($this, 
-       $this->config->thumb_width_album,
-       $this->config->thumb_height_album,
-       $this->config->thumb_force_size_album);
+    return $this->thumbnails[$type];
   }
 }
 

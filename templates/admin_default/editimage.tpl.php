@@ -1,15 +1,15 @@
-<h1><?php echo $sg->translator->_g("edit image") ?></h1>
+<h1><?php echo $sg->translator->_g("Edit Image") ?></h1>
   
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <input type="hidden" name="action" value="saveimage" />
-<input type="hidden" name="gallery" value="<?php echo htmlspecialchars($sg->gallery->id) ?>" />
-<input type="hidden" name="image" value="<?php echo htmlspecialchars($sg->image->id) ?>" />
+<input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities() ?>" />
+<input type="hidden" name="image" value="<?php echo $sg->image->idEntities() ?>" />
 <input type="hidden" name="sgThumbnail" value="<?php echo $sg->image->thumbnail ?>" />
 <input type="hidden" name="sgCategories" value="<?php echo $sg->image->categories ?>" />
 <table class="formTable">
 <tr>
   <td><?php echo $sg->translator->_g("Image") ?></td>
-  <td><div class="inputbox sgImageInput"><?php echo $sg->imageThumbnailImage() ?></div></td>
+  <td><div class="inputbox sgImageInput"><?php echo $sg->image->thumbnailHTML() ?></div></td>
 </tr>
 <tr>
   <td><?php echo $sg->translator->_g("Image name") ?></td>
@@ -37,7 +37,7 @@
 </tr>
 <tr>
   <td><?php echo $sg->translator->_g("Description") ?></td>
-  <td><textarea name="sgImageDesc" cols="70" rows="8"><?php echo str_replace("<br />","\n",$sg->image->desc) ?></textarea></td>
+  <td><textarea name="sgImageDesc" cols="70" rows="8"><?php echo $sg->image->descriptionStripped() ?></textarea></td>
 </tr>
 <tr>
   <td><?php echo $sg->translator->_g("Camera") ?></td>

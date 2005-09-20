@@ -11,7 +11,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.31 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: admin.php,v 1.32 2005/09/20 22:48:08 tamlyn Exp $
  */
 
 //include main class
@@ -142,7 +142,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "deleteuser" :
-      if(!$sg->isAdmin()) {
+      if(!$sg->user->isAdmin()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->translator->_g("confirm|OK")) {
@@ -176,7 +176,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "editimage";
       break;
     case "editpass" :
-      if($sg->isGuest()) {
+      if($sg->user->isGuest()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else
@@ -184,21 +184,21 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "editpermissions" :
       $sg->selectGallery();
-      if(!$sg->isAdmin() && !$sg->isOwner($sg->gallery)) {
+      if(!$sg->user->isAdmin() && !$sg->user->isOwner($sg->gallery)) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "view";
       } else
         $includeFile = "editpermissions";
       break;
     case "editprofile" :
-      if($sg->isGuest()) {
+      if($sg->user->isGuest()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else
         $includeFile = "editprofile";
       break;
     case "edituser" :
-      if(!$sg->isAdmin() && $_REQUEST["user"] != $sg->user->username || $sg->isGuest()) {
+      if(!$sg->user->isAdmin() && $_REQUEST["user"] != $sg->user->username || $sg->user->isGuest()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else
@@ -219,7 +219,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       $includeFile = "login";
       break;
     case "manageusers" :
-      if(!$sg->isAdmin()) {
+      if(!$sg->user->isAdmin()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else
@@ -248,7 +248,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $includeFile = "newimage";
       break;
     case "newuser" :
-      if(!$sg->isAdmin()) {
+      if(!$sg->user->isAdmin()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif($sg->addUser())
@@ -259,7 +259,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "purgecache" :
-      if(!$sg->isAdmin()) {
+      if(!$sg->user->isAdmin()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif(isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"]==$sg->translator->_g("confirm|OK")) {
@@ -314,7 +314,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "savepass" :
-      if($sg->isGuest()) {
+      if($sg->user->isGuest()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif($sg->savePass()) {
@@ -327,7 +327,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       break;
     case "savepermissions" :
       $sg->selectGallery();
-      if(!$sg->isAdmin() && !$sg->isOwner($sg->gallery)) {
+      if(!$sg->user->isAdmin() && !$sg->user->isOwner($sg->gallery)) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "view";
       } elseif($sg->savePermissions()) {
@@ -339,7 +339,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "saveprofile" :
-      if($_REQUEST["user"] != $sg->user->username || $sg->isGuest()) {
+      if($_REQUEST["user"] != $sg->user->username || $sg->user->isGuest()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif($sg->saveUser()) {
@@ -351,7 +351,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       }
       break;
     case "saveuser" :
-      if(!$sg->isAdmin()) {
+      if(!$sg->user->isAdmin()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif($sg->saveUser()) {
@@ -383,7 +383,7 @@ if($sg->isLoggedIn() || $sg->action == "login")
       //}
       break;
     case "suspenduser" :
-      if(!$sg->isAdmin()) {
+      if(!$sg->user->isAdmin()) {
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } elseif($sg->suspendUser())

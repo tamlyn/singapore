@@ -1,10 +1,10 @@
-<h1><?php echo $sg->translator->_g("new image") ?></h1>
+<h1><?php echo $sg->translator->_g("New Image") ?></h1>
 
 <?php if($sg->gallery->hasChildGalleries()) echo "<p>".$sg->translator->_g("This image will not be visible because this gallery is not an album: it contains child galleries.")."</p>"; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data" method="post">
 <input type="hidden" name="action" value="addimage" />
-<input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities ?>" />
+<input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities() ?>" />
 
   
 <table class="formTable">

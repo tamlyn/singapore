@@ -1,8 +1,8 @@
-<h1><?php echo $sg->translator->_g("edit gallery") ?></h1>
+<h1><?php echo $sg->translator->_g("Edit Gallery") ?></h1>
   
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 <input type="hidden" name="action" value="savegallery" />
-<input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities ?>" />
+<input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities() ?>" />
 <input type="hidden" name="sgCategories" value="<?php echo $sg->gallery->categories ?>" />
 
   
@@ -14,10 +14,10 @@
     if($sg->gallery->filename == "__random__")
       echo nl2br($sg->translator->_g("Random\nthumbnail"));
     else
-      echo $sg->galleryThumbnailImage(); 
+      echo $sg->gallery->thumbnailHTML(); 
   ?>
   <br />
-  <a href="<?php echo $sg->formatAdminURL("changethumbnail",$sg->gallery->getEncodedId()) ?>"><?php echo $sg->translator->_g("thumbnail|Change...") ?></a>
+  <a href="<?php echo $sg->formatAdminURL("changethumbnail",$sg->gallery->idEncoded()) ?>"><?php echo $sg->translator->_g("thumbnail|Change...") ?></a>
 </div></td>
 </tr>
 <tr>
@@ -42,11 +42,11 @@
 </tr>
 <tr>
   <td><?php echo $sg->translator->_g("Summary") ?></td>
-  <td><textarea name="sgSummary" cols="70" rows="3"><?php echo $sg->gallerySummaryStripped() ?></textarea></td>
+  <td><textarea name="sgSummary" cols="70" rows="3"><?php echo $sg->gallery->summaryStripped() ?></textarea></td>
 </tr>
 <tr>
   <td><?php echo $sg->translator->_g("Description") ?></td>
-  <td><textarea name="sgGalleryDesc" cols="70" rows="8"><?php echo $sg->galleryDescriptionStripped() ?></textarea></td>
+  <td><textarea name="sgGalleryDesc" cols="70" rows="8"><?php echo $sg->gallery->descriptionStripped() ?></textarea></td>
 </tr>
 <tr>
   <td></td>

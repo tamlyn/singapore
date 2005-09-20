@@ -6,11 +6,11 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: user.class.php,v 1.3 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: user.class.php,v 1.4 2005/09/20 22:48:09 tamlyn Exp $
  */
 
 /**
- * Data-only class used to store user data.
+ * Class used to represent a user.
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @copyright (c)2003, 2004 Tamlyn Rhodes
@@ -74,6 +74,49 @@ class sgUser
     $this->username = $username;
     $this->userpass = $userpass;
   }
+  
+  /**
+   * Checks if currently logged in user is an administrator.
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function isAdmin()
+  {
+    return $this->permissions & SG_ADMIN;
+  }
+  
+  /**
+   * Checks if currently logged in user is a guest.
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function isGuest()
+  {
+    return $this->username == "guest";
+  }
+  
+  /**
+   * Checks if this user is the owner of the specified item.
+   * 
+   * @param sgItem  the item to check
+   * @return bool   true if this user is the owner; false otherwise
+   */
+  function isOwner($item)
+  {
+    return $item->owner == $this->username;
+  }
+  
+  /**
+   * Checks if this user is a member of the group(s) supplied
+   * 
+   * @return bool true on success; false otherwise
+   */
+  function isInGroup($groups)
+  {
+    return (bool) array_intersect(explode(" ",$groups),explode(" ",$this->groups));
+  }
+  
+  
 }
 
 ?>

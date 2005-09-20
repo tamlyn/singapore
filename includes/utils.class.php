@@ -4,7 +4,7 @@
  * Static class providing utility methods
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: utils.class.php,v 1.2 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: utils.class.php,v 1.3 2005/09/20 22:48:09 tamlyn Exp $
  */
 
 
@@ -136,28 +136,34 @@ class sgUtils
   }
   
     
-  function print_array($array)
+  function dump($item)
   {
-    echo "<pre>Array (\n";
-    
-    foreach($array as $key => $value)
-      if(is_object($value))
-        switch(get_class($value)) {
-          case "sgimage" :
-            echo "  $key => sgImage ({$value->id})\n";
-            break;
-          case "sggallery" :
-            echo "  $key => sgGallery ({$value->id})\n";
-            break;
-          default :
-            echo "  $key => Object (".get_class($value).")\n";
-        }
-      elseif(is_array($value))
-        echo "  $key => ".sgUtils::print_array($value);
-      else
-        echo "  $key => $value\n";
+    echo "<pre>\n";
+    sgUtils::dump_s($item, 0);     
+    echo "</pre>";
+  }
+  
+  function dump_s($value, $depth)
+  {
+    if(is_object($value))
+      switch(get_class($value)) {
+        case "sgimage" :
+          echo "sgImage ({$value->id})";
+          break;
+        case "sggallery" :
+          echo "sgGallery ({$value->id})";
+          break;
+        default :
+          echo "Object (".get_class($value).")";
+      }
+    elseif(is_array($value)) {
+      echo "Array (\n";
+      foreach($value as $key => $val)
+        echo "  $key => ".sgUtils::dump_s($val, $depth+1);
+    } else
+      echo "$value";
         
-    echo ")</pre>";
+    echo "\n";
   }
   
   /**
@@ -165,7 +171,22 @@ class sgUtils
    */
   function mkdir($path)
   {
-    mkdir($path, $GLOBALS["sgConfig"]->directory_mode);
+    if($GLOBALS['sgConfig']->safe_mode_hack) {
+      $connection = ftp_connect($GLOBALS['sgConfig']->ftp_server);
+      // login to ftp server
+      $result = ftp_login($connection, $GLOBALS['sgConfig']->ftp_user, $GLOBALS['sgConfig']->ftp_pass);
+   
+      // check if connection was made
+      if ((!$connection) || (!$result))
+        return false;
+  
+      ftp_chdir($connection, $GLOBALS['sgConfig']->ftp_base_path); // go to destination dir
+      if(ftp_mkdir($connection, $path)) // create directory
+        ftp_site($connection, "CHMOD ".decoct($GLOBALS['sgConfig']->directory_mode)." ".$path);
+        
+      ftp_close($connection); // close connection
+    } else 
+      mkdir($path, $GLOBALS["sgConfig"]->directory_mode);
   }
     
 }

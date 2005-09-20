@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.9 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: gallery.class.php,v 1.10 2005/09/20 22:48:09 tamlyn Exp $
  */
 
 /**
@@ -154,24 +154,30 @@ class sgGallery extends sgItem
     return realpath($this->config->base_path.$this->config->pathto_galleries.$this->id);
   }
   
-  function thumbnailURL()
+  function thumbnailURL($type = "gallery")
   {
-    $this->loadThumbnail();
-    return $this->thumbnail->URL();
+    $thumb = $this->thumbnail($type);
+    return $thumb->URL();
   }
   
-  function thumbnailHTML()
+  function thumbnailHTML($class = "sgThumbGallery", $type = "gallery")
   {
-    $this->loadThumbnail();
-    if($this->thumbnail == null) {
+    $thumb = $this->thumbnail($type);
+    if($thumb == null) {
       $ret = nl2br($this->translator->_g("No\nthumbnail"));
     } else {    
-      $ret  = "<img src=\"".$this->thumbnail->URL().'" class="sgGalleryThumb" '; 
-      $ret .= 'width="'.$this->thumbnail->width().'" height="'.$this->thumbnail->height().'" ';
+      $ret  = '<img src="'.$thumb->URL().'" ';
+      $ret .= 'class="'.$class.'" '; 
+      $ret .= 'width="'.$thumb->width().'" height="'.$thumb->height().'" ';
       $ret .= 'alt="'.$this->translator->_g("Sample image from gallery").'" />';
     }
     
     return $ret;
+  }
+  
+  function thumbnailLink($class = "sgThumbGallery", $type = "gallery")
+  {
+    return '<a href="'.$this->URL().'">'.$this->thumbnailHTML($class, $type).'</a>';
   }
   
   /**
@@ -183,46 +189,83 @@ class sgGallery extends sgItem
     return str_replace("<br />","\n",$this->summary());
   }
   
-  /**
-   * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
-   * @return string the description of the gallery
-   */
-  function descriptionStripped()
+  function hasPrev()
   {
-    $ret = str_replace("<br />","\n",$this->description());
+    return (bool) $this->index();
+  }
+  
+  function hasNext()
+  {
+    $index = $this->index();
+    return $index !== false && $index < $this->parent->galleryCount()-1;
+  }
+  
+  function &prevGallery()
+  {
+    return new sgGallery($this->parent->id.'/'.$this->parent->galleries[$this->index()-1], $this->parent);
+  }
+  
+  function &nextGallery()
+  {
+    return new sgGallery($this->parent->id.'/'.$this->parent->galleries[$this->index()+1], $this->parent);
+  }
+  
+  function prevURL()
+  {
+    $tmp =& $this->prevGallery();
+    return $tmp->URL();
+  }
+  
+  function nextURL()
+  {
+    $tmp =& $this->nextGallery();
+    return $tmp->URL();
+  }
+  
+  function prevLink()
+  {
+    return '<a href="'.$this->prevURL().'">'.$this->translator->_g("Previous gallery").'</a>';
+  }
+  
+  function nextLink()
+  {
+    return '<a href="'.$this->nextURL().'">'.$this->translator->_g("Next gallery").'</a>';
+  }
+  
+  /**
+   * finds position of current gallery in parent array
+   */
+  function index()
+  {
+    foreach($this->parent->galleries as $key => $galleryId) 
+      if(basename($this->id) == $galleryId)
+        return $key;
     
-    if($this->config->enable_clickable_urls) {
-      //strip off html from autodetected URLs
-      $ret = preg_replace('{<a href="('.SG_REGEXP_PROTOCOLURL.')\">\1</a>}', '\1', $ret);
-      $ret = preg_replace('{<a href="http://('.SG_REGEXP_WWWURL.')">\1</a>}', '\1', $ret);
-      $ret = preg_replace('{<a href="mailto:('.SG_REGEXP_EMAILURL.')">\1</a>}', '\1', $ret);
-    }
-    
-    return $ret;
+    return false;
   }
   
   /** Accessor methods */
   function summary()       { return $this->summary; }
   
   /** Private methods */
-  function loadThumbnail()
+  function thumbnail($type)
   {
-    //if thumbnail already exists, return
-    if($this->thumbnail != null) return;
+    //only create thumbnail if it doesn't already exist
+    if(!isset($this->thumbnails[$type])) {
     
-    if($this->filename == "__none__" || $this->imageCount() == 0) 
-      return;
-    elseif($this->filename == "__random__") {
-      srand(time()); //seed random number generator and select random image
-      $img =& $this->images[rand(0,count($this->images)-1)];
-    } else
-      $img =& $this->findImage($this->filename);
+      if($this->filename == "__none__" || $this->imageCount() == 0) 
+        return;
+      elseif($this->filename == "__random__") {
+        srand(time()); //seed random number generator and select random image
+        $img =& $this->images[rand(0,count($this->images)-1)];
+      } else
+        $img =& $this->findImage($this->filename);
+      
+      //create thumbnail
+      $this->thumbnails[$type] =& new sgThumbnail($img, $type);
+    }
     
-    //create thumbnail
-    $this->thumbnail = new sgThumbnail($img, 
-       $this->config->thumb_width_gallery,
-       $this->config->thumb_height_gallery,
-       $this->config->thumb_force_size_gallery);
+    return $this->thumbnails[$type];
   }
   
   /**

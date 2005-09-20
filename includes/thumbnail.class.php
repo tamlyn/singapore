@@ -6,8 +6,9 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.1 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.2 2005/09/20 22:48:09 tamlyn Exp $
  */
+
 
 /**
  * Creates and manages image thumbnails
@@ -28,13 +29,18 @@ class sgThumbnail
   var $imagePath = "";
   var $thumbPath = "";
   
-  function sgThumbnail(&$img, $maxWidth, $maxHeight, $forceSize)
+  function sgThumbnail(&$img, $type)
   {
-    $this->config    = &$GLOBALS["sgConfig"];
-    $this->maxWidth  = $maxWidth;
-    $this->maxHeight = $maxHeight;
-    $this->forceSize = $forceSize;
-    $this->image     =& $img; 
+    $this->config =& $GLOBALS["sgConfig"];
+    $this->image  =& $img; 
+    
+    $widthVar  = "thumb_width_".$type;
+    $heightVar = "thumb_height_".$type;
+    $cropVar   = "thumb_crop_".$type;
+    $this->maxWidth  = $this->config->$widthVar;
+    $this->maxHeight = $this->config->$heightVar;
+    if(isset($this->$cropVar))
+      $this->forceSize = $this->config->$cropVar;
     
     if($this->image == null) return;
     

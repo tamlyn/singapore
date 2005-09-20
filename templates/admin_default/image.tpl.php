@@ -1,30 +1,28 @@
-<div class="sgNavBar"><p>
-  <?php echo $sg->imagePreviewThumbnails(); ?>
+<p class="sgNavBar sgTopNavBar">
+<?php echo $sg->previewThumbnails();?>
 <br />
-<?php echo $sg->imagePrevLink(); ?>
-<?php echo $sg->imageParentLink(); ?>
-<?php echo $sg->imageNextLink(); ?>
-</p></div>
-  
-<h2 class="sgTitle"><?php echo $sg->imageName(); ?></h2>
-<h4 class="sgSubTitle"><?php echo $sg->imageByArtist(); ?></h4>
+<?php if($sg->image->hasPrev()) echo $sg->image->prevLink()." | "; ?> 
+<?php echo $sg->image->parentLink(); ?> 
+<?php if($sg->image->hasNext()) echo " | ".$sg->image->nextLink(); ?>
+</p>
+<h2 class="sgTitle"><?php echo $sg->image->name(); ?></h2>
   
 <div class="sgContainer">
   <table class="sgContent"><tr><td><div class="sgContent">
-    <?php echo $sg->image() ?>
+    <?php echo $sg->image->imageHTML() ?>
   </div></td></tr></table>
 </div>
   
-<div class="sgNavBar"><p>
-<?php echo $sg->imagePrevLink(); ?>
-<?php echo $sg->imageParentLink(); ?>
-<?php echo $sg->imageNextLink(); ?>
+<div class="sgNavBar sgTopNavBar"><p>
+<?php if($sg->image->hasPrev()) echo $sg->image->prevLink()." | "; ?> 
+<?php echo $sg->image->parentLink(); ?> 
+<?php if($sg->image->hasNext()) echo " | ".$sg->image->nextLink(); ?>
 </p></div>
 
-<p><em><?php echo $sg->imageName() ?></em><?php echo $sg->imageByArtist() ?></p>
+<p><em><?php echo $sg->image->name() ?></em><?php echo $sg->image->byArtistText() ?></p>
   
 <p>
-<?php foreach($sg->imageDetailsArray() as $key => $value): ?>
+<?php foreach($sg->image->detailsArray() as $key => $value): ?>
 <strong><?php echo $key ?>:</strong> <?php echo $value ?><br />
 <?php endforeach; ?>
 </p>

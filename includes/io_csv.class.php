@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.24 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.25 2005/09/20 22:48:09 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.24 $";
+    return "$Revision: 1.25 $";
   }
 
   /**
@@ -98,8 +98,7 @@ class sgIO_csv extends sgIO
       if($getChildGalleries) {
         for($i=0;$i<count($temp)-3;$i++) {
           $gal->images[$i] =& new sgImage($temp[$i+2][0], $gal, $this->config);
-          list(
-            $gal->images[$i]->id,
+          list(,
             $gal->images[$i]->thumbnail,
             $gal->images[$i]->owner,
             $gal->images[$i]->groups,
@@ -124,14 +123,12 @@ class sgIO_csv extends sgIO
             $gal->images[$i]->width, 
             $gal->images[$i]->height, 
             $gal->images[$i]->type
-          ) = substr($gal->images[$i]->id, 0, 7)=="http://"
-              ? @GetImageSize($gal->images[$i]->id)
-              : @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->id);
+          ) = @GetImageSize($gal->images[$i]->realPath());
         }
-      //otherwise just fill in filenames
+      //otherwise just fill in empty images
       } else if(count($temp) > 3) {
         for($i=0;$i<count($temp)-3;$i++)
-          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal, $this->config);
+          $gal->images[$i] =& new sgImage($temp[$i+2][0], $gal);
       }
         
     } else
