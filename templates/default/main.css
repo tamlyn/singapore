@@ -97,6 +97,10 @@ div.sgLanguageFlipper, div.sgTemplateFlipper {
   clear: right;
 }
 
+div.sgClear {
+  clear: both;
+}
+
 /* wraps the drop-shadow table to allow IE to center it */
 div.sgShadow {
   text-align: center;
@@ -110,12 +114,7 @@ table.sgShadow {
   clear: both;
 }
 
-/* the tab with previous, up, next */
-table.sgShadowTab td {
-  font-size: 13px;
-}
-
-table.sgShadow, table.sgShadowTab {
+table.sgShadow {
   background-color: #f0f0f0;
   padding: 0;
   text-align: left;
@@ -125,21 +124,6 @@ table.sgShadow td {
   padding: 0;
   margin: 0;
 }
-
-table.sgShadow td.tabm, table.sgShadow td.tabr {
-  background-color: #fff;
-}
-
-/* appropriate background images for drop-shadow effect */
-table.sgShadow td.tl {  background-image: url('images/shadow-tl.gif');}
-table.sgShadow td.tm {  background-image: url('images/shadow-tm.gif');}
-table.sgShadow td.tr {  background-image: url('images/shadow-tr.gif');}
-table.sgShadow td.ml {  background-image: url('images/shadow-ml.gif');}
-table.sgShadow td.mm {  padding: 10px;} /* cell containing image */
-table.sgShadow td.mr {  background-image: url('images/shadow-mr.gif');}
-table.sgShadow td.bl {  background-image: url('images/shadow-bl.gif');}
-table.sgShadow td.bm {  background-image: url('images/shadow-bm.gif');}
-table.sgShadow td.br {  background-image: url('images/shadow-br.gif');}
 
 /* div containing each gallery sub-gallery on a gallery page */
 div.sgGallery {
@@ -222,3 +206,28 @@ div.sgThumbnail table {
 .borderTR { margin: -1px -1px 0px 0px; }
 .borderBL { margin: -5px 0px 0px 0px; }
 .borderBR { margin: -5px 0px 0px 0px; }
+
+
+/* appropriate background images for drop-shadow effect */
+table.sgShadow td.tabl { background-image: url('images/shadow-tabl.gif'); width: 16px; height: 16px; }
+table.sgShadow td.tabm { background-color: #fff; }
+table.sgShadow td.tabr { background-color: #fff; }
+
+table.sgShadow td.tl {  background-image: url('images/shadow-tl.gif'); width: 32px; height: 16px; }
+table.sgShadow td.tm {  background-image: url('images/shadow-tm.gif');}
+table.sgShadow td.tr {  background-image: url('images/shadow-tr.gif');}
+table.sgShadow td.ml {  background-image: url('images/shadow-ml.gif');}
+table.sgShadow td.mm {  padding: 10px;} /* cell containing image */
+table.sgShadow td.mr {  background-image: url('images/shadow-mr.gif');}
+table.sgShadow td.bl {  background-image: url('images/shadow-bl.gif');}
+table.sgShadow td.bm {  background-image: url('images/shadow-bm.gif');}
+table.sgShadow td.br {  background-image: url('images/shadow-br.gif'); width: 32px; height: 32px; }
+
+/* the tab with previous, up, next */
+table.sgShadow td.tabm div { 
+  font-size: 13px;
+  background-image: url('images/shadow-tabm.gif');
+  background-position: top right;
+  padding-right: 30px;
+  float: left; 
+}

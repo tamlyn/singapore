@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.52 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.53 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -223,8 +223,6 @@ class Singapore
     //set reference to current gallery
     $this->gallery = &$this->ancestors[count($this->ancestors)-1];
     
-    //echo "<pre>"; print_r($this->gallery); exit;
-    
     //check if gallery was successfully fetched
     if($this->gallery == null) {
       $this->gallery = new sgGallery($galleryId, new stdClass);
@@ -242,16 +240,25 @@ class Singapore
     $this->gallery->startat = isset($_REQUEST[$this->config->url_startat]) ? (int)$_REQUEST[$this->config->url_startat] : 0;
     $this->startat = $this->gallery->startat; //depreciated
     
-    //do the logging stuff and select the image (if any)
-    if(empty($_REQUEST[$this->config->url_image])) {
-      if($this->config->track_views) $hits = $this->logGalleryView();
-      if($this->config->show_views) $this->gallery->hits = $hits;
-    } else {
+    //select the image (if any)
+    if(!empty($_REQUEST[$this->config->url_image]))
       $this->selectImage($_REQUEST[$this->config->url_image]);
-      if($this->config->track_views) $hits = $this->logImageView();
-      if($this->config->show_views) $this->image->hits = $hits;
-    }
     
+    //load hit data
+    if($this->config->track_views || $this->config->show_views)
+      $this->io->getHits($this->gallery);
+    
+    //update and save hit data
+    if($this->config->track_views) {
+      if($this->isImagePage()) {
+        $this->image->hits++;
+        $this->image->lasthit = time();
+      } elseif($this->gallery->startat == 0) {
+        $this->gallery->hits++;
+        $this->gallery->lasthit = time();
+      }
+      $this->io->putHits($this->gallery);
+    }
   }
   
   /**
@@ -308,64 +315,6 @@ class Singapore
       return $this->config->gallery_name;
   }
   
-  
-  /**
-   * @return int|null the number of image hits or null
-   */
-  function logImageView() 
-  {
-    $this->gallery->hits = $this->io->getHits($this->gallery->id);
-    if(!$this->gallery->hits) return null;
-
-    if(isset($this->gallery->hits->images)) {
-      //search selected for image in existing log
-      for($i=0;$i<count($this->gallery->hits->images);$i++) 
-        if($this->gallery->hits->images[$i]->id == $this->image->id) {
-          $numhits = ++$this->gallery->hits->images[$i]->hits;
-          $this->gallery->hits->images[$i]->lasthit = time();
-          break;
-        }
-    } else {
-      $this->gallery->hits->images = array();
-      $i = 0;
-    }
-    //if image not found then add it
-    if($i == count($this->gallery->hits->images)) {
-      $this->gallery->hits->images[$i] = new stdClass;
-      $this->gallery->hits->images[$i]->id = $this->image->id;
-      $this->gallery->hits->images[$i]->hits = $numhits = 1;
-      $this->gallery->hits->images[$i]->lasthit = time();
-    }
-    
-    
-    //save modified hits data
-    $this->io->putHits($this->gallery->id,$this->gallery->hits);
-  
-    //return number of hits
-    return $numhits;
-  }
-  
-  /**
-   * @return int|null the number of gallery hits or null
-   */
-  function logGalleryView() 
-  {
-    $this->gallery->hits = $this->io->getHits($this->gallery->id);
-    if(!$this->gallery->hits) return null;
-    
-    if(isset($this->gallery->hits->hits) && $this->startat == 0) $numhits = ++$this->gallery->hits->hits;
-    elseif(isset($this->gallery->hits->hits)) $numhits = $this->gallery->hits->hits;
-    else $numhits = $this->gallery->hits->hits = 1;
-
-    $this->gallery->hits->lasthit = time();
-        
-    //save modified hits data
-    $this->io->putHits($this->gallery->id,$this->gallery->hits);
-  
-    //return number of hits
-    return $numhits;
-  }
-
   /**
    * @return bool true if this is an image page; false otherwise
    */

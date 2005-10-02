@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.25 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.26 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.25 $";
+    return "$Revision: 1.26 $";
   }
 
   /**
@@ -152,49 +152,49 @@ class sgIO_csv extends sgIO
    * Stores gallery information.
    * @param sgGallery  instance of gallery object to be stored
    */
-  function putGallery($gallery) {
-    $dataFile = $this->config->base_path.$this->config->pathto_galleries.$gallery->id."/metadata.csv";
-    $fp = fopen($dataFile,"w");
-    chmod($dataFile, $this->config->file_mode);
+  function putGallery($gal) {
+    $dataFile = $this->config->base_path.$this->config->pathto_galleries.$gal->id."/metadata.csv";
+    @chmod($dataFile, $this->config->file_mode);
+    $fp = @fopen($dataFile,"w");
     if(!$fp)
       return false;
     
     $success  = (bool) fwrite($fp,"filename,thumbnail,owner,group(s),permissions,catergories,image name,artist name,artist email,copyright,image description,image location,date taken,camera info,lens info,film info,darkroom manipulation,digital manipulation");
     $success &= (bool) fwrite($fp,"\n\"".
-      $gallery->filename."\",,".
-      $gallery->owner.",".
-      $gallery->groups.",".
-      $gallery->permissions.",".
-      $gallery->categories.',"'.
-      str_replace('"','""',$gallery->name).'","'.
-      str_replace('"','""',$gallery->artist).'","'.
-      str_replace('"','""',$gallery->email).'","'.
-      str_replace('"','""',$gallery->copyright).'","'.
-      str_replace('"','""',$gallery->desc).'","'.
-      str_replace('"','""',$gallery->summary).'","'.
-      str_replace('"','""',$gallery->date).'"'
+      $gal->filename.'",,'.
+      $gal->owner.','.
+      $gal->groups.','.
+      $gal->permissions.','.
+      $gal->categories.',"'.
+      str_replace('"','""',$gal->name).'","'.
+      str_replace('"','""',$gal->artist).'","'.
+      str_replace('"','""',$gal->email).'","'.
+      str_replace('"','""',$gal->copyright).'","'.
+      str_replace('"','""',$gal->desc).'","'.
+      str_replace('"','""',$gal->summary).'","'.
+      str_replace('"','""',$gal->date).'"'
     );
     
-    for($i=0;$i<count($gallery->images);$i++)
+    for($i=0;$i<count($gal->images);$i++)
       $success &= (bool) fwrite($fp,"\n\"".
-        $gallery->images[$i]->id."\",".
-        $gallery->images[$i]->thumbnail.",".
-        $gallery->images[$i]->owner.",".
-        $gallery->images[$i]->groups.",".
-        $gallery->images[$i]->permissions.",".
-        $gallery->images[$i]->categories.',"'.
-        str_replace('"','""',$gallery->images[$i]->name).'","'.
-        str_replace('"','""',$gallery->images[$i]->artist).'","'.
-        str_replace('"','""',$gallery->images[$i]->email).'","'.
-        str_replace('"','""',$gallery->images[$i]->copyright).'","'.
-        str_replace('"','""',$gallery->images[$i]->desc).'","'.
-        str_replace('"','""',$gallery->images[$i]->location).'","'.
-        str_replace('"','""',$gallery->images[$i]->date).'","'.
-        str_replace('"','""',$gallery->images[$i]->camera).'","'.
-        str_replace('"','""',$gallery->images[$i]->lens).'","'.
-        str_replace('"','""',$gallery->images[$i]->film).'","'.
-        str_replace('"','""',$gallery->images[$i]->darkroom).'","'.
-        str_replace('"','""',$gallery->images[$i]->digital).'"'
+        $gal->images[$i]->id.'",'.
+        $gal->images[$i]->thumbnail.','.
+        $gal->images[$i]->owner.','.
+        $gal->images[$i]->groups.','.
+        $gal->images[$i]->permissions.','.
+        $gal->images[$i]->categories.',"'.
+        str_replace('"','""',$gal->images[$i]->name).'","'.
+        str_replace('"','""',$gal->images[$i]->artist).'","'.
+        str_replace('"','""',$gal->images[$i]->email).'","'.
+        str_replace('"','""',$gal->images[$i]->copyright).'","'.
+        str_replace('"','""',$gal->images[$i]->desc).'","'.
+        str_replace('"','""',$gal->images[$i]->location).'","'.
+        str_replace('"','""',$gal->images[$i]->date).'","'.
+        str_replace('"','""',$gal->images[$i]->camera).'","'.
+        str_replace('"','""',$gal->images[$i]->lens).'","'.
+        str_replace('"','""',$gal->images[$i]->film).'","'.
+        str_replace('"','""',$gal->images[$i]->darkroom).'","'.
+        str_replace('"','""',$gal->images[$i]->digital).'"'
       );
     $success &= (bool) fclose($fp);
   
@@ -203,42 +203,43 @@ class sgIO_csv extends sgIO
   
   /**
    * Fetches hit data from file.
-   * @param string  id of gallery to fetch hits for
+   * @param sgGallery  gallery object to load hits into
    */
-  function getHits($galleryId) {
+  function getHits(&$gal) {
     
-    $fp = @fopen($this->config->base_path.$this->config->pathto_logs.strtr("views".$galleryId,":/?\\","----").".log","r");
+    $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$gal->id."/hits.csv","r");
     
     if($fp) {
       while($temp[] = fgetcsv($fp,255));
       fclose($fp);
     } else $temp = array();
     
-    $hits = new stdClass;
-    
     if(isset($temp[0]))
       list(
         ,
-        $hits->hits,
-        $hits->lasthit
+        $gal->hits,
+        $gal->lasthit
       ) = $temp[0];
-    else {
-      $hits->hits = 0;
-      $hits->lasthit = 0;
-    }
-    
-    $hits->images = array();
     
     for($i=0;$i<count($temp)-2;$i++) {
-      $hits->images[$i] = new stdClass;
-      list(
-        $hits->images[$i]->id,
-        $hits->images[$i]->hits,
-        $hits->images[$i]->lasthit
-      ) = $temp[$i+1];
+      if($temp[$i+1][0] == $gal->images[$i]->id) 
+        list(
+          ,
+          $gal->images[$i]->hits,
+          $gal->images[$i]->lasthit
+        ) = $temp[$i+1];
+      else
+        foreach($gal->images as $key => $img)
+          if($temp[$i+1][0] == $img->id) 
+            list(
+              ,
+              $gal->images[$key]->hits,
+              $gal->images[$key]->lasthit
+            ) = $temp[$i+1];
+        
     }
     
-    return $hits;
+    return true;
   }
   
   /**
@@ -246,25 +247,25 @@ class sgIO_csv extends sgIO
    * @param string      id of gallery to store hits for
    * @param sgStdClass  instance of object holding hit data
    */
-  function putHits($galleryId, $hits) {
-    $logfile = $this->config->base_path.$this->config->pathto_logs.strtr("views".$galleryId,":/?\\","----").".log";
-    $fp = fopen($logfile,"w");
+  function putHits($gal) {
+    $logfile = $this->config->base_path.$this->config->pathto_galleries.$gal->id."/hits.csv";
+    @chmod($logfile, $this->config->file_mode);
+    $fp = @fopen($logfile,"w");
     if(!$fp) return false;
-    chmod($logfile, $this->config->file_mode);
     
-    fwrite($fp, ",".
-      $hits->hits.",".
-      $hits->lasthit
+    fwrite($fp, '"'.
+      $gal->id.'",'.
+      $gal->hits.','.
+      $gal->lasthit
     );
       
-    if(isset($hits->images)) 
-      for($i=0;$i<count($hits->images);$i++)
-        if(!empty($hits->images[$i]->id)) fwrite($fp, "\n".
-          $hits->images[$i]->id.",".
-          $hits->images[$i]->hits.",".
-          $hits->images[$i]->lasthit
-        );
-      
+    for($i=0;$i<count($gal->images);$i++)
+      fwrite($fp, "\n\"".
+        $gal->images[$i]->id.'",'.
+        $gal->images[$i]->hits.','.
+        $gal->images[$i]->lasthit
+      );
+    
     return true;
   }
   

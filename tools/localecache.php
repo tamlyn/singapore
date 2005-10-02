@@ -8,18 +8,19 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: localecache.php,v 1.3 2004/10/14 02:02:19 tamlyn Exp $
+ * @version $Id: localecache.php,v 1.4 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 //require config class
-require_once "../includes/config.class.php";
-require_once "../includes/translator.class.php";
+$BASEPATH = "../";
+require_once $BASEPATH."includes/config.class.php";
+require_once $BASEPATH."includes/translator.class.php";
 //create config object
-$config = new sgConfig("../singapore.ini");
+$sgConfig = new sgConfig($BASEPATH."singapore.ini");
+$sgConfig->base_path = $BASEPATH;
 
-$BASEPATH = realpath("..");
-$OUTPUTPATH = "../".$config->pathto_locale;
-$OUTPUTFILE = "../".$config->pathto_data_dir."languages.cache";
+$OUTPUTPATH = $sgConfig->base_path.$sgConfig->pathto_locale;
+$OUTPUTFILE = $sgConfig->base_path.$sgConfig->pathto_data_dir."languages.cache";
   
   
 /**
@@ -72,7 +73,7 @@ function saveCache($availableLanguages, $output)
   $availableLanguages = array();
   foreach ($files as $file) {
     if (!preg_match("/singapore\.([\w]+)\.pmo$/i", $file, $matches)) continue;
-    $i18n = new Translator($file);
+    $i18n = new Translator($matches[1]);
     $availableLanguages[$matches[1]] = $i18n->languageStrings[0]['language'];
     echo "Added $matches[1] => ".$i18n->languageStrings[0]['language']." to available languages.<br />\n";
   }

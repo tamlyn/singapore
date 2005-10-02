@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.10 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: gallery.class.php,v 1.11 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 /**
@@ -76,8 +76,8 @@ class sgGallery extends sgItem
   function imageCount()        { return count($this->images); }
   function galleryCount()      { return count($this->galleries); }
   
-  function imageCountText()       { return $this->translator->_ng("%s image", "%s images", $this->imageCount()); }
-  function galleryCountText()     { return $this->translator->_ng("%s gallery", "%s galleries", $this->galleryCount()); }
+  function imageCountText()    { return $this->translator->_ng("%s image", "%s images", $this->imageCount()); }
+  function galleryCountText()  { return $this->translator->_ng("%s gallery", "%s galleries", $this->galleryCount()); }
   
   /**
    * Caches returned value for use with repeat requests
@@ -210,26 +210,26 @@ class sgGallery extends sgItem
     return new sgGallery($this->parent->id.'/'.$this->parent->galleries[$this->index()+1], $this->parent);
   }
   
-  function prevURL()
+  function prevURL($action = null)
   {
     $tmp =& $this->prevGallery();
-    return $tmp->URL();
+    return $tmp->URL($action);
   }
   
-  function nextURL()
+  function nextURL($action = null)
   {
     $tmp =& $this->nextGallery();
-    return $tmp->URL();
+    return $tmp->URL($action);
   }
   
-  function prevLink()
+  function prevLink($action = null)
   {
-    return '<a href="'.$this->prevURL().'">'.$this->translator->_g("Previous gallery").'</a>';
+    return '<a href="'.$this->prevURL($action).'">'.$this->translator->_g("Previous gallery").'</a>';
   }
   
-  function nextLink()
+  function nextLink($action = null)
   {
-    return '<a href="'.$this->nextURL().'">'.$this->translator->_g("Next gallery").'</a>';
+    return '<a href="'.$this->nextURL($action).'">'.$this->translator->_g("Next gallery").'</a>';
   }
   
   /**

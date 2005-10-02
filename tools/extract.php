@@ -8,20 +8,20 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.10 2005/04/23 02:17:52 tamlyn Exp $
+ * @version $Id: extract.php,v 1.11 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
 $GETTEXT_EXTRACT = "xgettext";
+$BASEPATH = realpath("..")."/";
 
 
 //require config class
-require_once "../includes/config.class.php";
+require_once $BASEPATH."includes/config.class.php";
 //create config object
-$config = new sgConfig("../singapore.ini");
+$config = new sgConfig($BASEPATH."singapore.ini");
 
-$BASEPATH = realpath("..");
-$OUTPUTPATH = "../".$config->pathto_locale;
+$OUTPUTPATH = $BASEPATH.$config->pathto_locale;
 $standardPot = $OUTPUTPATH."singapore.pot";
 $adminPot = $OUTPUTPATH."singapore.admin.pot";
 

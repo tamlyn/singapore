@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.8 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: io.class.php,v 1.9 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 /**
@@ -139,21 +139,21 @@ class sgIO
   /**
    * Pseudo-abstract method to be over-ridden in subclasses.
    */
-  function putGallery($gallery) {
+  function putGallery($gal) {
     return false;
   }
   
   /**
    * Pseudo-abstract method to be over-ridden in subclasses.
    */
-  function getHits($galleryId) {
+  function getHits($gal) {
     return false;
   }
   
   /**
    * Pseudo-abstract method to be over-ridden in subclasses.
    */
-  function putHits($galleryId, $hits) {
+  function putHits($gal) {
     return false;
   }
   

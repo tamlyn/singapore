@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.10 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.11 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 /**
@@ -91,42 +91,40 @@ class sgImage extends sgItem
     return $this->parent->images[count($this->parent->images)-1];
   }
   
-  
-  
-  function firstLink()
+  function firstLink($action = null)
   {
     if(!$this->hasPrev())
       return "";
     
     $tmp =& $this->firstImage(); 
-    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|First").'</a>';
+    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|First").'</a>';
   }
   
-  function prevLink()
+  function prevLink($action = null)
   {
     if(!$this->hasPrev())
       return "";
     
     $tmp =& $this->prevImage(); 
-    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|Previous").'</a>';
+    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|Previous").'</a>';
   }
   
-  function nextLink()
+  function nextLink($action = null)
   {
     if(!$this->hasNext())
       return "";
     
     $tmp =& $this->nextImage(); 
-    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|Next").'</a>';
+    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|Next").'</a>';
   }
   
-  function lastLink()
+  function lastLink($action = null)
   {
     if(!$this->hasNext())
       return "";
     
     $tmp =& $this->lastImage(); 
-    return '<a href="'.$tmp->URL().'">'.$this->translator->_g("image|Last").'</a>';
+    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|Last").'</a>';
   }
   
   function imageURL()

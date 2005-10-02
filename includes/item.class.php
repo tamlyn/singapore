@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.3 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: item.class.php,v 1.4 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -103,8 +103,16 @@ class sgItem
   
   var $location = "";
   
-  //non-db fields
+  /**
+   * Number of times item has been viewed
+   * @var int
+   */
   var $hits = 0;
+  
+  /**
+   * Unix timestamp of last time item was viewed
+   * @var int
+   */
   var $lasthit = 0;
   
   /**
@@ -141,7 +149,7 @@ class sgItem
   
   function canEdit()     { return false; }
   
-  function idEntities() { return htmlspecialchars($this->id); }
+  function idEntities()  { return htmlspecialchars($this->id); }
   
   /**
    * Removes script-generated HTML (BRs and URLs) but leaves any other HTML
@@ -187,15 +195,15 @@ class sgItem
         return "<a href=\"mailto:".$this->email."\">".$this->email."</a>";
   }
 
-  function nameLink()
+  function nameLink($action = null)
   {
-    return '<a href="'.$this->URL().'">'.$this->name().'</a>';
+    return '<a href="'.$this->URL(0, $action).'">'.$this->name().'</a>';
   }
   
-  function parentLink()
+  function parentLink($action = null)
   {
     $perpage = $this->parent->isAlbum() ? $this->config->thumb_number_album : $this->config->thumb_number_gallery;
-    return '<a href="'.$this->parent->URL(floor($this->index() / $perpage) * $perpage).'">'.$this->translator->_g("gallery|Up").'</a>';
+    return '<a href="'.$this->parent->URL(floor($this->index() / $perpage) * $perpage, $action).'">'.$this->translator->_g("gallery|Up").'</a>';
   }
   
   /**
@@ -221,7 +229,7 @@ class sgItem
     //special properties
     if(!empty($this->copyright)) $ret[$this->translator->_g("Copyright")] = $this->copyright;
     elseif(!empty($this->artist))$ret[$this->translator->_g("Copyright")] = $this->artist;
-    if($this->config->show_views && !empty($this->hits))
+    if($this->config->show_views)
       $ret[$this->translator->_g("Viewed")] = $this->translator->_ng("viewed|%s time", "viewed|%s times",$this->hits);
     
     return $ret;

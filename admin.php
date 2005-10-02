@@ -11,7 +11,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.32 2005/09/20 22:48:08 tamlyn Exp $
+ * @version $Id: admin.php,v 1.33 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 //include main class
@@ -368,7 +368,6 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else {*/
-        $sg->loadGalleryHits();
         $includeFile = "galleryhits";
       //}
       break;
@@ -378,7 +377,6 @@ if($sg->isLoggedIn() || $sg->action == "login")
         $adminMessage = $sg->translator->_g("You do not have permission to perform this operation.");
         $includeFile = "menu";
       } else {*/
-        $sg->loadImageHits();
         $includeFile = "imagehits";
       //}
       break;

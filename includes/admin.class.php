@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.41 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.42 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -164,42 +164,12 @@ class sgAdmin extends Singapore
     return substr(realpath($child),0,strlen($parentPath)) == $parentPath;
   }
 
-  /**
-   * Loads hits info into the galleries object.
-   */
-  function loadGalleryHits()
-  {
-    for($i=$max=0;$i<count($this->gallery->galleries);$i++) {
-      $this->gallery->galleries[$i]->hits = $this->io->getHits($this->gallery->galleries[$i]->id);
-      if($this->gallery->galleries[$i]->hits->hits > $max) $max = $this->gallery->galleries[$i]->hits->hits;
-    }
-    $this->gallery->maxhits = $max;
-  }
-  
-  /**
-   * Loads hits info into the images object.
-   */
-  function loadImageHits()
-  {
-    $hits = $this->io->getHits($this->gallery->id);
-    for($i=$max=0;$i<count($this->gallery->images);$i++) {
-      for($j=0;$j<count($hits->images);$j++)
-        if($hits->images[$j]->id == $this->gallery->images[$i]->id)
-          $this->gallery->images[$i]->hits = $hits->images[$j];
-      if(isset($this->gallery->images[$i]->hits->hits) && $this->gallery->images[$i]->hits->hits > $max) $max = $this->gallery->images[$i]->hits->hits;
-    }
-    $this->gallery->maxhits = $max;
-  }
-  
-  /**
-   * @return string
-   */
-  function galleryHitsTab()
-  {
-    $showing = $this->galleryTabShowing();
-    if($this->gallery->id != ".") $links = "<a href=\"".$this->formatAdminURL("showgalleryhits",$this->encodeId($this->ancestors[0]->id))."\" title=\"".$this->translator->_g("gallery|Up one level")."\">".$this->translator->_g("gallery|Up")."</a>";
-    if(empty($links)) return $showing;
-    else return $showing." | ".$links;
+  function getMaxHits($array) {
+    $max = 0;
+    foreach($array as $obj)
+      if($obj->hits > $max)
+        $max = $obj->hits;
+    return $max;
   }
   
   /**
@@ -514,7 +484,7 @@ class sgAdmin extends Singapore
   function reindexGallery()
   {
     $imagesAdded = 0;
-    $dir = $this->getListing($this->config->pathto_galleries.$this->gallery->id,"images");
+    $dir = sgUtils::getListing($this->config->pathto_galleries.$this->gallery->id,$this->config->recognised_extensions);
     for($i=0; $i<count($dir->files); $i++) {
       $found = false;
       for($j=0; $j<count($this->gallery->images); $j++)

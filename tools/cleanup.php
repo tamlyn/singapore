@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2004 Tamlyn Rhodes
- * @version $Id: cleanup.php,v 1.2 2004/10/11 05:25:18 tamlyn Exp $
+ * @version $Id: cleanup.php,v 1.3 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 /**
@@ -45,14 +45,14 @@ function makeWritable($dir)
 
 <body>
 
-<h1>cleanup script</h1>
+<h1>Fixing file permissions</h1>
 
 <p><?php 
   //start with parent directory (singapore root)
   makeWritable("../");
 ?></p>
 
-<p>All operations complete. <a href="index.html">Return</a> to tools.</p>
+<p>All done! <a href="index.html">Return</a> to tools.</p>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
  * Static class providing utility methods
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: utils.class.php,v 1.3 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: utils.class.php,v 1.4 2005/10/02 03:35:24 tamlyn Exp $
  */
 
 
@@ -62,9 +62,9 @@ class sgUtils
   {
     switch($mode) {
       case 0 :
-        return $GLOBALS["sgConfig"]->pathto_data_dir."cache/".$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
+        return $GLOBALS["sgConfig"]->base_path.$GLOBALS["sgConfig"]->pathto_data_dir."cache/".$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
       case 1 :
-        return $GLOBALS["sgConfig"]->pathto_galleries.$gallery."/_thumbs/".$width."x".$height.($forceSize?"f":"").strtr("-$image",":/?\\","----");
+        return $GLOBALS["sgConfig"]->base_path.$GLOBALS["sgConfig"]->pathto_galleries.$gallery."/_thumbs/".$width."x".$height.($forceSize?"f":"").strtr("-$image",":/?\\","----");
     }
   }
   
