@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.11 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.12 2005/10/05 15:08:30 tamlyn Exp $
  */
 
 /**
@@ -217,7 +217,7 @@ class sgImage extends sgItem
       $img = $this->thumbnail("image");
       return $img->width();
     } else
-      return $this->width;
+      return $this->realWidth();
   }
   
   function height()
@@ -226,7 +226,7 @@ class sgImage extends sgItem
       $img = $this->thumbnail("image");
       return $img->height();
     } else
-      return $this->height; 
+      return $this->realHeight(); 
   }
   
   /**
@@ -242,8 +242,24 @@ class sgImage extends sgItem
   }
   
   /** Accessor methods */
-  function realWidth()  { return $this->width; }
-  function realHeight() { return $this->height; }
+  function realWidth()
+  {
+    //try to load image dimensions if not already loaded
+    if($this->width == 0)
+      list($this->width, $this->height, $this->type) = 
+        @GetImageSize($this->realPath());
+    return $this->width; 
+  }
+  
+  function realHeight() 
+  {
+    //try to load image dimensions if not already loaded
+    if($this->height == 0)
+      list($this->width, $this->height, $this->type) = 
+        @GetImageSize($this->realPath());
+    return $this->height; 
+  }
+  
   function type()       { return $this->type; }
   
   

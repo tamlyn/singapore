@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.2 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.3 2005/10/05 15:08:30 tamlyn Exp $
  */
 
 
@@ -56,17 +56,16 @@ class sgThumbnail
     if(!$this->image->isRemote() && !preg_match("/.+\.(".$this->config->recognised_extensions.")$/i",$this->image->id))
       die("Specified file is not a recognised image file");
   
+    $this->calculateDimensions();
+    
+    //link straight to image if it smaller than required size
+    if($this->image->width <= $this->thumbWidth && $this->image->height <= $this->thumbHeight)
+      $this->thumbPath = $this->image->imageURL();
+    
     $imageModified = @filemtime($this->imagePath);
     $thumbModified = @filemtime($this->thumbPath);
     $thumbQuality = $this->config->thumbnail_quality;
     
-    if($this->image->width == 0) {
-      list($this->image->width, $this->image->height, $this->image->type) = 
-        @GetImageSize($this->image->realPath());
-    }
-    
-    $this->calculateDimensions();
-     
     if($imageModified > $thumbModified)
       $this->buildThumbnail();
   }
