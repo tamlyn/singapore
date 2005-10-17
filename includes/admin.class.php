@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.42 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.43 2005/10/17 14:04:31 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -26,6 +26,8 @@ class sgAdmin extends Singapore
    * @var string
    */
   var $lastError = "";
+  
+  var $includeFile = "login";
   
   /**
    * Admin constructor. Doesn't call {@link Singapore} constructor.
@@ -159,18 +161,415 @@ class sgAdmin extends Singapore
    * @param string  relative or absolute path to child directory or file
    * @return bool   true if $child is contained within $parent 
    */
-  function isSubPath($parent, $child) {
+  function isSubPath($parent, $child) 
+  {
     $parentPath = realpath($parent);
     return substr(realpath($child),0,strlen($parentPath)) == $parentPath;
   }
 
-  function getMaxHits($array) {
+  function getMaxHits($array) 
+  {
     $max = 0;
     foreach($array as $obj)
       if($obj->hits > $max)
         $max = $obj->hits;
     return $max;
   }
+  
+  /**
+   * Returns true if the current admin action has been confirmed (i.e. by clicking OK)
+   */
+  function actionConfirmed()
+  {
+    return isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"] == $this->translator->_g("confirm|OK");
+  }
+  
+  /**
+   * Returns true if the current admin action has been cancelled (i.e. by clicking Cancel)
+   */
+  function actionCancelled()
+  {
+    return isset($_REQUEST["confirmed"]) && $_REQUEST["confirmed"] == $this->translator->_g("confirm|Cancel");
+  }
+  
+  /**
+   * Checks request variables for action to perform, checks user permissions, 
+   * performs action and sets file to include.
+   */
+  function doAction()
+  {
+    //check if user is logged in
+    if(!$this->isLoggedIn() && $this->action != "login")
+      return;
+   
+    //choose which file to include and/or perform admin actions
+    switch($this->action) {
+      case "addgallery" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"add")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } elseif($this->addGallery()) {
+          $this->selectGallery($this->gallery->id."/".$_REQUEST["newgallery"]);
+          $this->adminMessage = $this->translator->_g("Gallery added");
+          $this->includeFile = "editgallery";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "newgallery";
+        }
+        break;
+      case "addimage" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"add")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+          break;
+        } 
+        switch($_REQUEST["sgLocationChoice"]) {
+          case "remote" :
+          case "single" :
+            if($this->addImage()) {
+              $this->adminMessage = $this->translator->_g("Image added");
+              $this->includeFile = "editimage";
+            } else {
+              $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+              $this->includeFile = "newimage";
+            }
+            break;
+          case "multi" :
+            if($this->addMultipleImages()) {
+              $this->adminMessage = $this->translator->_g("Archive contents added");
+              $this->includeFile = "view";
+            } else {
+              $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+              $this->includeFile = "newimage";
+            }
+            break;
+          default :
+            $this->includeFile = "newimage";
+            break;
+        }
+        break;
+      case "changethumbnail" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"edit")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } elseif($this->actionConfirmed()) {
+          if($this->saveGalleryThumbnail())
+            $this->adminMessage = $this->translator->_g("Thumbnail changed");
+          else
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "editgallery";
+        } elseif($this->actionCancelled()) {
+          $this->includeFile = "editgallery";
+        } else {
+          $this->includeFile = "changethumbnail";
+        }
+        break;
+      case "deletegallery" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"delete")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } elseif($this->actionConfirmed()) {
+          if($this->deleteGallery()) {
+            $this->selectGallery($this->ancestors[0]->id);
+            $this->adminMessage = $this->translator->_g("Gallery deleted");
+          } else {
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          }
+          $this->includeFile = "view";
+        } elseif($this->actionCancelled()) {
+          $this->includeFile = "view";
+        } else {
+          $confirmTitle = $this->translator->_g("delete gallery");
+          $confirmMessage = $this->translator->_g("Gallery %s is not empty.\nAre you sure you want to irretrievably delete it and all subgalleries and images it contains?", "<em>".$this->gallery->name."</em>");
+          $this->includeFile = "confirm";
+        }
+        break;
+      case "deleteimage" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"delete")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } elseif($this->actionConfirmed()) {
+          if($this->deleteImage())
+            $this->adminMessage = $this->translator->_g("Image deleted");
+          else
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "view";
+        } elseif($this->actionCancelled()) {
+          $this->includeFile = "view";
+        } else {
+          $confirmTitle = $this->translator->_g("delete image");
+          $confirmMessage = $this->translator->_g("Are you sure you want to irretrievably delete image %s from gallery %s?","<em>".$this->imageName().$this->imageByArtist()."</em>","<em>".$this->gallery->name."</em>");
+          $this->includeFile = "confirm";
+        }
+        break;
+      case "deleteuser" :
+        if(!$this->user->isAdmin()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } elseif($this->actionConfirmed()) {
+          if($this->deleteUser())
+            $this->adminMessage = $this->translator->_g("User deleted");
+          else
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "manageusers";
+        } elseif($this->actionCancelled()) {
+          $this->includeFile = "manageusers";
+        } else {
+          $confirmTitle = $this->translator->_g("delete user");
+          $confirmMessage = $this->translator->_g("Are you sure you want to permanently delete user %s?","<em>".$_REQUEST["user"]."</em>");
+          $this->includeFile = "confirm";
+        }
+        break;
+      case "editgallery" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"edit")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } else
+          $this->includeFile = "editgallery";
+        break;
+      case "editimage" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"edit")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } else
+          $this->includeFile = "editimage";
+        break;
+      case "editpass" :
+        if($this->user->isGuest()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } else
+          $this->includeFile = "editpass";
+        break;
+      case "editpermissions" :
+        $this->selectGallery();
+        if(!$this->user->isAdmin() && !$this->user->isOwner($this->gallery)) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } else
+          $this->includeFile = "editpermissions";
+        break;
+      case "editprofile" :
+        if($this->user->isGuest()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } else
+          $this->includeFile = "editprofile";
+        break;
+      case "edituser" :
+        if(!$this->user->isAdmin() && $_REQUEST["user"] != $this->user->username || $this->user->isGuest()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } else
+          $this->includeFile = "edituser";
+        break;
+      case "login" :
+        if($this->doLogin()) {
+          $this->adminMessage = $this->translator->_g("Welcome to singapore admin!");
+          $this->includeFile = "menu";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "login";
+        }
+        break;
+      case "logout" :
+        $this->logout();
+        $this->adminMessage = $this->translator->_g("Thank you and goodbye!");
+        $this->includeFile = "login";
+        break;
+      case "manageusers" :
+        if(!$this->user->isAdmin()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } else
+          $this->includeFile = "manageusers";
+        break;
+      case "multigallery" :
+      case "multiimage" :
+        $this->adminMessage = "This feature is not yet implemented";
+        $this->selectGallery();
+        $this->includeFile = "view";
+        break;
+      case "newgallery" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"add")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } else
+          $this->includeFile = "newgallery";
+        break;
+      case "newimage" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"add")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } else
+          $this->includeFile = "newimage";
+        break;
+      case "newuser" :
+        if(!$this->user->isAdmin()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } elseif($this->addUser())
+          $this->includeFile = "edituser";
+        else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "manageusers";
+        }
+        break;
+      case "purgecache" :
+        if(!$this->user->isAdmin()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } elseif($this->actionConfirmed()) {
+          if($this->purgeCache())
+            $this->adminMessage = $this->translator->_g("Thumbnail cache purged");
+          else
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "menu";
+        } elseif($this->actionCancelled()) {
+          $this->includeFile = "menu";
+        } else {
+          $confirmTitle = $this->translator->_g("purge cached thumbnails");
+          $dir = $this->getListing($this->config->pathto_cache,"all");
+          $confirmMessage = $this->translator->_g("Are you sure you want to delete all %s cached thumbnails?",count($dir->files));
+          $this->includeFile = "confirm";
+        }
+        break;
+      case "reindex" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"edit"))
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+        else {
+          $imagesAdded = $this->reindexGallery();
+          $this->adminMessage = $this->translator->_g("Gallery re-indexed. %s images added.",$imagesAdded);
+        }
+        $this->includeFile = "view";
+        break;
+      case "savegallery" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"edit")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } elseif($this->saveGallery()) {
+          $this->adminMessage = $this->translator->_g("Gallery info saved");
+          $this->includeFile = "view";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "editgallery";
+        }
+        break;
+      case "saveimage" :
+        $this->selectGallery();
+        if(!$this->checkPermissions($this->gallery,"edit")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } elseif($this->saveImage()) {
+          $this->adminMessage = $this->translator->_g("Image info saved");
+          $this->includeFile = "view";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "view";
+        }
+        break;
+      case "savepass" :
+        if($this->user->isGuest()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } elseif($this->savePass()) {
+          $this->adminMessage = $this->translator->_g("Password saved");
+          $this->includeFile = "menu";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "editpass";
+        }
+        break;
+      case "savepermissions" :
+        $this->selectGallery();
+        if(!$this->user->isAdmin() && !$this->user->isOwner($this->gallery)) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "view";
+        } elseif($this->savePermissions()) {
+          $this->adminMessage = $this->translator->_g("Permissions saved");
+          $this->includeFile = "view";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "editpermissions";
+        }
+        break;
+      case "saveprofile" :
+        if($_REQUEST["user"] != $this->user->username || $this->user->isGuest()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } elseif($this->saveUser()) {
+          $this->adminMessage = $this->translator->_g("User info saved");
+          $this->includeFile = "menu";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "editprofile";
+        }
+        break;
+      case "saveuser" :
+        if(!$this->user->isAdmin()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } elseif($this->saveUser()) {
+          $this->adminMessage = $this->translator->_g("User info saved");
+          $this->includeFile = "manageusers";
+        } else {
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+          $this->includeFile = "edituser";
+        }
+        break;
+      case "showgalleryhits" :
+        $this->selectGallery();
+        /*if(!$this->checkPermissions($this->gallery,"read")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } else {*/
+          $this->includeFile = "galleryhits";
+        //}
+        break;
+      case "showimagehits" :
+        $this->selectGallery();
+        /*if(!$this->checkPermissions($this->gallery,"read")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } else {*/
+          $this->includeFile = "imagehits";
+        //}
+        break;
+      case "suspenduser" :
+        if(!$this->user->isAdmin()) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } elseif($this->suspendUser())
+          $this->adminMessage = $this->translator->_g("User info saved");
+        else
+          $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+        $this->includeFile = "manageusers";
+        break;
+      case "view" :
+        $this->selectGallery();
+        /*if(!$this->checkPermissions($this->gallery,"read")) {
+          $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          $this->includeFile = "menu";
+        } else*/
+          $this->includeFile = "view";
+        break;
+      case "menu" :
+      default :
+        $this->includeFile = "menu";
+    }
+}    
+
   
   /**
    * Returns a two-dimensional array of links for the admin bar.

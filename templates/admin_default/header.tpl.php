@@ -33,12 +33,12 @@
   <?php endfor; ?>
 </div>
 
-<?php if(isset($adminMessage)): ?>
+<?php if(isset($sg->adminMessage)): ?>
 <div id="sgAdminMessages">
   <?php 
     echo $sg->translator->_g("Admin message:");
     echo "<br />\n&nbsp;&nbsp;";
-    echo $adminMessage; 
+    echo $sg->adminMessage; 
   ?>
 </div>
 <?php endif; ?>

@@ -13,11 +13,10 @@
     <input type="hidden" name="action" value="multiimage" />
     <input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities(); ?>" />
     <div class="sgGallery">
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete selected"); ?>" />
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move selected"); ?>" />
-      <select name="sgMoveTo">
-        <option value=""><?php echo $sg->translator->_g("Select gallery..."); ?></option>
-      </select>
+      <?php echo $sg->translator->_g("With selected:"); ?>
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Copy"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete"); ?>" />
     </div>
     <?php for($index = $sg->gallery->startat; $index < $sg->gallery->imageCountSelected()+$sg->gallery->startat; $index++): ?> 
     <div class="sgThumbnail">

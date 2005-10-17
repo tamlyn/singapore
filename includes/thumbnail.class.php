@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.3 2005/10/05 15:08:30 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.4 2005/10/17 14:04:31 tamlyn Exp $
  */
 
 
@@ -85,18 +85,18 @@ class sgThumbnail
     //if aspect ratio is to be constrained set crop size
     if($this->forceSize) {
       $newAspect = $this->maxWidth/$this->maxHeight;
-      $oldAspect = $this->image->width/$this->image->height;
+      $oldAspect = $this->image->realWidth()/$this->image->realHeight();
       if($newAspect > $oldAspect) {
-        $this->cropWidth  = $this->image->width;
-        $this->cropHeight = round($this->image->height*($oldAspect/$newAspect));
+        $this->cropWidth  = $this->image->realWidth();
+        $this->cropHeight = round($this->image->realHeight()*($oldAspect/$newAspect));
       } else {
-        $this->cropWidth  = round($this->image->width*($newAspect/$oldAspect));
-        $this->cropHeight = $this->image->height;
+        $this->cropWidth  = round($this->image->realWidth()*($newAspect/$oldAspect));
+        $this->cropHeight = $this->image->realHeight();
       }
     //else crop size is image size
     } else {
-      $this->cropWidth = $this->image->width;
-      $this->cropHeight = $this->image->height;
+      $this->cropWidth = $this->image->realWidth();
+      $this->cropHeight = $this->image->realHeight();
     }
     
     if($this->cropHeight > $this->maxHeight && ($this->cropWidth <= $this->maxWidth 
@@ -107,8 +107,8 @@ class sgThumbnail
       $this->thumbWidth  = $this->maxWidth;
       $this->thumbHeight = round($this->cropHeight/$this->cropWidth * $this->maxWidth);
     } else {
-      $this->thumbWidth  = $this->image->width;
-      $this->thumbHeight = $this->image->height;
+      $this->thumbWidth  = $this->image->realWidth();
+      $this->thumbHeight = $this->image->realHeight();
     }
   }
   

@@ -13,12 +13,11 @@
     <input type="hidden" name="action" value="multigallery" />
     <input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEncoded(); ?>" />
     <div class="sgGallery">
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete selected"); ?>" />
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move selected"); ?>" />
-      <select name="sgMoveTo">
-        <option value=""><?php echo $sg->translator->_g("Select gallery..."); ?></option>
-      </select>
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Re-index selected"); ?>" />
+      <?php echo $sg->translator->_g("With selected:"); ?>
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Copy"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Re-index"); ?>" />
     </div>
     <?php for($index = $sg->gallery->startat; $index < $sg->gallery->galleryCountSelected()+$sg->gallery->startat; $index++): ?> 
     <div class="sgGallery"><table>
