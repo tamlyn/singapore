@@ -1,474 +1,356 @@
-# translation of singapore.admin.is.po to Icelandic
-# Copyright (C) 2004 Free Software Foundation, Inc.
-# Stefan Freyr Stefansson <stefan@freyr.org>, 2004.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Josef Petrák <jspetrak@gmail.com>, 2005.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore.admin.is\n"
-"POT-Creation-Date: 2004-09-27 08:35+0100\n"
-"PO-Revision-Date: 2005-05-15 10:53-0000\n"
-"Last-Translator: StefÃ¡n Freyr StefÃ¡nsson <stefan@ru.is>\n"
-"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2004-11-01 07:57+0000\n"
+"PO-Revision-Date: 2005-02-28 21:39+0100\n"
+"Last-Translator: Josef Petrak & gZ <jspetrak@gmail.com>\n"
+"Language-Team: Czech <jspetrak@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3.1\n"
 
-#
-#: ../admin.php:41
-#: ../admin.php:55
-#: ../admin.php:87
-#: ../admin.php:104
-#: ../admin.php:125
-#: ../admin.php:143
-#: ../admin.php:162
-#: ../admin.php:170
-#: ../admin.php:177
-#: ../admin.php:185
-#: ../admin.php:192
-#: ../admin.php:199
-#: ../admin.php:220
-#: ../admin.php:234
-#: ../admin.php:242
-#: ../admin.php:249
-#: ../admin.php:260
-#: ../admin.php:280
-#: ../admin.php:290
-#: ../admin.php:303
-#: ../admin.php:315
-#: ../admin.php:328
-#: ../admin.php:340
-#: ../admin.php:352
+#: ../admin.php:41 ../admin.php:55 ../admin.php:87 ../admin.php:104
+#: ../admin.php:125 ../admin.php:143 ../admin.php:162 ../admin.php:170
+#: ../admin.php:177 ../admin.php:185 ../admin.php:192 ../admin.php:199
+#: ../admin.php:220 ../admin.php:234 ../admin.php:242 ../admin.php:249
+#: ../admin.php:260 ../admin.php:280 ../admin.php:290 ../admin.php:303
+#: ../admin.php:315 ../admin.php:328 ../admin.php:340 ../admin.php:352
 #: ../admin.php:384
 msgid "You do not have permission to perform this operation."
-msgstr "ÃÃº hefur ekki rÃ©ttindi til aÃ° framkvÃ¦ma Ã¾ess aÃ°gerÃ°."
+msgstr "Nemáte oprávnìní k provedení této operace."
 
-#
 #: ../admin.php:45
 msgid "Gallery added"
-msgstr "Myndasafni bÃ¦tt viÃ°"
+msgstr "Galerie pøidána"
 
-#
-#: ../admin.php:48
-#: ../admin.php:66
-#: ../admin.php:75
-#: ../admin.php:93
-#: ../admin.php:111
-#: ../admin.php:131
-#: ../admin.php:149
-#: ../admin.php:209
-#: ../admin.php:254
-#: ../admin.php:266
-#: ../admin.php:296
-#: ../admin.php:309
-#: ../admin.php:321
-#: ../admin.php:334
-#: ../admin.php:346
-#: ../admin.php:358
+#: ../admin.php:48 ../admin.php:66 ../admin.php:75 ../admin.php:93
+#: ../admin.php:111 ../admin.php:131 ../admin.php:149 ../admin.php:209
+#: ../admin.php:254 ../admin.php:266 ../admin.php:296 ../admin.php:309
+#: ../admin.php:321 ../admin.php:334 ../admin.php:346 ../admin.php:358
 #: ../admin.php:389
 msgid "An error occurred:"
-msgstr "Villa kom upp:"
+msgstr "Chyba:"
 
-#
 #: ../admin.php:63
 msgid "Image added"
-msgstr "Mynd var bÃ¦tt viÃ°"
+msgstr "Obrázek pøidán"
 
-#
 #: ../admin.php:72
 msgid "Archive contents added"
-msgstr "Innihaldi safnskrÃ¡ar hefur veriÃ° bÃ¦tt viÃ°"
+msgstr "Obsah archivu pøidán"
 
-#
-#: ../admin.php:89
-#: ../admin.php:106
-#: ../admin.php:127
-#: ../admin.php:145
-#: ../admin.php:262
-#: ../templates/admin_default/changethumbnail.tpl.php:19
+#: ../admin.php:89 ../admin.php:106 ../admin.php:127 ../admin.php:145
+#: ../admin.php:262 ../templates/admin_default/changethumbnail.tpl.php:19
 #: ../templates/admin_default/confirm.tpl.php:9
 msgid "confirm|OK"
-msgstr "Ã lagi"
+msgstr "OK"
 
-#
 #: ../admin.php:91
 msgid "Thumbnail changed"
-msgstr "SmÃ¡mynd breytt"
+msgstr "Náhled zmìnìn"
 
-#
-#: ../admin.php:95
-#: ../admin.php:114
-#: ../admin.php:133
-#: ../admin.php:151
-#: ../admin.php:268
-#: ../templates/admin_default/changethumbnail.tpl.php:20
+#: ../admin.php:95 ../admin.php:114 ../admin.php:133 ../admin.php:151
+#: ../admin.php:268 ../templates/admin_default/changethumbnail.tpl.php:20
 #: ../templates/admin_default/confirm.tpl.php:10
 msgid "confirm|Cancel"
-msgstr "HÃ¦tta viÃ°"
+msgstr "Zru¹it"
 
-#
 #: ../admin.php:109
 msgid "Gallery deleted"
-msgstr "Myndasafni eytt"
+msgstr "Galerie smazána"
 
-#
 #: ../admin.php:117
 msgid "delete gallery"
-msgstr "eyÃ°a myndasafni"
+msgstr "Smazat galerii"
 
-#
 #: ../admin.php:118
-#, c-format
+#, possible-c-format
 msgid ""
 "Gallery %s is not empty.\n"
-"Are you sure you want to irretrievably delete it and all subgalleries and images it contains?"
+"Are you sure you want to irretrievably delete it and all subgalleries and "
+"images it contains?"
 msgstr ""
-"MyndasafniÃ° '%s' er ekki tÃ³mt.\n"
-"Ertu viss um aÃ° Ã¾Ãº viljir eyÃ°a Ã¾vÃ­ og Ã¶llum undir-myndasÃ¶fnum og myndum sem Ã¾aÃ° inniheldur?"
+"Galerie %s není prázdná.\n"
+"Jste si naprosto jistı, ¾e chcete nenávratnì smazat tuto galerii a "
+"v¹echny v ní obsa¾ené obrázky?"
 
-#
 #: ../admin.php:129
 msgid "Image deleted"
-msgstr "Mynd eytt"
+msgstr "Obrázek smazán"
 
-#
 #: ../admin.php:136
 msgid "delete image"
-msgstr "eyÃ°a mynd"
+msgstr "Smazat obrázek"
 
-#
 #: ../admin.php:137
-#, c-format
+#, possible-c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
-msgstr "Ertu viss um aÃ° Ã¾Ãº viljir eyÃ°a myndinni '%s' Ãºr myndasafninu '%s' fyrir fullt og allt?"
+msgstr "Jste si naprosto jistı, ¾e chcete nenávratnì smazat obrázek %s galerie %s?"
 
-#
 #: ../admin.php:147
 msgid "User deleted"
-msgstr "Notanda eytt"
+msgstr "U¾ivatel odstranìn"
 
-#
 #: ../admin.php:154
 msgid "delete user"
-msgstr "eyÃ°a notanda"
+msgstr "Smazat u¾ivatele"
 
-#
 #: ../admin.php:155
-#, c-format
+#, possible-c-format
 msgid "Are you sure you want to permanently delete user %s?"
-msgstr "Ertu viss um aÃ° Ã¾Ãº viljir eyÃ°a notandanum %s fyrir fullt og allt?"
+msgstr "Jste si naprosto jistı, ¾e chtee odstranit u¾ivatele %s?"
 
-#
 #: ../admin.php:206
 msgid "Welcome to singapore admin!"
-msgstr "Velkomin(n) Ã­ kerfisstjÃ³rnun Singapore!"
+msgstr "Vítejte v administraci!"
 
-#
 #: ../admin.php:215
 msgid "Thank you and goodbye!"
-msgstr "Takk fyrir og bleble!"
+msgstr "Dìkujeme a nashledanou!"
 
-#
 #: ../admin.php:264
 msgid "Thumbnail cache purged"
-msgstr "FlÃ½timinni fyrir smÃ¡myndir var eytt"
+msgstr "Cache náhledù vyèi¹tìna"
 
-#
 #: ../admin.php:271
 msgid "purge cached thumbnails"
-msgstr "eyÃ°a flÃ½timinni fyrir smÃ¡myndir"
+msgstr "Vyèistit cache náhledù"
 
-#
 #: ../admin.php:273
-#, c-format
+#, possible-c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
-msgstr "Ertu viss um aÃ° Ã¾Ãº viljir eyÃ°a Ã¶llum %s flÃ½tivistuÃ°u smÃ¡myndunum?"
+msgstr "Jste si naprosto jistı, ¾e chcete smazat v¹ech náhledy?"
 
-#
 #: ../admin.php:283
-#, c-format
+#, possible-c-format
 msgid "Gallery re-indexed. %s images added."
-msgstr "VÃ­sar myndasafns hafa veriÃ° endurbyggÃ°ir. %s myndum var bÃ¦tt viÃ°."
+msgstr "Gallery znovu indexována. Pøidáno %s obrázkù."
 
-#
 #: ../admin.php:293
 msgid "Gallery info saved"
-msgstr "UpplÃ½singar um myndasafn vistaÃ°ar"
+msgstr "Informace o galerii ulo¾eny"
 
-#
 #: ../admin.php:306
 msgid "Image info saved"
-msgstr "UpplÃ½singar um mynd vistaÃ°ar"
+msgstr "Informace o obrázku ulo¾eny"
 
-#
 #: ../admin.php:318
 msgid "Password saved"
-msgstr "LykilorÃ° vistaÃ°"
+msgstr "Heslo ulo¾eno"
 
-#
 #: ../admin.php:331
 msgid "Permissions saved"
-msgstr "Heimildir vistaÃ°ar"
+msgstr "Oprávnìní ulo¾eno"
 
-#
-#: ../admin.php:343
-#: ../admin.php:355
-#: ../admin.php:387
+#: ../admin.php:343 ../admin.php:355 ../admin.php:387
 msgid "User info saved"
-msgstr "UpplÃ½singar um notanda vistaÃ°ar"
+msgstr "Informace o u¾ivateli ulo¾eny"
 
-#
 #: ../includes/admin.class.php:206
 msgid "admin bar|Back"
-msgstr "Til baka"
+msgstr "Zpìt"
 
-#
 #: ../includes/admin.class.php:208
 msgid "admin bar|Admin"
-msgstr "KerfisstjÃ³ri"
+msgstr "Administrace"
 
-#
 #: ../includes/admin.class.php:209
 msgid "admin bar|Galleries"
-msgstr "MyndasÃ¶fn"
+msgstr "Galerie"
 
-#
 #: ../includes/admin.class.php:210
 msgid "admin bar|Log out"
-msgstr "ÃštskrÃ¡"
+msgstr "Odhlásit se"
 
-#
 #: ../includes/admin.class.php:212
 #: ../templates/admin_default/gallery.tpl.php:28
 msgid "admin bar|Edit gallery"
-msgstr "Breyta myndasafni"
+msgstr "Editace galerie"
 
-#
 #: ../includes/admin.class.php:213
 #: ../templates/admin_default/gallery.tpl.php:29
 msgid "admin bar|Edit permissions"
-msgstr "Breyta heimildum"
+msgstr "Editace oprávnìní"
 
-#
 #: ../includes/admin.class.php:214
 #: ../templates/admin_default/gallery.tpl.php:30
 msgid "admin bar|Delete gallery"
-msgstr "EyÃ°a myndasafni"
+msgstr "Smazat galerii"
 
-#
 #: ../includes/admin.class.php:215
 #: ../templates/admin_default/gallery.tpl.php:31
 msgid "admin bar|New subgallery"
-msgstr "NÃ½tt undir-myndasafn"
+msgstr "Nová vnoøená galerie"
 
-#
 #: ../includes/admin.class.php:216
 #: ../templates/admin_default/gallery.tpl.php:32
 msgid "admin bar|Re-index gallery"
-msgstr "EndurvÃ­sa myndasafn"
+msgstr "Znovu indexovat galerii"
 
-#
 #: ../includes/admin.class.php:218
 msgid "admin bar|Edit image"
-msgstr "Breyta mynd"
+msgstr "Editovat obrázek"
 
-#
 #: ../includes/admin.class.php:219
 msgid "admin bar|Delete image"
-msgstr "EyÃ°a mynd"
+msgstr "Smazat obrázek"
 
-#
 #: ../includes/admin.class.php:221
 msgid "admin bar|New image"
-msgstr "NÃ½ mynd"
+msgstr "Novı obrázek"
 
-#
-#: ../includes/admin.class.php:245
-#: ../includes/admin.class.php:440
-#: ../includes/admin.class.php:469
-#: ../includes/admin.class.php:497
+#: ../includes/admin.class.php:245 ../includes/admin.class.php:440
+#: ../includes/admin.class.php:469 ../includes/admin.class.php:497
 #: ../includes/admin.class.php:517
 msgid "Could not save user info"
-msgstr "Gat ekki vistaÃ° upplÃ½singar um notanda"
+msgstr "Nemù¾u ulo¾it informace o u¾ivateli"
 
-#
 #: ../includes/admin.class.php:248
 msgid "New password must be between 6 and 16 characters long."
-msgstr "NÃ½ja lykilorÃ°iÃ° verÃ°ur aÃ° vera Ã¡ milli 6 og 16 stafa langt."
+msgstr "Nové heslo musí bıt 6 a¾ 16 znakù dlouhé."
 
-#
 #: ../includes/admin.class.php:250
 msgid "The new passwords you entered do not match."
-msgstr "NÃ½ju lykilorÃ°in sem Ã¾Ãº slÃ³st inn stemma ekki."
+msgstr "Nové heslo, které jste vlo¾il se neshoduje."
 
-#
 #: ../includes/admin.class.php:252
-msgid "The current password you entered does not match the one in the database."
-msgstr "LykilorÃ°iÃ° sem Ã¾Ãº slÃ³st inn stemmir ekki viÃ° Ã¾aÃ° sem geymt er Ã­ gagnagrunni."
+msgid ""
+"The current password you entered does not match the one in the database."
+msgstr "Souèasné heslo, které jste vlo¾il, neodpovídá heslo v databázi."
 
-#
 #: ../includes/admin.class.php:255
 msgid "The username specified was not found in the database."
-msgstr "NotandanafniÃ° sem slegiÃ° var inn fannst ekki Ã­ gagnagrunni."
+msgstr "Specifikované u¾ivatelské jméno nebylo nalezeno v databázi."
 
-#
 #: ../includes/admin.class.php:285
 msgid "Your account has been suspended"
-msgstr "AÃ°gangsreikningi Ã¾Ã­num hefur veriÃ° lokaÃ°"
+msgstr "Vá¹ ú¹et byl suspendován."
 
-#
 #: ../includes/admin.class.php:296
 msgid "Username and/or password incorrect"
-msgstr "Notandanafn og/eÃ°a lykilorÃ° ekki rÃ©tt"
+msgstr "U¾ivatelské jméno a/nebo heslo bylo nesprávnì zadáno."
 
-#
 #: ../includes/admin.class.php:299
 msgid "You must enter a username and password"
-msgstr "ÃÃº verÃ°ur aÃ° slÃ¡ inn notandanafn og lykilorÃ°"
+msgstr "Musíte vlo¾it u¾ivatelské jméno a heslo"
 
-#
-#: ../includes/admin.class.php:373
-#: ../includes/admin.class.php:557
-#: ../includes/admin.class.php:595
-#: ../includes/admin.class.php:625
+#: ../includes/admin.class.php:373 ../includes/admin.class.php:557
+#: ../includes/admin.class.php:595 ../includes/admin.class.php:625
 msgid "Could not save gallery info"
-msgstr "Gat ekki vistaÃ° upplÃ½singar um myndasafn"
+msgstr "Nemù¾u ulo¾it informace o galerii"
 
-#
 #: ../includes/admin.class.php:431
 msgid "Username already exists"
-msgstr "Notandanafn er til fyrir"
+msgstr "U¾ivatelské jméno ji¾ existuje"
 
-#
 #: ../includes/admin.class.php:455
 msgid "Cannot delete built in accounts"
-msgstr "Get ekki eytt innbyggÃ°um aÃ°gangsreikningum"
+msgstr ""
 
-#
-#: ../includes/admin.class.php:473
-#: ../includes/admin.class.php:500
+#: ../includes/admin.class.php:473 ../includes/admin.class.php:500
 #: ../includes/admin.class.php:520
 msgid "Username not recognised"
-msgstr "Notandanafn Ã³Ã¾ekkt"
+msgstr "U¾ivatelské jméno nebylo rozpoznáno"
 
-#
 #: ../includes/admin.class.php:573
 msgid "Gallery already exists"
-msgstr "Myndasafn er Ã¾egar til"
+msgstr "Galerie ji¾ existuje"
 
-#
 #: ../includes/admin.class.php:578
 msgid "Could not create directory"
-msgstr "Gat ekki bÃºiÃ° til skrÃ¡arsafn"
+msgstr "Nemù¾u vytvoøit adresáø"
 
-#
 #: ../includes/admin.class.php:646
 msgid "Cannot delete the top level directory"
-msgstr "Gat ekki eytt rÃ³tarskrÃ¡arsafni"
+msgstr "Nemù¾u smazat adresáø nejvy¹¹í úrovnì"
 
-#
-#: ../includes/admin.class.php:701
-#: ../includes/admin.class.php:797
+#: ../includes/admin.class.php:701 ../includes/admin.class.php:797
 #: ../includes/admin.class.php:829
 msgid "File already exists"
-msgstr "SkrÃ¡ er til fyrir"
+msgstr "Soubor ji¾ existuje"
 
-#
-#: ../includes/admin.class.php:706
-#: ../includes/admin.class.php:750
+#: ../includes/admin.class.php:706 ../includes/admin.class.php:750
 msgid "Could not upload file"
-msgstr "Gat ekki sent skrÃ¡"
+msgstr "Nemù¾u nahrát soubor"
 
-#
 #: ../includes/admin.class.php:726
 msgid "Could not add image to gallery"
-msgstr "Gat ekki bÃ¦tt mynd viÃ° myndasafn"
+msgstr "Nemù¾u pøidat obrázek do galerie"
 
-#
 #: ../includes/admin.class.php:740
 msgid "Could not find temporary storage space"
-msgstr "Fann ekki tÃ­mabundiÃ° geymslusvÃ¦Ã°i"
+msgstr "Nemù¾u najít prostor pro doèasné ulo¾ení souborù"
 
-#
 #: ../includes/admin.class.php:760
 msgid "Could not decompress archive"
-msgstr "Gat ekki afÃ¾jappaÃ° safnskrÃ¡"
+msgstr "Nemù¾u dekomprimovat archiv"
 
-#
 #: ../includes/admin.class.php:849
 msgid "Some archive contents could not be added"
-msgstr "Sumum hlutum safnskrÃ¡arinnar var ekki hÃ¦gt aÃ° bÃ¦ta viÃ°"
+msgstr "Nìkteré souèásti archivu nemohly bıt pøidány"
 
-#
 #: ../includes/admin.class.php:879
 msgid "Could not save image information"
-msgstr "Gat ekki vistaÃ° upplÃ½singar um mynd"
+msgstr "Nemù¾u ulo¾it informace o obrázku"
 
-#
 #: ../includes/admin.class.php:905
 msgid "Could not delete image"
-msgstr "Gat ekki eytt mynd"
+msgstr "Nemù¾u smazat obrázek"
 
-#
 #: ../templates/admin_default/changethumbnail.tpl.php:1
 msgid "choose thumbnail"
-msgstr "veldu smÃ¡mynd"
+msgstr "zvolte náhled"
 
-#
 #: ../templates/admin_default/changethumbnail.tpl.php:6
 msgid "Choose the filename of the image used to represent this gallery."
-msgstr "Veldu skrÃ¡arnafn myndarinnar sem Ã¡ aÃ° standa fyrir Ã¾etta myndasafn."
+msgstr "Zvolte obrázek, kterı bude reprezentovat tuto galerii."
 
-#
 #: ../templates/admin_default/changethumbnail.tpl.php:9
 msgid "thumbnail|None"
-msgstr "Engin"
+msgstr "®ádnı"
 
-#
 #: ../templates/admin_default/changethumbnail.tpl.php:10
 msgid "thumbnail|Random"
-msgstr "HandahÃ³fskennd"
+msgstr "Náhodnı"
 
-#
 #: ../templates/admin_default/editgallery.tpl.php:1
 msgid "edit gallery"
-msgstr "breyta myndasafni"
+msgstr "Editovat galerii"
 
-#
 #: ../templates/admin_default/editgallery.tpl.php:11
 msgid "Thumbnail"
-msgstr "SmÃ¡mynd"
+msgstr "Náhled"
 
-#
 #: ../templates/admin_default/editgallery.tpl.php:15
 msgid ""
 "Random\n"
 "thumbnail"
 msgstr ""
-"SmÃ¡mynd af\n"
-"handahÃ³fi"
+"Náhodnı\n"
+"náhléd"
 
-#
 #: ../templates/admin_default/editgallery.tpl.php:20
 msgid "thumbnail|Change..."
-msgstr "Breyta..."
+msgstr "Zmìnit ..."
 
-#
 #: ../templates/admin_default/editgallery.tpl.php:24
 #: ../templates/admin_default/galleryhits.tpl.php:7
 msgid "Gallery name"
-msgstr "Nafn myndasafns"
+msgstr "Jméno galerie"
 
-#
 #: ../templates/admin_default/editgallery.tpl.php:28
 #: ../templates/admin_default/editimage.tpl.php:19
 msgid "Artist name"
-msgstr "Nafn listamanns"
+msgstr "Jméno autora"
 
-#
 #: ../templates/admin_default/editgallery.tpl.php:44
 msgid "Summary"
-msgstr "Samantekt"
+msgstr "Souhrn"
 
 #: ../templates/admin_default/editgallery.tpl.php:53
 #: ../templates/admin_default/editimage.tpl.php:64
@@ -477,350 +359,288 @@ msgstr "Samantekt"
 #: ../templates/admin_default/editprofile.tpl.php:24
 #: ../templates/admin_default/edituser.tpl.php:31
 msgid "Save Changes"
-msgstr "Vista breytingar"
+msgstr "Ulo¾it zmìny"
 
-#
 #: ../templates/admin_default/editimage.tpl.php:1
 msgid "edit image"
-msgstr "breyta mynd"
+msgstr "Editovat obrázek"
 
-#
 #: ../templates/admin_default/editimage.tpl.php:11
 msgid "Image"
-msgstr "Mynd"
+msgstr "Obrázek"
 
-#
 #: ../templates/admin_default/editimage.tpl.php:15
 #: ../templates/admin_default/imagehits.tpl.php:7
 msgid "Image name"
-msgstr "Nafn myndar"
+msgstr "Jméno obrázku"
 
-#
 #: ../templates/admin_default/editpass.tpl.php:1
 msgid "change password"
-msgstr "breyta lykilorÃ°i"
+msgstr "Zmìna heslo"
 
-#
 #: ../templates/admin_default/editpass.tpl.php:2
 msgid "Please choose a new password between 6 and 16 characters in length."
-msgstr "Vinsamlega veldu nÃ½tt lykilorÃ° sem er Ã¡ milli 6 og 16 stafa langt."
+msgstr "Prosím, zvolte nové heslo o délce mezi 6 a¾ 16 znakù."
 
-#
 #: ../templates/admin_default/editpass.tpl.php:9
 msgid "Current password:"
-msgstr "NÃºverandi lykilorÃ°:"
+msgstr "Souèasné heslo:"
 
-#
 #: ../templates/admin_default/editpass.tpl.php:13
 msgid "New password:"
-msgstr "NÃ½tt lykilorÃ°:"
+msgstr "Nové heslo:"
 
-#
 #: ../templates/admin_default/editpass.tpl.php:17
 msgid "Confirm password:"
-msgstr "StaÃ°festu lykilorÃ°:"
+msgstr "Potvrzení hesla:"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:1
 msgid "edit permissions"
-msgstr "breyta heimildum"
+msgstr "Zmìna oprávnìní"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:13
 msgid "Owner"
-msgstr "Eigandi"
+msgstr "Vlastník"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:22
 #: ../templates/admin_default/edituser.tpl.php:21
 msgid "Groups"
-msgstr "HÃ³par"
+msgstr "Skupiny"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:26
 msgid "Group permissions"
-msgstr "Heimildir hÃ³pa"
+msgstr "Oprávnìní skupiny"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:28
 #: ../templates/admin_default/editpermissions.tpl.php:37
 msgid "permissions|Read"
-msgstr "Lesa"
+msgstr "Ètení"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:29
 #: ../templates/admin_default/editpermissions.tpl.php:38
 msgid "permissions|Edit"
-msgstr "Breyta"
+msgstr "Editace"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:30
 #: ../templates/admin_default/editpermissions.tpl.php:39
 msgid "permissions|Add"
-msgstr "BÃ¦ta viÃ°"
+msgstr "Pøidávání"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:31
 #: ../templates/admin_default/editpermissions.tpl.php:40
 msgid "permissions|Delete"
-msgstr "EyÃ°a"
+msgstr "Mazání"
 
-#
 #: ../templates/admin_default/editpermissions.tpl.php:35
 msgid "World permissions"
-msgstr "Heims-heimildir"
+msgstr "Globální oprávnìní"
 
-#
 #: ../templates/admin_default/editprofile.tpl.php:1
 msgid "my profile"
-msgstr "MÃ­nar stillingar"
+msgstr "mùj profil"
 
-#
 #: ../templates/admin_default/editprofile.tpl.php:8
 #: ../templates/admin_default/edituser.tpl.php:15
 msgid "Username"
-msgstr "Notandanafn"
+msgstr "U¾ivatelské jméno"
 
-#
 #: ../templates/admin_default/editprofile.tpl.php:16
 #: ../templates/admin_default/edituser.tpl.php:23
 msgid "Full name"
-msgstr "Fullt nafn"
+msgstr "Celé jméno"
 
-#
 #: ../templates/admin_default/edituser.tpl.php:1
 #: ../templates/admin_default/manageusers.tpl.php:1
 msgid "user management"
-msgstr "notendastjÃ³rnun"
+msgstr "Správa u¾ivatelù"
 
-#
 #: ../templates/admin_default/edituser.tpl.php:17
 msgid "Type"
-msgstr "Tegund"
+msgstr "Typ"
 
-#
 #: ../templates/admin_default/edituser.tpl.php:18
 msgid "Administrator"
-msgstr "UmsjÃ³narmaÃ°ur"
+msgstr "Administrátor"
 
-#
 #: ../templates/admin_default/edituser.tpl.php:19
 msgid "User"
-msgstr "Notandi"
+msgstr "U¾ivatel"
 
-#
 #: ../templates/admin_default/edituser.tpl.php:26
 msgid "Password"
-msgstr "LykilorÃ°"
+msgstr "Heslo"
 
-#
 #: ../templates/admin_default/gallery.tpl.php:27
 msgid "admin bar|View gallery"
-msgstr "SkoÃ°a myndasafn"
+msgstr "Zobrazit galerii"
 
-#
 #: ../templates/admin_default/gallery.tpl.php:34
 msgid "admin bar|Change thumbnail"
-msgstr "Breyta smÃ¡mynd"
+msgstr "Zmìnit náhled"
 
-#
 #: ../templates/admin_default/galleryhits.tpl.php:7
 #: ../templates/admin_default/imagehits.tpl.php:7
 msgid "hits table|Graph"
 msgstr "Graf"
 
-#
 #: ../templates/admin_default/galleryhits.tpl.php:7
 #: ../templates/admin_default/imagehits.tpl.php:7
 msgid "hits table|Hits"
-msgstr "HeimsÃ³knir"
+msgstr "Pøístupy"
 
-#
 #: ../templates/admin_default/galleryhits.tpl.php:7
 #: ../templates/admin_default/imagehits.tpl.php:7
 msgid "hits table|Last hit"
-msgstr "SÃ­Ã°asta heimsÃ³kn"
+msgstr "Poslední pøístup"
 
-#
 #: ../templates/admin_default/header.tpl.php:39
 msgid "Admin message:"
-msgstr "SkilaboÃ° frÃ¡ kerfisstjÃ³ra:"
+msgstr "Zpráva administrátora:"
 
-#
 #: ../templates/admin_default/login.tpl.php:1
 msgid "log in"
-msgstr "innskrÃ¡"
+msgstr "Pøihlásit se"
 
-#
 #: ../templates/admin_default/login.tpl.php:3
 msgid "Please enter your admin username and password below."
-msgstr "Vinsamlega slÃ¡Ã°u inn notandanafn og lykilorÃ° hÃ©r aÃ° neÃ°an."
+msgstr "Prosím, vlo¾te administrátorské u¾ivatelské jméno a heslo ní¾e."
 
-#
 #: ../templates/admin_default/login.tpl.php:8
 #: ../templates/admin_default/manageusers.tpl.php:10
 #: ../templates/admin_default/manageusers.tpl.php:30
 msgid "Username:"
-msgstr "Notandanafn:"
+msgstr "U¾ivatelské jméno:"
 
-#
 #: ../templates/admin_default/login.tpl.php:9
 msgid "Password:"
-msgstr "LykilorÃ°:"
+msgstr "Heslo:"
 
-#
 #: ../templates/admin_default/login.tpl.php:19
 msgid "If you do not have a username then you may log in as a guest."
-msgstr "Ef Ã¾Ãº hefur ekki notandanafn getur Ã¾Ãº skrÃ¡Ã° Ã¾ig inn sem gestur."
+msgstr "Pokud nemáte u¾ivatelské jméno a heslo, mù¾ete se pøihlásit jako host."
 
 #: ../templates/admin_default/login.tpl.php:20
 msgid "Log in as guest"
-msgstr "InnskrÃ¡ sem gestur"
+msgstr "Pøihlásit se jako host"
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:3
 msgid "You must be an administrator to access this area."
-msgstr "ÃÃº verÃ°ur aÃ° vera umsjÃ³narmaÃ°ur til aÃ° komast inn Ã¡ Ã¾etta svÃ¦Ã°i."
+msgstr "Musíte bıt administrátor, aby jste mohli vstoupit do této oblasti."
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:17
 msgid "Email:"
-msgstr "TÃ¶lvupÃ³stfang:"
+msgstr "E-mail:"
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:18
 msgid "Full name:"
-msgstr "Fullt nafn:"
+msgstr "Celé jméno:"
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:19
 msgid "edit"
-msgstr "breyta"
+msgstr "editovat"
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:20
 msgid "delete"
-msgstr "eyÃ°a"
+msgstr "smazat"
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:21
 msgid "suspend"
-msgstr "loka"
+msgstr "suspendovat"
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:21
 msgid "unsuspend"
-msgstr "opna"
+msgstr "povı¹it"
 
-#
 #: ../templates/admin_default/manageusers.tpl.php:28
 msgid "create new user"
-msgstr "bÃºa til nÃ½jan notanda"
+msgstr "vytvoøit nového u¾ivatele"
 
 #: ../templates/admin_default/manageusers.tpl.php:33
 #: ../templates/admin_default/newgallery.tpl.php:14
 #: ../templates/admin_default/newimage.tpl.php:48
 msgid "Create"
-msgstr "BÃºa til"
+msgstr "Vytvoøit"
 
-#
 #: ../templates/admin_default/menu.tpl.php:1
 msgid "Please choose an option:"
-msgstr "Vinsamlega veldu valkost:"
+msgstr "Prosím, zvolte jednu z mo¾ností:"
 
-#
 #: ../templates/admin_default/menu.tpl.php:4
 msgid "Manage galleries and images"
-msgstr "UmsjÃ³n mynda og myndasafna"
+msgstr "Spravovat galerie a obrázky"
 
-#
 #: ../templates/admin_default/menu.tpl.php:5
 msgid "View gallery hits"
-msgstr "SkoÃ°a heimsÃ³knir Ã­ myndasÃ¶fn"
+msgstr "Zobrazit pøístupy galerií"
 
-#
 #: ../templates/admin_default/menu.tpl.php:7
 msgid "Change password"
-msgstr "Breyta lykilorÃ°i"
+msgstr "Zmìnit heslo"
 
-#
 #: ../templates/admin_default/menu.tpl.php:8
 msgid "My profile"
-msgstr "MÃ­nar stillingar"
+msgstr "Mùj profil"
 
-#
 #: ../templates/admin_default/menu.tpl.php:11
 msgid "Manage users"
-msgstr "SÃ½sla meÃ° notendur"
+msgstr "Spravoavt u¾ivatele"
 
-#
 #: ../templates/admin_default/menu.tpl.php:12
 msgid "Purge cached thumbnails"
-msgstr "EyÃ°a flÃ½tivistuÃ°um smÃ¡myndum"
+msgstr "Odstranit cachované náhledy"
 
-#
 #: ../templates/admin_default/menu.tpl.php:14
 msgid "Log out of admin"
-msgstr "ÃštskrÃ¡ kerfisstjÃ³ra"
+msgstr "Odhlásit se z administrace"
 
-#
 #: ../templates/admin_default/newgallery.tpl.php:1
 msgid "new gallery"
-msgstr "nÃ½tt myndasafn"
+msgstr "nová galerie"
 
-#
 #: ../templates/admin_default/newgallery.tpl.php:9
 #: ../templates/admin_default/newimage.tpl.php:22
 msgid "Identifier:"
-msgstr "Einkenni:"
+msgstr "Identifikátor:"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:1
 msgid "new image"
-msgstr "nÃ½ mynd"
+msgstr "novı obrázek"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:3
-msgid "This image will not be visible because this gallery is not an album: it contains child galleries."
-msgstr "Ãessi mynd mun ekki verÃ°a sÃ½nileg Ã¾ar eÃ° Ã¾etta myndasafn inniheldur undir-myndasÃ¶fn."
+msgid ""
+"This image will not be visible because this gallery is not an album: it "
+"contains child galleries."
+msgstr ""
+"Tento obrázek nebude dostupnı, proto¾e tato galerie není albem: obsahuje galerie."
 
-#
 #: ../templates/admin_default/newimage.tpl.php:13
 msgid "Upload single file"
-msgstr "HlaÃ°a upp einni skrÃ¡"
+msgstr "Nahrát jeden soubor"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:17
 msgid "Image file to upload:"
-msgstr "MyndaskrÃ¡ sem Ã¡ aÃ° hlaÃ°a upp:"
+msgstr "Soubor obrázku k nahrátí:"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:24
 msgid "Use filename of uploaded file."
-msgstr "Nota skrÃ¡arnafn upphlaÃ°innar skrÃ¡r."
+msgstr "Pou¾ít jméno nahraného souboru."
 
-#
 #: ../templates/admin_default/newimage.tpl.php:25
 msgid "Specify different filename:"
-msgstr "Tilgreina annaÃ° skrÃ¡arnafn:"
+msgstr "Specifikuj jiné jméno:"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:30
 msgid "Upload multiple files"
-msgstr "HlaÃ°a upp mÃ¶rgum skrÃ¡m"
+msgstr "Nahrát více souborù"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:34
 msgid "ZIP file to upload:"
-msgstr "SafnskrÃ¡ (ZIP) sem hlaÃ°a Ã¡ upp:"
+msgstr "Soubor ZIP k nahrátí:"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:39
 msgid "Add remote file"
-msgstr "BÃ¦ta viÃ° fjarstaddri skrÃ¡"
+msgstr "Pøidat vzdálenı soubor"
 
-#
 #: ../templates/admin_default/newimage.tpl.php:43
 msgid "URL of image:"
-msgstr "URL myndar"
-
+msgstr "URL obrázku:"

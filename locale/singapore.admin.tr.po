@@ -1,0 +1,507 @@
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# Niels Hackius <niels@hackius.de>,2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.7\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2005-08-08 21:45+0100\n"
+"Last-Translator: Altan Yalcin <altanyalcin@gmail.com>\n"
+"Language-Team: Turkish (Türkçe)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-9\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#
+# File: ../admin.php, line: 43
+msgid "Welcome to singapore admin!"
+msgstr "Singapore admin menüsüne hoþgeldiniz!"
+
+#
+# File: ../admin.php, line: 46
+# File: ../admin.php, line: 55
+# File: ../admin.php, line: 64
+# File: ../admin.php, line: 79
+# File: ../admin.php, line: 93
+# File: ../admin.php, line: 104
+# File: ../admin.php, line: 121
+# File: ../admin.php, line: 139
+# File: ../admin.php, line: 153
+# File: ../admin.php, line: 163
+# File: ../admin.php, line: 188
+msgid "An error occurred:"
+msgstr "Bir hata meydana geldi."
+
+#
+# File: ../admin.php, line: 52
+msgid "Thank you and goodbye!"
+msgstr "Teþekkürler ve görüþmek üzere!"
+
+#
+# File: ../admin.php, line: 62
+msgid "Password saved"
+msgstr "Þifreniz kayýt edildi"
+
+#
+# File: ../admin.php, line: 76
+msgid "Gallery added"
+msgstr "Galeri eklendi"
+
+#
+# File: ../admin.php, line: 90
+msgid "Gallery info saved"
+msgstr "Galeri açýklamasý kayýt edilmiþtir"
+
+#
+# File: ../admin.php, line: 99
+# File: ../admin.php, line: 117
+# File: ../admin.php, line: 159
+# File: ../admin.php, line: 184
+msgid "confirm|OK"
+msgstr "Tamam"
+
+#
+# File: ../admin.php, line: 102
+msgid "Gallery deleted"
+msgstr "Galeri silindi"
+
+#
+# File: ../admin.php, line: 107
+# File: ../admin.php, line: 123
+# File: ../admin.php, line: 165
+# File: ../admin.php, line: 189
+msgid "confirm|Cancel"
+msgstr "Ýptal"
+
+#
+# File: ../admin.php, line: 110
+msgid "delete gallery"
+msgstr "Galeriyi sil"
+
+#
+# File: ../admin.php, line: 111
+#, c-format
+msgid ""
+"Gallery %s is not empty.\n"
+"Are you sure you want to irretrievably delete it and all subgalleries and images it contains?"
+msgstr ""
+"Galeri %s halen resim içermekte\n"
+"Galerinin tamamen silinmesini istiyormusunuz?"
+
+#
+# File: ../admin.php, line: 119
+msgid "Thumbnail changed"
+msgstr "Öngörüntü deðiþtirilmiþtir"
+
+#
+# File: ../admin.php, line: 136
+msgid "Image added"
+msgstr "Resim eklendi"
+
+#
+# File: ../admin.php, line: 150
+msgid "Image saved successfully"
+msgstr "Resim baþarýyla kayýt edildi."
+
+#
+# File: ../admin.php, line: 161
+msgid "Image deleted"
+msgstr "Resim silidi"
+
+#
+# File: ../admin.php, line: 168
+msgid "delete image"
+msgstr "Resim sil"
+
+#
+# File: ../admin.php, line: 169
+#, c-format
+msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
+msgstr "Resim (%s) tamamen galeri %s'den silmek istiyormusunuz?"
+
+#
+# File: ../admin.php, line: 186
+msgid "Thumbnail cache purged"
+msgstr "Resim öngörüntü Cache'i boþaltýldý"
+
+#
+# File: ../admin.php, line: 192
+msgid "purge cached thumbnails"
+msgstr "Resim öngörüntü Cache'ini boþalt."
+
+#
+# File: ../admin.php, line: 194
+#, c-format
+msgid "Are you sure you want to delete all %s cached thumbnails?"
+msgstr "Bütün %s resim öngörüntülerini Cache'den silmek istiyormusunuz?"
+
+#
+# File: ../includes/admin.class.php, line: 178
+msgid "admin bar|Back"
+msgstr "Geriye"
+
+#
+# File: ../includes/admin.class.php, line: 180
+msgid "admin bar|Admin"
+msgstr "Ayarlar"
+
+#
+# File: ../includes/admin.class.php, line: 181
+msgid "admin bar|Galleries"
+msgstr "Galeriler"
+
+#
+# File: ../includes/admin.class.php, line: 182
+msgid "admin bar|Log out"
+msgstr "Çýk"
+
+#
+# File: ../includes/admin.class.php, line: 184
+msgid "admin bar|Edit gallery"
+msgstr "Galeriyi düzenle"
+
+#
+# File: ../includes/admin.class.php, line: 185
+msgid "admin bar|Delete gallery"
+msgstr "Galeriyi sil"
+
+#
+# File: ../includes/admin.class.php, line: 186
+msgid "admin bar|New subgallery"
+msgstr "Yeni alt-galeri"
+
+#
+# File: ../includes/admin.class.php, line: 188
+msgid "admin bar|Edit image"
+msgstr "Resimi düzenle"
+
+#
+# File: ../includes/admin.class.php, line: 189
+msgid "admin bar|Delete image"
+msgstr "Resimi sil"
+
+#
+# File: ../includes/admin.class.php, line: 191
+msgid "admin bar|New image"
+msgstr "Yeni resim"
+
+#
+# File: ../includes/admin.class.php, line: 215
+msgid "There was an error saving the new password."
+msgstr "Yeni þifre kayýtýnda hata meydana geldi."
+
+#
+# File: ../includes/admin.class.php, line: 218
+msgid "New password must be between 6 and 16 characters long."
+msgstr "Þifre 6 - 16 karater içermesi lazým."
+
+#
+# File: ../includes/admin.class.php, line: 220
+msgid "The new passwords you entered do not match."
+msgstr "Verdýðýnz þifreler býrbýrýne uymuyor."
+
+#
+# File: ../includes/admin.class.php, line: 222
+msgid "The current password you entered does not match the one in the database."
+msgstr "Verdýðýnz þifre yanlýþ."
+
+#
+# File: ../includes/admin.class.php, line: 225
+msgid "The username specified was not found in the database."
+msgstr "Verdiðiniz kullanýcý ismi yoktur."
+
+#
+# File: ../includes/admin.class.php, line: 261
+msgid "Username and/or password incorrect"
+msgstr "Ýsminiz ve/veya þifreniz yanlýþ."
+
+#
+# File: ../includes/admin.class.php, line: 264
+msgid "You must enter a username and password"
+msgstr "Ýsminizi ve þifrenizý veriniz."
+
+#
+# File: ../includes/admin.class.php, line: 289
+msgid "Gallery already exists"
+msgstr "Galeri mevcuttur"
+
+#
+# File: ../includes/admin.class.php, line: 296
+msgid "Could not create directory"
+msgstr "Dizin oluþturalanamadý"
+
+#
+# File: ../includes/admin.class.php, line: 327
+msgid "Could not save gallery info"
+msgstr "Galeri açýklamasý kayýt edilenemedi."
+
+#
+# File: ../includes/admin.class.php, line: 345
+msgid "Cannot delete the top level directory"
+msgstr "Anadizin silinemedi."
+
+#
+# File: ../includes/admin.class.php, line: 386
+msgid "File already exists"
+msgstr "Kütük mevcuttur"
+
+#
+# File: ../includes/admin.class.php, line: 391
+msgid "Could not upload file"
+msgstr "Resim gönderilenemedi"
+
+#
+# File: ../includes/admin.class.php, line: 396
+msgid "Invalid location choice"
+msgstr "Yanlýþ hedef seçeneði"
+
+#
+# File: ../includes/admin.class.php, line: 415
+msgid "Could not add image to gallery"
+msgstr "Resim galeriye eklenemedi"
+
+#
+# File: ../includes/admin.class.php, line: 448
+msgid "Could not save image information"
+msgstr "Resim açýklamasý kayýt edilemedi"
+
+#
+# File: ../includes/admin.class.php, line: 470
+msgid "Could not delete image"
+msgstr "Resim silinemedi"
+
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php, line: 1
+msgid "choose thumbnail"
+msgstr "Lütfen resim seçiniz"
+
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php, line: 6
+msgid "Choose the filename of the image used to represent this gallery."
+msgstr "Galeriyi sembole edecek resimin ismini seçiniz."
+
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php, line: 9
+msgid "thumbnail|None"
+msgstr "Hiç"
+
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php, line: 10
+msgid "thumbnail|Random"
+msgstr "Rasgele"
+
+#
+# File: ../templates/admin_default/editgallery.tpl.php, line: 1
+msgid "edit gallery"
+msgstr "Galeriyi düzenle"
+
+#
+# File: ../templates/admin_default/editgallery.tpl.php, line: 14
+msgid "Gallery thumbnail:"
+msgstr "Galeri öngörüntü"
+
+#
+# File: ../templates/admin_default/editgallery.tpl.php, line: 18
+msgid ""
+"Random\n"
+"thumbnail"
+msgstr ""
+"Rasgele \n"
+"Öngörünütü"
+
+#
+# File: ../templates/admin_default/editgallery.tpl.php, line: 23
+msgid "thumbnail|Change..."
+msgstr "Baþka öngörünütü seç."
+
+#
+# File: ../templates/admin_default/editgallery.tpl.php, line: 27
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+msgid "Gallery name"
+msgstr "Galeri ismi"
+
+#
+# File: ../templates/admin_default/editgallery.tpl.php, line: 31
+# File: ../templates/admin_default/editimage.tpl.php, line: 22
+msgid "Artist name"
+msgstr "Resim çekenýn ismi"
+
+#
+# File: ../templates/admin_default/editimage.tpl.php, line: 1
+msgid "edit image"
+msgstr "Resimi düzenle"
+
+#
+# File: ../templates/admin_default/editimage.tpl.php, line: 14
+msgid "Image"
+msgstr "Resim"
+
+#
+# File: ../templates/admin_default/editimage.tpl.php, line: 18
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "Image name"
+msgstr "Resim ismi"
+
+#
+# File: ../templates/admin_default/editpass.tpl.php, line: 1
+msgid "change password"
+msgstr "Þifreyi deðiiþtir"
+
+#
+# File: ../templates/admin_default/editpass.tpl.php, line: 2
+msgid "Please choose a new password between 6 and 16 characters in length."
+msgstr "Lütfen 6-16 karakter uzunlukta þifre seçiniz."
+
+#
+# File: ../templates/admin_default/editpass.tpl.php, line: 9
+msgid "Current password:"
+msgstr "Þu anký þifreniz:"
+
+#
+# File: ../templates/admin_default/editpass.tpl.php, line: 13
+msgid "New password:"
+msgstr "Yeni þifreniz:"
+
+#
+# File: ../templates/admin_default/editpass.tpl.php, line: 17
+msgid "Confirm password:"
+msgstr "Þifreyi tekrarla:"
+
+#
+# File: ../templates/admin_default/footer.tpl.php, line: 3
+msgid "singapore|Powered by"
+msgstr ""
+
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Graph"
+msgstr "Grafik"
+
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Hits"
+msgstr "Hitsler"
+
+#
+# File: ../templates/admin_default/galleryhits.tpl.php, line: 22
+# File: ../templates/admin_default/imagehits.tpl.php, line: 22
+msgid "hits table|Last hit"
+msgstr "Son hit"
+
+#
+# File: ../templates/admin_default/header.tpl.php, line: 39
+msgid "Admin message:"
+msgstr "Admin mesajý:"
+
+#
+# File: ../templates/admin_default/loggedout.tpl.php, line: 1
+msgid "Return to galleries."
+msgstr "Galerilere geri dön."
+
+#
+# File: ../templates/admin_default/login.tpl.php, line: 1
+msgid "log in"
+msgstr "Gir"
+
+#
+# File: ../templates/admin_default/login.tpl.php, line: 3
+msgid ""
+"Only authorised users are allowed into the admin section.\n"
+"Please enter your admin username and password below."
+msgstr ""
+"Sadece ototesi olan kullanýcýlar ayarlarý deðiþtirebilir.\n"
+"Lütfen admin ismini ve þifresini veriniz"
+
+#
+# File: ../templates/admin_default/login.tpl.php, line: 8
+msgid "Username:"
+msgstr "Kullanýcý ismi:"
+
+#
+# File: ../templates/admin_default/login.tpl.php, line: 9
+msgid "Password:"
+msgstr "Þifre:"
+
+#
+# File: ../templates/admin_default/menu.tpl.php, line: 1
+msgid "Please choose an option:"
+msgstr "Lütfen seçiniz:"
+
+#
+# File: ../templates/admin_default/menu.tpl.php, line: 4
+msgid "Manage galleries and images"
+msgstr "Galeri ve resimleri düzenle"
+
+#
+# File: ../templates/admin_default/menu.tpl.php, line: 5
+msgid "View gallery hits"
+msgstr "Galeri ziyaretçi sayýsýný göster"
+
+#
+# File: ../templates/admin_default/menu.tpl.php, line: 6
+msgid "Purge cached thumbnails"
+msgstr "Resim öngörüntüsünü cacheden sil."
+
+#
+# File: ../templates/admin_default/menu.tpl.php, line: 7
+msgid "Change password"
+msgstr "Þifre deðiþtir"
+
+#
+# File: ../templates/admin_default/menu.tpl.php, line: 8
+msgid "Log out of admin"
+msgstr "Ayarlardan çýk"
+
+#
+# File: ../templates/admin_default/newgallery.tpl.php, line: 1
+msgid "new gallery"
+msgstr "yeni galeri"
+
+#
+# File: ../templates/admin_default/newgallery.tpl.php, line: 9
+# File: ../templates/admin_default/newimage.tpl.php, line: 28
+msgid "Identifier:"
+msgstr "Belirteyici:"
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 1
+msgid "new image"
+msgstr "yeni resim"
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 3
+msgid "This image will not be visible because this gallery contains subgalleries."
+msgstr "Bu resim gösterilebilenemez çünkü bu galeri alt-galerilere sahiptir."
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 12
+msgid "Remote file"
+msgstr "Resim baþka serverde"
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 16
+msgid "URL of image:"
+msgstr "Resimin URLu:"
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 20
+msgid "Local file"
+msgstr "Lokal resim"
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 24
+msgid "Image file to upload:"
+msgstr "Yüklenecek resim:"
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 30
+msgid "Use filename of uploaded file."
+msgstr "Yüklenmiþ resimin ismini kullan"
+
+#
+# File: ../templates/admin_default/newimage.tpl.php, line: 31
+msgid "Specify different filename:"
+msgstr "Baþka isim kullan:"
+

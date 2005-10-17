@@ -1,17 +1,17 @@
 # GERMAN TRANSLATION FOR SINGAPORE IMAGE GALLERY ADMIN INTERFACE.
 # Copyright (C) 2004 Free Software Foundation, Inc.
-# Niels Hackius <niels@hackius.de>, 2003.
+# Samuel Suther <info@suther.de>, 2005.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.9\n"
-"POT-Creation-Date: 2004-09-27 08:35+0100\n"
-"PO-Revision-Date: 2004-05-28 17:51+0100\n"
-"Last-Translator: Niels Hackius <niels@hackius.de>\n"
-"Language-Team: de <niels@hackius.de>\n"
+"Project-Id-Version: singapore 0.9.11\n"
+"POT-Creation-Date: 2005-08-08 19:35+0100\n"
+"PO-Revision-Date: 2005-08-08 20:20+0001\n"
+"Last-Translator: Samuel Suther <info@suther.de>\n"
+"Language-Team: German (Deutsch)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 #
 # File: ../admin.php, line: 41
@@ -38,7 +38,7 @@ msgstr ""
 # File: ../admin.php, line: 333
 # File: ../admin.php, line: 365
 msgid "You do not have permission to perform this operation."
-msgstr ""
+msgstr "Sie haben keine Berechtigung diesen Befehl auszuführen."
 #
 # File: ../admin.php, line: 45
 msgid "Gallery added"
@@ -108,7 +108,7 @@ msgid ""
 msgstr ""
 "Galerie %s is nicht leer.\n"
 "Soll die Galerie und alle Unter-Galerien wirklich "
-"unwiederherstellbargelöscht werden?"
+"unwiederruflich gelöscht werden?"
 #
 # File: ../admin.php, line: 129
 msgid "Image deleted"
@@ -122,7 +122,7 @@ msgstr "Bild löschen"
 #, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
 msgstr ""
-"Soll das Bild %s wirklich unwiederherstellbar aus der Galerie %s gelöscht "
+"Soll das Bild %s wirklich unwiederruflich aus der Galerie %s gelöscht "
 "werden?"
 #
 # File: ../admin.php, line: 147
@@ -139,12 +139,12 @@ msgstr "Galerie löschen"
 #, fuzzy, c-format
 msgid "Are you sure you want to permanently delete user %s?"
 msgstr ""
-"Soll das Bild %s wirklich unwiederherstellbar aus der Galerie %s gelöscht "
+"Soll das Bild %s wirklich unwiederruflich aus der Galerie %s gelöscht "
 "werden?"
 #
 # File: ../admin.php, line: 199
 msgid "Welcome to singapore admin!"
-msgstr "Willkomen in den singapore Einstellungen."
+msgstr "Willkomen im singapore Administrationsbereich."
 #
 # File: ../admin.php, line: 208
 msgid "Thank you and goodbye!"
@@ -166,7 +166,7 @@ msgstr "Wirklich alle %s Miniaturvorschau-Bilder aus dem Cache löschen?"
 # File: ../admin.php, line: 276
 #, c-format
 msgid "Gallery re-indexed. %s images added."
-msgstr ""
+msgstr "Galerie neu indexieren. %S Bilder wurden hinzugefügt."
 #
 # File: ../admin.php, line: 286
 msgid "Gallery info saved"
@@ -257,16 +257,16 @@ msgstr "Konnte Galerie-Beschreibung nicht speichern"
 #
 # File: ../includes/admin.class.php, line: 244
 msgid "New password must be between 6 and 16 characters long."
-msgstr "Ein neues Passwort muss von 6 bis 16 lang sein."
+msgstr "Ein neues Passwort muss zwischen 6 und 16 Zeichen lang sein."
 #
 # File: ../includes/admin.class.php, line: 246
 msgid "The new passwords you entered do not match."
-msgstr "Die neuen, eingebenen Passwörter stimmen nicht überein."
+msgstr "Die neu eingebenen Passwörter stimmen nicht überein."
 #
 # File: ../includes/admin.class.php, line: 248
 msgid ""
 "The current password you entered does not match the one in the database."
-msgstr "Das aktuelle Passwort stimmt nicht mit dem gespeicherten überein."
+msgstr "Das aktuelle Passwort stimmt nicht mit dem gespeicherten Passwort überein."
 #
 # File: ../includes/admin.class.php, line: 251
 msgid "The username specified was not found in the database."
@@ -274,7 +274,7 @@ msgstr "Der angegebene Nutzername wurde nicht gefunden."
 #
 # File: ../includes/admin.class.php, line: 281
 msgid "Your account has been suspended"
-msgstr ""
+msgstr "Ihr Zugang wurde gelöscht."
 #
 # File: ../includes/admin.class.php, line: 292
 msgid "Username and/or password incorrect"
@@ -293,17 +293,17 @@ msgstr "Konnte Galerie-Beschreibung nicht speichern"
 # File: ../includes/admin.class.php, line: 427
 #, fuzzy
 msgid "Username already exists"
-msgstr "Datei existiert bereits"
+msgstr "Nutzername existiert bereits"
 #
 # File: ../includes/admin.class.php, line: 451
 msgid "Cannot delete built in accounts"
-msgstr ""
+msgstr "Das Nutzer-Konto konnte nicht gelöscht werden."
 #
 # File: ../includes/admin.class.php, line: 469
 # File: ../includes/admin.class.php, line: 496
 # File: ../includes/admin.class.php, line: 516
 msgid "Username not recognised"
-msgstr ""
+msgstr "Nutzername nicht gefunden"
 #
 # File: ../includes/admin.class.php, line: 568
 msgid "Gallery already exists"
@@ -311,11 +311,11 @@ msgstr "Galerie existiert bereits."
 #
 # File: ../includes/admin.class.php, line: 575
 msgid "Could not create directory"
-msgstr "Konnte Ordner nicht erstellen"
+msgstr "Der Ordner konnte nicht erstellt werden."
 #
 # File: ../includes/admin.class.php, line: 626
 msgid "Cannot delete the top level directory"
-msgstr "Das Wurzel-Verzeichniss kann nicht gelöscht werden."
+msgstr "Das Basis-Verzeichniss kann nicht gelöscht werden."
 #
 # File: ../includes/admin.class.php, line: 681
 # File: ../includes/admin.class.php, line: 777
@@ -334,7 +334,7 @@ msgstr "Konnte Bild nicht zur Galerie hinzufügen"
 #
 # File: ../includes/admin.class.php, line: 720
 msgid "Could not find temporary storage space"
-msgstr "Temporärer Speicherplatz wurde nicht gefunden"
+msgstr "Zwischenspeicher wurde nicht gefunden"
 #
 # File: ../includes/admin.class.php, line: 740
 msgid "Could not decompress archive"
@@ -387,7 +387,7 @@ msgstr "Keins"
 msgid ""
 "Random\n"
 "thumbnail"
-msgstr "ZufälligesMiniaturvorschau-Bild"
+msgstr "Zufälliges Miniaturvorschau-Bild"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 20
 msgid "thumbnail|Change..."
@@ -405,7 +405,7 @@ msgstr "Fotografen-Name"
 #
 # File: ../templates/admin_default/editgallery.tpl.php, line: 44
 msgid "Summary"
-msgstr ""
+msgstr "Übersicht"
 #
 # File: ../templates/admin_default/editimage.tpl.php, line: 1
 msgid "edit image"
@@ -426,11 +426,11 @@ msgstr "Passwort ändern"
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 2
 msgid "Please choose a new password between 6 and 16 characters in length."
-msgstr "Bitte wählen Sie ein Passwort mit 6 bis 16 Zeichen Länge."
+msgstr "Bitte wählen Sie ein Passwort mit einer Länge zwischen 6 und 16 Zeichen."
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 9
 msgid "Current password:"
-msgstr "Derzeitiges Passwort:"
+msgstr "Aktuelles Passwort:"
 #
 # File: ../templates/admin_default/editpass.tpl.php, line: 13
 msgid "New password:"
@@ -442,49 +442,49 @@ msgstr "Passwort bestätigen:"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 1
 msgid "edit permissions"
-msgstr ""
+msgstr "Bearbeitungsrechte"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 13
 msgid "Owner"
-msgstr ""
+msgstr "Besitzer"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 22
 # File: ../templates/admin_default/edituser.tpl.php, line: 21
 msgid "Groups"
-msgstr ""
+msgstr "Gruppe"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 26
 msgid "Group permissions"
-msgstr ""
+msgstr "Gruppen-Rechte"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 28
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 37
 msgid "permissions|Read"
-msgstr ""
+msgstr "Lesen"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 29
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 38
 msgid "permissions|Edit"
-msgstr ""
+msgstr "Bearbeiten"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 30
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 39
 msgid "permissions|Add"
-msgstr ""
+msgstr "Hinzufügen"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 31
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 40
 msgid "permissions|Delete"
-msgstr ""
+msgstr "Löschen"
 #
 # File: ../templates/admin_default/editpermissions.tpl.php, line: 35
 msgid "World permissions"
-msgstr ""
+msgstr "Globale Rechte"
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 1
 # File: ../templates/admin_default/manageusers.tpl.php, line: 1
 msgid "user management"
-msgstr ""
+msgstr "Benutzerverwaltung"
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 15
 #, fuzzy
@@ -493,11 +493,11 @@ msgstr "Nutzername:"
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 17
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 18
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 #
 # File: ../templates/admin_default/edituser.tpl.php, line: 19
 #, fuzzy
@@ -517,12 +517,12 @@ msgstr "Passwort:"
 # File: ../templates/admin_default/gallery.tpl.php, line: 27
 #, fuzzy
 msgid "admin bar|View gallery"
-msgstr "Neue Unter-Galerie"
+msgstr "Galerie ansehen"
 #
 # File: ../templates/admin_default/gallery.tpl.php, line: 33
 #, fuzzy
 msgid "admin bar|Change thumbnail"
-msgstr "Neue Unter-Galerie"
+msgstr "Thumbnail ändern"
 #
 # File: ../templates/admin_default/galleryhits.tpl.php, line: 7
 # File: ../templates/admin_default/imagehits.tpl.php, line: 7
@@ -550,7 +550,7 @@ msgstr "anmelden"
 # File: ../templates/admin_default/login.tpl.php, line: 3
 #, fuzzy
 msgid "Please enter your admin username and password below."
-msgstr "Sie müssen einen Nutzernamen und ein Passwort eingeben."
+msgstr "Bitte geben Sie Ihren Nutzernamen und Ihr Passwort ein."
 #
 # File: ../templates/admin_default/login.tpl.php, line: 8
 # File: ../templates/admin_default/manageusers.tpl.php, line: 10
@@ -564,15 +564,15 @@ msgstr "Passwort:"
 #
 # File: ../templates/admin_default/login.tpl.php, line: 19
 msgid "If you do not have a username then you may log in as a guest."
-msgstr ""
+msgstr "Wenn Sie noch keinen Nutzernamen haben, können Sie sich als Gast anmelden."
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 3
 msgid "You must be an administrator to access this area."
-msgstr ""
+msgstr "Um auf diesen Bereich zugreifen zu können, müssen Sie Administrator des Systems sein."
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 17
 msgid "Email:"
-msgstr ""
+msgstr "Email"
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 18
 #, fuzzy
@@ -581,24 +581,24 @@ msgstr "Galerie-Name"
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 19
 msgid "edit"
-msgstr ""
+msgstr "bearbeiten"
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 20
 #, fuzzy
 msgid "delete"
-msgstr "Bild löschen"
+msgstr "löschen"
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 21
 msgid "suspend"
-msgstr ""
+msgstr "deaktiviert"
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 21
 msgid "unsuspend"
-msgstr ""
+msgstr "aktiviert"
 #
 # File: ../templates/admin_default/manageusers.tpl.php, line: 28
 msgid "create new user"
-msgstr ""
+msgstr "Neuen Nutzer anlegen"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 1
 msgid "Please choose an option:"
@@ -618,11 +618,11 @@ msgstr "Passwort ändern"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 8
 msgid "My profile"
-msgstr ""
+msgstr "Mein Profil"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 11
 msgid "Manage users"
-msgstr ""
+msgstr "Nutzer verwalten"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 12
 msgid "Purge cached thumbnails"
@@ -630,7 +630,7 @@ msgstr "Miniaturvorschau-Bilder aus dem Cache löschen"
 #
 # File: ../templates/admin_default/menu.tpl.php, line: 14
 msgid "Log out of admin"
-msgstr "Aus den Einstellungen abmelden"
+msgstr "Administrations-Bereich verlassen"
 #
 # File: ../templates/admin_default/newgallery.tpl.php, line: 1
 msgid "new gallery"
@@ -678,7 +678,7 @@ msgstr "ZIP-Archiv hochladen"
 # File: ../templates/admin_default/newimage.tpl.php, line: 39
 #, fuzzy
 msgid "Add remote file"
-msgstr "Datei auf einem anderen Server"
+msgstr "Datei die sich auf einem anderen Server befindet hinzufügen"
 #
 # File: ../templates/admin_default/newimage.tpl.php, line: 43
 msgid "URL of image:"
@@ -701,12 +701,12 @@ msgstr "URL des Bildes:"
 #~ "Only authorised users are allowed into the admin section.\n"
 #~ "Please enter your admin username and password below."
 #~ msgstr ""
-#~ "Nur authorisierte dürfen die Einstellungen betreten.Bitte geben Sie "
-#~ "Nutzernamen und Passwort unten ein."
+#~ "Nur authorisierte dürfen den Administrations-Bereich betreten. Bitte geben Sie Ihren"
+#~ "Nutzernamen und Ihr Passwort unten ein."
 #
 #
 #~ msgid "Invalid location choice"
-#~ msgstr "Das gewählte Ziel ungültig."
+#~ msgstr "Das gewählte Ziel ist ungültig."
 #
 #
 #~ msgid "singapore|Powered by"

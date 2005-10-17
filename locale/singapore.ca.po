@@ -1,0 +1,226 @@
+# Singapore-Versión español (mexicano)
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: singapore 0.9.6\n"
+"POT-Creation-Date: 2004-01-06 21:22+0000\n"
+"PO-Revision-Date: 2005-03-07 18:52+0100\n"
+"Last-Translator: Albert Mosoll <albert@mosoll.net>\n"
+"Language-Team: Catalan (Català)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n==1 ? 0 : 1;\n"
+
+#
+# File: ../includes/singapore.class.php, line: 323
+#, c-format
+msgid "Page created in %s seconds"
+msgstr "Pàgina creada en %s segons"
+
+#
+# File: ../includes/singapore.class.php, line: 340
+#, c-format
+msgid "singapore|Powered by %s"
+msgstr "Powered by %s"
+
+#
+# File: ../includes/singapore.class.php, line: 345
+msgid "All rights reserved."
+msgstr "Tots els drets reservats."
+
+#
+# File: ../includes/singapore.class.php, line: 350
+msgid "Images may not be reproduced in any form without the express written permission of the copyright holder."
+msgstr "Les imatges no poden ser reproduïdes de cap manera sense el consentiment exprés i per escrit del propietari dels drets."
+
+#
+# File: ../includes/singapore.class.php, line: 355
+msgid "Log in"
+msgstr "Administrar"
+
+#
+# File: ../includes/singapore.class.php, line: 490
+msgid "crumb line|You are here:"
+msgstr "Estàs aquí:"
+
+#
+# File: ../includes/singapore.class.php, line: 530
+#, c-format
+msgid "%s gallery"
+msgid_plural "%s galleries"
+msgstr[0] "%s galería"
+msgstr[1] "%s galeríes"
+
+#
+# File: ../includes/singapore.class.php, line: 559
+#, c-format
+msgid "%s image"
+msgid_plural "%s images"
+msgstr[0] "%s imatge"
+msgstr[1] "%s imatges"
+
+#
+# File: ../includes/singapore.class.php, line: 603
+# File: ../includes/singapore.class.php, line: 613
+msgid "Sample image from gallery"
+msgstr "Imatge de mostra de la galería"
+
+#
+# File: ../includes/singapore.class.php, line: 607
+msgid ""
+"No\n"
+"thumbnail"
+msgstr ""
+"Sense\n"
+"vista previa"
+
+#
+# File: ../includes/singapore.class.php, line: 647
+#, c-format
+msgid "Showing %s-%s of %s"
+msgstr "Mostrant %s-%s de %s"
+
+#
+# File: ../includes/singapore.class.php, line: 659
+msgid "gallery|Up"
+msgstr "Pujar"
+
+#
+# File: ../includes/singapore.class.php, line: 659
+msgid "gallery|Up one level"
+msgstr "Pujar un nivell"
+
+#
+# File: ../includes/singapore.class.php, line: 683
+# File: ../includes/singapore.class.php, line: 752
+msgid "gallery|Previous"
+msgstr "Anterior"
+
+#
+# File: ../includes/singapore.class.php, line: 684
+msgid "gallery|First"
+msgstr "Primera"
+
+#
+# File: ../includes/singapore.class.php, line: 687
+# File: ../includes/singapore.class.php, line: 740
+msgid "gallery|Next"
+msgstr "Següent"
+
+#
+# File: ../includes/singapore.class.php, line: 688
+msgid "gallery|Last"
+msgstr "Última"
+
+#
+# File: ../includes/singapore.class.php, line: 760
+# File: ../includes/singapore.class.php, line: 991
+#, c-format
+msgid "artist name|by %s"
+msgstr "per %s"
+
+#
+# File: ../includes/singapore.class.php, line: 836
+# File: ../includes/singapore.class.php, line: 838
+# File: ../includes/singapore.class.php, line: 1138
+# File: ../includes/singapore.class.php, line: 1140
+msgid "Email"
+msgstr "Correu electrònic"
+
+#
+# File: ../includes/singapore.class.php, line: 840
+# File: ../includes/singapore.class.php, line: 1146
+msgid "Description"
+msgstr "Descripció"
+
+#
+# File: ../includes/singapore.class.php, line: 842
+# File: ../includes/singapore.class.php, line: 844
+# File: ../includes/singapore.class.php, line: 1158
+# File: ../includes/singapore.class.php, line: 1160
+msgid "Copyright"
+msgstr "Copyright"
+
+#
+# File: ../includes/singapore.class.php, line: 846
+# File: ../includes/singapore.class.php, line: 1162
+msgid "Viewed"
+msgstr "Visitada"
+
+#
+# File: ../includes/singapore.class.php, line: 846
+# File: ../includes/singapore.class.php, line: 1162
+#, c-format
+msgid "viewed|%s time"
+msgid_plural "viewed|%s times"
+msgstr[0] "%s vegades"
+msgstr[1] "%s veces"
+
+#
+# File: ../includes/singapore.class.php, line: 959
+msgid "Add a comment"
+msgstr "Insertar un comentari"
+
+#
+# File: ../includes/singapore.class.php, line: 1068
+msgid "image|Previous"
+msgstr "Anterior"
+
+#
+# File: ../includes/singapore.class.php, line: 1079
+msgid "image|First"
+msgstr "primera"
+
+#
+# File: ../includes/singapore.class.php, line: 1096
+msgid "image|Thumbnails"
+msgstr "Miniatures"
+
+#
+# File: ../includes/singapore.class.php, line: 1107
+msgid "image|Next"
+msgstr "Següent"
+
+#
+# File: ../includes/singapore.class.php, line: 1118
+msgid "image|Last"
+msgstr "Última"
+
+#
+# File: ../includes/singapore.class.php, line: 1142
+msgid "Location"
+msgstr "Localització"
+
+#
+# File: ../includes/singapore.class.php, line: 1144
+msgid "Date"
+msgstr "Data"
+
+#
+# File: ../includes/singapore.class.php, line: 1148
+msgid "Camera"
+msgstr "Càmera"
+
+#
+# File: ../includes/singapore.class.php, line: 1150
+msgid "Lens"
+msgstr "Lents"
+
+#
+# File: ../includes/singapore.class.php, line: 1152
+msgid "Film"
+msgstr "Película"
+
+#
+# File: ../includes/singapore.class.php, line: 1154
+msgid "Darkroom manipulation"
+msgstr "Manipulació a l'habitació fosca"
+
+#
+# File: ../includes/singapore.class.php, line: 1156
+msgid "Digital manipulation"
+msgstr "Manipulació digital"
+
