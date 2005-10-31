@@ -10,12 +10,11 @@
   <div class="sgTab"><?php echo $sg->galleryTab()?></div>
   <div class="sgContent">
     <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="get">
-    <input type="hidden" name="action" value="multiimage" />
+    <input type="hidden" name="action" value="multi" />
     <input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities(); ?>" />
     <div class="sgGallery">
       <?php echo $sg->translator->_g("With selected:"); ?>
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Copy"); ?>" />
-      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Move"); ?>" />
+      <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Copy or move"); ?>" />
       <input type="submit" class="button" name="subaction" value="<?php echo $sg->translator->_g("Delete"); ?>" />
     </div>
     <?php for($index = $sg->gallery->startat; $index < $sg->gallery->imageCountSelected()+$sg->gallery->startat; $index++): ?> 

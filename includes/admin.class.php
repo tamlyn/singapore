@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.43 2005/10/17 14:04:31 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.44 2005/10/31 05:04:11 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -283,8 +283,8 @@ class sgAdmin extends Singapore
         } elseif($this->actionCancelled()) {
           $this->includeFile = "view";
         } else {
-          $confirmTitle = $this->translator->_g("delete gallery");
-          $confirmMessage = $this->translator->_g("Gallery %s is not empty.\nAre you sure you want to irretrievably delete it and all subgalleries and images it contains?", "<em>".$this->gallery->name."</em>");
+          $GLOBALS["confirmTitle"] = $this->translator->_g("delete gallery");
+          $GLOBALS["confirmMessage"] = $this->translator->_g("Gallery %s is not empty.\nAre you sure you want to irretrievably delete it and all subgalleries and images it contains?", "<em>".$this->gallery->name."</em>");
           $this->includeFile = "confirm";
         }
         break;
@@ -302,8 +302,8 @@ class sgAdmin extends Singapore
         } elseif($this->actionCancelled()) {
           $this->includeFile = "view";
         } else {
-          $confirmTitle = $this->translator->_g("delete image");
-          $confirmMessage = $this->translator->_g("Are you sure you want to irretrievably delete image %s from gallery %s?","<em>".$this->imageName().$this->imageByArtist()."</em>","<em>".$this->gallery->name."</em>");
+          $GLOBALS["confirmTitle"] = $this->translator->_g("delete image");
+          $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to irretrievably delete image %s from gallery %s?","<em>".$this->imageName().$this->imageByArtist()."</em>","<em>".$this->gallery->name."</em>");
           $this->includeFile = "confirm";
         }
         break;
@@ -320,8 +320,8 @@ class sgAdmin extends Singapore
         } elseif($this->actionCancelled()) {
           $this->includeFile = "manageusers";
         } else {
-          $confirmTitle = $this->translator->_g("delete user");
-          $confirmMessage = $this->translator->_g("Are you sure you want to permanently delete user %s?","<em>".$_REQUEST["user"]."</em>");
+          $GLOBALS["confirmTitle"] = $this->translator->_g("delete user");
+          $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to permanently delete user %s?","<em>".$_REQUEST["user"]."</em>");
           $this->includeFile = "confirm";
         }
         break;
@@ -391,10 +391,43 @@ class sgAdmin extends Singapore
         } else
           $this->includeFile = "manageusers";
         break;
-      case "multigallery" :
-      case "multiimage" :
-        $this->adminMessage = "This feature is not yet implemented";
+      case "multi" :
         $this->selectGallery();
+        if(!isset($_REQUEST["sgGalleries"]) && !isset($_REQUEST["sgImages"])) {
+          $this->adminMessage = $this->translator->_g("Please select one or more items");
+          $this->includeFile = "view";
+        } elseif($_REQUEST["subaction"]==$this->translator->_g("Copy or move")) {
+          $this->includeFile = "multimove";
+        } elseif($_REQUEST["subaction"]==$this->translator->_g("Delete")) {
+          if($this->actionConfirmed()) {
+            if(!$this->checkPermissions($this->gallery,"delete")) {
+              $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+            } else {
+              $this->adminMessage = "not deleted";
+            }
+            $this->includeFile = "view";
+          } elseif($this->actionCancelled()) {
+            $this->includeFile = "view";
+          } else {
+            if(isset($_REQUEST["sgImages"])) {
+              $GLOBALS["confirmTitle"] = $this->translator->_g("Delete Images");
+              $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to permanently delete %s images?",count($_REQUEST["sgImages"])); 
+            } else{
+              $GLOBALS["confirmTitle"] = $this->translator->_g("Delete Galleries");
+              $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to permanently delete %s galleries?",count($_REQUEST["sgGalleries"]));
+            }
+            $this->includeFile = "confirm";
+          }
+        } elseif($_REQUEST["subaction"]==$this->translator->_g("Re-index")) {
+          $this->adminMessage = "This feature is not yet implemented";
+          $this->includeFile = "view";
+        }
+        break;
+      case "multimove" :
+        $this->selectGallery();
+        if($this->actionConfirmed()) {
+          $this->adminMessage = "not moved";
+        } 
         $this->includeFile = "view";
         break;
       case "newgallery" :
@@ -437,9 +470,9 @@ class sgAdmin extends Singapore
         } elseif($this->actionCancelled()) {
           $this->includeFile = "menu";
         } else {
-          $confirmTitle = $this->translator->_g("purge cached thumbnails");
           $dir = $this->getListing($this->config->pathto_cache,"all");
-          $confirmMessage = $this->translator->_g("Are you sure you want to delete all %s cached thumbnails?",count($dir->files));
+          $GLOBALS["confirmTitle"] = $this->translator->_g("purge cached thumbnails");
+          $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to delete all %s cached thumbnails?",count($dir->files));
           $this->includeFile = "confirm";
         }
         break;
@@ -568,8 +601,28 @@ class sgAdmin extends Singapore
       default :
         $this->includeFile = "menu";
     }
-}    
-
+  }
+  
+  function &allGalleriesArray()
+  {
+    $root =& $this->io->getGallery(".", new stdClass, 100);
+    return $this->allGalleriesRecurse($root);
+  }
+  
+  function &allGalleriesRecurse(&$gal)
+  {
+    if($gal->hasChildGalleries()) {
+      $galArray = array();
+      foreach($gal->galleries as $child)
+        $galArray = array_merge($galArray, $this->allGalleriesRecurse($child));
+      array_unshift($galArray, $gal);
+      return $galArray;
+    } else 
+      return array($gal);
+    
+  }
+  
+  
   
   /**
    * Returns a two-dimensional array of links for the admin bar.

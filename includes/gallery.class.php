@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.11 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: gallery.class.php,v 1.12 2005/10/31 05:04:11 tamlyn Exp $
  */
 
 /**
@@ -237,9 +237,10 @@ class sgGallery extends sgItem
    */
   function index()
   {
-    foreach($this->parent->galleries as $key => $galleryId) 
-      if(basename($this->id) == $galleryId)
-        return $key;
+    if(!$this->isRoot())
+      foreach($this->parent->galleries as $key => $galleryId) 
+        if(basename($this->id) == $galleryId)
+          return $key;
     
     return false;
   }
