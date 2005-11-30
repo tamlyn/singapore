@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.44 2005/10/31 05:04:11 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.45 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -43,7 +43,6 @@ class sgAdmin extends Singapore
     require_once $basePath."includes/gallery.class.php";
     require_once $basePath."includes/config.class.php";
     require_once $basePath."includes/image.class.php";
-    require_once $basePath."includes/utils.class.php";
     require_once $basePath."includes/user.class.php";
     
     //start execution timer
@@ -51,24 +50,21 @@ class sgAdmin extends Singapore
 
     //remove slashes
     if(get_magic_quotes_gpc()) {
-      $_REQUEST = array_map(array("sgUtils","arraystripslashes"), $_REQUEST);
+      $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
       
       //as if magic_quotes_gpc wasn't insane enough, php doesn't add slashes 
       //to the tmp_name variable so I have to add them manually. Grrrr.
-      if(isset($_FILES["sgImageFile"]["tmp_name"])) 
-        $_FILES["sgImageFile"]["tmp_name"] = addslashes($_FILES["sgImageFile"]["tmp_name"]);
-      if(isset($_FILES["sgArchiveFile"]["tmp_name"])) 
-        $_FILES["sgArchiveFile"]["tmp_name"] = addslashes($_FILES["sgArchiveFile"]["tmp_name"]);
-      $_FILES   = array_map(array("sgUtils","arraystripslashes"), $_FILES);
+      foreach($_FILES as $key => $nothing)
+        $_FILES[$key]["tmp_name"] = addslashes($_FILES[$key]["tmp_name"]);
+      $_FILES   = array_map(array("Singapore","arraystripslashes"), $_FILES);
     }
     
     $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
-    //load config from default ini file (singapore.ini)
-    $this->config = new sgConfig($basePath."singapore.ini");
+    //load config from singapore root directory
+    $this->config = sgConfig::getInstance();
+    $this->config->loadConfig($basePath."singapore.ini");
     $this->config->loadConfig($basePath."secret.ini.php");
-    //setup global variable
-    $GLOBALS["sgConfig"] =& $this->config;
     
     //set runtime values
     $this->config->pathto_logs = $this->config->pathto_data_dir."logs/";
@@ -85,10 +81,10 @@ class sgAdmin extends Singapore
 
     //set current language from request vars or config
     $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
-    //read the language files
-    $this->translator = new Translator($this->language, true);
-    //setup global variable
-    $GLOBALS["sgTranslator"] =& $this->translator;
+    //read the language file
+    $this->translator = Translator::getInstance($this->language);
+    $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.".$this->language.".pmo");
+    $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.admin.".$this->language.".pmo");
     
     //include IO handler class and create instance
     require_once $basePath."includes/io_".$this->config->io_handler.".class.php";
@@ -403,7 +399,16 @@ class sgAdmin extends Singapore
             if(!$this->checkPermissions($this->gallery,"delete")) {
               $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
             } else {
-              $this->adminMessage = "not deleted";
+              if(isset($_REQUEST["sgImages"])) {
+                if($success = $this->deleteMultipleImages())
+                  $this->adminMessage = $this->translator->_g("%s images deleted.", $success);
+                else
+                  $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+              } else{
+                $GLOBALS["confirmTitle"] = $this->translator->_g("Delete Galleries");
+                $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to permanently delete %s galleries?",count($_REQUEST["sgGalleries"]));
+              }
+              $this->multiDelete();
             }
             $this->includeFile = "view";
           } elseif($this->actionCancelled()) {
@@ -936,7 +941,7 @@ class sgAdmin extends Singapore
   function reindexGallery()
   {
     $imagesAdded = 0;
-    $dir = sgUtils::getListing($this->config->pathto_galleries.$this->gallery->id,$this->config->recognised_extensions);
+    $dir = Singapore::getListing($this->config->pathto_galleries.$this->gallery->id,$this->config->recognised_extensions);
     for($i=0; $i<count($dir->files); $i++) {
       $found = false;
       for($j=0; $j<count($this->gallery->images); $j++)
@@ -981,13 +986,13 @@ class sgAdmin extends Singapore
     }
     
     //create directory or fail
-    if(!mkdir($path, $this->config->directory_mode)) {
+    if(!Singapore::mkdir($path)) {
       $this->lastError = $this->translator->_g("Could not create directory");
       return false;
     }
     
     //explicitly set permissions on gallery directory
-    @chmod($path, $this->config->directory_mode);
+    @chmod($path, octdec($this->config->directory_mode));
     
     $gal = new sgGallery($newGalleryId, $this->gallery, $this->config);
     $gal->name = $_REQUEST["newgallery"];
@@ -1077,6 +1082,10 @@ class sgAdmin extends Singapore
     return $this->rmdir_all($this->config->pathto_galleries.$galleryId);
   }
   
+  function deleteMulti() {
+    
+  }
+  
   /**
    * Saves changes to the gallery thumbnail to the database.
    *
@@ -1134,7 +1143,7 @@ class sgAdmin extends Singapore
       }
       
       // try to change file-permissions
-      @chmod($path, $this->config->file_mode);
+      @chmod($path, octdec($this->config->file_mode));
       
     }
     
@@ -1170,7 +1179,7 @@ class sgAdmin extends Singapore
     }
     
     //create new temp directory in system temp dir but stop after 100 attempts
-    while(!mkdir($tmpdir = $systmpdir."/".uniqid("sg"),$this->config->directory_mode) && $tries++<100);
+    while(!Singapore::mkdir($tmpdir = $systmpdir."/".uniqid("sg")) && $tries++<100);
     
     $archive = $_FILES["sgArchiveFile"]["tmp_name"];
   
@@ -1230,7 +1239,7 @@ class sgAdmin extends Singapore
       copy($wd.'/'.$srcImage,$path);
       
       // try to change file-permissions
-      @chmod($path, $this->config->file_mode);
+      @chmod($path, octdec($this->config->file_mode));
       
       $img = new sgImage($image, $this->gallery, $this->config);
       
@@ -1265,7 +1274,7 @@ class sgAdmin extends Singapore
         rename($wd.'/'.$gallery,$path);
         
         //change directory permissions (but not contents)
-        @chmod($path, $this->config->directory_mode);
+        @chmod($path, octdec($this->config->directory_mode));
       }
     
     //if images were added save metadata

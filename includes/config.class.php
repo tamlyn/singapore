@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: config.class.php,v 1.7 2005/04/23 02:17:31 tamlyn Exp $
+ * @version $Id: config.class.php,v 1.8 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 /**
@@ -19,15 +19,22 @@
  */
 class sgConfig
 {
+
   /**
-   * Tries to load the default configuration
+   * Implements the Singleton design pattern by always returning a reference
+   * to the same sgConfig object. Use instead of 'new'.
    */
-  function sgConfig($configFilePath = "singapore.ini")
+  function &getInstance()
   {
-    $this->loadConfig($configFilePath);
+    static $instance;
+    if(!is_object($instance))
+      //note that the new config object is NOT assigned by reference as 
+      //references are not stored in static variables (don't ask me...)
+      $instance = new sgConfig();
+    return $instance;
   }
-	
-	/**
+  
+  /**
 	 * Parses an ini file for configuration directives and imports the values 
 	 * into the current object overwriting any previous values.
 	 * @param string relative or absolute path to the ini file to load
@@ -40,10 +47,6 @@ class sgConfig
 	  //get values from ini file
     $ini_values = parse_ini_file($configFilePath);
 
-    //convert octal strings to integers
-    if(isset($ini_values['directory_mode']) && is_string($ini_values['directory_mode'])) $ini_values['directory_mode'] = octdec($ini_values['directory_mode']);
-    if(isset($ini_values['file_mode']) && is_string($ini_values['file_mode'])) $ini_values['file_mode'] = octdec($ini_values['file_mode']);
-    
     //import values into object scope
     foreach($ini_values as $key => $value) $this->$key = $value;
  

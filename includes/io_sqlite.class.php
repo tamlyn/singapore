@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_sqlite.class.php,v 1.3 2004/12/15 17:04:56 tamlyn Exp $
+ * @version $Id: io_sqlite.class.php,v 1.4 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 //include the generic SQL class
@@ -27,9 +27,9 @@ class sgIO_sqlite extends sgIOsql
    * @param sgConfig pointer to a {@link sgConfig} object representing 
    *   the current script configuration
    */
-  function sgIO_sqlite(&$config)
+  function sgIO_sqlite()
   {
-    $this->config =& $config;
+    $this->config =& sgConfig::getInstance();
     $this->db = sqlite_open($this->config->base_path.$this->config->pathto_data_dir."sqlite.dat");
   }
 
@@ -46,7 +46,7 @@ class sgIO_sqlite extends sgIOsql
    */
   function getVersion()
   {
-    return "$Revision: 1.3 $";
+    return "$Revision: 1.4 $";
   }
 
   /**

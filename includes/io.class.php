@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.9 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: io.class.php,v 1.10 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 /**
@@ -28,9 +28,9 @@ class sgIO
    * Constructor. Can be over-ridden by subclass but does not need to be.
    * @param sgConfig  pointer to current script configuration object
    */
-  function sgIO(&$config)
+  function sgIO()
   {
-    $this->config =& $config;
+    $this->config =& sgConfig::getInstance();
   }
   
   /**
@@ -87,7 +87,7 @@ class sgIO
       else
         $gal->name = $temp;
       
-      $dir = sgUtils::getListing($this->config->base_path.$this->config->pathto_galleries.$gal->id."/", $this->config->recognised_extensions);
+      $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$gal->id."/", $this->config->recognised_extensions);
       
       //set gallery thumbnail to first image in gallery (if any)
       if(isset($dir->files[0])) $gal->filename = $dir->files[0];
@@ -124,7 +124,7 @@ class sgIO
     }
     
     //discover child galleries
-    $dir = sgUtils::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/");
+    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/");
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 

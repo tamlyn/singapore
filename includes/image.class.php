@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.12 2005/10/05 15:08:30 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.13 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 /**
@@ -54,8 +54,8 @@ class sgImage extends sgItem
   {
     $this->id = $id;
     $this->parent =& $parent;
-    $this->config =& $GLOBALS["sgConfig"];
-    $this->translator =& $GLOBALS["sgTranslator"];
+    $this->config =& sgConfig::getInstance();
+    $this->translator =& Translator::getInstance();
   }
   
   function isImage() { return true; }

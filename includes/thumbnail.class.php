@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.4 2005/10/17 14:04:31 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.5 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 
@@ -31,7 +31,7 @@ class sgThumbnail
   
   function sgThumbnail(&$img, $type)
   {
-    $this->config =& $GLOBALS["sgConfig"];
+    $this->config =& sgConfig::getInstance();
     $this->image  =& $img; 
     
     $widthVar  = "thumb_width_".$type;
@@ -45,7 +45,7 @@ class sgThumbnail
     if($this->image == null) return;
     
     $this->imagePath = $this->image->realPath();
-    $this->thumbPath = sgUtils::thumbnailPath($this->image->parent->id, $this->image->id, $this->maxWidth, $this->maxHeight, $this->forceSize);
+    $this->thumbPath = Singapore::thumbnailPath($this->image->parent->id, $this->image->id, $this->maxWidth, $this->maxHeight, $this->forceSize);
     
     //security check: make sure requested file is in galleries directory
     $galPath = realpath($this->config->pathto_galleries);
@@ -119,7 +119,7 @@ class sgThumbnail
     
     //check thumbs directory exists and create it if not
     if(!file_exists(dirname($this->thumbPath)))
-      sgUtils::mkdir(dirname($this->thumbPath));
+      Singapore::mkdir(dirname($this->thumbPath));
       
     //if file is remote then copy locally first
     if($this->image->isRemote()) {
@@ -210,7 +210,7 @@ class sgThumbnail
     }
     
     //set file permissions on newly created thumbnail
-    @chmod($this->thumbPath, $this->config->file_mode);
+    @chmod($this->thumbPath, octdec($this->config->file_mode));
   }
 
 }

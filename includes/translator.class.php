@@ -4,7 +4,7 @@
  * Translation class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: translator.class.php,v 1.3 2005/09/17 14:57:46 tamlyn Exp $
+ * @version $Id: translator.class.php,v 1.4 2005/11/30 23:02:18 tamlyn Exp $
  */
  
 /**
@@ -27,24 +27,30 @@ class Translator
   var $language = "en";
   
   /**
-   * Reference to the current config object
-   * @var sgConfig
-   */
-  var $config;
-  
-  /**
    * Constructor
-   * @param string  file to load
+   * @param string  language code
+   * @private
    */
-  function Translator($language, $loadAdmin = false)
+  function Translator($language)
   {
     $this->language = $language;
-    $this->config =& $GLOBALS["sgConfig"];
-    
-    $this->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.".$this->language.".pmo");
-    if($loadAdmin)
-      $this->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.admin.".$this->language.".pmo");
-    
+  }
+  
+  /**
+   * Implements a version of the Singleton design pattern by always returning 
+   * a reference to the same Translator object for each language. If no 
+   * language is specified then the first loaded Translator is returned.
+   * @param string  language code (optional)
+   * @static
+   */
+  function &getInstance($language = 0)
+  {
+    static $instances = array();
+    if(!isset($instances[$language]))
+      //note that the new object is NOT assigned by reference as 
+      //references are not stored in static variables (don't ask me...)
+      $instances[$language] = new Translator($language);
+    return $instances[$language];
   }
   
   /**
@@ -58,10 +64,6 @@ class Translator
    */
   function readLanguageFile($languageFile)
   {
-      //check if locale directory exists
-      //if (!is_dir($this->config->pathto_locale)) 
-      //  return false; // Directory doesn't exist, return unsuccessful
-      
       // Look for the language file
       if(!file_exists($languageFile))
         return false;

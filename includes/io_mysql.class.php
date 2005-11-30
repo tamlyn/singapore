@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: io_mysql.class.php,v 1.6 2004/12/15 17:04:56 tamlyn Exp $
+ * @version $Id: io_mysql.class.php,v 1.7 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 //include the base IO class and generic SQL class
@@ -22,9 +22,9 @@ class sgIO_mysql extends sgIOsql
    * @param sgConfig pointer to a {@link sgConfig} object representing 
    *   the current script configuration
    */
-  function sgIO_mysql(&$config)
+  function sgIO_mysql()
   {
-    $this->config =& $config;
+    $this->config =& sgConfig::getInstance();
     mysql_connect($this->config->sql_host, $this->config->sql_user, $this->config->sql_pass);
     mysql_select_db($this->config->sql_database);
   }
@@ -42,7 +42,7 @@ class sgIO_mysql extends sgIOsql
    */
   function getVersion()
   {
-    return "$Revision: 1.6 $";
+    return "$Revision: 1.7 $";
   }
 
   /**

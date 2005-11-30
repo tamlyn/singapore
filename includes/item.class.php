@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.4 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: item.class.php,v 1.5 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -130,7 +130,7 @@ class sgItem
   
   /**
    * Reference to the current translator object
-   * @var sgTranslator
+   * @var Translator
    */
   var $translator;
   

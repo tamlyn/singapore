@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.26 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.27 2005/11/30 23:02:18 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.26 $";
+    return "$Revision: 1.27 $";
   }
 
   /**
@@ -64,7 +64,10 @@ class sgIO_csv extends sgIO
   {
     $gal =& new sgGallery($galleryId, $parent);
 
-    if($language == null) $language = $GLOBALS["sgTranslator"]->language;
+    if($language == null) {
+      $translator =& Translator::getInstance();
+      $language = $translator->language;
+    }
     
     //try to open language specific metadata
     $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$galleryId."/metadata.$language.csv","r");
@@ -136,7 +139,7 @@ class sgIO_csv extends sgIO
       return parent::getGallery($galleryId, $parent, $getChildGalleries, $language);
     
     //discover child galleries
-    $dir = sgUtils::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
+    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
@@ -154,7 +157,7 @@ class sgIO_csv extends sgIO
    */
   function putGallery($gal) {
     $dataFile = $this->config->base_path.$this->config->pathto_galleries.$gal->id."/metadata.csv";
-    @chmod($dataFile, $this->config->file_mode);
+    @chmod($dataFile, octdec($this->config->file_mode));
     $fp = @fopen($dataFile,"w");
     if(!$fp)
       return false;
@@ -249,7 +252,7 @@ class sgIO_csv extends sgIO
    */
   function putHits($gal) {
     $logfile = $this->config->base_path.$this->config->pathto_galleries.$gal->id."/hits.csv";
-    @chmod($logfile, $this->config->file_mode);
+    @chmod($logfile, octdec($this->config->file_mode));
     $fp = @fopen($logfile,"w");
     if(!$fp) return false;
     
