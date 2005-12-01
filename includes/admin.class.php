@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.45 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.46 2005/12/01 00:10:45 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -151,18 +151,6 @@ class sgAdmin extends Singapore
     else return null;
   }
   
-  /**
-   * Tests if $child is within $parent
-   * @param string  relative or absolute path to parent directory
-   * @param string  relative or absolute path to child directory or file
-   * @return bool   true if $child is contained within $parent 
-   */
-  function isSubPath($parent, $child) 
-  {
-    $parentPath = realpath($parent);
-    return substr(realpath($child),0,strlen($parentPath)) == $parentPath;
-  }
-
   function getMaxHits($array) 
   {
     $max = 0;
@@ -299,7 +287,7 @@ class sgAdmin extends Singapore
           $this->includeFile = "view";
         } else {
           $GLOBALS["confirmTitle"] = $this->translator->_g("delete image");
-          $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to irretrievably delete image %s from gallery %s?","<em>".$this->imageName().$this->imageByArtist()."</em>","<em>".$this->gallery->name."</em>");
+          $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to irretrievably delete image %s from gallery %s?","<em>".$this->image->name().$this->image->byArtistText()."</em>","<em>".$this->gallery->name()."</em>");
           $this->includeFile = "confirm";
         }
         break;
@@ -400,15 +388,16 @@ class sgAdmin extends Singapore
               $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
             } else {
               if(isset($_REQUEST["sgImages"])) {
-                if($success = $this->deleteMultipleImages())
-                  $this->adminMessage = $this->translator->_g("%s images deleted.", $success);
-                else
-                  $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
-              } else{
-                $GLOBALS["confirmTitle"] = $this->translator->_g("Delete Galleries");
-                $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to permanently delete %s galleries?",count($_REQUEST["sgGalleries"]));
+                $success = $this->deleteMultipleImages();
+                $successMessage = $this->translator->_g("%s images deleted.", $success);
+              } else {
+                $success = $this->deleteMultipleGalleries();
+                $successMessage = $this->translator->_g("%s galleries deleted.", $success);
               }
-              $this->multiDelete();
+              if($success)
+                $this->adminMessage = $successMessage;
+              else
+                $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
             }
             $this->includeFile = "view";
           } elseif($this->actionCancelled()) {
@@ -1082,8 +1071,25 @@ class sgAdmin extends Singapore
     return $this->rmdir_all($this->config->pathto_galleries.$galleryId);
   }
   
-  function deleteMulti() {
+  /**
+   * Deletes several galleries from the current gallery.
+   *
+   * @return int|false  number of galleries deleted on success; false otherwise
+   */
+  function deleteMultipleGalleries() {
+    $success = true;
+    $deleted = 0;
+    foreach($_REQUEST["sgGalleries"] as $gallery => $val) {
+      $success &= $this->deleteGallery($gallery);
+      $deleted += 1;
+    }
     
+    //reload gallery data if we deleted any
+    if($deleted)
+      $this->selectGallery();
+    
+    if(!$success) $this->lastError = $this->translator->_g("One or more galleries could not be deleted");
+    return $success ? $deleted : false;
   }
   
   /**
@@ -1350,6 +1356,22 @@ class sgAdmin extends Singapore
       $this->lastError = $this->translator->_g("Could not delete image");
       return false;
     }
+  }
+  
+  /**
+   * Deletes several images from the current gallery.
+   *
+   * @return int|false  number of images deleted on success; false otherwise
+   */
+  function deleteMultipleImages() {
+    $success = true;
+    $deleted = 0;
+    foreach($_REQUEST["sgImages"] as $image => $val) {
+      $success &= $this->deleteImage($image);
+      $deleted += 1;
+    }
+    if(!$success) $this->lastError = $this->translator->_g("One or more images could not be deleted");
+    return $success ? $deleted : false;
   }
   
   /**

@@ -214,11 +214,6 @@ img.sgImage {
   border: 1px solid #000;
 }
 
-div.sgNavBar, p.sgNavBar {
-  text-align: center;
-  float: right;
-}
-
 input.sgImageCheckbox {
   position: absolute;
   float: left;

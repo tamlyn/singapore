@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.54 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.55 2005/12/01 00:10:45 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -896,7 +896,7 @@ class Singapore
     $success = true;
     while(false !== ($entry = readdir($dp))) {
       if($entry == "." || $entry == "..") continue;
-      if(is_dir("$wd/$entry")) $success &= $this->rmdir_all("$wd/$entry");
+      if(is_dir("$wd/$entry")) $success &= Singapore::rmdir_all("$wd/$entry");
       else $success &= unlink("$wd/$entry");
     }
     closedir($dp);
@@ -938,15 +938,29 @@ class Singapore
         return false;
   
       ftp_chdir($connection, $config->ftp_base_path); // go to destination dir
-      if(ftp_mkdir($connection, $path)) // create directory
-        ftp_site($connection, "CHMOD ".$config->directory_mode." ".$path);
-        
+      if(!ftp_mkdir($connection, $path)) // create directory
+        return false;
+      
+      ftp_site($connection, "CHMOD ".$config->directory_mode." ".$path);
       ftp_close($connection); // close connection
+      return true;
     } else 
-      mkdir($path, octdec($config->directory_mode));
+      return mkdir($path, octdec($config->directory_mode));
   }
   
-  
+  /**
+   * Tests if $child is within $parent
+   * @param string  relative or absolute path to parent directory
+   * @param string  relative or absolute path to child directory or file
+   * @return bool   true if $child is contained within $parent 
+   */
+  function isSubPath($parent, $child) 
+  {
+    $parentPath = realpath($parent);
+    return substr(realpath($child),0,strlen($parentPath)) == $parentPath;
+  }
+
+
   ///////////////////////////////
   //////depreciated methods//////
   ///////////////////////////////

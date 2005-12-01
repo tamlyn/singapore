@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.5 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.6 2005/12/01 00:10:45 tamlyn Exp $
  */
 
 
@@ -48,13 +48,12 @@ class sgThumbnail
     $this->thumbPath = Singapore::thumbnailPath($this->image->parent->id, $this->image->id, $this->maxWidth, $this->maxHeight, $this->forceSize);
     
     //security check: make sure requested file is in galleries directory
-    $galPath = realpath($this->config->pathto_galleries);
-    if(substr($this->imagePath,0,strlen($galPath)) != $galPath && !$this->image->isRemote())
-      die("Requested image does not exist or is outside allowed directory");
+    if(!Singapore::isSubPath($this->config->pathto_galleries, $this->imagePath) && !$this->image->isRemote())
+      return;
     
     //security check: make sure $image has a valid extension
     if(!$this->image->isRemote() && !preg_match("/.+\.(".$this->config->recognised_extensions.")$/i",$this->image->id))
-      die("Specified file is not a recognised image file");
+      return;
   
     $this->calculateDimensions();
     
@@ -66,7 +65,7 @@ class sgThumbnail
     $thumbModified = @filemtime($this->thumbPath);
     $thumbQuality = $this->config->thumbnail_quality;
     
-    if($imageModified > $thumbModified)
+    if($imageModified > $thumbModified || !$imageModified)
       $this->buildThumbnail();
   }
   
