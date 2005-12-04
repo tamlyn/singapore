@@ -1,9 +1,9 @@
 
 <div id="footer"><p>
   <?php echo $sg->allRightsReserved(); ?>
-  <?php echo $sg->copyrightMessage(); ?>
+  <?php echo $sg->licenseText(); ?>
   <br />
-  <?php echo $sg->poweredByVersion(); ?> 
+  <?php echo $sg->poweredByText(); ?> 
   <?php echo $sg->scriptExecTimeText(); ?> |
   <?php echo $sg->adminLink(); ?>
 </p></div>

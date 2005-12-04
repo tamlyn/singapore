@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.55 2005/12/01 00:10:45 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.56 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -364,33 +364,9 @@ class Singapore
       return "";
   }
   
-  /**
-   * @depreciated
-   */  
-  function versionText()
-  {
-    return "singapore ".$this->version;
-  }
-  
-  /**
-   * @depreciated
-   */  
-  function versionLink()
-  {
-    return '<a href="http://singapore.sourceforge.net/">'.$this->versionText().'</a>';
-  }
-  
-  /**
-   * @depreciated
-   */  
-  function poweredByVersion()
-  {
-    return $this->translator->_g("Powered by <a href=\"http://singapore.sourceforge.net/\">singapore</a>");
-  }
-  
   function poweredByText()
   {
-    return $this->translator->_g("Powered by <a href=\"http://singapore.sourceforge.net/\">singapore</a>");
+    return $this->translator->_g("Powered by").' <a href="http://www.sgal.org/">singapore</a>';
   }
   
   function allRightsReserved()
@@ -398,22 +374,19 @@ class Singapore
     return $this->translator->_g("All rights reserved.");
   }
   
-  /**
-   * @depreciated
-   */  
-  function copyrightMessage()
-  {
-    return $this->translator->_g("Images may not be reproduced in any form without the express written permission of the copyright holder.");
-  }
-  
   function licenseText()
   {
     return $this->translator->_g("Images may not be reproduced in any form without the express written permission of the copyright holder.");
   }
   
+  function adminURL()
+  {
+    return '<a href="'.$this->config->base_url.'admin.php">';
+  }
+  
   function adminLink()
   {
-    return '<a href="'.$this->config->base_url.'admin.php">'.$this->translator->_g("Log in")."</a>";
+    return $this->adminURL().$this->translator->_g("Log in")."</a>";
   }
   
     
@@ -478,7 +451,7 @@ class Singapore
     for($i=0;$i<count($crumbArray)-1;$i++)
       $ret .= $crumbArray[$i]->nameLink()." &gt;\n";
       
-    $ret .= $crumbArray[$i]->name();
+    $ret .= $crumbArray[$i]->nameForce();
     return $ret;
   }
   
@@ -966,6 +939,12 @@ class Singapore
   ///////////////////////////////
   /*
 
+  function versionText() { return "singapore ".$this->version; }
+  function versionLink() { return '<a href="http://www.sgal.org/">'.$this->versionText().'</a>';  }
+  function poweredByVersion() { return $this->poweredByText(); }
+  function copyrightMessage() { return $this->translator->_g("Images may not be reproduced in any form without the express written permission of the copyright holder."); }
+  
+  
   function galleryURL($index = null) { return $index === null ? $this->gallery->URL() : $this->gallery->galleries[$index]->URL(); }
   function galleryThumbnailImage($index = null) { return $index === null ? $this->gallery->thumbnailHTML() : $this->gallery->galleries[$index]->thumbnailHTML(); }
   function galleryByArtist($index = null) { return $index === null ? $this->gallery->byArtistText() : $this->gallery->galleries[$index]->byArtistText(); }

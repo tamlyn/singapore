@@ -11,7 +11,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.34 2005/10/17 14:04:31 tamlyn Exp $
+ * @version $Id: admin.php,v 1.35 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 //include main class
@@ -26,13 +26,13 @@ ini_set("arg_separator.output", "&amp;");
 
 //start session
 session_name($sg->config->session_name);
-session_start();
+@session_start();
 
 //load user details (must be done after session_start)
 $sg->loadUser();
 
 //send content-type and character encoding header
-header("Content-type: text/html; charset=".$sg->character_set);
+@header("Content-type: text/html; charset=".$sg->character_set);
 
 //perform admin action
 $sg->doAction();

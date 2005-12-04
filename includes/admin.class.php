@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.46 2005/12/01 00:10:45 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.47 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -383,22 +383,19 @@ class sgAdmin extends Singapore
         } elseif($_REQUEST["subaction"]==$this->translator->_g("Copy or move")) {
           $this->includeFile = "multimove";
         } elseif($_REQUEST["subaction"]==$this->translator->_g("Delete")) {
-          if($this->actionConfirmed()) {
-            if(!$this->checkPermissions($this->gallery,"delete")) {
-              $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+          if(!$this->checkPermissions($this->gallery,"delete")) {
+            $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
+            $this->includeFile = "view";
+          } elseif($this->actionConfirmed()) {
+            if(isset($_REQUEST["sgImages"])) {
+              $success = $this->deleteMultipleImages();
+              $this->adminMessage = $this->translator->_g("%s images deleted.", $success);
             } else {
-              if(isset($_REQUEST["sgImages"])) {
-                $success = $this->deleteMultipleImages();
-                $successMessage = $this->translator->_g("%s images deleted.", $success);
-              } else {
-                $success = $this->deleteMultipleGalleries();
-                $successMessage = $this->translator->_g("%s galleries deleted.", $success);
-              }
-              if($success)
-                $this->adminMessage = $successMessage;
-              else
-                $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
+              $success = $this->deleteMultipleGalleries();
+              $this->adminMessage = $this->translator->_g("%s galleries deleted.", $success);
             }
+            if(!$success)
+              $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
             $this->includeFile = "view";
           } elseif($this->actionCancelled()) {
             $this->includeFile = "view";
@@ -413,7 +410,10 @@ class sgAdmin extends Singapore
             $this->includeFile = "confirm";
           }
         } elseif($_REQUEST["subaction"]==$this->translator->_g("Re-index")) {
-          $this->adminMessage = "This feature is not yet implemented";
+          if(is_int($success = $this->reindexMultipleGalleries()))
+            $this->adminMessage = $this->translator->_g("Galleries re-indexed. %s total images added.", $success);
+          else
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
           $this->includeFile = "view";
         }
         break;
@@ -476,7 +476,10 @@ class sgAdmin extends Singapore
           $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
         else {
           $imagesAdded = $this->reindexGallery();
-          $this->adminMessage = $this->translator->_g("Gallery re-indexed. %s images added.",$imagesAdded);
+          if(is_int($imagesAdded))
+            $this->adminMessage = $this->translator->_g("Gallery re-indexed. %s images added.",$imagesAdded);
+          else
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
         }
         $this->includeFile = "view";
         break;
@@ -732,8 +735,6 @@ class sgAdmin extends Singapore
     if($this->user->isAdmin() || $this->user->isOwner($obj))// || (!$this->user->isGuest() && $obj->owner == "__nobody__"))
       return true;
     
-    //print_r($obj);
-    
     switch($action) {
       case "read" :
         if(($obj->permissions & SG_IHR_READ) == SG_IHR_READ)
@@ -922,44 +923,74 @@ class sgAdmin extends Singapore
   }
   
   /**
-   * Check for images in current gallery directory which are
-   * not in the metadata and add them.
-   * 
-   * @return int the number of images added
+   * Check for images in specified gallery directory which are
+   * not in the metadata and add them. If no gallery is specified,
+   * the current gallery is used.
+   * @param string  id of gallery to reindex (optional)
+   * @return int|false  the number of images added or false on error
    */
-  function reindexGallery()
+  function reindexGallery($galleryId = null)
   {
+    if($galleryId == null)
+      $gal =& $this->gallery;
+    else
+      $gal =& $this->io->getGallery($galleryId, new stdClass);
+    
     $imagesAdded = 0;
-    $dir = Singapore::getListing($this->config->pathto_galleries.$this->gallery->id,$this->config->recognised_extensions);
+    $dir = Singapore::getListing($this->config->pathto_galleries.$gal->id,$this->config->recognised_extensions);
     for($i=0; $i<count($dir->files); $i++) {
       $found = false;
-      for($j=0; $j<count($this->gallery->images); $j++)
-        if($dir->files[$i] == $this->gallery->images[$j]->id) {
+      for($j=0; $j<count($gal->images); $j++)
+        if($dir->files[$i] == $gal->images[$j]->id) {
           $found = true;
           break;
         }
       if(!$found) {
-        $this->gallery->images[$j] = new sgImage($dir->files[$i], $this->gallery, $this->config);
-        $this->gallery->images[$j]->name = $dir->files[$i];
+        $gal->images[$j] = new sgImage($dir->files[$i], $gal, $this->config);
+        $gal->images[$j]->name = $dir->files[$i];
         list(
-          $this->gallery->images[$j]->width, 
-          $this->gallery->images[$j]->height, 
-          $this->gallery->images[$j]->type
-        ) = GetImageSize($this->config->pathto_galleries.$this->gallery->id."/".$this->gallery->images[$j]->id);
+          $gal->images[$j]->width, 
+          $gal->images[$j]->height, 
+          $gal->images[$j]->type
+        ) = GetImageSize($this->config->pathto_galleries.$gal->id."/".$gal->images[$j]->id);
         $imagesAdded++;
       }
     }
     
-    if($this->io->putGallery($this->gallery))
+    if($this->io->putGallery($gal))
       return $imagesAdded;
       
     $this->lastError = $this->translator->_g("Could not save gallery info");
-      return 0;
+      return false;
 
   }
   
   /**
-   * Creates a directory.
+   * Reindexes several galleries from the current gallery.
+   *
+   * @return int|false  number of images added on success; false otherwise
+   */
+  function reindexMultipleGalleries()
+  {
+    $success = true;
+    $totalImagesAdded = 0;
+    foreach($_REQUEST["sgGalleries"] as $galleryId) {
+      $current = $this->reindexGallery($galleryId);
+      if($current === false) $success = false;
+      else $totalImagesAdded += $current;
+    }
+    
+    //reload gallery data if we deleted any
+    if($totalImagesAdded)
+      $this->selectGallery();
+    
+    if(!$success) $this->lastError = $this->translator->_g("One or more galleries could not be reindexed");
+    return $success ? $totalImagesAdded : false;
+      
+  }
+  
+  /**
+   * Creates a gallery.
    *
    * @return boolean true on success; false otherwise
    */
@@ -1079,8 +1110,8 @@ class sgAdmin extends Singapore
   function deleteMultipleGalleries() {
     $success = true;
     $deleted = 0;
-    foreach($_REQUEST["sgGalleries"] as $gallery => $val) {
-      $success &= $this->deleteGallery($gallery);
+    foreach($_REQUEST["sgGalleries"] as $galleryId) {
+      $success &= $this->deleteGallery($galleryId);
       $deleted += 1;
     }
     
@@ -1366,7 +1397,7 @@ class sgAdmin extends Singapore
   function deleteMultipleImages() {
     $success = true;
     $deleted = 0;
-    foreach($_REQUEST["sgImages"] as $image => $val) {
+    foreach($_REQUEST["sgImages"] as $image) {
       $success &= $this->deleteImage($image);
       $deleted += 1;
     }

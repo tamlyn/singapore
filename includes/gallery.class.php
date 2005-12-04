@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.13 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: gallery.class.php,v 1.14 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 /**
@@ -101,6 +101,16 @@ class sgGallery extends sgItem
     for($i=1;$i<count($in);$i++)
       $out[$i-1] = rawurlencode($in[$i]);
     return $out ? implode("/",$out) : ".";
+  }
+  
+  function nameForce()
+  {
+    if($this->name)
+      return $this->name;
+    elseif($this->isRoot())
+      return $this->config->gallery_name;
+    else
+      return substr($this->id, strrpos($this->id,'/')+1);
   }
   
   /**

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io.class.php,v 1.10 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: io.class.php,v 1.11 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 /**
@@ -124,7 +124,6 @@ class sgIO
     }
     
     //discover child galleries
-    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/");
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 

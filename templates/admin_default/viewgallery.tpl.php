@@ -21,7 +21,7 @@
     <?php for($index = $sg->gallery->startat; $index < $sg->gallery->galleryCountSelected()+$sg->gallery->startat; $index++): ?> 
     <div class="sgGallery"><table>
     <tr valign="top">
-      <td><input type="checkbox" class="checkbox" name="sgGalleries[<?php echo $sg->gallery->galleries[$index]->idEncoded(); ?>]" /></td>
+      <td><input type="checkbox" class="checkbox" name="sgGalleries[]" value="<?php echo $sg->gallery->galleries[$index]->idEntities(); ?>" /></td>
       <td class="sgGalleryThumbnail"><?php echo $sg->gallery->galleries[$index]->thumbnailHTML() ?></td>
       <td>
         <?php echo $sg->gallery->galleries[$index]->name() ?> - <?php echo $sg->gallery->galleries[$index]->itemCountText() ?><br />

@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.13 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.14 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 /**
@@ -182,6 +182,16 @@ class sgImage extends sgItem
     $ret .= "width=".($this->width()+20).",";
     $ret .= "height=".($this->height()+20)."');";
     $ret .= "return false;\">".$this->thumbnailHTML($class, $type)."</a>";
+  }
+  
+  function nameForce()
+  {
+    if($this->name)
+      return $this->name;
+    elseif($this->isRemote())
+      return substr($this->id, strrpos($this->id,'/') + 1, strrpos($this->id,'.') - strrpos($this->id,'/') - 1);
+    else
+      return substr($this->id, 0, strrpos($this->id,'.'));
   }
   
   /**

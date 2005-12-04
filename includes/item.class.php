@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.5 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: item.class.php,v 1.6 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -197,7 +197,7 @@ class sgItem
 
   function nameLink($action = null)
   {
-    return '<a href="'.$this->URL(0, $action).'">'.$this->name().'</a>';
+    return '<a href="'.$this->URL(0, $action).'">'.$this->nameForce().'</a>';
   }
   
   function parentLink($action = null)

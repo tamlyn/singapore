@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.28 2005/12/01 00:10:45 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.29 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.28 $";
+    return "$Revision: 1.29 $";
   }
 
   /**
@@ -139,7 +139,7 @@ class sgIO_csv extends sgIO
       return parent::getGallery($galleryId, $parent, $getChildGalleries, $language);
     
     //discover child galleries
-    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/", "dirs");
+    $dir = Singapore::getListing($this->config->base_path.$this->config->pathto_galleries.$galleryId."/");
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 

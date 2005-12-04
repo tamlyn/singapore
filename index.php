@@ -9,7 +9,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: index.php,v 1.18 2004/10/15 17:24:47 tamlyn Exp $
+ * @version $Id: index.php,v 1.19 2005/12/04 04:39:46 tamlyn Exp $
  */
 
 //include main class
@@ -25,11 +25,11 @@ if(isset($_REQUEST[$sg->config->session_name])) {
   
   //start session
   session_name($sg->config->session_name);
-  session_start();
+  @session_start();
 }
 
 //send content-type and character encoding header
-header("Content-type: text/html; charset=".$sg->character_set);
+@header("Content-type: text/html; charset=".$sg->character_set);
 
 //pass control over to template
 include $sg->config->base_path.$sg->config->pathto_current_template."index.tpl.php";
