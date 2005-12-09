@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.48 2005/12/09 14:05:28 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.49 2005/12/09 19:46:21 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -378,7 +378,7 @@ class sgAdmin extends Singapore
       case "multi" :
         $this->selectGallery();
         if(!isset($_REQUEST["sgGalleries"]) && !isset($_REQUEST["sgImages"])) {
-          $this->adminMessage = $this->translator->_g("Please select one or more items");
+          $this->adminMessage = $this->translator->_g("Please select one or more items.");
           $this->includeFile = "view";
         } elseif($_REQUEST["subaction"]==$this->translator->_g("Copy or move")) {
           $this->includeFile = "multimove";
@@ -420,7 +420,17 @@ class sgAdmin extends Singapore
       case "multimove" :
         $this->selectGallery();
         if($this->actionConfirmed()) {
-          $this->adminMessage = "not moved";
+          if(isset($_REQUEST["sgImages"])) {
+            //$success = $this->moveMultipleImages();
+            //$this->adminMessage = $this->translator->_g("%s images moved.", $success);
+            $success=true;
+            $this->adminMessage = "not yet implemented";
+          } else {
+            $success = $this->moveMultipleGalleries();
+            $this->adminMessage = $this->translator->_g("%s galleries moved.", $success);
+          }
+          if(!$success)
+            $this->adminMessage = $this->translator->_g("An error occurred:")." ".$this->getLastError();
         } 
         $this->includeFile = "view";
         break;
@@ -987,6 +997,79 @@ class sgAdmin extends Singapore
     if(!$success) $this->lastError = $this->translator->_g("One or more galleries could not be reindexed");
     return $success ? $totalImagesAdded : false;
       
+  }
+  
+  /**
+   * Moves or copies galleries.
+   *
+   * @return int|false  number of galleries moved; false otherwise
+   */
+  function moveMultipleGalleries()
+  {
+    $success = true;
+    $totalGalleriesMoved = 0;
+    foreach($_REQUEST["sgGalleries"] as $galleryId) {
+      $source = $this->config->base_path.$this->config->pathto_galleries.$galleryId;
+      $target = $this->config->base_path.$this->config->pathto_galleries.$_REQUEST['sgMoveTarget'].'/'.basename($galleryId);
+      if(file_exists($target)) {
+        $success = false;
+      } elseif($this->isSubPath($source, $target, false)) {
+        $success = false;
+      } else {
+        if($_REQUEST["sgMoveType"] == 'move') { //Move
+          $current = rename($source, $target);
+        } else { //Copy
+          $current = $this->copyDir($source, $target);
+        }
+        if($current === false) $success = false;
+        else $totalGalleriesMoved++;
+      }
+    }
+    
+    //load target gallery
+    if($totalGalleriesMoved)
+      $this->selectGallery($_REQUEST['sgMoveTarget']);
+    
+    if(!$success) $this->lastError = $this->translator->_g("One or more galleries could not be moved");
+    return $success ? $totalGalleriesMoved : false;
+      
+  }
+  
+  /**
+   * Copies everything from directory $fromDir to directory $toDir
+   * and sets up files mode $chmod
+   * @author Anton Makarenko <makarenkoa at ukrpost dot net>
+   */
+  function copyDir($fromDir, $toDir)
+  {
+    $success = true;
+    $handle = opendir($fromDir);
+    
+    //ensure target directory exists
+    if(!file_exists($toDir)) 
+      if(mkdir($toDir))
+        chmod($toDir, octdec($this->config->directory_mode));
+      else
+        return false;
+    
+    while(false !== ($item = readdir($handle)))
+      if($item != '.' && $item != '..') {
+        $from = $fromDir.'/'.$item;
+        $to = $toDir.'/'.$item;
+        
+        if(is_dir($from)) {
+          if($success &= mkdir($to))
+            chmod($to, octdec($this->config->directory_mode));
+          //recurse
+          $this->copyDir($from, $to);
+        } else {
+          if($success &= copy($from, $to))
+            chmod($to, octdec($this->config->file_mode));
+        }
+      }
+    closedir($handle);
+    
+    return $success;
   }
   
   /**

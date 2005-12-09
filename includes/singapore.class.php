@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.56 2005/12/04 04:39:46 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.57 2005/12/09 19:46:21 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -922,15 +922,18 @@ class Singapore
   }
   
   /**
-   * Tests if $child is within $parent
-   * @param string  relative or absolute path to parent directory
-   * @param string  relative or absolute path to child directory or file
-   * @return bool   true if $child is contained within $parent 
+   * Tests if $child is within or is the same path as $parent. 
+   *
+   * @param string  path to parent directory
+   * @param string  path to child directory or file
+   * @param bool    set false to prevent canonicalisation of paths (optional)
+   * @return bool   true if $child is contained within or is $parent 
    */
-  function isSubPath($parent, $child) 
+  function isSubPath($parent, $child, $canonicalise = true) 
   {
-    $parentPath = realpath($parent);
-    return substr(realpath($child),0,strlen($parentPath)) == $parentPath;
+    $parentPath = $canonicalise ? realpath($parent) : $parent;
+    $childPath = $canonicalise ? realpath($child) : $child;
+    return $parentPath && $childPath && substr($childPath,0,strlen($parentPath)) == $parentPath;
   }
 
 

@@ -21,8 +21,8 @@
 ?>
 </select></p>
 <p>
-  <label><input type="radio" name="sgMoveType" value="copy" checked="true" /> Copy</label>
-  <label><input type="radio" name="sgMoveType" value="move" /> Move</label>
+  <label><input type="radio" name="sgMoveType" value="copy" checked="true" /> <?php /*"*/ echo $sg->translator->_g("Copy") ?></label>
+  <label><input type="radio" name="sgMoveType" value="move" /> <?php /*"*/ echo $sg->translator->_g("Move") ?></label>
 </p>
 <p><input type="submit" class="button" name="confirmed" value="<?php /*"*/ echo $sg->translator->_g("confirm|OK") ?>">
 <input type="submit" class="button" name="confirmed" value="<?php /*"*/ echo $sg->translator->_g("confirm|Cancel") ?>"></p>
