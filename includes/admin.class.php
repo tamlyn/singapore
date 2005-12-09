@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.47 2005/12/04 04:39:46 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.48 2005/12/09 14:05:28 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1184,13 +1184,13 @@ class sgAdmin extends Singapore
       
     }
     
-    $img = new sgImage($image, $this->gallery, $this->config);
+    $img =& new sgImage($image, $this->gallery);
     
     $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
     list($img->width, $img->height, $img->type) = GetImageSize($path);
     $img->owner = $this->user->username;
     
-    $this->gallery->images[count($this->gallery->images)] = $img;
+    $this->gallery->images[count($this->gallery->images)] =& $img;
     
     if($this->io->putGallery($this->gallery)) {
       $this->selectImage($image);
