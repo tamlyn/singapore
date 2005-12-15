@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.57 2005/12/09 19:46:21 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.58 2005/12/15 17:18:47 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -89,7 +89,6 @@ class Singapore
   {
     //import class definitions
     //io handler class included once config is loaded
-    require_once $basePath."includes/item.class.php";
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/thumbnail.class.php";
     require_once $basePath."includes/gallery.class.php";
@@ -105,7 +104,7 @@ class Singapore
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
     //load config from singapore root directory
-    $this->config = sgConfig::getInstance();
+    $this->config =& sgConfig::getInstance();
     $this->config->loadConfig($basePath."singapore.ini");
     $this->config->loadConfig($basePath."secret.ini.php");
     

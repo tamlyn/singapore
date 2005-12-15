@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.49 2005/12/09 19:46:21 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.50 2005/12/15 17:18:47 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -37,7 +37,6 @@ class sgAdmin extends Singapore
   {
     //import class definitions
     //io handler class included once config is loaded
-    require_once $basePath."includes/item.class.php";
     require_once $basePath."includes/translator.class.php";
     require_once $basePath."includes/thumbnail.class.php";
     require_once $basePath."includes/gallery.class.php";
@@ -62,7 +61,7 @@ class sgAdmin extends Singapore
     $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
     //load config from singapore root directory
-    $this->config = sgConfig::getInstance();
+    $this->config =& sgConfig::getInstance();
     $this->config->loadConfig($basePath."singapore.ini");
     $this->config->loadConfig($basePath."secret.ini.php");
     

@@ -6,9 +6,12 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.14 2005/12/04 04:39:46 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.15 2005/12/15 17:18:47 tamlyn Exp $
  */
 
+//include the base class
+require_once dirname(__FILE__)."/item.class.php";
+ 
 /**
  * Data-only class used to store image data.
  * @package singapore

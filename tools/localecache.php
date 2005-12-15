@@ -8,15 +8,17 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: localecache.php,v 1.4 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: localecache.php,v 1.5 2005/12/15 17:18:47 tamlyn Exp $
  */
 
 //require config class
 $BASEPATH = "../";
 require_once $BASEPATH."includes/config.class.php";
 require_once $BASEPATH."includes/translator.class.php";
-//create config object
-$sgConfig = new sgConfig($BASEPATH."singapore.ini");
+
+//get config object
+$sgConfig = sgConfig::getInstance();
+$sgConfig->loadConfig($BASEPATH."singapore.ini");
 $sgConfig->base_path = $BASEPATH;
 
 $OUTPUTPATH = $sgConfig->base_path.$sgConfig->pathto_locale;
@@ -73,7 +75,8 @@ function saveCache($availableLanguages, $output)
   $availableLanguages = array();
   foreach ($files as $file) {
     if (!preg_match("/singapore\.([\w]+)\.pmo$/i", $file, $matches)) continue;
-    $i18n = new Translator($matches[1]);
+    $i18n = Translator::getInstance($matches[1]);
+    $i18n->readLanguageFile($sgConfig->base_path.$sgConfig->pathto_locale."singapore.".$i18n->language.".pmo");
     $availableLanguages[$matches[1]] = $i18n->languageStrings[0]['language'];
     echo "Added $matches[1] => ".$i18n->languageStrings[0]['language']." to available languages.<br />\n";
   }

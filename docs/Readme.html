@@ -10,7 +10,7 @@
 <body>
 
 
-<h1>singapore v0.10.0 - Readme</h1>
+<h1>singapore v0.10.0PRE1 - Readme</h1>
 
 <ul>
   <li><a href="#release">Release notes</a></li>
@@ -60,7 +60,14 @@ a project donation of 20USD is considered a suitable alternative.</p>
 
 <h2><a name="release">Release notes</a></h2>
 
-<p>After almost a year, here it is!</p>
+<p>To celebrate (or mourn) the anniversary of our last file release I am pleased
+to present, for your delectation, the first preview release of singapore 0.10.0.
+It's far from ready but I felt I had to give you something... Please don't use 
+on production websites but please do download and test it. Although on the 
+surface it doesn't look much different from v0.9.11, a LOT has changed internally
+which probably means lots of new bugs. The SQL backends won't work. Templates will
+not work although you can enable a kind of 'compatibility mode' by uncommenting 
+all stuff at the end of singapore.class.php. Um, yeah, probably other stuff.</p>
 
 
 <h2><a name="install">Installation</a></h2>
@@ -86,9 +93,6 @@ a project donation of 20USD is considered a suitable alternative.</p>
   
   <li>Delete the <code>install/</code> directory to prevent unauthorised access.</li>
   
-  <li>If upgrading from v0.9.9b or earlier run <code>tools/convertdb.php</code> 
-  to upgrade your database.</li>
-
   <li>Log into the admin section and change the password. The username is 
   <code>admin</code> and the default password is <code>password</code>.</li>
   
@@ -110,12 +114,12 @@ a project donation of 20USD is considered a suitable alternative.</p>
   to integrate it with your site.<br />
   -or-<br />
   Browse the pre-existing templates available for singapore on the 
-  <a href="http://singapore.sourceforge.net/?page=templates">templates</a> page.
+  <a href="http://www.sgal.org/wiki/files/templates">templates</a> page.
   -or-<br />
   Create your own template by editing an existing one. There is currently no 
   documentation on this topic but anyone with a basic grasp of PHP should be 
   able to work it out. Visit the 
-  <a href="http://singapore.sourceforge.net/forum/viewforum.php?f=2">templates forum</a>
+  <a href="http://www.sgal.org/forum/viewforum.php?id=2">templates forum</a>
   for help and advice.</li>
 </ul>
 
@@ -179,9 +183,9 @@ files also sometimes referred to as <em>compressed folders</em> on Windows. You
 need an unzipping utility on your server to use this feature. Most Linux/Unix 
 machines come with the free <em>unzip</em> utility by Info-Zip preinstalled but 
 precompiled binaries for nearly all operating systems ever conceived can be 
-found on the <a href="http://www.info-zip.org/">Info-Zip website</a>. A Win32 
+found on the <a href="http://www.info-zip.org/">Info-Zip website</a>. <!--A Win32 
 version is also available here: 
-<a href="http://singapore.sourceforge.net/binaries/singapore-unzip-Win32.zip">http://singapore.sourceforge.net/binaries/singapore-unzip-Win32.zip</a>.
+<a href="http://singapore.sourceforge.net/binaries/singapore-unzip-Win32.zip">http://singapore.sourceforge.net/binaries/singapore-unzip-Win32.zip</a>.-->
 Simply place the executable in your PATH or in the singapore root directory.</p>
 
 <p>Upload the archive using the 'new image' option in the singapore admin and 
@@ -335,22 +339,26 @@ o changed
 </pre>
 
 <p>A complete and up-to-date CVS changelog is 
-<a href="http://singapore.sourceforge.net/cvsdemo/ChangeLog">available online</a>.</p>
+<a href="http://www.sgal.org/cvsdemo/ChangeLog">available online</a>.</p>
 
-<h3>0.10.0 - 2005-10-01</h3>
+<h3>0.10.0PRE1 - 2005-12-15</h3>
 
 <pre>
 o code is now more object oriented and easier to understand
-o thumbnails stored in each gallery
++ added safe_mode hack using FTP
+o thumbnails and logs stored in each gallery
 + thumbnails created on page load and statically linked
 + ancestor metadata is parsed for crumb line
 o removed leading ./ from gallery id in urls
++ can move &amp; copy galleries in admin
++ can batch delete images and galleries in admin
 + next and previous gallery links
 + 'up' links to correct page of parent gallery
 * base_path and base_url are no longer overwritten by external.php
 * fixed new lines in summary field
 * fixed image resizing bug when image size equals maxsize
 * fixed imagemagick v6.x support
+* fixed session.auto_start bug (aka login loop)
 + added sort by date to galleries
 o rewritten hit logging code
 o added explicit chmod's instead of relying on umask
@@ -570,7 +578,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2005/10/02 03:35:24 $</em></p>
+<p><em>$Date: 2005/12/15 17:18:47 $</em></p>
 
 </body>
 </html>

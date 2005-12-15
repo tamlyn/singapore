@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: compile.php,v 1.7 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: compile.php,v 1.8 2005/12/15 17:18:47 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -18,8 +18,10 @@ $BASEPATH = realpath("..")."/";
 
 //require config class
 require_once $BASEPATH."includes/config.class.php";
-//create config object
-$config = new sgConfig($BASEPATH."singapore.ini");
+
+//get config object
+$config = sgConfig::getInstance();
+$config->loadConfig($BASEPATH."singapore.ini");
 
 $OUTPUTPATH = $BASEPATH.$config->pathto_locale;
 $standardPot = $OUTPUTPATH."singapore.pot";

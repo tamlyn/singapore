@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.6 2005/12/01 00:10:45 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.7 2005/12/15 17:18:47 tamlyn Exp $
  */
 
 
@@ -46,9 +46,9 @@ class sgThumbnail
     
     $this->imagePath = $this->image->realPath();
     $this->thumbPath = Singapore::thumbnailPath($this->image->parent->id, $this->image->id, $this->maxWidth, $this->maxHeight, $this->forceSize);
-    
+
     //security check: make sure requested file is in galleries directory
-    if(!Singapore::isSubPath($this->config->pathto_galleries, $this->imagePath) && !$this->image->isRemote())
+    if(!Singapore::isSubPath($this->config->base_path.$this->config->pathto_galleries, $this->imagePath) && !$this->image->isRemote())
       return;
     
     //security check: make sure $image has a valid extension

@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: install.php,v 1.3 2005/04/24 14:59:57 tamlyn Exp $
+ * @version $Id: install.php,v 1.4 2005/12/15 17:18:47 tamlyn Exp $
  */
 
 //path to singapore root
@@ -50,7 +50,7 @@ if(false) {
 
 switch($setupStep) {
   case "test" :
-    setupHeader("Step 1 of 3: Test Server");
+    setupHeader("Step 1 of 1: Test Server");
     setupMessage("Attempting to find out if your server is capable of running singapore"); 
     setupMessage("No changes are made at this time");
     if(testServer()) {
@@ -62,7 +62,8 @@ switch($setupStep) {
     }
     echo '<br /><a href="index.html">&lt;&lt; Previous: welcome</a>';
     echo ' | <a href="install.php?step=phpinfo">View PHP configuration</a>';
-    echo ' | <a href="install.php?step=directories">Next: create directories &gt;&gt;</a>';
+    echo ' | <a href="index.html">Finish</a>';
+    //echo ' | <a href="install.php?step=directories">Next: create directories &gt;&gt;</a>';
     break;
     
   case "directories" :
@@ -74,7 +75,7 @@ switch($setupStep) {
     $config->pathto_logs  = $config->pathto_data_dir."logs/";
     $config->pathto_cache = $config->pathto_data_dir."cache/";
     $config->base_path = $basePath;
-        
+    
     if(createDirectories($config)) {
       setupHeader("OK");
       setupMessage("This step completed successfully");
