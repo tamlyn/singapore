@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.15 2005/12/15 17:18:47 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.16 2006/01/03 17:56:35 tamlyn Exp $
  */
 
 //include the base class
@@ -144,7 +144,7 @@ class sgImage extends sgItem
     if($this->isRemote())
       return $this->id;
     else
-      return $this->config->pathto_galleries.$this->parent->idEncoded()."/".$this->idEncoded();
+      return $this->config->base_url.$this->config->pathto_galleries.$this->parent->idEncoded()."/".$this->idEncoded();
   }
   
   function imageHTML($class = "sgImage")
@@ -254,25 +254,33 @@ class sgImage extends sgItem
     return false;
   }
   
-  /** Accessor methods */
   function realWidth()
   {
     //try to load image dimensions if not already loaded
-    if($this->width == 0)
-      list($this->width, $this->height, $this->type) = 
-        @GetImageSize($this->realPath());
+    if($this->width == 0) {
+      $size = @GetImageSize($this->realPath());
+      if($size)
+        list($this->width, $this->height, $this->type) = $size;
+      else
+        return $this->config->thumb_width_image;
+    }
     return $this->width; 
   }
   
   function realHeight() 
   {
     //try to load image dimensions if not already loaded
-    if($this->height == 0)
-      list($this->width, $this->height, $this->type) = 
-        @GetImageSize($this->realPath());
+    if($this->height == 0) {
+      $size = @GetImageSize($this->realPath());
+      if($size)
+        list($this->width, $this->height, $this->type) = $size;
+      else
+        return $this->config->thumb_height_image;
+    }
     return $this->height; 
   }
   
+  /** Accessor methods */
   function type()       { return $this->type; }
   
   

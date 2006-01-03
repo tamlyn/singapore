@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.58 2005/12/15 17:18:47 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.59 2006/01/03 17:56:35 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -601,8 +601,8 @@ class Singapore
       $ret .= $this->prevPageLink()." ";
     
     //Uncomment the following two lines for compatibility with old templates
-    //if(!$this->gallery->isRoot())
-    //  $ret .= $this->gallery->parentLink();
+    if(!$this->gallery->isRoot() && method_exists($this, 'galleryName'))
+      $ret .= $this->gallery->parentLink();
     
     if($this->hasNextPage())
       $ret .= " ".$this->nextPageLink();
@@ -939,25 +939,24 @@ class Singapore
   ///////////////////////////////
   //////depreciated methods//////
   ///////////////////////////////
-  /*
-
-  function versionText() { return "singapore ".$this->version; }
-  function versionLink() { return '<a href="http://www.sgal.org/">'.$this->versionText().'</a>';  }
+  
+  /* uncomment the following to enable compatibility with pre v0.10 templates
+  
+  function versionText()      { return "singapore ".$this->version; }
+  function versionLink()      { return $this->poweredByLink(); }
   function poweredByVersion() { return $this->poweredByText(); }
-  function copyrightMessage() { return $this->translator->_g("Images may not be reproduced in any form without the express written permission of the copyright holder."); }
-  
-  
-  function galleryURL($index = null) { return $index === null ? $this->gallery->URL() : $this->gallery->galleries[$index]->URL(); }
+  function copyrightMessage() { return $this->licenseText(); }
+  function galleryURL($index = null)            { return $index === null ? $this->gallery->URL() : $this->gallery->galleries[$index]->URL(); }
   function galleryThumbnailImage($index = null) { return $index === null ? $this->gallery->thumbnailHTML() : $this->gallery->galleries[$index]->thumbnailHTML(); }
-  function galleryByArtist($index = null) { return $index === null ? $this->gallery->byArtistText() : $this->gallery->galleries[$index]->byArtistText(); }
+  function galleryByArtist($index = null)       { return $index === null ? $this->gallery->byArtistText() : $this->gallery->galleries[$index]->byArtistText(); }
   function gallerySummaryStripped($index = null)     { return $index === null ? $this->gallery->summaryStripped() : $this->gallery->galleries[$index]->summaryStripped(); }
 	function galleryDescriptionStripped($index = null) { return $index === null ? $this->gallery->descriptionStripped() : $this->gallery->galleries[$index]->descriptionStripped(); }
   function galleryImagesArray()         { return $this->gallery->images; }
   function gallerySelectedImagesArray() { return $this->gallery->imageSelectedArray(); }
   function gallerySelectedImagesCount() { return $this->gallery->imageCountSelected(); }
-  function galleryGalleriesArray()         { return $this->gallery->galleries; }
-  function gallerySelectedGalleriesArray() { return $this->gallery->gallerySelectedArray(); }
-  function gallerySelectedGalleriesCount() { return $this->gallery->galleryCountSelected(); }
+  function galleryGalleriesArray()           { return $this->gallery->galleries; }
+  function gallerySelectedGalleriesArray()   { return $this->gallery->gallerySelectedArray(); }
+  function gallerySelectedGalleriesCount()   { return $this->gallery->galleryCountSelected(); }
   function galleryIdEncoded($index = null)   { return $index===null ? $this->gallery->idEncoded() : $this->gallery->galleries[$index]->idEncoded(); }
   function galleryName($index = null)        { return $index===null ? $this->gallery->name() : $this->gallery->galleries[$index]->name(); }
   function galleryArtist($index = null)      { return $index===null ? $this->gallery->itemCountText() : $this->gallery->galleries[$index]->itemCountText(); }
@@ -982,8 +981,8 @@ class Singapore
   function imageArtist($index = null)     { return $index===null ? $this->image->artist() : $this->gallery->images[$index]->artist(); }
   function imageByArtist($index = null)   { return $index===null ? $this->image->byArtistText() : $this->gallery->images[$index]->byArtistText(); }
   function imageDescription($index = null){ return $index===null ? $this->image->desc() : $this->gallery->images[$index]->desc(); }
-  function imageURL($index = null)     { return $index===null ? $this->image->imageURL() : $this->gallery->images[$index]->imageURL(); }
-  function imageRealURL($index = null) { return $index===null ? $this->image->imageRealURL() : $this->gallery->images[$index]->imageRealURL(); }
+  function imageURL($index = null)        { return $index===null ? $this->image->imageURL() : $this->gallery->images[$index]->imageURL(); }
+  function imageRealURL($index = null)    { return $index===null ? $this->image->imageRealURL() : $this->gallery->images[$index]->imageRealURL(); }
   function imageParentURL()  { return $this->image->parent->URL(); }
   function imageFirstURL()   { $tmp =& $this->image->firstImage(); return $tmp->URL(); }
   function imagePrevURL()    { $tmp =& $this->image->prevImage(); return $tmp->URL(); }
@@ -1010,72 +1009,7 @@ class Singapore
   function imageDetailsArray()   { return $this->image->detailsArray(); }
   function galleryDetailsArray() { return $this->gallery->detailsArray(); }
   function imagePreviewThumbnails() { return $this->previewThumbnails(); }
-  
-  function isInGroup($groups1,$groups2)
-  {
-    return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2));
-  }
-  
-  
-  /*function thumbnailWidth($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
-  {
-    //if aspect ratio is to be constrained set crop size
-    if($forceSize) {
-      $newAspect = $maxWidth/$maxHeight;
-      $oldAspect = $imageWidth/$imageHeight;
-      if($newAspect > $oldAspect) {
-        $cropWidth = $imageWidth;
-        $cropHeight = round($imageHeight*($oldAspect/$newAspect));
-      } else {
-        $cropWidth = round($imageWidth*($newAspect/$oldAspect));
-        $cropHeight = $imageHeight;
-      }
-    //else crop size is image size
-    } else {
-      $cropWidth = $imageWidth;
-      $cropHeight = $imageHeight;
-    }
-    
-    if($cropHeight > $maxHeight && ($cropWidth <= $maxWidth || ($cropWidth > $maxWidth && round($cropHeight/$cropWidth * $maxWidth) > $maxHeight)))
-      return round($cropWidth/$cropHeight * $maxHeight);
-    elseif($cropWidth > $maxWidth)
-      return $maxWidth;
-    else
-      return $imageWidth;
-  }
-  
-  function thumbnailHeight($imageWidth, $imageHeight, $maxWidth, $maxHeight, $forceSize)
-  {
-    return $this->thumbnailWidth($imageHeight, $imageWidth, $maxHeight, $maxWidth, $forceSize);
-  }
-  
-  function formatURL($gallery, $image = null, $startat = null, $action = null)
-  {
-    if($this->config->use_mod_rewrite) { //format url for use with mod_rewrite
-      $ret  = $this->config->base_url.$gallery;
-      if($startat) $ret .= ','.$startat;
-      $ret .= '/';
-      if($image)   $ret .= rawurlencode($image);
-      
-      $query = array();
-      if($action)  $query[] = $this->config->url_action."=".$action;
-      if($this->language != $this->config->default_language) $query[] = $this->config->url_lang.'='.$this->language;
-      if($this->template != $this->config->default_template) $query[] = $this->config->url_template.'='.$this->template;
-      
-      if(!empty($query))
-        $ret .= '?'.implode('&amp;', $query);
-    } else { //format plain url
-      $ret  = $this->config->index_file_url;
-      $ret .= $this->config->url_gallery."=".$gallery;
-      if($startat) $ret .= "&amp;".$this->config->url_startat."=".$startat;
-      if($image)   $ret .= "&amp;".$this->config->url_image."=".rawurlencode($image);
-      if($action)  $ret .= "&amp;".$this->config->url_action."=".$action;
-      if($this->language != $this->config->default_language) $ret .= '&amp;'.$this->config->url_lang.'='.$this->language;
-      if($this->template != $this->config->default_template) $ret .= '&amp;'.$this->config->url_template.'='.$this->template;
-    }
-    
-    return $ret;
-  }
+  function isInGroup($groups1,$groups2) { return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2)); }
   //*/
 
 }

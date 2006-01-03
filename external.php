@@ -12,7 +12,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: external.php,v 1.2 2005/04/23 02:17:52 tamlyn Exp $
+ * @version $Id: external.php,v 1.3 2006/01/03 17:56:35 tamlyn Exp $
  */
 
 //you may leave this blank as it will be automatically detected
@@ -31,6 +31,10 @@ if(isset($_SERVER["SCRIPT_FILENAME"]) && realpath(__FILE__) != realpath($_SERVER
   for($j=$i;$j<count($you);$j++) $relativePath .= "../";
   //travel down appropriate directories
   for($j=$i;$j<count($me); $j++) $relativePath .= $me[$j]."/";
+
+//otherwise print an error as this is not how external.php is supposed to work.
+} else {
+  die("This file is not intended to be used in this way. Please see the singapore integration guide.");
 }
   
 

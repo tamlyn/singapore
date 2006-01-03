@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.7 2005/12/15 17:18:47 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.8 2006/01/03 17:56:35 tamlyn Exp $
  */
 
 
@@ -58,14 +58,15 @@ class sgThumbnail
     $this->calculateDimensions();
     
     //link straight to image if it smaller than required size
-    if($this->image->width <= $this->thumbWidth && $this->image->height <= $this->thumbHeight)
+    if($this->image->width <= $this->thumbWidth && $this->image->height <= $this->thumbHeight) {
       $this->thumbPath = $this->image->imageURL();
+      return;
+    }
     
     $imageModified = @filemtime($this->imagePath);
     $thumbModified = @filemtime($this->thumbPath);
-    $thumbQuality = $this->config->thumbnail_quality;
     
-    if($imageModified > $thumbModified || !$imageModified)
+    if($imageModified > $thumbModified || !$thumbModified)
       $this->buildThumbnail();
   }
   
@@ -122,12 +123,14 @@ class sgThumbnail
       
     //if file is remote then copy locally first
     if($this->image->isRemote()) {
-      $ip = fopen($this->imagePath, "rb");
-      $tp = fopen($this->thumbPath, "wb");
-      while(fwrite($tp,fread($ip, 4095)));
-      fclose($tp);
-      fclose($ip);
-      $this->imagePath = $this->thumbPath;
+      $ip = @fopen($this->imagePath, "rb");
+      $tp = @fopen($this->thumbPath, "wb");
+      if($ip && $tp) {
+        while(fwrite($tp,fread($ip, 4095)));
+        fclose($tp);
+        fclose($ip);
+        $this->imagePath = $this->thumbPath;
+      }
     }
     
     switch($this->config->thumbnail_software) {
@@ -161,51 +164,58 @@ class sgThumbnail
       default : //use GD by default
         //read in image as appropriate type
         switch($this->image->type) {
-          case 1 : $image = ImageCreateFromGIF($this->imagePath); break;
-          case 3 : $image = ImageCreateFromPNG($this->imagePath); break;
+          case 1 : $image = @ImageCreateFromGIF($this->imagePath); break;
+          case 3 : $image = @ImageCreateFromPNG($this->imagePath); break;
           case 2 : 
-          default: $image = ImageCreateFromJPEG($this->imagePath); break;
+          default: $image = @ImageCreateFromJPEG($this->imagePath); break;
         }
         
-        switch($this->config->thumbnail_software) {
-        case "gd2" :
-          //create blank truecolor image
-          $thumb = ImageCreateTrueColor($this->thumbWidth,$this->thumbHeight);
-          //resize image with resampling
-          ImageCopyResampled(
-            $thumb,                                $image,
-            0,                 0,                  $cropX,     $cropY,
-            $this->thumbWidth, $this->thumbHeight, $this->cropWidth, $this->cropHeight);
-          break;
-        case "gd1" :
-        default :
-          //create blank 256 color image
-          $thumb = ImageCreate($this->thumbWidth,$this->thumbHeight);
-          //resize image
-          ImageCopyResized(
-            $thumb,                                $image,
-            0,                 0,                  $cropX,     $cropY,
-            $this->thumbWidth, $this->thumbHeight, $this->cropWidth, $this->cropHeight);
-          break;
-        }
+        if($image) {
+          switch($this->config->thumbnail_software) {
+          case "gd2" :
+            //create blank truecolor image
+            $thumb = ImageCreateTrueColor($this->thumbWidth,$this->thumbHeight);
+            //resize image with resampling
+            ImageCopyResampled(
+              $thumb,                                $image,
+              0,                 0,                  $cropX,     $cropY,
+              $this->thumbWidth, $this->thumbHeight, $this->cropWidth, $this->cropHeight);
+            break;
+          case "gd1" :
+          default :
+            //create blank 256 color image
+            $thumb = ImageCreate($this->thumbWidth,$this->thumbHeight);
+            //resize image
+            ImageCopyResized(
+              $thumb,                                $image,
+              0,                 0,                  $cropX,     $cropY,
+              $this->thumbWidth, $this->thumbHeight, $this->cropWidth, $this->cropHeight);
+            break;
+          }
+        } /*else {
+          $thumb = ImageCreate($this->thumbWidth, $this->thumbHeight);
+          $bg = ImageColorAllocate($thumb, 255, 255, 255);
+          $text = ImageColorAllocate($thumb, 255, 0, 0);
+          ImageString($thumb, 1, 0, 0, "Cannot load source image", $text);
+        }*/
         
         //set image interlacing
-        ImageInterlace($thumb,$this->config->progressive_thumbs);
+        @ImageInterlace($thumb, $this->config->progressive_thumbs);
         
         //output image of appropriate type
         switch($this->image->type) {
           case 1 :
             //GIF images are saved as PNG
           case 3 :
-            ImagePNG($thumb,$this->thumbPath); 
+            ImagePNG($thumb, $this->thumbPath); 
             break;
           case 2 :
           default: 
-            ImageJPEG($thumb,$this->thumbPath,$this->config->thumbnail_quality); 
+            ImageJPEG($thumb, $this->thumbPath, $this->config->thumbnail_quality); 
             break;
         }
-        ImageDestroy($image);
-        ImageDestroy($thumb);
+        @ImageDestroy($image);
+        @ImageDestroy($thumb);
     }
     
     //set file permissions on newly created thumbnail
