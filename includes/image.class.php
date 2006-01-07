@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.16 2006/01/03 17:56:35 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.17 2006/01/07 16:24:14 tamlyn Exp $
  */
 
 //include the base class
@@ -100,7 +100,7 @@ class sgImage extends sgItem
       return "";
     
     $tmp =& $this->firstImage(); 
-    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|First").'</a>';
+    return '<a href="'.$tmp->URL($action).'">'.$this->firstText().'</a>';
   }
   
   function prevLink($action = null)
@@ -108,8 +108,7 @@ class sgImage extends sgItem
     if(!$this->hasPrev())
       return "";
     
-    $tmp =& $this->prevImage(); 
-    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|Previous").'</a>';
+    return '<a href="'.$this->prevURL($action).'">'.$this->prevText().'</a>';
   }
   
   function nextLink($action = null)
@@ -117,8 +116,7 @@ class sgImage extends sgItem
     if(!$this->hasNext())
       return "";
     
-    $tmp =& $this->nextImage(); 
-    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|Next").'</a>';
+    return '<a href="'.$this->nextURL($action).'">'.$this->nextText().'</a>';
   }
   
   function lastLink($action = null)
@@ -127,8 +125,26 @@ class sgImage extends sgItem
       return "";
     
     $tmp =& $this->lastImage(); 
-    return '<a href="'.$tmp->URL($action).'">'.$this->translator->_g("image|Last").'</a>';
+    return '<a href="'.$tmp->URL($action).'">'.$this->lastText().'</a>';
   }
+  
+  function prevURL($action = null)
+  {
+    $tmp =& $this->prevImage(); 
+    return $tmp->URL($action);
+  }
+  
+  function nextURL($action = null)
+  {
+    $tmp =& $this->nextImage(); 
+    return $tmp->URL($action);
+  }
+  
+  function firstText() { return $this->translator->_g("image|First"); }
+  function prevText() { return $this->translator->_g("image|Previous"); }
+  function nextText() { return $this->translator->_g("image|Next"); }
+  function lastText() { return $this->translator->_g("image|Last"); }
+  function parentText() { return $this->translator->_g("image|Thumbnails"); }
   
   function imageURL()
   {

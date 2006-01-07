@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.6 2005/12/04 04:39:46 tamlyn Exp $
+ * @version $Id: item.class.php,v 1.7 2006/01/07 16:24:14 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -203,7 +203,12 @@ class sgItem
   function parentLink($action = null)
   {
     $perpage = $this->parent->isAlbum() ? $this->config->thumb_number_album : $this->config->thumb_number_gallery;
-    return '<a href="'.$this->parent->URL(floor($this->index() / $perpage) * $perpage, $action).'">'.$this->translator->_g("gallery|Up").'</a>';
+    return '<a href="'.$this->parent->URL(floor($this->index() / $perpage) * $perpage, $action).'">'.$this->parentText().'</a>';
+  }
+  
+  function parentText()
+  {
+    return $this->translator->_g("gallery|Up");
   }
   
   /**

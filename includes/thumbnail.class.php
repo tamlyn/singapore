@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.8 2006/01/03 17:56:35 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.9 2006/01/07 16:24:14 tamlyn Exp $
  */
 
 
@@ -164,10 +164,10 @@ class sgThumbnail
       default : //use GD by default
         //read in image as appropriate type
         switch($this->image->type) {
-          case 1 : $image = @ImageCreateFromGIF($this->imagePath); break;
-          case 3 : $image = @ImageCreateFromPNG($this->imagePath); break;
+          case 1 : $image = ImageCreateFromGIF($this->imagePath); break;
+          case 3 : $image = ImageCreateFromPNG($this->imagePath); break;
           case 2 : 
-          default: $image = @ImageCreateFromJPEG($this->imagePath); break;
+          default: $image = ImageCreateFromJPEG($this->imagePath); break;
         }
         
         if($image) {

@@ -9,7 +9,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: index.php,v 1.19 2005/12/04 04:39:46 tamlyn Exp $
+ * @version $Id: index.php,v 1.20 2006/01/07 16:24:14 tamlyn Exp $
  */
 
 //include main class
@@ -18,11 +18,11 @@ require_once "includes/singapore.class.php";
 //create a wrapper
 $sg = new Singapore();
 
+//set session arg separator to be xml compliant
+ini_set("arg_separator.output", "&amp;");  
+
 //only start session if session is already registered
 if(isset($_REQUEST[$sg->config->session_name])) {
-  //set session arg separator to be xml compliant
-  ini_set("arg_separator.output", "&amp;");
-  
   //start session
   session_name($sg->config->session_name);
   @session_start();

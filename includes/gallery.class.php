@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: gallery.class.php,v 1.16 2006/01/03 17:56:35 tamlyn Exp $
+ * @version $Id: gallery.class.php,v 1.17 2006/01/07 16:24:14 tamlyn Exp $
  */
 
 //include the base class
@@ -239,12 +239,22 @@ class sgGallery extends sgItem
   
   function prevLink($action = null)
   {
-    return '<a href="'.$this->prevURL($action).'">'.$this->translator->_g("Previous gallery").'</a>';
+    return '<a href="'.$this->prevURL($action).'">'.$this->prevText().'</a>';
   }
   
   function nextLink($action = null)
   {
-    return '<a href="'.$this->nextURL($action).'">'.$this->translator->_g("Next gallery").'</a>';
+    return '<a href="'.$this->nextURL($action).'">'.$this->nextText().'</a>';
+  }
+  
+  function prevText()
+  {
+    return $this->translator->_g("Previous gallery");
+  }
+  
+  function nextText()
+  {
+    return $this->translator->_g("Next gallery");
   }
   
   /**
