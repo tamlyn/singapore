@@ -9,7 +9,7 @@
   <?php endif; ?>
   <?php if($sg->user->isAdmin()): ?>
   <li><a href="<?php echo $sg->formatAdminURL("manageusers") ?>"><?php echo $sg->translator->_g("Manage users") ?></a></li>
-  <li><a href="<?php echo $sg->formatAdminURL("purgecache") ?>"><?php echo $sg->translator->_g("Purge cached thumbnails") ?></a></li>
+  <?php /*<li><a href="<?php echo $sg->formatAdminURL("purgecache") ?>"><?php echo $sg->translator->_g("Purge cached thumbnails") ?></a></li>*/ ?>
   <?php endif; ?>
   <li><a href="<?php echo $sg->formatAdminURL("logout") ?>"><?php echo $sg->translator->_g("Log out of admin") ?></a></li>
 </ul>

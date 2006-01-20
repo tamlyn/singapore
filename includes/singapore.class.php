@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.59 2006/01/03 17:56:35 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.60 2006/01/20 12:31:08 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -821,9 +821,9 @@ class Singapore
     $config =& sgConfig::getInstance();
     switch($mode) {
       case 0 :
-        return $config->base_path.$config->pathto_data_dir."cache/".$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
+        return $config->pathto_data_dir."cache/".$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
       case 1 :
-        return $config->base_path.$config->pathto_galleries.$gallery."/_thumbs/".$width."x".$height.($forceSize?"f":"").strtr("-$image",":/?\\","----");
+        return $config->pathto_galleries.$gallery."/_thumbs/".$width."x".$height.($forceSize?"f":"").strtr("-$image",":/?\\","----");
     }
   }
   

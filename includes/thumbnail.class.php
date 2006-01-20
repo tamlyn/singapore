@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.9 2006/01/07 16:24:14 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.10 2006/01/20 12:31:08 tamlyn Exp $
  */
 
 
@@ -45,7 +45,8 @@ class sgThumbnail
     if($this->image == null) return;
     
     $this->imagePath = $this->image->realPath();
-    $this->thumbPath = Singapore::thumbnailPath($this->image->parent->id, $this->image->id, $this->maxWidth, $this->maxHeight, $this->forceSize);
+    $this->thumbPath = $this->config->base_path.Singapore::thumbnailPath($this->image->parent->id, $this->image->id, $this->maxWidth, $this->maxHeight, $this->forceSize);
+    $this->thumbURL  = $this->config->base_url .Singapore::thumbnailPath($this->image->parent->id, $this->image->id, $this->maxWidth, $this->maxHeight, $this->forceSize);
 
     //security check: make sure requested file is in galleries directory
     if(!Singapore::isSubPath($this->config->base_path.$this->config->pathto_galleries, $this->imagePath) && !$this->image->isRemote())
@@ -73,7 +74,7 @@ class sgThumbnail
   /** Accessor methods */
   function width()  { return $this->thumbWidth; }
   function height() { return $this->thumbHeight; }
-  function URL()    { return $this->thumbPath; }
+  function URL()    { return $this->thumbURL; }
   
   /** Private methods */
   

@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.30 2005/12/09 14:05:28 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.31 2006/01/20 12:31:08 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.30 $";
+    return "$Revision: 1.31 $";
   }
 
   /**
@@ -213,7 +213,9 @@ class sgIO_csv extends sgIO
     $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$gal->id."/hits.csv","r");
     
     if($fp) {
+      flock($fp, LOCK_SH);
       while($temp[] = fgetcsv($fp,255));
+      flock($fp, LOCK_UN);
       fclose($fp);
     } else $temp = array();
     
@@ -253,22 +255,25 @@ class sgIO_csv extends sgIO
   function putHits($gal) {
     $logfile = $this->config->base_path.$this->config->pathto_galleries.$gal->id."/hits.csv";
     @chmod($logfile, octdec($this->config->file_mode));
-    $fp = @fopen($logfile,"w");
+    $fp = @fopen($logfile,"r+");
     if(!$fp) return false;
     
+    flock($fp, LOCK_EX);
+    ftruncate($fp, 0);
     fwrite($fp, '"'.
       $gal->id.'",'.
       $gal->hits.','.
       $gal->lasthit
     );
       
-    for($i=0;$i<count($gal->images);$i++)
+    foreach($gal->images as $img)
       fwrite($fp, "\n\"".
-        $gal->images[$i]->id.'",'.
-        $gal->images[$i]->hits.','.
-        $gal->images[$i]->lasthit
+        $img->id.'",'.
+        $img->hits.','.
+        $img->lasthit
       );
-    
+    flock($fp, LOCK_UN);
+    fclose($fp);
     return true;
   }
   

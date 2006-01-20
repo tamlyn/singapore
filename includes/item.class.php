@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.7 2006/01/07 16:24:14 tamlyn Exp $
+ * @version $Id: item.class.php,v 1.8 2006/01/20 12:31:08 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -276,7 +276,7 @@ class sgItem
       if($action)          $query[] = $this->config->url_action."=".$action;
       if($this->translator->language != $this->config->default_language)
                            $query[] = $this->config->url_lang.'='.$this->translator->language;
-      if($GLOBALS["sg"]->template != $this->config->default_template)
+      if(isset($GLOBALS["sg"]->template) && $GLOBALS["sg"]->template != $this->config->default_template)
                            $query[] = $this->config->url_template.'='.$GLOBALS["sg"]->template;
                            
       $ret = $this->config->index_file_url.implode(ini_get('arg_separator.output'), $query);

@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: uninstall.php,v 1.2 2005/04/24 14:59:57 tamlyn Exp $
+ * @version $Id: uninstall.php,v 1.3 2006/01/20 12:31:08 tamlyn Exp $
  */
 
 //path to singapore root
@@ -50,12 +50,9 @@ switch($setupStep) {
     setupHeader("Step 2 of 2: Delete database information");
     
     //create config object
-    $config = new sgConfig($basePath."singapore.ini");
-    $config->loadConfig($basePath."secret.ini.php");
+    $config =& sgConfig::getInstance();
+    $config->loadConfig($basePath."singapore.ini");
     $config->base_path = $basePath;
-    //include base classes
-    require_once $basePath."includes/io.class.php";
-    require_once $basePath."includes/io_sql.class.php";
     
     switch($config->io_handler) {
       case "csv" :
@@ -65,7 +62,8 @@ switch($setupStep) {
           break;
           
         case "mysql" :
-          require_once $basePath."includes/io_mysql.class.php";
+          $config->loadConfig($basePath."secret.ini.php");
+          include_once $basePath."includes/io_mysql.class.php";
           setupMessage("Setup will now delete all gallery, image and user information");
           setupHeader("Connecting to MySQL database");
           $io = new sgIO_mysql($config);
@@ -83,6 +81,7 @@ switch($setupStep) {
           break;
           
         case "sqlite" :
+          $config->loadConfig($basePath."secret.ini.php");
           setupMessage("Setup will now delete all gallery, image and user information");
           setupHeader("Deleting SQLite database file");
           if(unlink($basePath.$config->pathto_data_dir."sqlite.dat")) {
