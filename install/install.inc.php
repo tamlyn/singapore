@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: install.inc.php,v 1.3 2005/04/23 02:17:52 tamlyn Exp $
+ * @version $Id: install.inc.php,v 1.4 2006/01/22 03:25:37 tamlyn Exp $
  */
 
 /**
@@ -52,7 +52,7 @@ function testServer()
   
   setupHeader("Testing for config file");
   
-  if(file_exists("../singapore.ini")) setupMessage("Config file found");
+  if(file_exists($GLOBALS['basePath']."singapore.ini")) setupMessage("Config file found");
   else $success &= setupError("Config file not found - singapore.ini must be located in the root singapore directory");
   
   setupHeader("Testing for GD");
@@ -80,13 +80,13 @@ function testServer()
   
   setupHeader("Testing for ImageMagick");
   
-  $foundIM = exec("convert");
-  $whereIM = exec("whereis convert");
+  $foundIM = exec("mogrify");
+  $whereIM = exec("whereis mogrify");
   if($foundIM) {
     if($whereIM) setupMessage("Found ImageMagick at $whereIM");
     else setupMessage("Found ImageMagick");
     setupMessage("To take advantage of ImageMagick change the <code>thumbnail_software</code> option in singapore.ini to \"im\"");
-  } else setupMessage("ImageMagick not found but that doesn't mean it's not there (on Win32 this crude test will always fail). If it really is not available you may be able to install it yourself (even without shell access to the server)");
+  } else setupMessage("ImageMagick not found but that doesn't mean it's not there. If it really is not available you may be able to install it yourself (even without shell access to the server)");
   
   return $success;
 }

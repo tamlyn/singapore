@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: io_csv.class.php,v 1.31 2006/01/20 12:31:08 tamlyn Exp $
+ * @version $Id: io_csv.class.php,v 1.32 2006/01/22 03:25:36 tamlyn Exp $
  */
 
 //include the base IO class
@@ -34,7 +34,7 @@ class sgIO_csv extends sgIO
    */
   function getVersion()
   {
-    return "$Revision: 1.31 $";
+    return "$Revision: 1.32 $";
   }
 
   /**
@@ -249,8 +249,7 @@ class sgIO_csv extends sgIO
   
   /**
    * Stores gallery hits.
-   * @param string      id of gallery to store hits for
-   * @param sgStdClass  instance of object holding hit data
+   * @param sgGallery  gallery object to store
    */
   function putHits($gal) {
     $logfile = $this->config->base_path.$this->config->pathto_galleries.$gal->id."/hits.csv";

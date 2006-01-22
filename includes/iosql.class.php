@@ -4,7 +4,7 @@
  * IO class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: iosql.class.php,v 1.4 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: iosql.class.php,v 1.5 2006/01/22 03:25:36 tamlyn Exp $
  */
 
 //include the base IO class
@@ -80,8 +80,8 @@ class sgIOsql extends sgIO
         $res = $this->query("SELECT * FROM ".$this->config->sql_prefix."images ".
                "WHERE galleryid='".$this->escape_string($galleryId)."' and lang=''");
       for($i=0;$i<$this->num_rows($res);$i++) {
-        $gal->images[$i] =& new sgImage($imginfo['filename'], $gal);
         $imginfo = $this->fetch_array($res);
+        $gal->images[$i] =& new sgImage($imginfo['filename'], $gal);
         $gal->images[$i]->thumbnail = $imginfo['thumbnail'];
         $gal->images[$i]->owner = $imginfo['owner'];
         $gal->images[$i]->groups = $imginfo['groups'];
@@ -177,57 +177,33 @@ class sgIOsql extends sgIO
   }
   
   /**
-   * Fetches hit data from database.
-   * @param string  id of gallery to fetch hits for
+   * Hits are loaded by getGallery so this method does nothing
+   * @param sgGallery  gallery object to load hits into
    */
-  function getHits($galleryId) {
-    
-    $hits = new stdClass;
-    
-    $res = $this->query("SELECT hits,lasthit FROM ".$this->config->sql_prefix.
-           "galleries WHERE id='".$this->escape_string($galleryId)."'");
-    if($res && $this->num_rows($res)) {
-      $galinfo = $this->fetch_array($res);
-      $hits->hits = $galinfo['hits'];
-      $hits->lasthit = $galinfo['lasthit'];
-      
-      $hits->images = array();
-      
-      $res = $this->query("SELECT filename,hits,lasthit FROM ".$this->config->sql_prefix.
-             "images WHERE galleryid='".$this->escape_string($galleryId)."'");
-      for($i=0;$i<$this->num_rows($res);$i++) {
-        $imginfo = $this->fetch_array($res);
-        $hits->images[$i] = new stdClass;
-        $hits->images[$i]->id = $imginfo['filename'];
-        $hits->images[$i]->hits = $imginfo['hits'];
-        $hits->images[$i]->lasthit = $imginfo['lasthit'];
-      }
-    } else {
-      $hits->hits = 0;
-      $hits->lasthit = 0;
-      $hits->images = array();
-    }
-    
-    return $hits;
+  function getHits(&$gal) {
+    return true;
   }
   
   /**
    * Stores gallery hits.
-   * @param string      id of gallery to store hits for
-   * @param sgStdClass  instance of object holding hit data
+   * @param sgGallery  gallery object to store
    */
-  function putHits($galleryId, $hits) {
-  
+  function putHits($gal) {
+    //if gallery data doesn't exist in database, add it
+    $res = $this->query("SELECT id FROM ".$this->config->sql_prefix."galleries ".
+           "WHERE id='".$this->escape_string($gal->id)."'");
+    if(!$res || !$this->num_rows($res))
+      $this->putGallery($gal);
+    
     $success = (bool) $this->query("UPDATE ".$this->config->sql_prefix."galleries ".
-           "SET hits=".$hits->hits.", lasthit=".$hits->lasthit." ".
-           "WHERE id='".$this->escape_string($galleryId)."'");
-           
-    foreach($hits->images as $imghit)
+           "SET hits=".$gal->hits.", lasthit=".$gal->lasthit." ".
+           "WHERE id='".$this->escape_string($gal->id)."'");
+    foreach($gal->images as $img)
       $success &= (bool) $this->query("UPDATE ".$this->config->sql_prefix."images ".
-             "SET hits=".$imghit->hits.", lasthit=".$imghit->lasthit." ".
-             "WHERE galleryid='".$this->escape_string($galleryId)."' ".
-             "AND filename='".$this->escape_string($imghit->id)."'");
-
+             "SET hits=".$img->hits.", lasthit=".$img->lasthit." ".
+             "WHERE galleryid='".$this->escape_string($gal->id)."' ".
+             "AND filename='".$this->escape_string($img->id)."'");
+    
     return $success;
   }
   

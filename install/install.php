@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: install.php,v 1.4 2005/12/15 17:18:47 tamlyn Exp $
+ * @version $Id: install.php,v 1.5 2006/01/22 03:25:37 tamlyn Exp $
  */
 
 //path to singapore root
@@ -50,7 +50,7 @@ if(false) {
 
 switch($setupStep) {
   case "test" :
-    setupHeader("Step 1 of 1: Test Server");
+    setupHeader("Step 1 of 2: Test Server");
     setupMessage("Attempting to find out if your server is capable of running singapore"); 
     setupMessage("No changes are made at this time");
     if(testServer()) {
@@ -62,7 +62,8 @@ switch($setupStep) {
     }
     echo '<br /><a href="index.html">&lt;&lt; Previous: welcome</a>';
     echo ' | <a href="install.php?step=phpinfo">View PHP configuration</a>';
-    echo ' | <a href="index.html">Finish</a>';
+    echo ' | <a href="install.php?step=database">Next: setup database &gt;&gt;</a>';
+    //echo ' | <a href="index.html">Finish</a>';
     //echo ' | <a href="install.php?step=directories">Next: create directories &gt;&gt;</a>';
     break;
     
@@ -88,10 +89,11 @@ switch($setupStep) {
     break;
     
   case "database" :
-    setupHeader("Step 3 of 3: Setup Database");
+    setupHeader("Step 2 of 2: Setup Database");
           
     //create config object
-    $config = new sgConfig($basePath."singapore.ini");
+    $config = sgConfig::getInstance();
+    $config->loadConfig($basePath."singapore.ini");
     $config->loadConfig($basePath."secret.ini.php");
     $config->base_path = $basePath;
     
@@ -103,10 +105,10 @@ switch($setupStep) {
           break;
           
         case "mysql" :
-          require_once $basePath."includes/io_mysql.class.php";
+          include_once $basePath."includes/io_mysql.class.php";
           setupMessage("Setup will now create the tables necessary to run singapore on a MySQL database");
           setupHeader("Connecting to database");
-          $io = new sgIO_mysql($config);
+          $io = new sgIO_mysql();
           if(!$io) setupError("Error connecting to database. Please ensure database settings are correct");
           if(sqlCreateTables($io)) {
             setupHeader("OK");
@@ -118,10 +120,10 @@ switch($setupStep) {
           break;
           
         case "sqlite" :
-          require_once $basePath."includes/io_sqlite.class.php";
+          include_once $basePath."includes/io_sqlite.class.php";
           setupMessage("Setup will now create the database and tables necessary to run singapore on SQLite");
           setupHeader("Opening database file");
-          $io = new sgIO_sqlite($config);
+          $io = new sgIO_sqlite();
           if(!$io) {
             setupError("Error connecting to database. Please ensure database settings are correct");
             break;
@@ -138,7 +140,8 @@ switch($setupStep) {
           setupError("Unrecognised io_handler.");
     }
     setupMessage("Don't forget to delete or protect this <code>install</code> directory to prevent unauthorised access");
-    echo '<br /><a href="install.php?step=directories">&lt;&lt; Previous: create directories</a>';
+    echo '<br /><a href="install.php?step=test">&lt;&lt; Previous: test server</a>';
+    //echo '<br /><a href="install.php?step=directories">&lt;&lt; Previous: create directories</a>';
     echo ' | <a href="index.html">Finish</a>';
     break;
 }
