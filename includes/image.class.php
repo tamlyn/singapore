@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.17 2006/01/07 16:24:14 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.18 2006/01/24 13:10:44 tamlyn Exp $
  */
 
 //include the base class
@@ -168,6 +168,7 @@ class sgImage extends sgItem
     $ret  = "<img src=\"".$this->imageURL().'" '; 
     $ret .= 'class="'.$class.'" '; 
     $ret .= 'width="'.$this->width().'" height="'.$this->height().'" ';
+    if($this->config->imagemap_navigation) $ret .= 'usemap="#sgNavMap" border="0" ';
     $ret .= 'alt="'.$this->name().$this->byArtistText().'" />';
     
     return $ret;

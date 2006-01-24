@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.61 2006/01/22 03:25:36 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.62 2006/01/24 13:10:44 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -465,21 +465,21 @@ class Singapore
    */
   function imageMap()
   {
-    if(!$this->config->imagemap_navigation) return;
+    if(!$this->config->imagemap_navigation) return "";
     
-    $imageWidth = $this->imageWidth();
-    $imageHeight = $this->imageHeight();
+    $imageWidth = $this->image->width();
+    $imageHeight = $this->image->height();
     $middleX = round($imageWidth/2);
     $middleY = round($imageHeight/2);
     
     $ret  = "<map name=\"sgNavMap\" id=\"sgNavMap\">\n";
-    if($this->imageHasNext()) $ret .= '<area href="'.$this->imageNextURL().'" alt="'.$this->translator->_g("image|Next").'" title="'.$this->translator->_g("image|Next").'" shape="poly" ';
-    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->translator->_g("image|Thumbnails").'" title="'.$this->translator->_g("image|Thumbnails").'" shape="poly" ';
+    if($this->image->hasNext()) $ret .= '<area href="'.$this->image->nextURL().'" alt="'.$this->image->nextText().'" title="'.$this->image->nextText().'" shape="poly" ';
+    else $ret .= '<area href="'.$this->image->parent->URL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,$imageWidth,$imageHeight,$imageWidth,0,$middleX,$middleY\" />\n";
-    if($this->imageHasPrev()) $ret .= '<area href="'.$this->imagePrevURL().'" alt="'.$this->translator->_g("image|Previous").'" title="'.$this->translator->_g("image|Previous").'" shape="poly" ';
-    else $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->translator->_g("image|Thumbnails").'" title="'.$this->translator->_g("image|Thumbnails").'" shape="poly" ';
+    if($this->image->hasPrev()) $ret .= '<area href="'.$this->image->prevURL().'" alt="'.$this->image->prevText().'" title="'.$this->image->prevText().'" shape="poly" ';
+    else $ret .= '<area href="'.$this->image->parent->URL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,0,$imageHeight,$middleX,$middleY\" />\n";
-    $ret .= '<area href="'.$this->imageParentURL().'" alt="'.$this->translator->_g("image|Thumbnails").'" title="'.$this->translator->_g("image|Thumbnails").'" shape="poly" ';
+    $ret .= '<area href="'.$this->image->parent->URL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,$imageWidth,0,$middleX,$middleY\" />\n";
     $ret .= '</map>';
     
