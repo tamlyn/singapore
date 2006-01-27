@@ -6,11 +6,15 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.51 2006/01/20 12:31:08 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.52 2006/01/27 13:31:25 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
 define("SG_SUSPENDED", 2048);
+
+//include the base IO class
+require_once dirname(__FILE__)."/singapore.class.php";
+ 
 
 /**
  * Provides gallery, image and user administration functions.

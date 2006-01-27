@@ -11,11 +11,10 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: admin.php,v 1.35 2005/12/04 04:39:46 tamlyn Exp $
+ * @version $Id: admin.php,v 1.36 2006/01/27 13:31:24 tamlyn Exp $
  */
 
-//include main class
-require_once "includes/singapore.class.php";
+//include admin class
 require_once "includes/admin.class.php";
 
 //create the admin object
