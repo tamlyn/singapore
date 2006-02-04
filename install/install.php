@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: install.php,v 1.5 2006/01/22 03:25:37 tamlyn Exp $
+ * @version $Id: install.php,v 1.6 2006/02/04 02:12:12 tamlyn Exp $
  */
 
 //path to singapore root
@@ -92,9 +92,8 @@ switch($setupStep) {
     setupHeader("Step 2 of 2: Setup Database");
           
     //create config object
-    $config = sgConfig::getInstance();
+    $config =& sgConfig::getInstance();
     $config->loadConfig($basePath."singapore.ini");
-    $config->loadConfig($basePath."secret.ini.php");
     $config->base_path = $basePath;
     
     switch($config->io_handler) {
@@ -106,6 +105,7 @@ switch($setupStep) {
           
         case "mysql" :
           include_once $basePath."includes/io_mysql.class.php";
+          $config->loadConfig($basePath."secret.ini.php");
           setupMessage("Setup will now create the tables necessary to run singapore on a MySQL database");
           setupHeader("Connecting to database");
           $io = new sgIO_mysql();

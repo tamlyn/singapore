@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.18 2006/01/24 13:10:44 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.19 2006/02/04 02:12:12 tamlyn Exp $
  */
 
 //include the base class
@@ -61,7 +61,28 @@ class sgImage extends sgItem
     $this->translator =& Translator::getInstance();
   }
   
+  /**
+   * Over-rides the method in the item class
+   * @return true  returns true
+   */
   function isImage() { return true; }
+  
+  
+  /**
+   * @return bool  true if image height is greater than width
+   */
+  function isPortrait() 
+  { 
+    return $this->width()/$this->height() > 1; 
+  }
+  
+  /**
+   * @return bool  true if image height is greater than width
+   */
+  function isLandscape() 
+  { 
+    return $this->width()/$this->height() < 1; 
+  }
   
   function hasPrev() 
   {
