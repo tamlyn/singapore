@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.10 2006/01/20 12:31:08 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.11 2006/02/04 00:52:26 tamlyn Exp $
  */
 
 
@@ -39,7 +39,7 @@ class sgThumbnail
     $cropVar   = "thumb_crop_".$type;
     $this->maxWidth  = $this->config->$widthVar;
     $this->maxHeight = $this->config->$heightVar;
-    if(isset($this->$cropVar))
+    if(isset($this->config->$cropVar))
       $this->forceSize = $this->config->$cropVar;
     
     if($this->image == null) return;
