@@ -1,70 +1,138 @@
 # This is the Bulgarian version of singapore.admin.pot
-# Copyright (C) 2004 oannu
-# oannu <oannu users sourceforge net>, 2004.
+# Copyright (C) 2006 oannu
+# Aleksandar Milanov <oannu users sourceforge net>, 2006.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.10\n"
-"POT-Creation-Date: 2004-09-27 08:35+0100\n"
-"PO-Revision-Date: 2004-10-01 00:00+0000\n"
-"Last-Translator: oannu <oannu users sourceforge net>\n"
-"Language-Team: Bulgarian ()\n"
+"Project-Id-Version: singapore v0.9.11\n"
+"POT-Creation-Date: 2004-11-01 07:57+0000\n"
+"PO-Revision-Date: 2006-02-04 00:00+0000\n"
+"Last-Translator: Aleksandar Milanov <oannu users sourceforge net>\n"
+"Language-Team: Bulgarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../admin.php:41 ../admin.php:55 ../admin.php:87 ../admin.php:104
-#: ../admin.php:125 ../admin.php:143 ../admin.php:162 ../admin.php:170
-#: ../admin.php:177 ../admin.php:185 ../admin.php:192 ../admin.php:213
-#: ../admin.php:227 ../admin.php:235 ../admin.php:242 ../admin.php:253
-#: ../admin.php:273 ../admin.php:283 ../admin.php:296 ../admin.php:308
-#: ../admin.php:321 ../admin.php:333 ../admin.php:365
+#
+# File: ../admin.php, line: 41
+# File: ../admin.php, line: 55
+# File: ../admin.php, line: 87
+# File: ../admin.php:104
+, line: -1
+# File: ../admin.php, line: 125
+# File: ../admin.php, line: 143
+# File: ../admin.php, line: 162
+# File: ../admin.php:170
+, line: -1
+# File: ../admin.php, line: 177
+# File: ../admin.php, line: 185
+# File: ../admin.php, line: 192
+# File: ../admin.php:199
+, line: -1
+# File: ../admin.php, line: 220
+# File: ../admin.php, line: 234
+# File: ../admin.php, line: 242
+# File: ../admin.php:249
+, line: -1
+# File: ../admin.php, line: 260
+# File: ../admin.php, line: 280
+# File: ../admin.php, line: 290
+# File: ../admin.php:303
+, line: -1
+# File: ../admin.php, line: 315
+# File: ../admin.php, line: 328
+# File: ../admin.php, line: 340
+# File: ../admin.php:352
+, line: -1
+# File: ../admin.php:384
+, line: -1
 msgid "You do not have permission to perform this operation."
 msgstr "Не ви е позволено да извършите тази операция."
-
-#: ../admin.php:45
+#
+# File: ../admin.php:45
+, line: -1
 msgid "Gallery added"
 msgstr "Галерията е прибавена"
-
-#: ../admin.php:48 ../admin.php:66 ../admin.php:75 ../admin.php:93
-#: ../admin.php:111 ../admin.php:131 ../admin.php:149 ../admin.php:202
-#: ../admin.php:247 ../admin.php:259 ../admin.php:289 ../admin.php:302
-#: ../admin.php:314 ../admin.php:327 ../admin.php:339 ../admin.php:370
+#
+# File: ../admin.php, line: 48
+# File: ../admin.php, line: 66
+# File: ../admin.php, line: 75
+# File: ../admin.php:93
+, line: -1
+# File: ../admin.php, line: 111
+# File: ../admin.php, line: 131
+# File: ../admin.php, line: 149
+# File: ../admin.php:209
+, line: -1
+# File: ../admin.php, line: 254
+# File: ../admin.php, line: 266
+# File: ../admin.php, line: 296
+# File: ../admin.php:309
+, line: -1
+# File: ../admin.php, line: 321
+# File: ../admin.php, line: 334
+# File: ../admin.php, line: 346
+# File: ../admin.php:358
+, line: -1
+# File: ../admin.php:389
+, line: -1
 msgid "An error occurred:"
 msgstr "Грешка:"
-
-#: ../admin.php:63
+#
+# File: ../admin.php:63
+, line: -1
 msgid "Image added"
 msgstr "Изображението е прибавено"
-
-#: ../admin.php:72
+#
+# File: ../admin.php:72
+, line: -1
 msgid "Archive contents added"
 msgstr "Съдържанието на архива е прибавено"
-
-#: ../admin.php:89 ../admin.php:106 ../admin.php:127 ../admin.php:145
-#: ../admin.php:255
+#
+# File: ../admin.php, line: 89
+# File: ../admin.php, line: 106
+# File: ../admin.php, line: 127
+# File: ../admin.php:145
+, line: -1
+# File: ../admin.php, line: 262
+# File: ../templates/admin_default/changethumbnail.tpl.php:19
+, line: -1
+# File: ../templates/admin_default/confirm.tpl.php:9
+, line: -1
 msgid "confirm|OK"
 msgstr "OK"
-
-#: ../admin.php:91
+#
+# File: ../admin.php:91
+, line: -1
 msgid "Thumbnail changed"
 msgstr "Умаленото изображение е сменено"
-
-#: ../admin.php:95 ../admin.php:114 ../admin.php:133 ../admin.php:151
-#: ../admin.php:261
+#
+# File: ../admin.php, line: 95
+# File: ../admin.php, line: 114
+# File: ../admin.php, line: 133
+# File: ../admin.php:151
+, line: -1
+# File: ../admin.php, line: 268
+# File: ../templates/admin_default/changethumbnail.tpl.php:20
+, line: -1
+# File: ../templates/admin_default/confirm.tpl.php:10
+, line: -1
 msgid "confirm|Cancel"
 msgstr "Отказ"
-
-#: ../admin.php:109
+#
+# File: ../admin.php:109
+, line: -1
 msgid "Gallery deleted"
 msgstr "Галерията е изтрита"
-
-#: ../admin.php:117
+#
+# File: ../admin.php:117
+, line: -1
 msgid "delete gallery"
 msgstr "изтриване на галерията"
-
-#: ../admin.php:118
+#
+# File: ../admin.php:118
+, line: -1
+#, c-format
 msgid ""
 "Gallery %s is not empty.\n"
 "Are you sure you want to irretrievably delete it and all subgalleries and "
@@ -73,545 +141,752 @@ msgstr ""
 "Галерията %s не е празна.\n"
 "Наистина ли искате безвъзвратно да я изтриете заедно с всички подгалерии и "
 "изображения, които съдържа?"
-
-#: ../admin.php:129
+#
+# File: ../admin.php:129
+, line: -1
 msgid "Image deleted"
 msgstr "Изображението е изтрито"
-
-#: ../admin.php:136
+#
+# File: ../admin.php:136
+, line: -1
 msgid "delete image"
 msgstr "изтриване на изображението"
-
-#: ../admin.php:137
+#
+# File: ../admin.php:137
+, line: -1
+#, c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
 msgstr "Наистина ли искате да изтриете безвъзвратно изображението %s от галерия %s?"
-
-#: ../admin.php:147
+#
+# File: ../admin.php:147
+, line: -1
 msgid "User deleted"
 msgstr "Потребителят е изтрит"
-
-#: ../admin.php:154
+#
+# File: ../admin.php:154
+, line: -1
 msgid "delete user"
 msgstr "изтриване на потребителя"
-
-#: ../admin.php:155
+#
+# File: ../admin.php:155
+, line: -1
+#, c-format
 msgid "Are you sure you want to permanently delete user %s?"
 msgstr "Наистина ли искате да изтриете безвъзвратно потребителя %s?"
-
-#: ../admin.php:199
+#
+# File: ../admin.php:206
+, line: -1
 msgid "Welcome to singapore admin!"
 msgstr "Добре дошли в администраторската ложа!"
-
-#: ../admin.php:208
+#
+# File: ../admin.php:215
+, line: -1
 msgid "Thank you and goodbye!"
 msgstr "До скоро!"
-
-#: ../admin.php:257
+#
+# File: ../admin.php:264
+, line: -1
 msgid "Thumbnail cache purged"
 msgstr "Кешът на умалените изображения е прочистен"
-
-#: ../admin.php:264
+#
+# File: ../admin.php:271
+, line: -1
 msgid "purge cached thumbnails"
 msgstr "изтриване на кешираните умалени изображения"
-
-#: ../admin.php:266
+#
+# File: ../admin.php:273
+, line: -1
+#, c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
 msgstr "Наистина ли искате да изтриете всичките %s кеширани умалени изображения?"
-
-#: ../admin.php:276
+#
+# File: ../admin.php:283
+, line: -1
+#, c-format
 msgid "Gallery re-indexed. %s images added."
 msgstr "Галерията е индексирана наново. %s изображения са прибавени."
-
-#: ../admin.php:286
+#
+# File: ../admin.php:293
+, line: -1
 msgid "Gallery info saved"
 msgstr "Информацията за галерията е съхранена"
-
-#: ../admin.php:299
-msgid "Image saved successfully"
-msgstr "Изображението е съхранено успешно"
-
-#: ../admin.php:311
+#
+# File: ../admin.php:306
+, line: -1
+#, fuzzy
+msgid "Image info saved"
+msgstr "Информацията за потребителя е съхранена"
+#
+# File: ../admin.php:318
+, line: -1
 msgid "Password saved"
 msgstr "Паролата е съхранена"
-
-#: ../admin.php:324
+#
+# File: ../admin.php:331
+, line: -1
 msgid "Permissions saved"
 msgstr "Правата са съхранени"
-
-#: ../admin.php:336 ../admin.php:368
+#
+# File: ../admin.php, line: 343
+# File: ../admin.php, line: 355
+# File: ../admin.php:387
+, line: -1
 msgid "User info saved"
 msgstr "Информацията за потребителя е съхранена"
-
-#: ../includes/admin.class.php:202
+#
+# File: ../includes/admin.class.php:206
+, line: -1
 msgid "admin bar|Back"
 msgstr "Назад"
-
-#: ../includes/admin.class.php:204
+#
+# File: ../includes/admin.class.php:208
+, line: -1
 msgid "admin bar|Admin"
 msgstr "Управление"
-
-#: ../includes/admin.class.php:205
+#
+# File: ../includes/admin.class.php:209
+, line: -1
 msgid "admin bar|Galleries"
 msgstr "Галерии"
-
-#: ../includes/admin.class.php:206
+#
+# File: ../includes/admin.class.php:210
+, line: -1
 msgid "admin bar|Log out"
 msgstr "Изход"
-
-#: ../includes/admin.class.php:208
-#: ../templates/admin_default/gallery.tpl.php:28
+#
+# File: ../includes/admin.class.php:212
+, line: -1
+# File: ../templates/admin_default/gallery.tpl.php:28
+, line: -1
 msgid "admin bar|Edit gallery"
 msgstr "Редактиране на галерията"
-
-#: ../includes/admin.class.php:209
-#: ../templates/admin_default/gallery.tpl.php:29
+#
+# File: ../includes/admin.class.php:213
+, line: -1
+# File: ../templates/admin_default/gallery.tpl.php:29
+, line: -1
 msgid "admin bar|Edit permissions"
 msgstr "Редактиране на правата"
-
-#: ../includes/admin.class.php:210
-#: ../templates/admin_default/gallery.tpl.php:30
+#
+# File: ../includes/admin.class.php:214
+, line: -1
+# File: ../templates/admin_default/gallery.tpl.php:30
+, line: -1
 msgid "admin bar|Delete gallery"
 msgstr "Изтриване на галерията"
-
-#: ../includes/admin.class.php:211
-#: ../templates/admin_default/gallery.tpl.php:31
+#
+# File: ../includes/admin.class.php:215
+, line: -1
+# File: ../templates/admin_default/gallery.tpl.php:31
+, line: -1
 msgid "admin bar|New subgallery"
 msgstr "Нова подгалерия"
-
-#: ../includes/admin.class.php:212
-#: ../templates/admin_default/gallery.tpl.php:32
+#
+# File: ../includes/admin.class.php:216
+, line: -1
+# File: ../templates/admin_default/gallery.tpl.php:32
+, line: -1
 msgid "admin bar|Re-index gallery"
 msgstr "Индексиране на галерията"
-
-#: ../includes/admin.class.php:214
+#
+# File: ../includes/admin.class.php:218
+, line: -1
 msgid "admin bar|Edit image"
 msgstr "Редактиране на изображението"
-
-#: ../includes/admin.class.php:215
+#
+# File: ../includes/admin.class.php:219
+, line: -1
 msgid "admin bar|Delete image"
 msgstr "Изтриване на изображението"
-
-#: ../includes/admin.class.php:217
+#
+# File: ../includes/admin.class.php:221
+, line: -1
 msgid "admin bar|New image"
 msgstr "Ново изображение"
-
-#: ../includes/admin.class.php:241 ../includes/admin.class.php:436
-#: ../includes/admin.class.php:465 ../includes/admin.class.php:493
-#: ../includes/admin.class.php:513
+#
+# File: ../includes/admin.class.php, line: 245
+# File: ../includes/admin.class.php:440
+, line: -1
+# File: ../includes/admin.class.php, line: 469
+# File: ../includes/admin.class.php:497
+, line: -1
+# File: ../includes/admin.class.php:517
+, line: -1
 msgid "Could not save user info"
 msgstr "Информацията за потребителя не може да бъде съхранена"
-
-#: ../includes/admin.class.php:244
+#
+# File: ../includes/admin.class.php:248
+, line: -1
 msgid "New password must be between 6 and 16 characters long."
 msgstr "Новата парола трябва да е между 6 и 16 знака."
-
-#: ../includes/admin.class.php:246
+#
+# File: ../includes/admin.class.php:250
+, line: -1
 msgid "The new passwords you entered do not match."
 msgstr "Новите пароли, които въведохте, не съвпадат."
-
-#: ../includes/admin.class.php:248
+#
+# File: ../includes/admin.class.php:252
+, line: -1
 msgid ""
 "The current password you entered does not match the one in the database."
 msgstr ""
-"Сегашната парола, която въведохте, не съвпада с тази в базата данни."
-
-#: ../includes/admin.class.php:251
+"Паролата, която въведохте, не съвпада с тази в базата данни."
+#
+# File: ../includes/admin.class.php:255
+, line: -1
 msgid "The username specified was not found in the database."
 msgstr "Потребителят не е намерен в базата данни."
-
-#: ../includes/admin.class.php:281
+#
+# File: ../includes/admin.class.php:285
+, line: -1
 msgid "Your account has been suspended"
 msgstr "Вашият потребител е блокиран."
-
-#: ../includes/admin.class.php:292
+#
+# File: ../includes/admin.class.php:296
+, line: -1
 msgid "Username and/or password incorrect"
 msgstr "Потребителското име и/или паролата са неправилни."
-
-#: ../includes/admin.class.php:295
+#
+# File: ../includes/admin.class.php:299
+, line: -1
 msgid "You must enter a username and password"
 msgstr "Трябва да въведете потребител и парола"
-
-#: ../includes/admin.class.php:369 ../includes/admin.class.php:553
-#: ../includes/admin.class.php:605
+#
+# File: ../includes/admin.class.php, line: 373
+# File: ../includes/admin.class.php:557
+, line: -1
+# File: ../includes/admin.class.php, line: 595
+# File: ../includes/admin.class.php:625
+, line: -1
 msgid "Could not save gallery info"
 msgstr "Информацията за галерията не може да бъде съхранена"
-
-#: ../includes/admin.class.php:427
+#
+# File: ../includes/admin.class.php:431
+, line: -1
 msgid "Username already exists"
 msgstr "Потребителското име вече съществува"
-
-#: ../includes/admin.class.php:451
+#
+# File: ../includes/admin.class.php:455
+, line: -1
 msgid "Cannot delete built in accounts"
 msgstr "Вградените потребители не могат да бъдат изтрити"
-
-#: ../includes/admin.class.php:469 ../includes/admin.class.php:496
-#: ../includes/admin.class.php:516
+#
+# File: ../includes/admin.class.php, line: 473
+# File: ../includes/admin.class.php:500
+, line: -1
+# File: ../includes/admin.class.php:520
+, line: -1
 msgid "Username not recognised"
 msgstr "Потребителското име не е разпознато"
-
-#: ../includes/admin.class.php:568
+#
+# File: ../includes/admin.class.php:573
+, line: -1
 msgid "Gallery already exists"
 msgstr "Галерията вече съществува"
-
-#: ../includes/admin.class.php:575
+#
+# File: ../includes/admin.class.php:578
+, line: -1
 msgid "Could not create directory"
 msgstr "Директорията не може да бъде създадена"
-
-#: ../includes/admin.class.php:626
+#
+# File: ../includes/admin.class.php:646
+, line: -1
 msgid "Cannot delete the top level directory"
 msgstr "Главната директория не може да бъде изтрита"
-
-#: ../includes/admin.class.php:681 ../includes/admin.class.php:777
-#: ../includes/admin.class.php:809
+#
+# File: ../includes/admin.class.php, line: 701
+# File: ../includes/admin.class.php:797
+, line: -1
+# File: ../includes/admin.class.php:829
+, line: -1
 msgid "File already exists"
 msgstr "Файлът вече съществува"
-
-#: ../includes/admin.class.php:686 ../includes/admin.class.php:730
+#
+# File: ../includes/admin.class.php, line: 706
+# File: ../includes/admin.class.php:750
+, line: -1
 msgid "Could not upload file"
 msgstr "Файлът не може да бъде качен"
-
-#: ../includes/admin.class.php:706
+#
+# File: ../includes/admin.class.php:726
+, line: -1
 msgid "Could not add image to gallery"
 msgstr "Изображението не може да бъде прибавено в галерията"
-
-#: ../includes/admin.class.php:720
+#
+# File: ../includes/admin.class.php:740
+, line: -1
 msgid "Could not find temporary storage space"
 msgstr "Не може да бъде намерено място за временно съхранение"
-
-#: ../includes/admin.class.php:740
+#
+# File: ../includes/admin.class.php:760
+, line: -1
 msgid "Could not decompress archive"
 msgstr "Архивът не може да бъде отворен"
-
-#: ../includes/admin.class.php:829
+#
+# File: ../includes/admin.class.php:849
+, line: -1
 msgid "Some archive contents could not be added"
 msgstr "Някои части от архива не могат да бъдат прибавени"
-
-#: ../includes/admin.class.php:859
+#
+# File: ../includes/admin.class.php:879
+, line: -1
 msgid "Could not save image information"
 msgstr "Информацията за изображението не може да бъде съхранена"
-
-#: ../includes/admin.class.php:885
+#
+# File: ../includes/admin.class.php:905
+, line: -1
 msgid "Could not delete image"
 msgstr "Изображението не може да бъде изтрито"
-
-#: ../templates/admin_default/album.tpl.php:14
-#: ../templates/admin_default/gallery.tpl.php:15
-msgid "Select gallery..."
-msgstr "Избор на галерия..."
-
-#: ../templates/admin_default/changethumbnail.tpl.php:1
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php:1
+, line: -1
 msgid "choose thumbnail"
 msgstr "избор на умалено изображение"
-
-#: ../templates/admin_default/changethumbnail.tpl.php:6
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php:6
+, line: -1
 msgid "Choose the filename of the image used to represent this gallery."
 msgstr "Изберете изображението, което ще представя тази галерия."
-
-#: ../templates/admin_default/changethumbnail.tpl.php:9
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php:9
+, line: -1
 msgid "thumbnail|None"
 msgstr "Без изображение"
-
-#: ../templates/admin_default/changethumbnail.tpl.php:10
+#
+# File: ../templates/admin_default/changethumbnail.tpl.php:10
+, line: -1
 msgid "thumbnail|Random"
 msgstr "Произволно"
-
-#: ../templates/admin_default/editgallery.tpl.php:1
+#
+# File: ../templates/admin_default/editgallery.tpl.php:1
+, line: -1
 msgid "edit gallery"
 msgstr "редактиране на галерията"
-
-#: ../templates/admin_default/editgallery.tpl.php:11
+#
+# File: ../templates/admin_default/editgallery.tpl.php:11
+, line: -1
 msgid "Thumbnail"
 msgstr "Умалено изображение"
-
-#: ../templates/admin_default/editgallery.tpl.php:15
+#
+# File: ../templates/admin_default/editgallery.tpl.php:15
+, line: -1
 msgid ""
 "Random\n"
 "thumbnail"
 msgstr ""
 "Произволно\n"
 "умалено изображение"
-
-#: ../templates/admin_default/editgallery.tpl.php:20
+#
+# File: ../templates/admin_default/editgallery.tpl.php:20
+, line: -1
 msgid "thumbnail|Change..."
 msgstr "Смяна..."
-
-#: ../templates/admin_default/editgallery.tpl.php:24
-#: ../templates/admin_default/galleryhits.tpl.php:7
+#
+# File: ../templates/admin_default/editgallery.tpl.php:24
+, line: -1
+# File: ../templates/admin_default/galleryhits.tpl.php:7
+, line: -1
 msgid "Gallery name"
 msgstr "Име на галерията"
-
-#: ../templates/admin_default/editgallery.tpl.php:28
-#: ../templates/admin_default/editimage.tpl.php:19
+#
+# File: ../templates/admin_default/editgallery.tpl.php:28
+, line: -1
+# File: ../templates/admin_default/editimage.tpl.php:19
+, line: -1
 msgid "Artist name"
 msgstr "Име на автора"
-
-#: ../templates/admin_default/editgallery.tpl.php:44
+#
+# File: ../templates/admin_default/editgallery.tpl.php:44
+, line: -1
 msgid "Summary"
 msgstr "Кратко описание"
-
-#: ../templates/admin_default/editimage.tpl.php:1
+#
+# File: ../templates/admin_default/editgallery.tpl.php:53
+, line: -1
+# File: ../templates/admin_default/editimage.tpl.php:64
+, line: -1
+# File: ../templates/admin_default/editpass.tpl.php:22
+, line: -1
+# File: ../templates/admin_default/editpermissions.tpl.php:45
+, line: -1
+# File: ../templates/admin_default/editprofile.tpl.php:24
+, line: -1
+# File: ../templates/admin_default/edituser.tpl.php:31
+, line: -1
+msgid "Save Changes"
+msgstr "Съхраняване"
+#
+# File: ../templates/admin_default/editimage.tpl.php:1
+, line: -1
 msgid "edit image"
 msgstr "редактиране на изображението"
-
-#: ../templates/admin_default/editimage.tpl.php:11
+#
+# File: ../templates/admin_default/editimage.tpl.php:11
+, line: -1
 msgid "Image"
 msgstr "Изображение"
-
-#: ../templates/admin_default/editimage.tpl.php:15
-#: ../templates/admin_default/imagehits.tpl.php:7
+#
+# File: ../templates/admin_default/editimage.tpl.php:15
+, line: -1
+# File: ../templates/admin_default/imagehits.tpl.php:7
+, line: -1
 msgid "Image name"
 msgstr "Име на изображението"
-
-#: ../templates/admin_default/editpass.tpl.php:1
+#
+# File: ../templates/admin_default/editpass.tpl.php:1
+, line: -1
 msgid "change password"
 msgstr "промяна на паролата"
-
-#: ../templates/admin_default/editpass.tpl.php:2
+#
+# File: ../templates/admin_default/editpass.tpl.php:2
+, line: -1
 msgid "Please choose a new password between 6 and 16 characters in length."
 msgstr "Изберете нова парола с дължина между 6 и 16 знака."
-
-#: ../templates/admin_default/editpass.tpl.php:9
+#
+# File: ../templates/admin_default/editpass.tpl.php:9
+, line: -1
 msgid "Current password:"
 msgstr "Сегашна парола:"
-
-#: ../templates/admin_default/editpass.tpl.php:13
+#
+# File: ../templates/admin_default/editpass.tpl.php:13
+, line: -1
 msgid "New password:"
 msgstr "Нова парола:"
-
-#: ../templates/admin_default/editpass.tpl.php:17
+#
+# File: ../templates/admin_default/editpass.tpl.php:17
+, line: -1
 msgid "Confirm password:"
 msgstr "Потвърдете новата парола:"
-
-#: ../templates/admin_default/editpermissions.tpl.php:1
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:1
+, line: -1
 msgid "edit permissions"
 msgstr "редактиране на правата"
-
-#: ../templates/admin_default/editpermissions.tpl.php:13
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:13
+, line: -1
 msgid "Owner"
 msgstr "Собственик"
-
-#: ../templates/admin_default/editpermissions.tpl.php:22
-#: ../templates/admin_default/edituser.tpl.php:21
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:22
+, line: -1
+# File: ../templates/admin_default/edituser.tpl.php:21
+, line: -1
 msgid "Groups"
 msgstr "Групи"
-
-#: ../templates/admin_default/editpermissions.tpl.php:26
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:26
+, line: -1
 msgid "Group permissions"
 msgstr "Групови права"
-
-#: ../templates/admin_default/editpermissions.tpl.php:28
-#: ../templates/admin_default/editpermissions.tpl.php:37
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:28
+, line: -1
+# File: ../templates/admin_default/editpermissions.tpl.php:37
+, line: -1
 msgid "permissions|Read"
 msgstr "Четене"
-
-#: ../templates/admin_default/editpermissions.tpl.php:29
-#: ../templates/admin_default/editpermissions.tpl.php:38
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:29
+, line: -1
+# File: ../templates/admin_default/editpermissions.tpl.php:38
+, line: -1
 msgid "permissions|Edit"
 msgstr "Редактиране"
-
-#: ../templates/admin_default/editpermissions.tpl.php:30
-#: ../templates/admin_default/editpermissions.tpl.php:39
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:30
+, line: -1
+# File: ../templates/admin_default/editpermissions.tpl.php:39
+, line: -1
 msgid "permissions|Add"
 msgstr "Прибавяне"
-
-#: ../templates/admin_default/editpermissions.tpl.php:31
-#: ../templates/admin_default/editpermissions.tpl.php:40
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:31
+, line: -1
+# File: ../templates/admin_default/editpermissions.tpl.php:40
+, line: -1
 msgid "permissions|Delete"
 msgstr "Изтриване"
-
-#: ../templates/admin_default/editpermissions.tpl.php:35
+#
+# File: ../templates/admin_default/editpermissions.tpl.php:35
+, line: -1
 msgid "World permissions"
 msgstr "Глобални права"
-
-#: ../templates/admin_default/edituser.tpl.php:1
-#: ../templates/admin_default/manageusers.tpl.php:1
-msgid "user management"
-msgstr "управление на потребители"
-
-#: ../templates/admin_default/edituser.tpl.php:15
+#
+# File: ../templates/admin_default/editprofile.tpl.php:1
+, line: -1
+#, fuzzy
+msgid "my profile"
+msgstr "Профил"
+#
+# File: ../templates/admin_default/editprofile.tpl.php:8
+, line: -1
+# File: ../templates/admin_default/edituser.tpl.php:15
+, line: -1
 msgid "Username"
 msgstr "Потребителско име"
-
-#: ../templates/admin_default/edituser.tpl.php:17
-msgid "Type"
-msgstr "Тип"
-
-#: ../templates/admin_default/edituser.tpl.php:18
-msgid "Administrator"
-msgstr "Администратор"
-
-#: ../templates/admin_default/edituser.tpl.php:19
-msgid "User"
-msgstr "Потребител"
-
-#: ../templates/admin_default/edituser.tpl.php:23
+#
+# File: ../templates/admin_default/editprofile.tpl.php:16
+, line: -1
+# File: ../templates/admin_default/edituser.tpl.php:23
+, line: -1
 msgid "Full name"
 msgstr "Име"
-
-#: ../templates/admin_default/edituser.tpl.php:26
+#
+# File: ../templates/admin_default/edituser.tpl.php:1
+, line: -1
+# File: ../templates/admin_default/manageusers.tpl.php:1
+, line: -1
+msgid "user management"
+msgstr "управление на потребители"
+#
+# File: ../templates/admin_default/edituser.tpl.php:17
+, line: -1
+msgid "Type"
+msgstr "Тип"
+#
+# File: ../templates/admin_default/edituser.tpl.php:18
+, line: -1
+msgid "Administrator"
+msgstr "Администратор"
+#
+# File: ../templates/admin_default/edituser.tpl.php:19
+, line: -1
+msgid "User"
+msgstr "Потребител"
+#
+# File: ../templates/admin_default/edituser.tpl.php:26
+, line: -1
 msgid "Password"
 msgstr "Парола"
-
-#: ../templates/admin_default/gallery.tpl.php:27
+#
+# File: ../templates/admin_default/gallery.tpl.php:27
+, line: -1
 msgid "admin bar|View gallery"
 msgstr "Преглед на галерията"
-
-#: ../templates/admin_default/gallery.tpl.php:33
+#
+# File: ../templates/admin_default/gallery.tpl.php:34
+, line: -1
 msgid "admin bar|Change thumbnail"
 msgstr "Смяна на умаленото изображение"
-
-#: ../templates/admin_default/galleryhits.tpl.php:7
-#: ../templates/admin_default/imagehits.tpl.php:7
+#
+# File: ../templates/admin_default/galleryhits.tpl.php:7
+, line: -1
+# File: ../templates/admin_default/imagehits.tpl.php:7
+, line: -1
 msgid "hits table|Graph"
 msgstr "Графика"
-
-#: ../templates/admin_default/galleryhits.tpl.php:7
-#: ../templates/admin_default/imagehits.tpl.php:7
+#
+# File: ../templates/admin_default/galleryhits.tpl.php:7
+, line: -1
+# File: ../templates/admin_default/imagehits.tpl.php:7
+, line: -1
 msgid "hits table|Hits"
 msgstr "Посещения"
-
-#: ../templates/admin_default/galleryhits.tpl.php:7
-#: ../templates/admin_default/imagehits.tpl.php:7
+#
+# File: ../templates/admin_default/galleryhits.tpl.php:7
+, line: -1
+# File: ../templates/admin_default/imagehits.tpl.php:7
+, line: -1
 msgid "hits table|Last hit"
 msgstr "Последно посещение"
-
-#: ../templates/admin_default/header.tpl.php:39
+#
+# File: ../templates/admin_default/header.tpl.php:39
+, line: -1
 msgid "Admin message:"
 msgstr "Системно съобщение:"
-
-#: ../templates/admin_default/login.tpl.php:1
+#
+# File: ../templates/admin_default/login.tpl.php:1
+, line: -1
 msgid "log in"
 msgstr "Вход"
-
-#: ../templates/admin_default/login.tpl.php:3
+#
+# File: ../templates/admin_default/login.tpl.php:3
+, line: -1
 msgid "Please enter your admin username and password below."
 msgstr "Моля въведете потребител и парола"
-
-#: ../templates/admin_default/login.tpl.php:8
-#: ../templates/admin_default/manageusers.tpl.php:10
-#: ../templates/admin_default/manageusers.tpl.php:30
+#
+# File: ../templates/admin_default/login.tpl.php:8
+, line: -1
+# File: ../templates/admin_default/manageusers.tpl.php:10
+, line: -1
+# File: ../templates/admin_default/manageusers.tpl.php:30
+, line: -1
 msgid "Username:"
 msgstr "Потребител:"
-
-#: ../templates/admin_default/login.tpl.php:9
+#
+# File: ../templates/admin_default/login.tpl.php:9
+, line: -1
 msgid "Password:"
 msgstr "Парола:"
-
-#: ../templates/admin_default/login.tpl.php:19
+#
+# File: ../templates/admin_default/login.tpl.php:19
+, line: -1
 msgid "If you do not have a username then you may log in as a guest."
 msgstr "Ако нямате потребител, може да влезете като гост."
-
-#: ../templates/admin_default/manageusers.tpl.php:3
+#
+# File: ../templates/admin_default/login.tpl.php:20
+, line: -1
+msgid "Log in as guest"
+msgstr "Вход като гост"
+#
+# File: ../templates/admin_default/manageusers.tpl.php:3
+, line: -1
 msgid "You must be an administrator to access this area."
 msgstr "Трябва да сте администратор, за да имате достъп до тази част."
-
-#: ../templates/admin_default/manageusers.tpl.php:17
+#
+# File: ../templates/admin_default/manageusers.tpl.php:17
+, line: -1
 msgid "Email:"
 msgstr "Поща:"
-
-#: ../templates/admin_default/manageusers.tpl.php:18
+#
+# File: ../templates/admin_default/manageusers.tpl.php:18
+, line: -1
 msgid "Full name:"
 msgstr "Име:"
-
-#: ../templates/admin_default/manageusers.tpl.php:19
+#
+# File: ../templates/admin_default/manageusers.tpl.php:19
+, line: -1
 msgid "edit"
 msgstr "редактиране"
-
-#: ../templates/admin_default/manageusers.tpl.php:20
+#
+# File: ../templates/admin_default/manageusers.tpl.php:20
+, line: -1
 msgid "delete"
 msgstr "изтриване"
-
-#: ../templates/admin_default/manageusers.tpl.php:21
+#
+# File: ../templates/admin_default/manageusers.tpl.php:21
+, line: -1
 msgid "suspend"
 msgstr "блокиране"
-
-#: ../templates/admin_default/manageusers.tpl.php:21
+#
+# File: ../templates/admin_default/manageusers.tpl.php:21
+, line: -1
 msgid "unsuspend"
 msgstr "отблокиране"
-
-#: ../templates/admin_default/manageusers.tpl.php:28
+#
+# File: ../templates/admin_default/manageusers.tpl.php:28
+, line: -1
 msgid "create new user"
 msgstr "създаване на нов потребител"
-
-#: ../templates/admin_default/menu.tpl.php:1
+#
+# File: ../templates/admin_default/manageusers.tpl.php:33
+, line: -1
+# File: ../templates/admin_default/newgallery.tpl.php:14
+, line: -1
+# File: ../templates/admin_default/newimage.tpl.php:48
+, line: -1
+msgid "Create"
+msgstr "Създаване"
+#
+# File: ../templates/admin_default/menu.tpl.php:1
+, line: -1
 msgid "Please choose an option:"
 msgstr "Изберете опция:"
-
-#: ../templates/admin_default/menu.tpl.php:4
+#
+# File: ../templates/admin_default/menu.tpl.php:4
+, line: -1
 msgid "Manage galleries and images"
 msgstr "Управление на галериите и изображенията"
-
-#: ../templates/admin_default/menu.tpl.php:5
+#
+# File: ../templates/admin_default/menu.tpl.php:5
+, line: -1
 msgid "View gallery hits"
 msgstr "Преглед на посещенията на галериите"
-
-#: ../templates/admin_default/menu.tpl.php:7
+#
+# File: ../templates/admin_default/menu.tpl.php:7
+, line: -1
 msgid "Change password"
 msgstr "Промяна на паролата"
-
-#: ../templates/admin_default/menu.tpl.php:8
+#
+# File: ../templates/admin_default/menu.tpl.php:8
+, line: -1
 msgid "My profile"
 msgstr "Профил"
-
-#: ../templates/admin_default/menu.tpl.php:11
+#
+# File: ../templates/admin_default/menu.tpl.php:11
+, line: -1
 msgid "Manage users"
 msgstr "Управление на потребителите"
-
-#: ../templates/admin_default/menu.tpl.php:12
+#
+# File: ../templates/admin_default/menu.tpl.php:12
+, line: -1
 msgid "Purge cached thumbnails"
 msgstr "Изтриване на складираните умалени изображения"
-
-#: ../templates/admin_default/menu.tpl.php:14
+#
+# File: ../templates/admin_default/menu.tpl.php:14
+, line: -1
 msgid "Log out of admin"
 msgstr "Изход от администраторската ложа"
-
-#: ../templates/admin_default/newgallery.tpl.php:1
+#
+# File: ../templates/admin_default/newgallery.tpl.php:1
+, line: -1
 msgid "new gallery"
 msgstr "нова галерия"
-
-#: ../templates/admin_default/newgallery.tpl.php:9
-#: ../templates/admin_default/newimage.tpl.php:22
+#
+# File: ../templates/admin_default/newgallery.tpl.php:9
+, line: -1
+# File: ../templates/admin_default/newimage.tpl.php:22
+, line: -1
 msgid "Identifier:"
 msgstr "Идентификатор:"
-
-#: ../templates/admin_default/newimage.tpl.php:1
+#
+# File: ../templates/admin_default/newimage.tpl.php:1
+, line: -1
 msgid "new image"
 msgstr "ново изображение"
-
-#: ../templates/admin_default/newimage.tpl.php:3
+#
+# File: ../templates/admin_default/newimage.tpl.php:3
+, line: -1
+#, fuzzy
 msgid ""
-"This image will not be visible because this gallery contains subgalleries."
+"This image will not be visible because this gallery is not an album: it "
+"contains child galleries."
 msgstr ""
 "Изображението няма да е видимо, защото тази галерия съдържа подгалерии."
-
-#: ../templates/admin_default/newimage.tpl.php:13
+#
+# File: ../templates/admin_default/newimage.tpl.php:13
+, line: -1
 msgid "Upload single file"
 msgstr "Качване на един файл"
-
-#: ../templates/admin_default/newimage.tpl.php:17
+#
+# File: ../templates/admin_default/newimage.tpl.php:17
+, line: -1
 msgid "Image file to upload:"
 msgstr "Изображение за качване:"
-
-#: ../templates/admin_default/newimage.tpl.php:24
+#
+# File: ../templates/admin_default/newimage.tpl.php:24
+, line: -1
 msgid "Use filename of uploaded file."
 msgstr "Използване на името на качения файл."
-
-#: ../templates/admin_default/newimage.tpl.php:25
+#
+# File: ../templates/admin_default/newimage.tpl.php:25
+, line: -1
 msgid "Specify different filename:"
 msgstr "Използване на различно име:"
-
-#: ../templates/admin_default/newimage.tpl.php:30
+#
+# File: ../templates/admin_default/newimage.tpl.php:30
+, line: -1
 msgid "Upload multiple files"
 msgstr "Качване на няколко файла"
-
-#: ../templates/admin_default/newimage.tpl.php:34
+#
+# File: ../templates/admin_default/newimage.tpl.php:34
+, line: -1
 msgid "ZIP file to upload:"
 msgstr "ZIP файл за качване:"
-
-#: ../templates/admin_default/newimage.tpl.php:39
+#
+# File: ../templates/admin_default/newimage.tpl.php:39
+, line: -1
 msgid "Add remote file"
 msgstr "Прибавяне на отдалечен файл"
-
-#: ../templates/admin_default/newimage.tpl.php:43
+#
+# File: ../templates/admin_default/newimage.tpl.php:43
+, line: -1
 msgid "URL of image:"
 msgstr "URL на изображението:"
+#
+#~ msgid "Image saved successfully"
+#~ msgstr "Изображението е съхранено успешно"
+#
+#~ msgid "Select gallery..."
+#~ msgstr "Избор на галерия..."

@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.62 2006/01/24 13:10:44 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.63 2006/02/06 18:47:57 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -150,7 +150,7 @@ class Singapore
     }
     
     //read the language file
-    $this->translator = Translator::getInstance($this->language);
+    $this->translator =& Translator::getInstance($this->language);
     $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     
     //clear the UMASK

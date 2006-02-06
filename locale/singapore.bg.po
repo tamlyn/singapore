@@ -1,203 +1,272 @@
 # This is the Bulgarian version of singapore.pot
-# Copyright (C) 2004 oannu
-# oannu <oannu users sourceforge net>, 2004.
+# Copyright (C) 2006 oannu
+# Aleksandar Milanov <oannu users sourceforge net>, 2006.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore v0.9.10\n"
-"POT-Creation-Date: 2004-09-27 08:35+0100\n"
-"PO-Revision-Date: 2004-10-01 00:00+0000\n"
-"Last-Translator: oannu <oannu users sourceforge net>\n"
-"Language-Team: Bulgarian (UTF-8)\n"
+"Project-Id-Version: singapore v0.9.11\n"
+"POT-Creation-Date: 2004-11-01 07:57+0000\n"
+"PO-Revision-Date: 2006-02-04 00:00+0000\n"
+"Last-Translator: Aleksandar Milanov <oannu users sourceforge net>\n"
+"Language-Team: Bulgarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: ../includes/singapore.class.php:164
+#
+# File: ../includes/singapore.class.php:183
+, line: -1
+#, c-format
 msgid "Gallery not found '%s'"
 msgstr "Галерията не е намерена '%s'"
-
-#: ../includes/singapore.class.php:225
+#
+# File: ../includes/singapore.class.php:240
+, line: -1
+#, c-format
 msgid "Image not found '%s'"
 msgstr "Изображението не е намерено '%s'"
-
-#: ../includes/singapore.class.php:280
+#
+# File: ../includes/singapore.class.php:295
+, line: -1
 msgid "email|at"
 msgstr "пред"
-
-#: ../includes/singapore.class.php:280
+#
+# File: ../includes/singapore.class.php:295
+, line: -1
 msgid "email|dot"
 msgstr "точка"
-
-#: ../includes/singapore.class.php:452
+#
+# File: ../includes/singapore.class.php:492
+, line: -1
+#, c-format
 msgid "Page created in %s seconds"
 msgstr "Страницата беше генерирана %s секунди"
-
-#: ../includes/singapore.class.php:469
+#
+# File: ../includes/singapore.class.php:509
+, line: -1
+#, c-format
 msgid "singapore|Powered by %s"
 msgstr "Задвижвано от %s"
-
-#: ../includes/singapore.class.php:474
+#
+# File: ../includes/singapore.class.php:514
+, line: -1
 msgid "All rights reserved."
 msgstr "Всички права са запазени."
-
-#: ../includes/singapore.class.php:479
+#
+# File: ../includes/singapore.class.php:519
+, line: -1
 msgid ""
 "Images may not be reproduced in any form without the express written "
 "permission of the copyright holder."
 msgstr ""
 "Изображенията не могат да бъдат използвани, в каквато и да е форма, без "
 "изричното писмено съгласие на техния автор."
-
-#: ../includes/singapore.class.php:484
+#
+# File: ../includes/singapore.class.php:524
+, line: -1
 msgid "Log in"
 msgstr "Вход"
-
-#: ../includes/singapore.class.php:616
+#
+# File: ../includes/singapore.class.php:674
+, line: -1
 msgid "crumb line|You are here:"
 msgstr "Вие сте тук:"
-
-#: ../includes/singapore.class.php:629 ../includes/singapore.class.php:1510
+#
+# File: ../includes/singapore.class.php, line: 687
+# File: ../includes/singapore.class.php:1584
+, line: -1
 msgid "image|Next"
 msgstr "Следващо"
-
-#: ../includes/singapore.class.php:630 ../includes/singapore.class.php:633
-#: ../includes/singapore.class.php:635 ../includes/singapore.class.php:1501
+#
+# File: ../includes/singapore.class.php, line: 688
+# File: ../includes/singapore.class.php:691
+, line: -1
+# File: ../includes/singapore.class.php, line: 693
+# File: ../includes/singapore.class.php:1575
+, line: -1
 msgid "image|Thumbnails"
 msgstr "Умалени изображения"
-
-#: ../includes/singapore.class.php:632 ../includes/singapore.class.php:1484
+#
+# File: ../includes/singapore.class.php, line: 690
+# File: ../includes/singapore.class.php:1558
+, line: -1
 msgid "image|Previous"
 msgstr "Предишно"
-
-#: ../includes/singapore.class.php:671
+#
+# File: ../includes/singapore.class.php:729
+, line: -1
 msgid "Select language..."
 msgstr "Избор на език..."
-
-#: ../includes/singapore.class.php:679 ../includes/singapore.class.php:711
+#
+# File: ../includes/singapore.class.php, line: 737
+# File: ../includes/singapore.class.php:769
+, line: -1
 msgid "Go"
 msgstr "Go"
-
-#: ../includes/singapore.class.php:701
+#
+# File: ../includes/singapore.class.php:759
+, line: -1
 msgid "Select template..."
 msgstr "Избор на шаблон..."
-
-#: ../includes/singapore.class.php:768
+#
+# File: ../includes/singapore.class.php:826
+, line: -1
+#, c-format
 msgid "%s gallery"
 msgid_plural "%s galleries"
 msgstr[0] "%s галерия"
 msgstr[1] "%s галерии"
-
-#: ../includes/singapore.class.php:797
+#
+# File: ../includes/singapore.class.php:855
+, line: -1
+#, c-format
 msgid "%s image"
 msgid_plural "%s images"
 msgstr[0] "%s изображение"
 msgstr[1] "%s изображения"
-
-#: ../includes/singapore.class.php:842 ../includes/singapore.class.php:846
+#
+# File: ../includes/singapore.class.php, line: 900
+# File: ../includes/singapore.class.php:904
+, line: -1
 msgid ""
 "No\n"
 "thumbnail"
 msgstr ""
 "Няма\n"
 "умалено изображение"
-
-#: ../includes/singapore.class.php:858
+#
+# File: ../includes/singapore.class.php:916
+, line: -1
 msgid "Sample image from gallery"
 msgstr "Изображение от галерия"
-
-#: ../includes/singapore.class.php:893
+#
+# File: ../includes/singapore.class.php:951
+, line: -1
+#, c-format
 msgid "Showing %s-%s of %s"
 msgstr "Показва %s-%s от %s"
-
-#: ../includes/singapore.class.php:905
+#
+# File: ../includes/singapore.class.php:963
+, line: -1
 msgid "gallery|Up"
 msgstr "Нагоре"
-
-#: ../includes/singapore.class.php:905
+#
+# File: ../includes/singapore.class.php:963
+, line: -1
 msgid "gallery|Up one level"
 msgstr "Нагоре с едно ниво"
-
-#: ../includes/singapore.class.php:929 ../includes/singapore.class.php:998
+#
+# File: ../includes/singapore.class.php, line: 987
+# File: ../includes/singapore.class.php:1056
+, line: -1
 msgid "gallery|Previous"
 msgstr "Предишна"
-
-#: ../includes/singapore.class.php:930
+#
+# File: ../includes/singapore.class.php:988
+, line: -1
 msgid "gallery|First"
 msgstr "Първа"
-
-#: ../includes/singapore.class.php:933 ../includes/singapore.class.php:986
+#
+# File: ../includes/singapore.class.php, line: 991
+# File: ../includes/singapore.class.php:1044
+, line: -1
 msgid "gallery|Next"
 msgstr "Следваща"
-
-#: ../includes/singapore.class.php:934
+#
+# File: ../includes/singapore.class.php:992
+, line: -1
 msgid "gallery|Last"
 msgstr "Последна"
-
-#: ../includes/singapore.class.php:1006 ../includes/singapore.class.php:1381
+#
+# File: ../includes/singapore.class.php, line: 1064
+# File: ../includes/singapore.class.php:1455
+, line: -1
+#, c-format
 msgid "artist name|by %s"
 msgstr "от %s"
-
-#: ../includes/singapore.class.php:1092 ../includes/singapore.class.php:1571
+#
+# File: ../includes/singapore.class.php, line: 1150
+# File: ../includes/singapore.class.php:1645
+, line: -1
 msgid "Email"
 msgstr "Поща"
-
-#: ../includes/singapore.class.php:1094 ../includes/singapore.class.php:1577
+#
+# File: ../includes/singapore.class.php, line: 1152
+# File: ../includes/singapore.class.php:1651
+, line: -1
 msgid "Description"
 msgstr "Описание"
-
-#: ../includes/singapore.class.php:1096 ../includes/singapore.class.php:1098
-#: ../includes/singapore.class.php:1589 ../includes/singapore.class.php:1591
+#
+# File: ../includes/singapore.class.php, line: 1154
+# File: ../includes/singapore.class.php:1156
+, line: -1
+# File: ../includes/singapore.class.php, line: 1663
+# File: ../includes/singapore.class.php:1665
+, line: -1
 msgid "Copyright"
 msgstr "Авторски права"
-
-#: ../includes/singapore.class.php:1100 ../includes/singapore.class.php:1593
+#
+# File: ../includes/singapore.class.php, line: 1158
+# File: ../includes/singapore.class.php:1667
+, line: -1
 msgid "Viewed"
 msgstr "Видяно"
-
-#: ../includes/singapore.class.php:1100 ../includes/singapore.class.php:1593
+#
+# File: ../includes/singapore.class.php, line: 1158
+# File: ../includes/singapore.class.php:1667
+, line: -1
+#, c-format
 msgid "viewed|%s time"
 msgid_plural "viewed|%s times"
 msgstr[0] "%s път"
 msgstr[1] "%s пъти"
-
-#: ../includes/singapore.class.php:1349
+#
+# File: ../includes/singapore.class.php:1423
+, line: -1
 msgid "Add a comment"
 msgstr "Коментиране"
-
-#: ../includes/singapore.class.php:1493
+#
+# File: ../includes/singapore.class.php:1567
+, line: -1
 msgid "image|First"
 msgstr "Първо"
-
-#: ../includes/singapore.class.php:1519
+#
+# File: ../includes/singapore.class.php:1593
+, line: -1
 msgid "image|Last"
 msgstr "Последно"
-
-#: ../includes/singapore.class.php:1573
+#
+# File: ../includes/singapore.class.php:1647
+, line: -1
 msgid "Location"
 msgstr "Място"
-
-#: ../includes/singapore.class.php:1575
+#
+# File: ../includes/singapore.class.php:1649
+, line: -1
 msgid "Date"
 msgstr "Дата"
-
-#: ../includes/singapore.class.php:1579
+#
+# File: ../includes/singapore.class.php:1653
+, line: -1
 msgid "Camera"
 msgstr "Фотоапарат"
-
-#: ../includes/singapore.class.php:1581
+#
+# File: ../includes/singapore.class.php:1655
+, line: -1
 msgid "Lens"
 msgstr "Обектив"
-
-#: ../includes/singapore.class.php:1583
+#
+# File: ../includes/singapore.class.php:1657
+, line: -1
 msgid "Film"
 msgstr "Филм"
-
-#: ../includes/singapore.class.php:1585
+#
+# File: ../includes/singapore.class.php:1659
+, line: -1
 msgid "Darkroom manipulation"
 msgstr "Обработка в тъмна стая"
-
-#: ../includes/singapore.class.php:1587
+#
+# File: ../includes/singapore.class.php:1661
+, line: -1
 msgid "Digital manipulation"
 msgstr "Софтуерна обработка"

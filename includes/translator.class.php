@@ -4,7 +4,7 @@
  * Translation class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: translator.class.php,v 1.4 2005/11/30 23:02:18 tamlyn Exp $
+ * @version $Id: translator.class.php,v 1.5 2006/02/06 18:47:57 tamlyn Exp $
  */
  
 /**
@@ -46,11 +46,14 @@ class Translator
   function &getInstance($language = 0)
   {
     static $instances = array();
-    if(!isset($instances[$language]))
+    
+    $key = empty($instances) ? 0 : $language;
+    
+    if(!isset($instances[$key]))
       //note that the new object is NOT assigned by reference as 
       //references are not stored in static variables (don't ask me...)
-      $instances[$language] = new Translator($language);
-    return $instances[$language];
+      $instances[$key] = new Translator($language);
+    return $instances[$key];
   }
   
   /**

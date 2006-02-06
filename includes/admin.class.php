@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.52 2006/01/27 13:31:25 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.53 2006/02/06 18:47:57 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -85,7 +85,7 @@ class sgAdmin extends Singapore
     //set current language from request vars or config
     $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
     //read the language file
-    $this->translator = Translator::getInstance($this->language);
+    $this->translator =& Translator::getInstance($this->language);
     $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.admin.".$this->language.".pmo");
     
