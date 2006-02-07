@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.63 2006/02/06 18:47:57 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.64 2006/02/07 15:45:55 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -936,6 +936,11 @@ class Singapore
   }
 
 
+  function isInGroup($groups1,$groups2) 
+  {
+    return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2)); 
+  }
+  
   ///////////////////////////////
   //////depreciated methods//////
   ///////////////////////////////
@@ -1009,7 +1014,6 @@ class Singapore
   function imageDetailsArray()   { return $this->image->detailsArray(); }
   function galleryDetailsArray() { return $this->gallery->detailsArray(); }
   function imagePreviewThumbnails() { return $this->previewThumbnails(); }
-  function isInGroup($groups1,$groups2) { return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2)); }
   //*/
 
 }
