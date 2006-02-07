@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.11 2006/02/04 00:52:26 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.12 2006/02/07 19:19:39 tamlyn Exp $
  */
 
 
@@ -60,7 +60,7 @@ class sgThumbnail
     
     //link straight to image if it smaller than required size
     if($this->image->width <= $this->thumbWidth && $this->image->height <= $this->thumbHeight) {
-      $this->thumbPath = $this->image->imageURL();
+      $this->thumbURL = $this->image->realURL();
       return;
     }
     
