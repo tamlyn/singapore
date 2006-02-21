@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.64 2006/02/07 15:45:55 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.65 2006/02/21 04:41:20 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -761,8 +761,13 @@ class Singapore
     $thumbs =& $this->previewThumbnailsArray();
     $index = $this->image->index();
     $ret = "";
-    foreach($thumbs as $key => $thumb)
-      $ret .= $thumb->thumbnailLink($key==$index ? "sgThumbnailPreview" : "sgThumbnailPreview sgThumbnailPreviewCurrent", "preview")."\n";
+    foreach($thumbs as $key => $thumb) {
+      $thumbClass = "sgThumbnailPreview";
+      if($key==$index-1) $thumbClass .= " sgThumbnailPreviewPrev";
+      elseif($key==$index) $thumbClass .= " sgThumbnailPreviewCurrent";
+      elseif($key==$index+1) $thumbClass .= " sgThumbnailPreviewNext";
+      $ret .= $thumb->thumbnailLink($thumbClass, "preview")."\n";
+    }
       
     return $ret;
   }
@@ -777,10 +782,10 @@ class Singapore
    */
   function multiSort($a, $b) {
     switch($GLOBALS["sgSortOrder"]) {
+      case "f" :
       case "p" : return strcmp($a->id, $b->id); //path
+      case "F" :
       case "P" : return strcmp($b->id, $a->id); //path (reverse)
-      case "f" : return strcmp($a->filename, $b->filename); //filename
-      case "F" : return strcmp($b->filename, $a->filename); //filename (reverse)
       case "n" : return strcmp($a->name, $b->name); //name
       case "N" : return strcmp($b->name, $a->name); //name (reverse)
       case "i" : return strcasecmp($a->name, $b->name); //case-insensitive name

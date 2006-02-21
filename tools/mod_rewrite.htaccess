@@ -6,7 +6,7 @@
 # path to your installation (e.g. the bit after the .com, .org or whatever)
 # then rename  this file  to .htaccess  and put  it in  the singapore  root 
 # directory (the one containing thumb.php). Finally don't forget to turn on
-# the use_mod_rewrite option in singapore.ini. Voila!
+# use_mod_rewrite and update the base_path in singapore.ini. Voila!
 
 
 Options +FollowSymlinks
