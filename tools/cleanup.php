@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2004 Tamlyn Rhodes
- * @version $Id: cleanup.php,v 1.3 2005/10/02 03:35:24 tamlyn Exp $
+ * @version $Id: cleanup.php,v 1.4 2006/03/02 16:14:03 tamlyn Exp $
  */
 
 /**
@@ -21,7 +21,8 @@ function makeWritable($dir)
   if (is_dir($dir)) {
     $d = dir($dir);
     while (($file = $d->read()) !== false) {
-      if ($file == '.' || $file == '..') continue;
+      //ignore current and parent dirs and php files
+      if ($file == '.' || $file == '..' || substr($file, strlen($file)-4)=='.php') continue;
       $fullfile = $d->path . $file;
       if(@chmod($fullfile,0777))
         echo "Made $fullfile writable.<br />";

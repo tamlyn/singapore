@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.53 2006/02/06 18:47:57 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.54 2006/03/02 16:14:02 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1234,7 +1234,7 @@ class sgAdmin extends Singapore
       else $image = basename($_REQUEST["sgFileName"]);
       
       //make sure file has a recognised extension
-      if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpeg";
+      if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpg";
       
       $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
       $srcImage = $image;
@@ -1332,7 +1332,7 @@ class sgAdmin extends Singapore
     foreach($contents->files as $image) {
     
       //make sure file has a recognised extension
-      if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpeg";
+      if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i",$image)) $image .= ".jpg";
       
       $path = $this->config->pathto_galleries.$this->gallery->id."/".$image;
       $srcImage = $image;
