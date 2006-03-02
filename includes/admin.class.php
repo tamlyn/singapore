@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.54 2006/03/02 16:14:02 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.55 2006/03/02 17:05:29 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -573,6 +573,9 @@ class sgAdmin extends Singapore
         break;
       case "showgalleryhits" :
         $this->selectGallery();
+        //load hit data for child galleries
+        foreach(array_keys($this->gallery->galleries) as $index)
+          $this->io->getHits($this->gallery->galleries[$index]);
         /*if(!$this->checkPermissions($this->gallery,"read")) {
           $this->adminMessage = $this->translator->_g("You do not have permission to perform this operation.");
           $this->includeFile = "menu";
