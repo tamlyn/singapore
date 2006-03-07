@@ -10,23 +10,24 @@
 
 
 Options +FollowSymlinks
-RewriteEngine On 
+RewriteEngine On
 
 # rewrite galleries
 # url must end in / and gallery names must not contain commas (,)
 # example: /singapore/gallery/subgallery,20/
 # becomes: /singapore/index.php?gallery=gallery/subgallery&startat=20
-RewriteRule ^([^,]+)(,([0-9]+))?/$ /singapore/index.php?gallery=$1&startat=$3&%{QUERY_STRING} [ne] 
- 
-# rewrite images 
-# do not rewrite requests to the following directories
-# if you wish to have galleries named 'docs', 'galleries', 'templates' or 'tools'
-# simply supply the full path to singapore below. e.g.: !$/singapore/docs/
-RewriteCond %{REQUEST_URI} !/docs/ 
-RewriteCond %{REQUEST_URI} !/galleries/ 
-RewriteCond %{REQUEST_URI} !/templates/ 
-RewriteCond %{REQUEST_URI} !/tools/
+RewriteRule ^([^,]+)(,([0-9]+))?/$ /singapore/index.php?gallery=$1&startat=$3&%{QUERY_STRING} [ne]
+
+# rewrite images
+# do not rewrite requests to files and directories that really exist
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 
 # example: /singapore/gallery/subgallery/myphoto.jpeg
 # becomes: /singapore/index.php?gallery=gallery/subgallery&image=myphoto.jpeg
-RewriteRule ^((.*)/)?([^/]+\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff))$ /singapore/index.php?gallery=$2&image=$3&%{QUERY_STRING} [ne,nc] 
+RewriteRule ^((.*)/)?([^/]+\.(jpeg|jpg|jpe|png|gif|bmp|tif|tiff))$ /singapore/index.php?gallery=$2&image=$3&%{QUERY_STRING} [ne,nc]
+
+# rewrite feed.xml to the rss template
+# example: /singapore/gallery/feed.xml
+# becomes: /singapore/index.php?gallery=gallery&template=rss
+RewriteRule ^((.*)/)?feed.xml$ /singapore/index.php?gallery=$2&template=rss&%{QUERY_STRING} [ne]
