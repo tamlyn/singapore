@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: user.class.php,v 1.4 2005/09/20 22:48:09 tamlyn Exp $
+ * @version $Id: user.class.php,v 1.5 2006/03/14 19:38:54 tamlyn Exp $
  */
 
 /**
@@ -18,8 +18,7 @@
 class sgUser
 {
   /**
-   * Filename of the image if the image is local or the full URL of the image
-   * if the image is remotely hosted.
+   * Username of user. Special cases are 'guest' and 'admin'.
    * @var string
    */
   var $username = "";

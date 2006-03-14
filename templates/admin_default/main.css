@@ -112,9 +112,19 @@ table.formTable input.radio, table.formTable input.checkbox {
 #sgAdminMessages {
   background-color: #fff;
   border: 1px dashed #000;
-  margin: 1em 0 1em 0;
+  margin: 1em 0;
   padding: 5px;
   font-size: x-small;
+}
+
+#sgAdminMessages li.adminError {
+  list-style-image: url(images/error.gif);
+  margin-left: 20px;
+}
+
+#sgAdminMessages li.adminMessage {
+  list-style-image: url(images/message.gif);
+  margin-left: 20px;
 }
 
 #sgAdminBar {

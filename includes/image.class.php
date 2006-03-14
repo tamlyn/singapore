@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.19 2006/02/04 02:12:12 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.20 2006/03/14 19:38:53 tamlyn Exp $
  */
 
 //include the base class
@@ -238,9 +238,10 @@ class sgImage extends sgItem
   /**
    * checks if image is remote (filename starts with 'http://')
    */
-  function isRemote()
+  function isRemote($image = null)
   {
-    return substr($this->id, 0, 7) == "http://";
+    if($image == null) $image = $this->id;
+    return substr($image, 0, 7) == "http://";
   }
   
   /**
