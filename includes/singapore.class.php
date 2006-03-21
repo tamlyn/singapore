@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.65 2006/02/21 04:41:20 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.66 2006/03/21 02:29:14 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -600,7 +600,8 @@ class Singapore
     if($this->hasPrevPage())
       $ret .= $this->prevPageLink()." ";
     
-    //Uncomment the following two lines for compatibility with old templates
+    //This is for compatibility with old templates
+    //it detects if compatibility mode is on using method_exists()
     if(!$this->gallery->isRoot() && method_exists($this, 'galleryName'))
       $ret .= $this->gallery->parentLink();
     

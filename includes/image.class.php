@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.20 2006/03/14 19:38:53 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.21 2006/03/21 02:29:14 tamlyn Exp $
  */
 
 //include the base class
@@ -121,7 +121,7 @@ class sgImage extends sgItem
       return "";
     
     $tmp =& $this->firstImage(); 
-    return '<a href="'.$tmp->URL($action).'">'.$this->firstText().'</a>';
+    return '<a href="'.$tmp->URL(null, $action).'">'.$this->firstText().'</a>';
   }
   
   function prevLink($action = null)
@@ -146,19 +146,19 @@ class sgImage extends sgItem
       return "";
     
     $tmp =& $this->lastImage(); 
-    return '<a href="'.$tmp->URL($action).'">'.$this->lastText().'</a>';
+    return '<a href="'.$tmp->URL(null, $action).'">'.$this->lastText().'</a>';
   }
   
   function prevURL($action = null)
   {
     $tmp =& $this->prevImage(); 
-    return $tmp->URL($action);
+    return $tmp->URL(null, $action);
   }
   
   function nextURL($action = null)
   {
     $tmp =& $this->nextImage(); 
-    return $tmp->URL($action);
+    return $tmp->URL(null, $action);
   }
   
   function firstText() { return $this->translator->_g("image|First"); }
