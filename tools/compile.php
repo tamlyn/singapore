@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: compile.php,v 1.8 2005/12/15 17:18:47 tamlyn Exp $
+ * @version $Id: compile.php,v 1.9 2006/04/29 16:18:52 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -174,7 +174,7 @@ function parsePO ($input, $output)
     fclose($fp);
     
     //set permissions on new PMO file
-    @chmod($output, $GLOBALS['config']->file_mode);
+    @chmod($output, octdec($GLOBALS['config']->file_mode));
 
     // Return
     return true;

@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.12 2005/12/15 17:18:47 tamlyn Exp $
+ * @version $Id: extract.php,v 1.13 2006/04/29 16:18:52 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -90,7 +90,7 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   unlink($temp);
   
   //set permissions on new POT file
-  @chmod($standardPot, $config->file_mode);
+  @chmod($standardPot, octdec($config->file_mode));
   
   
 ///////admin///////////
@@ -117,7 +117,7 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   unlink($temp);
 
   //set permissions on new POT file
-  @chmod($adminPot, $config->file_mode);
+  @chmod($adminPot, octdec($config->file_mode));
   
 ?>
 </p>
