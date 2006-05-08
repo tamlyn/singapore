@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: merge.php,v 1.7 2006/04/29 16:18:52 tamlyn Exp $
+ * @version $Id: merge.php,v 1.8 2006/05/08 09:40:02 thepavian Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -16,11 +16,11 @@ $GETTEXT_MERGE   = "msgmerge";
 $BASEPATH = realpath("..")."/";
 
 //require config class
-require_once "../includes/config.class.php";
+require_once $BASEPATH."includes/config.class.php";
 
 //get config object
-$this->config = sgConfig::getInstance();
-$this->config->loadConfig($BASEPATH."singapore.ini");
+$config = sgConfig::getInstance();
+$config->loadConfig($BASEPATH."singapore.ini");
 
 $OUTPUTPATH = $BASEPATH.$config->pathto_locale;
 $standardPot = $OUTPUTPATH."singapore.pot";
