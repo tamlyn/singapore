@@ -9,7 +9,7 @@
 <div class="sgContainer">
   <div class="sgTab"><?php echo $sg->galleryTab()?></div>
   <div class="sgContent">
-    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="get">
+    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
     <input type="hidden" name="action" value="multi" />
     <input type="hidden" name="gallery" value="<?php echo $sg->gallery->idEntities(); ?>" />
     <div class="sgGallery">
