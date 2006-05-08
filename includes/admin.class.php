@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.56 2006/03/14 19:38:53 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.57 2006/05/08 09:36:34 thepavian Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1059,7 +1059,7 @@ class sgAdmin extends Singapore
   function addGallery()
   {
     $newGalleryId = $this->gallery->id."/".$_REQUEST["newgallery"];
-    $path = $this->config->pathto_galleries.$newGalleryId;
+    $path = $this->config->base_path.$this->config->pathto_galleries.$newGalleryId;
     
     //fail if directory already exists
     if(file_exists($path))
