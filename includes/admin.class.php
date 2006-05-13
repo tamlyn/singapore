@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.57 2006/05/08 09:36:34 thepavian Exp $
+ * @version $Id: admin.class.php,v 1.58 2006/05/13 14:05:55 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1094,8 +1094,9 @@ class sgAdmin extends Singapore
     if($multiline) {
       $text = strip_tags($text, $this->config->allowed_tags);
       $text = str_replace(array("\n","\r"), array("<br />",""), $text);
-    } else
-      $text = htmlentities($text);
+    } else {
+      $text = htmlspecialchars($text);
+    }
       
     return $text;
   }
