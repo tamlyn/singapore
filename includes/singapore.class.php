@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.66 2006/03/21 02:29:14 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.67 2006/05/13 13:21:17 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -513,7 +513,7 @@ class Singapore
     $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
     //carry over current get vars
     foreach($_GET as $var => $val)
-      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\" />\n";
+      $ret .= '<input type="hidden" name="'.$var.'" value="'.htmlspecialchars($val)."\" />\n";
     $ret .= '<select name="'.$this->config->url_lang."\">\n";
     $ret .= '  <option value="'.$this->config->default_language.'">'.$this->translator->_g("Select language...")."</option>\n";
     foreach($availableLanguages as $code => $name) {
@@ -543,7 +543,7 @@ class Singapore
     $ret .= '<form method="get" action="'.$_SERVER["PHP_SELF"]."\">\n";
     //carry over current get vars
     foreach($_GET as $var => $val)
-      $ret .= '<input type="hidden" name="'.$var.'" value="'.$val."\" />\n";
+      $ret .= '<input type="hidden" name="'.$var.'" value="'.htmlspecialchars($val)."\" />\n";
     $ret .= '<select name="'.$this->config->url_template."\">\n";
     $ret .= '  <option value="'.$this->config->default_template.'">'.$this->translator->_g("Select template...")."</option>\n";
     foreach($templates->dirs as $name)
