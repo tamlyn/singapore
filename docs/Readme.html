@@ -10,7 +10,7 @@
 <body>
 
 
-<h1>singapore v0.10.0PRE2 - Readme</h1>
+<h1>singapore v0.10.0 - Readme</h1>
 
 <ul>
   <li><a href="#release">Release notes</a></li>
@@ -33,7 +33,7 @@
 
 <pre>
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *  <a href="http://www.sgal.org/">singapore</a> - Copyright 2002-5 Tamlyn Rhodes &lt;tam@zenology.co.uk&gt;    *
+ *  <a href="http://www.sgal.org/">singapore</a> - Copyright 2002-6 Tamlyn Rhodes &lt;tam@zenology.co.uk&gt;    *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the <a href="License.txt">GNU General Public License</a> as published  *
@@ -60,12 +60,20 @@ a project donation of 20USD is considered a suitable alternative.</p>
 
 <h2><a name="release">Release notes</a></h2>
 
-<p>PRE1 was so full of bugs it was untrue. PRE2 is certainly not ready either 
-but it's significantly better. Please don't use it
-on production websites but do download and test it. The SQL backends should now 
-work correctly. Old templates will
-not work although you can enable a kind of 'compatibility mode' by uncommenting 
-all stuff at the end of singapore.class.php. Um, yeah, probably other stuff.</p>
+<p>Ok here it is, and about time too! Immediately noticeable is our new default 
+template. It's called 'modern' and we hope you'll agree it's a great improvement 
+on the old default template (if you don't agree then the old template is also 
+provided under the name 'classic'). Also new is the ability to copy and move 
+directories and images using the admin interface as well as several bug fixes 
+and other minor additions. Internally there have been many changes. The code is 
+much more object oriented which should make development and modifications 
+simpler and more intuitive in future. However this means that old templates will
+need to be updated to be used. Several of the exisitng templates have already 
+been updated and are available from the templates page on the website. If you 
+use a custom template and don't have the time or confidence to update it there 
+is a kind of 'compatibility mode' that can be enbled by uncommenting all stuff 
+at the end of singapore.class.php. Note this is a temporary feature that will 
+not be present in subsequent releases. </p>
 
 
 <h2><a name="install">Installation</a></h2>
@@ -126,10 +134,20 @@ all stuff at the end of singapore.class.php. Um, yeah, probably other stuff.</p>
 
 <p>Always back-up first!</p>
 
+<p>If you are happily running v0.9.11 and have applied the XSS vulnerability 
+patch (2006-05-12) then you probably don't need to upgrade. Due to the code 
+reorganisation v0.10.0 is almost certainly less stable than v0.9.11. If, on the 
+other hand, you were having problems with v0.9.11 then there's every chance that 
+the v0.10.0 will work better.</p>
+
 <p>Upgrading is usually just a matter of unzipping the new version over the old. 
-Your galleries, images, metadata, logs and cache will not be affected but the 
+Your galleries, images, metadata will not be affected but the 
 admin password will be reset and the root ini file (singapore.ini) will be 
-overwritten. Unless otherwise stated you can keep your old users.csv.php file. 
+overwritten. The location of log files and thumbnail cache has changed in this 
+version. See the forum for 
+<a href="http://www.sgal.org/forum/viewtopic.php?id=1267">instructions on 
+copying your old logs over to their new location</a>.
+You can keep your old users.csv.php file. 
 When new configuration options are added you will need to either add these 
 to your old singapore.ini or re-edit the new singapore.ini in order to keep your 
 personal settings. You may want to use a file difference utility such as
@@ -305,7 +323,7 @@ user.</p>
   and also images.</dd>
 
 <dt>Album</dt>
-  <dd>an album is a special case of gallery that it contains exactly zero
+  <dd>an album is a special case of gallery that contains exactly zero
   galleries and zero or more images. In other words a gallery is called an 
   album when it does not have any child galleries. So an album is a gallery
   but a gallery is not an album in much the same way that a kitchen is a room 
@@ -339,27 +357,30 @@ o changed
 <p>A complete and up-to-date CVS changelog is 
 <a href="http://www.sgal.org/cvsdemo/ChangeLog">available online</a>.</p>
 
-<h3>0.10.0PRE2 - 2005-02-06</h3>
+<h3>0.10.0 - 2006-05-17</h3>
 
 <pre>
 o code is now more object oriented and easier to understand
 + added safe_mode hack using FTP
++ can move &amp; copy galleries in admin
++ can batch delete images and galleries in admin
 o thumbnails and logs stored in each gallery
 + thumbnails created on page load and statically linked
 + ancestor metadata is parsed for crumb line
 o removed leading ./ from gallery id in urls
-+ can move &amp; copy galleries in admin
-+ can batch delete images and galleries in admin
 + next and previous gallery links
 + 'up' links to correct page of parent gallery
 * base_path and base_url are no longer overwritten by external.php
+* fixed eastern european characters in data fields
 * fixed new lines in summary field
 * fixed image resizing bug when image size equals maxsize
 * fixed imagemagick v6.x support
 * fixed session.auto_start bug (aka login loop)
-+ added sort by date to galleries
+* fixed XSS vulnerability in template &amp language flippers
++ added sort by date field to galleries
 o rewritten hit logging code
 o added explicit chmod's instead of relying on umask
+o new admin error handling in preparetion for our new admin backend 
 </pre>
 
 <h3>0.9.11 - 2004-12-15</h3>
@@ -576,7 +597,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2006/02/06 18:47:57 $</em></p>
+<p><em>$Date: 2006/05/17 13:33:47 $</em></p>
 
 </body>
 </html>
