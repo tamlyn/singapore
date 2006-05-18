@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.58 2006/05/13 14:05:55 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.59 2006/05/18 16:14:20 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -289,9 +289,9 @@ class sgAdmin extends Singapore
         if(!$this->checkPermissions($this->gallery,"delete")) {
           $this->pushMessage($this->translator->_g("You do not have permission to perform this operation."));
           $this->includeFile = "view";
-        } elseif($this->actionConfirmed()) {
+        } elseif($this->actionConfirmed() || ($this->gallery->galleryCount()==0 && $this->gallery->imageCount()==0)) {
           if($this->deleteGallery())
-            $this->selectGallery($this->ancestors[0]->id);
+            $this->selectGallery($this->gallery->parent->id);
           $this->includeFile = "view";
         } elseif($this->actionCancelled()) {
           $this->includeFile = "view";
@@ -1148,8 +1148,11 @@ class sgAdmin extends Singapore
     if(realpath($this->config->pathto_galleries.$galleryId) == realpath($this->config->pathto_galleries))
       return $this->pushError($this->translator->_g("Cannot delete the root gallery."));
     
-    //remove the offending directory and all contained therein
-    return $this->rmdir_all($this->config->pathto_galleries.$galleryId);
+    //attempt to remove the offending directory and all contained therein
+    if($this->rmdir_all($this->config->pathto_galleries.$galleryId))
+      return $this->pushMessage($this->translator->_g("Gallery '%s' deleted.", $galleryId));
+    else
+      return $this->pushError($this->translator->_g("Unable to delete gallery '%s'.", $galleryId));
   }
   
   /**

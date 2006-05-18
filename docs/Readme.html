@@ -63,17 +63,18 @@ a project donation of 20USD is considered a suitable alternative.</p>
 <p>Ok here it is, and about time too! Immediately noticeable is our new default 
 template. It's called 'modern' and we hope you'll agree it's a great improvement 
 on the old default template (if you don't agree then the old template is also 
-provided under the name 'classic'). Also new is the ability to copy and move 
-directories and images using the admin interface as well as several bug fixes 
-and other minor additions. Internally there have been many changes. The code is 
-much more object oriented which should make development and modifications 
-simpler and more intuitive in future. However this means that old templates will
-need to be updated to be used. Several of the exisitng templates have already 
-been updated and are available from the templates page on the website. If you 
-use a custom template and don't have the time or confidence to update it there 
-is a kind of 'compatibility mode' that can be enbled by uncommenting all stuff 
-at the end of singapore.class.php. Note this is a temporary feature that will 
-not be present in subsequent releases. </p>
+provided under the name 'classic'). As a bonus we've bundled the 'rss' template 
+which turns any singapore gallery into an RSS 2.0 feed. Also new is the ability 
+to copy and move directories and images using the admin interface as well as 
+several bug fixes and other minor additions. Internally there have been many 
+changes. The code is much more object oriented which should make development and 
+modifications simpler and more intuitive in future. However this means that old 
+templates will need to be updated to be used. Several of the exisitng templates 
+have already been updated and are available from the templates page on the 
+website. If you use a custom template and don't have the time or confidence to 
+update it there is a kind of 'compatibility mode' that can be enbled by 
+uncommenting all stuff at the end of singapore.class.php. Note this is a 
+temporary feature that will not be present in subsequent releases.</p>
 
 
 <h2><a name="install">Installation</a></h2>
@@ -376,7 +377,7 @@ o removed leading ./ from gallery id in urls
 * fixed image resizing bug when image size equals maxsize
 * fixed imagemagick v6.x support
 * fixed session.auto_start bug (aka login loop)
-* fixed XSS vulnerability in template &amp language flippers
+* fixed XSS vulnerability in template &amp; language flippers
 + added sort by date field to galleries
 o rewritten hit logging code
 o added explicit chmod's instead of relying on umask
@@ -597,7 +598,7 @@ o first release under GPL
 + everything
 </pre>
 
-<p><em>$Date: 2006/05/17 13:33:47 $</em></p>
+<p><em>$Date: 2006/05/18 16:14:20 $</em></p>
 
 </body>
 </html>
