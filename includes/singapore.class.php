@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.67 2006/05/13 13:21:17 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.68 2006/05/20 18:48:17 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -474,12 +474,12 @@ class Singapore
     
     $ret  = "<map name=\"sgNavMap\" id=\"sgNavMap\">\n";
     if($this->image->hasNext()) $ret .= '<area href="'.$this->image->nextURL().'" alt="'.$this->image->nextText().'" title="'.$this->image->nextText().'" shape="poly" ';
-    else $ret .= '<area href="'.$this->image->parent->URL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
+    else $ret .= '<area href="'.$this->image->parentURL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,$imageWidth,$imageHeight,$imageWidth,0,$middleX,$middleY\" />\n";
     if($this->image->hasPrev()) $ret .= '<area href="'.$this->image->prevURL().'" alt="'.$this->image->prevText().'" title="'.$this->image->prevText().'" shape="poly" ';
-    else $ret .= '<area href="'.$this->image->parent->URL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
+    else $ret .= '<area href="'.$this->image->parentURL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,0,$imageHeight,$middleX,$middleY\" />\n";
-    $ret .= '<area href="'.$this->image->parent->URL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
+    $ret .= '<area href="'.$this->image->parentURL().'" alt="'.$this->image->parentText().'" title="'.$this->image->parentText().'" shape="poly" ';
     $ret .= "coords=\"$middleX,$middleY,0,0,$imageWidth,0,$middleX,$middleY\" />\n";
     $ret .= '</map>';
     
