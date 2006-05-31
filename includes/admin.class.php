@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.59 2006/05/18 16:14:20 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.60 2006/05/31 12:30:28 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1450,15 +1450,17 @@ class sgAdmin extends Singapore
       $image = $this->image->id;
   
     //security check: make sure requested file is in galleries directory
-    if(!$this->isSubPath($this->config->pathto_galleries, $this->config->pathto_galleries.$this->gallery->id."/".$image) && !sgImage::isRemote($image))
-      return $this->pushError($this->translator->_g("Requested item '%s' appears to be outside the galleries directory.", $image));
+    if(!sgImage::isRemote($image) && file_exists($this->config->pathto_galleries.$this->gallery->id."/".$image))
+      if(!$this->isSubPath($this->config->pathto_galleries, $this->config->pathto_galleries.$this->gallery->id."/".$image))
+        return $this->pushError($this->translator->_g("Requested item '%s' appears to be outside the galleries directory.", $image));
+      else
+        unlink($this->config->pathto_galleries.$this->gallery->id."/".$image);
   
     foreach($this->gallery->images as $i => $img)
-      if($img->id == $image)
+      if($img->id == $image) {
         array_splice($this->gallery->images,$i,1);
-    
-    if(file_exists($this->config->pathto_galleries.$this->gallery->id."/".$image))
-      unlink($this->config->pathto_galleries.$this->gallery->id."/".$image);
+        break;
+      }
     
     if($this->io->putGallery($this->gallery)) {
       $this->image = null;
