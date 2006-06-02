@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.60 2006/05/31 12:30:28 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.61 2006/06/02 04:32:35 thepavian Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1139,17 +1139,20 @@ class sgAdmin extends Singapore
   {
     if($galleryId === null)
       $galleryId = $_REQUEST['gallery'];
+  	
+  	//calculate the path where the folder actually resides.
+  	$path = $this->config->base_path.$this->config->pathto_galleries.$galleryId;
   
     //security check: make sure requested file is in galleries directory
-    if(!$this->isSubPath($this->config->pathto_galleries,$this->config->pathto_galleries.$galleryId))
+    if(!$this->isSubPath($this->config->base_path.$this->config->pathto_galleries,$path))
       return $this->pushError($this->translator->_g("Requested item '%s' appears to be outside the galleries directory", $galleryId));
   
     //check that the gallery to delete is not the top level directory
-    if(realpath($this->config->pathto_galleries.$galleryId) == realpath($this->config->pathto_galleries))
+    if(realpath($path) == realpath($this->config->base_path.$this->config->pathto_galleries))
       return $this->pushError($this->translator->_g("Cannot delete the root gallery."));
     
     //attempt to remove the offending directory and all contained therein
-    if($this->rmdir_all($this->config->pathto_galleries.$galleryId))
+    if($this->rmdir_all($path))
       return $this->pushMessage($this->translator->_g("Gallery '%s' deleted.", $galleryId));
     else
       return $this->pushError($this->translator->_g("Unable to delete gallery '%s'.", $galleryId));
