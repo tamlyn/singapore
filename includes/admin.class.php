@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.61 2006/06/02 04:32:35 thepavian Exp $
+ * @version $Id: admin.class.php,v 1.62 2006/06/07 15:49:54 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -930,24 +930,25 @@ class sgAdmin extends Singapore
       $gal =& $this->io->getGallery($galleryId, new stdClass);
     
     $imagesAdded = 0;
-    $dir = Singapore::getListing($this->config->pathto_galleries.$gal->id,$this->config->recognised_extensions);
+    //get list of images
+    $dir = Singapore::getListing($this->config->pathto_galleries.$gal->id, $this->config->recognised_extensions);
+    //cycle through the image files
     for($i=0; $i<count($dir->files); $i++) {
-      $found = false;
+      //search for the image file in the database images
       for($j=0; $j<count($gal->images); $j++)
-        if($dir->files[$i] == $gal->images[$j]->id) {
-          $found = true;
-          break;
-        }
-      if(!$found) {
-        $gal->images[$j] = new sgImage($dir->files[$i], $gal, $this->config);
-        $gal->images[$j]->name = $dir->files[$i];
-        list(
-          $gal->images[$j]->width, 
-          $gal->images[$j]->height, 
-          $gal->images[$j]->type
-        ) = GetImageSize($this->config->pathto_galleries.$gal->id."/".$gal->images[$j]->id);
-        $imagesAdded++;
-      }
+        //if we find it
+        if($dir->files[$i] == $gal->images[$j]->id)
+          //skip the rest of this loop
+          continue 2;
+      //otherwise add the image to the database
+      $gal->images[$j] = new sgImage($dir->files[$i], $gal, $this->config);
+      $gal->images[$j]->name = $dir->files[$i];
+      list(
+        $gal->images[$j]->width, 
+        $gal->images[$j]->height, 
+        $gal->images[$j]->type
+      ) = GetImageSize($this->config->pathto_galleries.$gal->id."/".$gal->images[$j]->id);
+      $imagesAdded++;
     }
     
     if($this->io->putGallery($gal))
@@ -1452,25 +1453,30 @@ class sgAdmin extends Singapore
     if($image === null)
       $image = $this->image->id;
   
-    //security check: make sure requested file is in galleries directory
+    //if file is remote or doesn't exist then there's no point trying to delete it
     if(!sgImage::isRemote($image) && file_exists($this->config->pathto_galleries.$this->gallery->id."/".$image))
+      //check that we're not being fooled into deleting something we shouldn't
       if(!$this->isSubPath($this->config->pathto_galleries, $this->config->pathto_galleries.$this->gallery->id."/".$image))
-        return $this->pushError($this->translator->_g("Requested item '%s' appears to be outside the galleries directory.", $image));
+        return $this->pushError($this->translator->_g("Requested item '%s' appears to be outside the galleries directory.", htmlspecialchars($image)));
       else
         unlink($this->config->pathto_galleries.$this->gallery->id."/".$image);
   
+    //remove the image from the images array
     foreach($this->gallery->images as $i => $img)
       if($img->id == $image) {
         array_splice($this->gallery->images,$i,1);
-        break;
+        //image removed from array so save metadata
+        if($this->io->putGallery($this->gallery)) {
+          //nulling image reference will select parent gallery
+          $this->image = null;
+          return $this->pushMessage($this->translator->_g("Image '%s' deleted", htmlspecialchars($image)));
+        } else {
+          return $this->pushError($this->translator->_g("Unable to save metadata."));
+        }
       }
     
-    if($this->io->putGallery($this->gallery)) {
-      $this->image = null;
-      return $this->pushMessage($this->translator->_g("Image '%s' deleted", $image));
-    } else {
-      return $this->pushError($this->translator->_g("Unable to save metadata."));
-    }
+    //image not found in array
+    return $this->pushError($this->translator->_g("Image not found '%s'", htmlspecialchars($image)));
   }
   
   /**

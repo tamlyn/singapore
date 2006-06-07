@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.68 2006/05/20 18:48:17 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.69 2006/06/07 15:49:54 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -851,10 +851,13 @@ class Singapore
     if(!$dp) return false;
 
     while(false !== ($entry = readdir($dp)))
-      if(is_dir($dir->path.$entry) && (($entry{0} != '.' && $entry{0} != '_') || $getHidden))
-        $dir->dirs[] = $entry;
-      elseif(!is_dir($entry) && ($mask == null || preg_match("/\.($mask)$/i",$entry)))
-        $dir->files[] = $entry;
+      if(is_dir($dir->path.$entry)) {
+        if(($entry{0} != '.' && $entry{0} != '_') || $getHidden)
+          $dir->dirs[] = $entry;
+      } else {
+        if($mask == null || preg_match("/\.($mask)$/i",$entry))
+          $dir->files[] = $entry;
+      }
     
     sort($dir->files);
     sort($dir->dirs);
@@ -947,81 +950,6 @@ class Singapore
     return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2)); 
   }
   
-  ///////////////////////////////
-  //////depreciated methods//////
-  ///////////////////////////////
-  
-  /* uncomment the following to enable compatibility with pre v0.10 templates
-  
-  function versionText()      { return "singapore ".$this->version; }
-  function versionLink()      { return $this->poweredByLink(); }
-  function poweredByVersion() { return $this->poweredByText(); }
-  function copyrightMessage() { return $this->licenseText(); }
-  function galleryURL($index = null)            { return $index === null ? $this->gallery->URL() : $this->gallery->galleries[$index]->URL(); }
-  function galleryThumbnailImage($index = null) { return $index === null ? $this->gallery->thumbnailHTML() : $this->gallery->galleries[$index]->thumbnailHTML(); }
-  function galleryByArtist($index = null)       { return $index === null ? $this->gallery->byArtistText() : $this->gallery->galleries[$index]->byArtistText(); }
-  function gallerySummaryStripped($index = null)     { return $index === null ? $this->gallery->summaryStripped() : $this->gallery->galleries[$index]->summaryStripped(); }
-	function galleryDescriptionStripped($index = null) { return $index === null ? $this->gallery->descriptionStripped() : $this->gallery->galleries[$index]->descriptionStripped(); }
-  function galleryImagesArray()         { return $this->gallery->images; }
-  function gallerySelectedImagesArray() { return $this->gallery->imageSelectedArray(); }
-  function gallerySelectedImagesCount() { return $this->gallery->imageCountSelected(); }
-  function galleryGalleriesArray()           { return $this->gallery->galleries; }
-  function gallerySelectedGalleriesArray()   { return $this->gallery->gallerySelectedArray(); }
-  function gallerySelectedGalleriesCount()   { return $this->gallery->galleryCountSelected(); }
-  function galleryIdEncoded($index = null)   { return $index===null ? $this->gallery->idEncoded() : $this->gallery->galleries[$index]->idEncoded(); }
-  function galleryName($index = null)        { return $index===null ? $this->gallery->name() : $this->gallery->galleries[$index]->name(); }
-  function galleryArtist($index = null)      { return $index===null ? $this->gallery->itemCountText() : $this->gallery->galleries[$index]->itemCountText(); }
-  function gallerySummary($index = null)     { return $index===null ? $this->gallery->summary() : $this->gallery->galleries[$index]->summary(); }
-  function galleryDescription($index = null) { return $index===null ? $this->gallery->description() : $this->gallery->galleries[$index]->description(); }
-  function galleryViews($index = null)       { return $index===null ? $this->gallery->hits() : $this->gallery->galleries[$index]->hits(); }
-  function imageRealWidth($index = null)     { return $index===null ? $this->image->realWidth() : $this->gallery->images[$index]->realWidth(); }
-  function imageRealHeight($index = null)    { return $index===null ? $this->image->realHeight() : $this->gallery->images[$index]->realHeight(); }
-  function galleryContents($index = null)    { return $index===null ? $this->gallery->itemCountText() : $this->gallery->galleries[$index]->itemCountText(); }
-  function galleryCount($index = null)       { return $index===null ? $this->gallery->galleryCount() : $this->gallery->galleries[$index]->galleryCount(); }
-  function galleryCountText($index = null)   { return $index===null ? $this->gallery->galleryCountText() : $this->gallery->galleries[$index]->galleryCountText(); }
-  function imageCount($index = null)         { return $index===null ? $this->gallery->imageCount() : $this->gallery->galleries[$index]->imageCount(); }
-  function imageCountText($index = null)     { return $index===null ? $this->gallery->imageCountText() : $this->gallery->galleries[$index]->imageCountText(); }
-  function galleryThumbnailLinked($index = null) { return $index===null ? $this->gallery->thumbnailLink() : $this->gallery->galleries[$index]->thumbnailLink(); }
-  function imageThumbnailLinked($index = null) { return $index===null ? $this->image->thumbnailLink() : $this->gallery->images[$index]->thumbnailLink(); }
-  function imageThumbnailPopup($index = null)  { return $index===null ? $this->image->thumbnailPopupHTML() : $this->gallery->images[$index]->thumbnailPopupHTML(); }
-  function imageThumbnailImage($index = null)  { return $index===null ? $this->image->thumbnailHTML() : $this->gallery->images[$index]->thumbnailHTML(); }
-  function image()  { return $this->image->imageHTML(); }
-  function imageWidth($index = null)      { return $index===null ? $this->image->width() : $this->gallery->images[$index]->width(); }
-  function imageHeight($index = null)     { return $index===null ? $this->image->height() : $this->gallery->images[$index]->height(); }
-  function imageName($index = null)       { return $index===null ? $this->image->name() : $this->gallery->images[$index]->name(); }
-  function imageArtist($index = null)     { return $index===null ? $this->image->artist() : $this->gallery->images[$index]->artist(); }
-  function imageByArtist($index = null)   { return $index===null ? $this->image->byArtistText() : $this->gallery->images[$index]->byArtistText(); }
-  function imageDescription($index = null){ return $index===null ? $this->image->desc() : $this->gallery->images[$index]->desc(); }
-  function imageURL($index = null)        { return $index===null ? $this->image->imageURL() : $this->gallery->images[$index]->imageURL(); }
-  function imageRealURL($index = null)    { return $index===null ? $this->image->imageRealURL() : $this->gallery->images[$index]->imageRealURL(); }
-  function imageParentURL()  { return $this->image->parent->URL(); }
-  function imageFirstURL()   { $tmp =& $this->image->firstImage(); return $tmp->URL(); }
-  function imagePrevURL()    { $tmp =& $this->image->prevImage(); return $tmp->URL(); }
-  function imageNextURL()    { $tmp =& $this->image->nextImage(); return $tmp->URL(); }
-  function imageLastURL()    { $tmp =& $this->image->lastImage(); return $tmp->URL(); }
-  function imageParentLink() { return ' '.$this->image->parentLink().' '; }
-  function imageFirstLink()  { return $this->image->firstLink(); }
-  function imagePrevLink()   { return $this->image->prevLink(); }
-  function imageNextLink()   { return $this->image->nextLink(); }
-  function imageLastLink()   { return $this->image->lastLink(); }
-  function imageHasPrev()    { return $this->image->hasPrev(); }
-  function imageHasNext()    { return $this->image->hasNext(); }
-  function isImage()                { return $this->isImagePage(); }
-  function isGallery($index = null) { return !empty($this->gallery) && ($index === null ? $this->gallery->isGallery() : $this->gallery->galleries[$index]->isGallery()); }
-  function isAlbum($index = null)   { return !empty($this->gallery) && ($index === null ? $this->gallery->isAlbum() : $this->gallery->galleries[$index]->isAlbum()); }
-  function galleryHasSubGalleries($index = null) { return $index === null ? $this->gallery->hasChildGalleries() : $this->gallery->galleries[$index]->hasChildGalleries(); }
-	function galleryHasImages($index = null)       { return $index === null ? $this->gallery->hasImages() : $this->gallery->galleries[$index]->hasImages(); }
-  function galleryHasNext() { return $this->hasNextPage(); }
-  function galleryHasPrev() { return $this->hasPrevPage(); }
-  function galleryNextURL() { return $this->nextPageURL(); }
-  function galleryNextLink(){ return ' '.$this->nextPageLink().' '; }
-  function galleryPrevURL() { return $this->prevPageURL(); }
-  function galleryPrevLink(){ return ' '.$this->prevPageLink().' '; }
-  function imageDetailsArray()   { return $this->image->detailsArray(); }
-  function galleryDetailsArray() { return $this->gallery->detailsArray(); }
-  function imagePreviewThumbnails() { return $this->previewThumbnails(); }
-  //*/
-
 }
 
 
