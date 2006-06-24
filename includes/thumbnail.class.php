@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: thumbnail.class.php,v 1.12 2006/02/07 19:19:39 tamlyn Exp $
+ * @version $Id: thumbnail.class.php,v 1.13 2006/06/24 20:33:00 tamlyn Exp $
  */
 
 
@@ -139,7 +139,7 @@ class sgThumbnail
         $cmd  = '"'.$this->config->pathto_convert.'"';
         if($this->forceSize) $cmd .= " -crop {$this->cropWidth}x{$this->cropHeight}+{$this->cropX}+{$this->cropY}";
         $cmd .= " -geometry {$this->thumbWidth}x{$this->thumbHeight}";
-        if($this->image->type == 2) $cmd .= " -quality {$this->thumbQuality}";
+        if($this->image->type == 2) $cmd .= " -quality ".$this->config->thumbnail_quality;
         if($this->config->progressive_thumbs) $cmd .= " -interlace Plane";
         if($this->config->remove_jpeg_profile) $cmd .= ' +profile "*"';
         $cmd .= ' '.escapeshellarg($this->imagePath).' '.escapeshellarg($this->thumbPath);
