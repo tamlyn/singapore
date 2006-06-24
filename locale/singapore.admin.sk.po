@@ -2,465 +2,488 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: singapore 0.10.0\n"
 "POT-Creation-Date: 2006-05-20 20:17+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2006-05-25 18:44+0800\n"
+"Last-Translator: Branislav J. Svac <brano.svac@gmail.com>\n"
+"Language-Team: Slovak (Slovenský) <brano.svac@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Poedit-Language: Slovak\n"
+"X-Poedit-Country: SLOVAKIA\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
 
 #: ../includes/admin.class.php:153
 msgid "ERROR"
-msgstr ""
+msgstr "CHYBA"
 
 #: ../includes/admin.class.php:211
 #: ../templates/admin_default/changethumbnail.tpl.php:30
 #: ../templates/admin_default/confirm.tpl.php:13
 #: ../templates/admin_default/multimove.tpl.php:27
 msgid "confirm|OK"
-msgstr ""
+msgstr "OK"
 
 #: ../includes/admin.class.php:219
 #: ../templates/admin_default/changethumbnail.tpl.php:31
 #: ../templates/admin_default/confirm.tpl.php:14
 #: ../templates/admin_default/multimove.tpl.php:28
 msgid "confirm|Cancel"
-msgstr ""
+msgstr "Zrušiť"
 
-#: ../includes/admin.class.php:237 ../includes/admin.class.php:250
-#: ../includes/admin.class.php:276 ../includes/admin.class.php:290
-#: ../includes/admin.class.php:307 ../includes/admin.class.php:322
-#: ../includes/admin.class.php:339 ../includes/admin.class.php:347
-#: ../includes/admin.class.php:354 ../includes/admin.class.php:362
-#: ../includes/admin.class.php:369 ../includes/admin.class.php:376
-#: ../includes/admin.class.php:393 ../includes/admin.class.php:407
-#: ../includes/admin.class.php:454 ../includes/admin.class.php:462
-#: ../includes/admin.class.php:469 ../includes/admin.class.php:478
-#: ../includes/admin.class.php:496 ../includes/admin.class.php:507
-#: ../includes/admin.class.php:518 ../includes/admin.class.php:529
-#: ../includes/admin.class.php:541 ../includes/admin.class.php:552
-#: ../includes/admin.class.php:563 ../includes/admin.class.php:593
+#: ../includes/admin.class.php:237
+#: ../includes/admin.class.php:250
+#: ../includes/admin.class.php:276
+#: ../includes/admin.class.php:290
+#: ../includes/admin.class.php:307
+#: ../includes/admin.class.php:322
+#: ../includes/admin.class.php:339
+#: ../includes/admin.class.php:347
+#: ../includes/admin.class.php:354
+#: ../includes/admin.class.php:362
+#: ../includes/admin.class.php:369
+#: ../includes/admin.class.php:376
+#: ../includes/admin.class.php:393
+#: ../includes/admin.class.php:407
+#: ../includes/admin.class.php:454
+#: ../includes/admin.class.php:462
+#: ../includes/admin.class.php:469
+#: ../includes/admin.class.php:478
+#: ../includes/admin.class.php:496
+#: ../includes/admin.class.php:507
+#: ../includes/admin.class.php:518
+#: ../includes/admin.class.php:529
+#: ../includes/admin.class.php:541
+#: ../includes/admin.class.php:552
+#: ../includes/admin.class.php:563
+#: ../includes/admin.class.php:593
 msgid "You do not have permission to perform this operation."
-msgstr ""
+msgstr "Na vykonanie tejto operácie nemáte oprávnenie."
 
 #: ../includes/admin.class.php:241
 msgid "Gallery added"
-msgstr ""
+msgstr "Galéria pridaná"
 
 #: ../includes/admin.class.php:299
 msgid "Delete Gallery"
-msgstr ""
+msgstr "Zmazať galériu"
 
 #: ../includes/admin.class.php:300
 #, possible-c-format
 msgid ""
 "Gallery %s is not empty.\n"
-"Are you sure you want to irretrievably delete it and all subgalleries and "
-"images it contains?"
+"Are you sure you want to irretrievably delete it and all subgalleries and images it contains?"
 msgstr ""
+"Galéria %s nie je prázdna.\n"
+"Naozaj ju chcete nenávratne vymazať vrátane všetkých vnorených galérií a obrázkov ktoré obsahuje?"
 
 #: ../includes/admin.class.php:315
 msgid "delete image"
-msgstr ""
+msgstr "zmazať obrázok"
 
 #: ../includes/admin.class.php:316
 #, possible-c-format
 msgid "Are you sure you want to irretrievably delete image %s from gallery %s?"
-msgstr ""
+msgstr "Naozaj chcete nenávratne vymazať obrázok %s z galérie %s?"
 
 #: ../includes/admin.class.php:326
 msgid "User deleted"
-msgstr ""
+msgstr "Užívateľ vymazaný"
 
 #: ../includes/admin.class.php:331
 msgid "delete user"
-msgstr ""
+msgstr "zmazať užívateľa"
 
 #: ../includes/admin.class.php:332
 #, possible-c-format
 msgid "Are you sure you want to permanently delete user %s?"
-msgstr ""
+msgstr "Naozaj chcete natrvalo vymazať užívateľa %s?"
 
 #: ../includes/admin.class.php:401
 msgid "Please select one or more items."
-msgstr ""
+msgstr "Zvoľte prosím jednu alebo viacero položiek."
 
 #: ../includes/admin.class.php:403
 msgid "Copy or move"
-msgstr ""
+msgstr "Kopírovať alebo vymazať"
 
 #: ../includes/admin.class.php:405
 msgid "Delete"
-msgstr ""
+msgstr "Vymazať"
 
 #: ../includes/admin.class.php:412
 #, possible-c-format
 msgid "%s images deleted."
-msgstr ""
+msgstr "%s obrázkov vymazaných."
 
 #: ../includes/admin.class.php:415
 #, possible-c-format
 msgid "%s galleries deleted."
-msgstr ""
+msgstr "%s galérií vymazaných."
 
 #: ../includes/admin.class.php:422
 msgid "Delete Images"
-msgstr ""
+msgstr "Zmazať obrázky"
 
 #: ../includes/admin.class.php:423
 #, possible-c-format
 msgid "Are you sure you want to permanently delete %s images?"
-msgstr ""
+msgstr "Naozaj chcete natrvalo vymazať %s obrázkov?"
 
 #: ../includes/admin.class.php:425
 msgid "Delete Galleries"
-msgstr ""
+msgstr "Zmazať galérie"
 
 #: ../includes/admin.class.php:426
 #, possible-c-format
 msgid "Are you sure you want to permanently delete %s galleries?"
-msgstr ""
+msgstr "Naozaj chcete natrvalo vymazať %s galérií?"
 
 #: ../includes/admin.class.php:430
 msgid "Re-index"
-msgstr ""
+msgstr "Re-indexovať"
 
 #: ../includes/admin.class.php:432
 #, possible-c-format
 msgid "Galleries re-indexed. %s total images added."
-msgstr ""
+msgstr "Galérie reindexované. Spolu pridaných %s obrázkov."
 
 #: ../includes/admin.class.php:446
 #, possible-c-format
 msgid "%s galleries moved."
-msgstr ""
+msgstr "%s galérií presunutých."
 
 #: ../includes/admin.class.php:482
 msgid "Thumbnail cache purged"
-msgstr ""
+msgstr "Cache náhľadov vymazaná."
 
 #: ../includes/admin.class.php:488
 msgid "purge cached thumbnails"
-msgstr ""
+msgstr "vymazať cache náhľadov"
 
 #: ../includes/admin.class.php:489
 #, possible-c-format
 msgid "Are you sure you want to delete all %s cached thumbnails?"
-msgstr ""
+msgstr "Naozaj chcete z cache vymazať všetkých %s náhľadov?"
 
 #: ../includes/admin.class.php:500
 #, possible-c-format
 msgid "Gallery re-indexed. %s images added."
-msgstr ""
+msgstr "Galéria reindexovaná. Pridaných %s obrázkov."
 
 #: ../includes/admin.class.php:521
 msgid "Image info saved"
-msgstr ""
+msgstr "Informácie o obrázku uložené"
 
 #: ../includes/admin.class.php:532
 msgid "Password saved"
-msgstr ""
+msgstr "Heslo uložené"
 
 #: ../includes/admin.class.php:544
 msgid "Permissions saved"
-msgstr ""
+msgstr "Oprávnenia uložené"
 
-#: ../includes/admin.class.php:555 ../includes/admin.class.php:596
+#: ../includes/admin.class.php:555
+#: ../includes/admin.class.php:596
 #: ../includes/admin.class.php:841
 msgid "User info saved"
-msgstr ""
+msgstr "Informácie o užívateľovi uložené"
 
 #: ../includes/admin.class.php:641
 msgid "admin bar|Back to galleries"
-msgstr ""
+msgstr "Späť na galérie"
 
 #: ../includes/admin.class.php:643
 msgid "admin bar|Admin"
-msgstr ""
+msgstr "Admin"
 
 #: ../includes/admin.class.php:644
 msgid "admin bar|Galleries"
-msgstr ""
+msgstr "Galérie"
 
 #: ../includes/admin.class.php:645
 msgid "admin bar|Log out"
-msgstr ""
+msgstr "Odhlásiť sa"
 
 #: ../includes/admin.class.php:647
 #: ../templates/admin_default/viewgallery.tpl.php:30
 msgid "admin bar|Edit gallery"
-msgstr ""
+msgstr "Upraviť galériu"
 
 #: ../includes/admin.class.php:648
 #: ../templates/admin_default/viewgallery.tpl.php:31
 msgid "admin bar|Access control"
-msgstr ""
+msgstr "Správa prístupov"
 
 #: ../includes/admin.class.php:649
 #: ../templates/admin_default/viewgallery.tpl.php:32
 msgid "admin bar|Delete gallery"
-msgstr ""
+msgstr "Vymazať galériu"
 
 #: ../includes/admin.class.php:650
 #: ../templates/admin_default/viewgallery.tpl.php:33
 msgid "admin bar|New subgallery"
-msgstr ""
+msgstr "Nová vnorená galéria"
 
 #: ../includes/admin.class.php:651
 #: ../templates/admin_default/viewgallery.tpl.php:34
 msgid "admin bar|Re-index gallery"
-msgstr ""
+msgstr "Re-indexovať galériu"
 
 #: ../includes/admin.class.php:653
 msgid "admin bar|Edit image"
-msgstr ""
+msgstr "Upraviť obrázok"
 
 #: ../includes/admin.class.php:654
 msgid "admin bar|Delete image"
-msgstr ""
+msgstr "Vymazať obrázok"
 
 #: ../includes/admin.class.php:656
 msgid "admin bar|New image"
-msgstr ""
+msgstr "Nový obrázok"
 
-#: ../includes/admin.class.php:680 ../includes/admin.class.php:843
-#: ../includes/admin.class.php:869 ../includes/admin.class.php:895
+#: ../includes/admin.class.php:680
+#: ../includes/admin.class.php:843
+#: ../includes/admin.class.php:869
+#: ../includes/admin.class.php:895
 #: ../includes/admin.class.php:913
 msgid "Could not save user info"
-msgstr ""
+msgstr "Nepodarilo sa uložiť informácie o užívateľovi"
 
 #: ../includes/admin.class.php:683
 msgid "New password must be between 6 and 16 characters long."
-msgstr ""
+msgstr "Nové heslo musí byť dlhé od 6 do 16 znakov."
 
 #: ../includes/admin.class.php:685
 msgid "The new passwords you entered do not match."
-msgstr ""
+msgstr "Nové heslá ktoré ste zadali sa nezhodujú."
 
 #: ../includes/admin.class.php:687
-msgid ""
-"The current password you entered does not match the one in the database."
-msgstr ""
+msgid "The current password you entered does not match the one in the database."
+msgstr "Aktuálne heslo ktoré ste zadali sa nezhoduje s heslom v databáze."
 
 #: ../includes/admin.class.php:690
 msgid "The username specified was not found in the database."
-msgstr ""
+msgstr "Dané užívateľské meno sa v databáze nepodarilo nájsť."
 
 #: ../includes/admin.class.php:708
 msgid "Your account has been suspended"
-msgstr ""
+msgstr "Váš účet bol pozastavený."
 
 #: ../includes/admin.class.php:713
 msgid "Welcome to singapore admin!"
-msgstr ""
+msgstr "Vitajte v správe systému singapore!"
 
 #: ../includes/admin.class.php:717
 msgid "Username and/or password incorrect"
-msgstr ""
+msgstr "Užívateľské meno a/alebo heslo sú nesprávne"
 
 #: ../includes/admin.class.php:719
 msgid "You must enter a username and password"
-msgstr ""
+msgstr "Musíte zadať užívateľské meno a heslo"
 
 #: ../includes/admin.class.php:730
 msgid "Thank you and goodbye!"
-msgstr ""
+msgstr "Ďakujeme a dovidenia!"
 
 #: ../includes/admin.class.php:818
 msgid "Gallery info saved"
-msgstr ""
+msgstr "Informácie o galérii uložené"
 
-#: ../includes/admin.class.php:820 ../includes/admin.class.php:956
+#: ../includes/admin.class.php:820
+#: ../includes/admin.class.php:956
 #: ../includes/admin.class.php:1130
 msgid "Could not save gallery info"
-msgstr ""
+msgstr "Nepodarilo sa uložiť informácie o galérii"
 
 #: ../includes/admin.class.php:833
 msgid "Username already exists"
-msgstr ""
+msgstr "Užívateľské meno už existuje"
 
 #: ../includes/admin.class.php:836
-msgid ""
-"Username must be at least 3 characters long and contain only alphanumeric "
-"characters"
-msgstr ""
+msgid "Username must be at least 3 characters long and contain only alphanumeric characters"
+msgstr "Užívateľské meno "
 
 #: ../includes/admin.class.php:857
 msgid "Cannot delete built in accounts"
-msgstr ""
+msgstr "Zabudované účty nemožno vymazať"
 
-#: ../includes/admin.class.php:872 ../includes/admin.class.php:897
+#: ../includes/admin.class.php:872
+#: ../includes/admin.class.php:897
 #: ../includes/admin.class.php:915
 msgid "Username not recognised"
-msgstr ""
+msgstr "Nepodarilo sa rozpoznať užívateľské meno"
 
 #: ../includes/admin.class.php:969
 #, possible-c-format
 msgid "Gallery '%s' could not be reindexed"
-msgstr ""
+msgstr "Galériu '%s' sa nepodarilo re-indexovať"
 
 #: ../includes/admin.class.php:970
 #, possible-c-format
 msgid "Gallery '%s' reindexed: %s images added"
-msgstr ""
+msgstr "Galéria '%s' re-indexovaná: pridaných %s obrázkov"
 
 #: ../includes/admin.class.php:994
 #, possible-c-format
-msgid ""
-"Unable to copy/move gallery '%s' because the target gallery already exists."
-msgstr ""
+msgid "Unable to copy/move gallery '%s' because the target gallery already exists."
+msgstr "Galériu '%s' sa nepodarilo skopírovať/presunúť pretože cieľová galéria už existuje."
 
 #: ../includes/admin.class.php:996
 #, possible-c-format
-msgid ""
-"Unable to copy/move gallery '%s' because the target is a child of the source."
-msgstr ""
+msgid "Unable to copy/move gallery '%s' because the target is a child of the source."
+msgstr "Galériu '%s' sa nepodarilo skopírovať/presunúť pretože cieľom je jej vnorená galéria."
 
 #: ../includes/admin.class.php:1005
 #, possible-c-format
 msgid "Unable to copy/move gallery '%s' because the operation failed."
-msgstr ""
+msgstr "Galériu '%s' sa nepodarilo skopírovať/presunúť pretože operácia zlihala."
 
 #: ../includes/admin.class.php:1066
 msgid "Gallery already exists."
-msgstr ""
+msgstr "Galéria už existuje."
 
 #: ../includes/admin.class.php:1070
 #, possible-c-format
 msgid "Unable to create directory '%s'"
-msgstr ""
+msgstr "Nepodarilo sa vytvoriť adresár '%s'"
 
-#: ../includes/admin.class.php:1089 ../includes/admin.class.php:1188
-#: ../includes/admin.class.php:1266 ../includes/admin.class.php:1397
-#: ../includes/admin.class.php:1438 ../includes/admin.class.php:1467
+#: ../includes/admin.class.php:1089
+#: ../includes/admin.class.php:1188
+#: ../includes/admin.class.php:1266
+#: ../includes/admin.class.php:1397
+#: ../includes/admin.class.php:1438
+#: ../includes/admin.class.php:1467
 msgid "Unable to save metadata."
-msgstr ""
+msgstr "Nepodarilo sa uložiť metadata."
 
 #: ../includes/admin.class.php:1145
 #, possible-c-format
 msgid "Requested item '%s' appears to be outside the galleries directory"
-msgstr ""
+msgstr "Požadovaná položka '%s' je pravdepodobne mimo adresára galérií"
 
 #: ../includes/admin.class.php:1149
 msgid "Cannot delete the root gallery."
-msgstr ""
+msgstr "Kmeňovú galériu nemožno vymazať."
 
 #: ../includes/admin.class.php:1153
 #, possible-c-format
 msgid "Gallery '%s' deleted."
-msgstr ""
+msgstr "Galéria '%s' vymazaná."
 
 #: ../includes/admin.class.php:1155
 #, possible-c-format
 msgid "Unable to delete gallery '%s'."
-msgstr ""
+msgstr "Galériu '%s' sa nepodarilo vymazať."
 
 #: ../includes/admin.class.php:1186
 msgid "Thumbnail changed."
-msgstr ""
+msgstr "Náhľad zmenený."
 
-#: ../includes/admin.class.php:1218 ../includes/admin.class.php:1321
+#: ../includes/admin.class.php:1218
+#: ../includes/admin.class.php:1321
 #, possible-c-format
-msgid ""
-"Uploaded image '%s' has unrecognised extension and image type could not be "
-"determined from file contents."
-msgstr ""
+msgid "Uploaded image '%s' has unrecognised extension and image type could not be determined from file contents."
+msgstr "Nahratý obrázok '%s' má nerozpoznanú príponu a typ obrázku sa nepodarilo určiť z obsahu súboru."
 
 #: ../includes/admin.class.php:1239
 msgid "File already exists."
-msgstr ""
+msgstr "Súbor už existuje."
 
-#: ../includes/admin.class.php:1243 ../includes/admin.class.php:1287
+#: ../includes/admin.class.php:1243
+#: ../includes/admin.class.php:1287
 msgid "Could not upload file."
-msgstr ""
+msgstr "Súbor sa nepodarilo nahrať."
 
 #: ../includes/admin.class.php:1263
 msgid "Image added"
-msgstr ""
+msgstr "Obrázok pridaný"
 
 #: ../includes/admin.class.php:1279
 msgid "Unable to find temporary storage space."
-msgstr ""
+msgstr "Nepodarilo sa nájsť prístor na dočasné uloženie dát."
 
 #: ../includes/admin.class.php:1295
 msgid "Could not decompress archive."
-msgstr ""
+msgstr "Archív sa nepodarilo dekomprimovať."
 
-#: ../includes/admin.class.php:1343 ../includes/admin.class.php:1382
+#: ../includes/admin.class.php:1343
+#: ../includes/admin.class.php:1382
 #, possible-c-format
 msgid "File '%s' already exists."
-msgstr ""
+msgstr "Súbor '%s' už existuje."
 
 #: ../includes/admin.class.php:1407
 msgid "Archive contents added."
-msgstr ""
+msgstr "Obsah archívu pridaný."
 
 #: ../includes/admin.class.php:1409
 msgid "Some archive contents could not be added."
-msgstr ""
+msgstr "Časť obsahu archívu sa nepodarilo pridať."
 
 #: ../includes/admin.class.php:1454
 #, possible-c-format
 msgid "Requested item '%s' appears to be outside the galleries directory."
-msgstr ""
+msgstr "Požadovaná položka '%s' je pravdepodobne mimo adresára galérií."
 
 #: ../includes/admin.class.php:1465
 #, possible-c-format
 msgid "Image '%s' deleted"
-msgstr ""
+msgstr "Obrázok '%s' vymazaný"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:1
 msgid "Choose Thumbnail"
-msgstr ""
+msgstr "Zvoľte náhľad"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:6
 msgid "Choose the filename of the image used to represent this gallery."
-msgstr ""
+msgstr "Zvoľte názov súboru obrázku, ktorý má reprezentovať túto galériu."
 
 #: ../templates/admin_default/changethumbnail.tpl.php:20
 msgid "thumbnail|None"
-msgstr ""
+msgstr "Žiaden"
 
 #: ../templates/admin_default/changethumbnail.tpl.php:21
 msgid "thumbnail|Random"
-msgstr ""
+msgstr "Náhodný"
 
 #: ../templates/admin_default/editgallery.tpl.php:1
 msgid "Edit Gallery"
-msgstr ""
+msgstr "Upraviť galériu"
 
 #: ../templates/admin_default/editgallery.tpl.php:11
 msgid "Thumbnail"
-msgstr ""
+msgstr "Náhľad"
 
 #: ../templates/admin_default/editgallery.tpl.php:15
 msgid ""
 "Random\n"
 "thumbnail"
 msgstr ""
+"Náhodný\n"
+"náhľad"
 
 #: ../templates/admin_default/editgallery.tpl.php:20
 msgid "thumbnail|Change..."
-msgstr ""
+msgstr "Zmeniť..."
 
 #: ../templates/admin_default/editgallery.tpl.php:24
 #: ../templates/admin_default/galleryhits.tpl.php:12
 msgid "Gallery name"
-msgstr ""
+msgstr "Názov galérie"
 
 #: ../templates/admin_default/editgallery.tpl.php:28
 #: ../templates/admin_default/editimage.tpl.php:19
 msgid "Artist name"
-msgstr ""
+msgstr "Meno autora"
 
 #: ../templates/admin_default/editgallery.tpl.php:44
 msgid "Summary"
-msgstr ""
+msgstr "Súhrn"
 
 #: ../templates/admin_default/editgallery.tpl.php:53
 #: ../templates/admin_default/editimage.tpl.php:64
@@ -469,308 +492,307 @@ msgstr ""
 #: ../templates/admin_default/editprofile.tpl.php:24
 #: ../templates/admin_default/edituser.tpl.php:31
 msgid "Save Changes"
-msgstr ""
+msgstr "Uložiť zmeny"
 
 #: ../templates/admin_default/editimage.tpl.php:1
 msgid "Edit Image"
-msgstr ""
+msgstr "Upraviť obrázok"
 
 #: ../templates/admin_default/editimage.tpl.php:11
 msgid "Image"
-msgstr ""
+msgstr "Obrázok"
 
 #: ../templates/admin_default/editimage.tpl.php:15
 #: ../templates/admin_default/imagehits.tpl.php:12
 msgid "Image name"
-msgstr ""
+msgstr "Názov obrázku"
 
 #: ../templates/admin_default/editpass.tpl.php:1
 msgid "Change Password"
-msgstr ""
+msgstr "Zmeniť heslo"
 
 #: ../templates/admin_default/editpass.tpl.php:2
 msgid "Please choose a new password between 6 and 16 characters in length."
-msgstr ""
+msgstr "Zvoľte prosím nové heslo dlhé od 6 do 16 znakov."
 
 #: ../templates/admin_default/editpass.tpl.php:9
 msgid "Current password:"
-msgstr ""
+msgstr "Súčasné heslo:"
 
 #: ../templates/admin_default/editpass.tpl.php:13
 msgid "New password:"
-msgstr ""
+msgstr "Nové heslo:"
 
 #: ../templates/admin_default/editpass.tpl.php:17
 msgid "Confirm password:"
-msgstr ""
+msgstr "Potvrdiť heslo:"
 
 #: ../templates/admin_default/editpermissions.tpl.php:1
 msgid "Access Control"
-msgstr ""
+msgstr "Správa prístupov"
 
 #: ../templates/admin_default/editpermissions.tpl.php:9
 msgid "Owner"
-msgstr ""
+msgstr "Majiteľ"
 
 #: ../templates/admin_default/editpermissions.tpl.php:18
 #: ../templates/admin_default/edituser.tpl.php:21
 msgid "Groups"
-msgstr ""
+msgstr "Skupiny"
 
 #: ../templates/admin_default/editpermissions.tpl.php:22
 msgid "access control|Read"
-msgstr ""
+msgstr "Čítať"
 
 #: ../templates/admin_default/editpermissions.tpl.php:30
 #: ../templates/admin_default/editpermissions.tpl.php:47
 #: ../templates/admin_default/editpermissions.tpl.php:64
 #: ../templates/admin_default/editpermissions.tpl.php:81
 msgid "permissions|Owner"
-msgstr ""
+msgstr "Majiteľ"
 
 #: ../templates/admin_default/editpermissions.tpl.php:31
 #: ../templates/admin_default/editpermissions.tpl.php:48
 #: ../templates/admin_default/editpermissions.tpl.php:65
 #: ../templates/admin_default/editpermissions.tpl.php:82
 msgid "permissions|Group"
-msgstr ""
+msgstr "Skupina"
 
 #: ../templates/admin_default/editpermissions.tpl.php:32
 #: ../templates/admin_default/editpermissions.tpl.php:49
 #: ../templates/admin_default/editpermissions.tpl.php:66
 #: ../templates/admin_default/editpermissions.tpl.php:83
 msgid "permissions|World"
-msgstr ""
+msgstr "Svet"
 
 #: ../templates/admin_default/editpermissions.tpl.php:34
 #: ../templates/admin_default/editpermissions.tpl.php:51
 #: ../templates/admin_default/editpermissions.tpl.php:68
 #: ../templates/admin_default/editpermissions.tpl.php:85
 msgid "permissions|Inherit"
-msgstr ""
+msgstr "Zdedené"
 
 #: ../templates/admin_default/editpermissions.tpl.php:39
 msgid "access control|Edit"
-msgstr ""
+msgstr "Upraviť"
 
 #: ../templates/admin_default/editpermissions.tpl.php:56
 msgid "access control|Add"
-msgstr ""
+msgstr "Pridať"
 
 #: ../templates/admin_default/editpermissions.tpl.php:73
 msgid "access control|Delete"
-msgstr ""
+msgstr "Vymazať"
 
 #: ../templates/admin_default/editprofile.tpl.php:1
 msgid "Edit Profile"
-msgstr ""
+msgstr "Upraviť profil"
 
 #: ../templates/admin_default/editprofile.tpl.php:8
 #: ../templates/admin_default/edituser.tpl.php:15
 #: ../templates/admin_default/manageusers.tpl.php:10
 #: ../templates/admin_default/manageusers.tpl.php:30
 msgid "Username"
-msgstr ""
+msgstr "Užívateľské meno"
 
 #: ../templates/admin_default/editprofile.tpl.php:16
 #: ../templates/admin_default/edituser.tpl.php:23
 #: ../templates/admin_default/manageusers.tpl.php:18
 msgid "Full name"
-msgstr ""
+msgstr "Celé meno"
 
 #: ../templates/admin_default/edituser.tpl.php:1
 #: ../templates/admin_default/manageusers.tpl.php:1
 msgid "User Management"
-msgstr ""
+msgstr "Správa užívateľov"
 
 #: ../templates/admin_default/edituser.tpl.php:17
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: ../templates/admin_default/edituser.tpl.php:18
 msgid "Administrator"
-msgstr ""
+msgstr "Administrátor"
 
 #: ../templates/admin_default/edituser.tpl.php:19
 msgid "User"
-msgstr ""
+msgstr "Užívateľ"
 
 #: ../templates/admin_default/edituser.tpl.php:26
 msgid "Password"
-msgstr ""
+msgstr "Heslo"
 
 #: ../templates/admin_default/galleryhits.tpl.php:12
 #: ../templates/admin_default/imagehits.tpl.php:12
 msgid "hits table|Graph"
-msgstr ""
+msgstr "Graf"
 
 #: ../templates/admin_default/galleryhits.tpl.php:12
 #: ../templates/admin_default/imagehits.tpl.php:12
 msgid "hits table|Hits"
-msgstr ""
+msgstr "Návštevy"
 
 #: ../templates/admin_default/galleryhits.tpl.php:12
 #: ../templates/admin_default/imagehits.tpl.php:12
 msgid "hits table|Last hit"
-msgstr ""
+msgstr "Posledná návšteva"
 
 #: ../templates/admin_default/login.tpl.php:1
 msgid "Log In"
-msgstr ""
+msgstr "Prihlásiť"
 
 #: ../templates/admin_default/login.tpl.php:3
 msgid "Please enter your admin username and password below."
-msgstr ""
+msgstr "Zadajte prosím svoje užívateľské meno a heslo pre prihlásenie do správy systému singapore."
 
 #: ../templates/admin_default/login.tpl.php:8
 msgid "Username:"
-msgstr ""
+msgstr "Užívateľské meno:"
 
 #: ../templates/admin_default/login.tpl.php:9
 msgid "Password:"
-msgstr ""
+msgstr "Heslo:"
 
 #: ../templates/admin_default/login.tpl.php:19
 msgid "If you do not have a username then you may log in as a guest."
-msgstr ""
+msgstr "Ak nemáte užívateľské meno, môžete sa prihlásiť ako hosť."
 
 #: ../templates/admin_default/login.tpl.php:20
 msgid "Log in as guest"
-msgstr ""
+msgstr "Prihlásiť ako hosť"
 
 #: ../templates/admin_default/manageusers.tpl.php:3
 msgid "You must be an administrator to access this area."
-msgstr ""
+msgstr "Na prístup do tejto časti musíte byť administrátor."
 
 #: ../templates/admin_default/manageusers.tpl.php:19
 msgid "edit"
-msgstr ""
+msgstr "upraviť"
 
 #: ../templates/admin_default/manageusers.tpl.php:20
 msgid "delete"
-msgstr ""
+msgstr "vymazať"
 
 #: ../templates/admin_default/manageusers.tpl.php:21
 msgid "suspend"
-msgstr ""
+msgstr "pozastaviť"
 
 #: ../templates/admin_default/manageusers.tpl.php:21
 msgid "unsuspend"
-msgstr ""
+msgstr "zrušiť pozastavenie"
 
 #: ../templates/admin_default/manageusers.tpl.php:28
 msgid "Create New User"
-msgstr ""
+msgstr "Vytvoriť nového užívateľa"
 
 #: ../templates/admin_default/manageusers.tpl.php:33
 #: ../templates/admin_default/newgallery.tpl.php:14
 #: ../templates/admin_default/newimage.tpl.php:48
 msgid "Create"
-msgstr ""
+msgstr "Vytvoriť"
 
 #: ../templates/admin_default/menu.tpl.php:1
 msgid "Please choose an option:"
-msgstr ""
+msgstr "Zvoľte prosím možnosť:"
 
 #: ../templates/admin_default/menu.tpl.php:4
 msgid "Manage galleries and images"
-msgstr ""
+msgstr "Spravovať galérie a obrázky"
 
 #: ../templates/admin_default/menu.tpl.php:5
 msgid "View gallery hits"
-msgstr ""
+msgstr "Zobraziť návštevy galérie"
 
 #: ../templates/admin_default/menu.tpl.php:7
 msgid "Change password"
-msgstr ""
+msgstr "Zmeniť heslo"
 
 #: ../templates/admin_default/menu.tpl.php:8
 msgid "My profile"
-msgstr ""
+msgstr "Môj profil"
 
 #: ../templates/admin_default/menu.tpl.php:11
 msgid "Manage users"
-msgstr ""
+msgstr "Spravovať užívateľov"
 
 #: ../templates/admin_default/menu.tpl.php:14
 msgid "Log out of admin"
-msgstr ""
+msgstr "Odhlásiť zo správy systému"
 
 #: ../templates/admin_default/multimove.tpl.php:1
 msgid "Move or Copy Items"
-msgstr ""
+msgstr "Presunúť alebo kopírovať položky"
 
 #: ../templates/admin_default/multimove.tpl.php:24
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovať"
 
 #: ../templates/admin_default/multimove.tpl.php:25
 msgid "Move"
-msgstr ""
+msgstr "Presunúť"
 
 #: ../templates/admin_default/newgallery.tpl.php:1
 msgid "New Gallery"
-msgstr ""
+msgstr "Nová galéria"
 
 #: ../templates/admin_default/newgallery.tpl.php:9
 msgid "Identifier"
-msgstr ""
+msgstr "Identifikátor"
 
 #: ../templates/admin_default/newimage.tpl.php:1
 msgid "New Image"
-msgstr ""
+msgstr "Nový obrázok"
 
 #: ../templates/admin_default/newimage.tpl.php:3
-msgid ""
-"This image will not be visible because this gallery is not an album: it "
-"contains child galleries."
-msgstr ""
+msgid "This image will not be visible because this gallery is not an album: it contains child galleries."
+msgstr "Tento obrázok nebude viditeľný, pretože táto galéria nie je albumom: obsahuje vnorené galérie."
 
 #: ../templates/admin_default/newimage.tpl.php:13
 msgid "Upload single file"
-msgstr ""
+msgstr "Nahrať jeden súbor"
 
 #: ../templates/admin_default/newimage.tpl.php:17
 msgid "Image file to upload:"
-msgstr ""
+msgstr "Súbor ubrázku na nahratie:"
 
 #: ../templates/admin_default/newimage.tpl.php:22
 msgid "Identifier:"
-msgstr ""
+msgstr "Identifikátor:"
 
 #: ../templates/admin_default/newimage.tpl.php:24
 msgid "Use filename of uploaded file."
-msgstr ""
+msgstr "Použiť názov nahratého súboru."
 
 #: ../templates/admin_default/newimage.tpl.php:25
 msgid "Specify different filename:"
-msgstr ""
+msgstr "Zadať iný názov súboru:"
 
 #: ../templates/admin_default/newimage.tpl.php:30
 msgid "Upload multiple files"
-msgstr ""
+msgstr "Nahrať viacero súborov"
 
 #: ../templates/admin_default/newimage.tpl.php:34
 msgid "ZIP file to upload:"
-msgstr ""
+msgstr "Súbor ZIP na nahratie:"
 
 #: ../templates/admin_default/newimage.tpl.php:39
 msgid "Add remote file"
-msgstr ""
+msgstr "Pridať vzdialený súbor"
 
 #: ../templates/admin_default/newimage.tpl.php:43
 msgid "URL of image:"
-msgstr ""
+msgstr "URL obrázku:"
 
 #: ../templates/admin_default/viewalbum.tpl.php:16
 #: ../templates/admin_default/viewgallery.tpl.php:16
 msgid "With selected:"
-msgstr ""
+msgstr "S označeným:"
 
 #: ../templates/admin_default/viewgallery.tpl.php:29
 msgid "admin bar|View gallery"
-msgstr ""
+msgstr "Zobraziť galériu"
 
 #: ../templates/admin_default/viewgallery.tpl.php:36
 msgid "admin bar|Change thumbnail"
-msgstr ""
+msgstr "Zmeniť náhľad"
+
