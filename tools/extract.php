@@ -8,7 +8,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: extract.php,v 1.13 2006/04/29 16:18:52 tamlyn Exp $
+ * @version $Id: extract.php,v 1.14 2006/06/24 22:36:15 tamlyn Exp $
  */
 
 // Programs to call (insert path to them if necessary)
@@ -75,7 +75,11 @@ function parseDirectory ($dir, $filter = "php|html|tpl|inc")
   
   // Get all files matching pattern in current template
   $files = parseDirectory("../".$config->pathto_templates.$config->default_template.'/');
-  $files[count($files)] = "../includes/singapore.class.php";
+  $files[] = "../includes/image.class.php";
+  $files[] = "../includes/item.class.php";
+  $files[] = "../includes/gallery.class.php";
+  $files[] = "../includes/singapore.class.php";
+  $files[] = "../includes/user.class.php";
   fwrite($fp, implode("\n", $files));
   
   // Close tempfile
