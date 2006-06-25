@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.69 2006/06/07 15:49:54 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.70 2006/06/25 00:13:56 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -203,12 +203,13 @@ class Singapore
     
     //fetch galleries passing previous gallery as parent pointer
     for($i=0; $i<$numberOfAncestors; $i++)
-      $this->ancestors[$i] =& 
-          $this->io->getGallery(
+      if(!$this->ancestors[$i] =& $this->io->getGallery(
               $ancestorIds[$i], $this->ancestors[$i-1],
               //only fetch children of bottom level gallery 
               ($i==$numberOfAncestors-1) ? 1 : 0
-          );
+          )
+        )
+        break;
     
     //need to remove bogus parent of root gallery created by previous step
     unset($this->ancestors[-1]);
@@ -301,12 +302,14 @@ class Singapore
    */
   function pageTitle()
   {
-    if($this->isImagePage() && $this->image->name()!="")
-      return $this->image->name();
-    elseif(($this->isAlbumPage() || $this->isGalleryPage()) && $this->gallery->name()!="")
-      return $this->gallery->name();
-    else
-      return $this->config->gallery_name;
+    $crumbArray = $this->crumbLineArray();
+    
+    $ret = "";
+    for($i=count($crumbArray)-1;$i>0;$i--)
+      $ret .= $crumbArray[$i]->nameForce()." &lt; ";
+    $ret .= $crumbArray[$i]->nameForce();
+    
+    return $ret;
   }
   
   /**
@@ -430,11 +433,11 @@ class Singapore
    * Creates an array of objects each representing an item in the crumb line.
    * @return array  the items of the crumb line
    */
-  function &crumbLineArray()
+  function crumbLineArray()
   {
-    $crumb =& $this->ancestors;
+    $crumb = $this->ancestors;
     
-    if($this->isImagePage()) $crumb[] =& $this->image;
+    if($this->isImagePage()) $crumb[] = $this->image;
     
     return $crumb;
   }
@@ -444,13 +447,13 @@ class Singapore
    */
   function crumbLineText()
   {
-    $crumbArray =& $this->crumbLineArray();
-    
+    $crumbArray = $this->crumbLineArray();
+
     $ret = "";
     for($i=0;$i<count($crumbArray)-1;$i++)
       $ret .= $crumbArray[$i]->nameLink()." &gt;\n";
-      
     $ret .= $crumbArray[$i]->nameForce();
+
     return $ret;
   }
   
