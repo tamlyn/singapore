@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.62 2006/06/07 15:49:54 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.63 2006/06/26 21:08:23 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1261,6 +1261,10 @@ class sgAdmin extends Singapore
       $img->owner = $this->user->username;
     
     $this->gallery->images[] =& $img;
+    
+    //set as gallery thumbnail?
+    if($this->gallery->imageCount()==1)
+      $this->gallery->filename = $img->id;
     
     if($this->io->putGallery($this->gallery)) {
       $this->selectImage($image);
