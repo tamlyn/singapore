@@ -1,0 +1,167 @@
+/* 	
+	 White on White CSS for Modern - Singapore Template v1.3 (www.sgal.org)
+	   by Ross Howard (www.abitcloser.com)													
+*/
+
+/* Structure */
+													
+body {
+	background-color: #E5E5E5;
+}
+
+#sgContainer {
+	border-right-color: #DEDEDE; 				
+	border-left-color: #DEDEDE;			 
+	border-top-color: #DEDEDE;
+	border-bottom-color: #DEDEDE;
+	background-color: #FFF;	
+}
+
+#sgHeader {
+	border-right-color: #C3C3C3;				
+}
+
+#sgMain-nav {
+	border-right-color: #C3C3C3;				
+	color: #999;
+}
+
+#sgContent {
+	border-right-color: #C3C3C3;				
+	border-bottom-color: #C3C3C3;				
+	border-top-color: #FFF;
+}
+
+/* Page Elements */
+
+.sgCrumb {
+	color: #999;
+}
+
+.sgGallery {
+	border-color: #CCC;
+	background-color: #EEE;
+}
+
+.sgAlbum {
+	border-color: #CCC;
+	background-color: #EEE;
+}
+
+.sgImageBox {
+	background-color: #EEE;
+	border-color: #DDD;
+	border-right-color: #AAA;
+	border-bottom-color: #AAA;
+}
+
+img.sgImage  {
+	background: #EEE url(../img/loader_w.gif) center bottom no-repeat;
+}
+
+/* Typography */
+
+h2 {
+	color: #555;
+}
+
+h4 {
+	color: #666;
+}
+
+p {
+	color: #666;
+}
+
+.sgGallery p.sgCount {
+	color: #AAA;
+}
+
+.sgPreview p {
+	color: #999;
+}
+
+#sgFooter p {
+	color: #AAA;
+}
+
+a {
+	color: #29A9FF;
+}
+
+#sgFooter a {
+	color: #29A9FF;
+}
+
+/* Links and Thumbnails */
+
+.sgAlbum a img {
+	background-color: #FFF;
+	border-color: #DDD;			
+}
+
+.sgGallery a img {
+	background-color: #FFF;
+	border-color: #DDD;
+}
+
+a:hover img.sgThumbnailAlbum, a:hover img.sgThumbGallery {
+	border-color: #BBB;
+}
+
+.sgPreview a img {
+	border-color: #CCC;
+	color: #CCC;
+}
+
+.sgPreview a:hover img, .sgPreview a:hover img.sgThumbnailPreviewCurrent{
+	border-color: #29A9FF;
+}
+
+/* Details */
+
+dl {
+	color: #999;
+}
+
+dt {
+	color: #666;
+}
+
+/* Forms */
+
+select{
+	color: #666;
+}
+
+/* In-Image Rollovers */
+
+.sgImageBox a {
+	background-color: #222;
+}
+
+.sgImageBox a.prev {
+	border-right-color: #111;
+}
+
+.sgImageBox a.thumb {
+	border-bottom-color: #111;
+}
+
+.sgImageBox a.next {
+	border-left-color: #111;
+}
+
+.sgImageBox a.control {
+	border-top-color: #111;
+}
+
+/* Slideshow */
+
+body#slideshow {
+	background-color: #000;
+}
+
+#slideshow div.sgImageBox {
+	background-color: #000;
+}
