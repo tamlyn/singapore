@@ -5,10 +5,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.11\n"
+"Project-Id-Version: singapore 0.1\n"
 "POT-Creation-Date: 2005-08-08 19:35+0100\n"
-"PO-Revision-Date: 2005-08-08 20:20+0001\n"
-"Last-Translator: Samuel Suther <info@suther.de>\n"
+"PO-Revision-Date: 2006-07-13 13:14-0006\n"
+"Last-Translator: Niels Hackius <niels@hackius.de>\n"
 "Language-Team: German (Deutsch)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -72,7 +72,7 @@ msgstr "Nächstes"
 # File: ../includes/singapore.class.php, line: 635
 # File: ../includes/singapore.class.php, line: 1501
 msgid "image|Thumbnails"
-msgstr "Miniaturbilder"
+msgstr "Übersicht"
 #
 # File: ../includes/singapore.class.php, line: 632
 # File: ../includes/singapore.class.php, line: 1484
@@ -86,7 +86,7 @@ msgstr "Sprache wählen..."
 # File: ../includes/singapore.class.php, line: 679
 # File: ../includes/singapore.class.php, line: 711
 msgid "Go"
-msgstr ""
+msgstr "Start"
 #
 # File: ../includes/singapore.class.php, line: 701
 msgid "Select template..."
@@ -117,7 +117,7 @@ msgstr ""
 #
 # File: ../includes/singapore.class.php, line: 858
 msgid "Sample image from gallery"
-msgstr "Beispielbild aus der Galerie"
+msgstr "Vorschaubild für die Galerie"
 #
 # File: ../includes/singapore.class.php, line: 893
 #, c-format
@@ -176,7 +176,7 @@ msgstr "Urheberrecht"
 # File: ../includes/singapore.class.php, line: 1100
 # File: ../includes/singapore.class.php, line: 1593
 msgid "Viewed"
-msgstr ""
+msgstr "Angezeigt"
 #
 # File: ../includes/singapore.class.php, line: 1100
 # File: ../includes/singapore.class.php, line: 1593
@@ -220,8 +220,8 @@ msgstr "Film"
 #
 # File: ../includes/singapore.class.php, line: 1585
 msgid "Darkroom manipulation"
-msgstr "In der Dunkelkammer verändert"
+msgstr "Analog verändert"
 #
 # File: ../includes/singapore.class.php, line: 1587
 msgid "Digital manipulation"
-msgstr "Mit dem Computer verändert"
+msgstr "Digtal verändert"

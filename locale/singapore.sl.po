@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: singapore 0.9.10\n"
+"Project-Id-Version: singapore 0.9.10\n" 
 "POT-Creation-Date: 2004-11-02 19:12-0500\n"
 "PO-Revision-Date: 2004-11-03 01:11+0100\n"
 "Last-Translator: Benjamin Pezdir <benjamin.pezdir@siol.net>\n"
