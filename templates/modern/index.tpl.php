@@ -9,6 +9,7 @@
  */
 
 //if slideshow then set external
+$embed = false;
  if($sg->action == 'slideshow') {$embed = true;}
 
 //include header file
