@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.63 2006/06/26 21:08:23 tamlyn Exp $
+ * @version $Id: admin.class.php,v 1.64 2006/08/04 18:26:28 thepavian Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -484,7 +484,7 @@ class sgAdmin extends Singapore
         } elseif($this->actionCancelled()) {
           $this->includeFile = "menu";
         } else {
-          $dir = $this->getListing($this->config->pathto_cache,"all");
+          $dir = $this->getListing($this->config->pathto_cache,$this->config->recognised_extensions);
           $GLOBALS["confirmTitle"] = $this->translator->_g("purge cached thumbnails");
           $GLOBALS["confirmMessage"] = $this->translator->_g("Are you sure you want to delete all %s cached thumbnails?",count($dir->files));
           $this->includeFile = "confirm";
@@ -1304,11 +1304,11 @@ class sgAdmin extends Singapore
     
     //start processing archive contents
     $wd = $tmpdir;
-    $contents = $this->getListing($wd,"images");
+    $contents = $this->getListing($wd,$this->config->recognised_extensions);
     
     //cope with archives contained within a directory
     if(empty($contents->files) && count($contents->dirs) == 1)
-      $contents = $this->getListing($wd .= '/'.$contents->dirs[0],"images");
+      $contents = $this->getListing($wd .= '/'.$contents->dirs[0],$this->config->recognised_extensions);
       
     $success = true;
 
@@ -1504,7 +1504,7 @@ class sgAdmin extends Singapore
    */
   function purgeCache()
   {
-    $dir = $this->getListing($this->config->pathto_cache, "all");
+    $dir = $this->getListing($this->config->pathto_cache, $this->config->recognised_extensions);
     
     $success = true;
     for($i=0;$i<count($dir->files);$i++) {
