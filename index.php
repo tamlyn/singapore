@@ -9,7 +9,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003, 2004 Tamlyn Rhodes
- * @version $Id: index.php,v 1.20 2006/01/07 16:24:14 tamlyn Exp $
+ * @version $Id: index.php,v 1.21 2006/08/05 19:56:32 thepavian Exp $
  */
 
 //include main class
@@ -32,6 +32,6 @@ if(isset($_REQUEST[$sg->config->session_name])) {
 @header("Content-type: text/html; charset=".$sg->character_set);
 
 //pass control over to template
-include $sg->config->base_path.$sg->config->pathto_current_template."index.tpl.php";
+@include $sg->config->base_path.$sg->config->pathto_current_template."index.tpl.php";
 
 ?>
