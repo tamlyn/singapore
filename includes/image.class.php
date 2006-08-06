@@ -6,7 +6,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: image.class.php,v 1.21 2006/03/21 02:29:14 tamlyn Exp $
+ * @version $Id: image.class.php,v 1.22 2006/08/06 13:50:20 thepavian Exp $
  */
 
 //include the base class
@@ -223,6 +223,7 @@ class sgImage extends sgItem
     $ret .= "width=".($this->width()+20).",";
     $ret .= "height=".($this->height()+20)."');";
     $ret .= "return false;\">".$this->thumbnailHTML($class, $type)."</a>";
+    return $ret;
   }
   
   function nameForce()
