@@ -12,7 +12,7 @@
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: external.php,v 1.3 2006/01/03 17:56:35 tamlyn Exp $
+ * @version $Id: external.php,v 1.4 2006/08/07 10:04:28 thepavian Exp $
  */
 
 //you may leave this blank as it will be automatically detected
@@ -49,6 +49,6 @@ if(!headers_sent())
   header("Content-type: text/html; charset=".$sg->character_set);
 
 //pass control over to template
-include $sg->config->base_path.$sg->config->pathto_current_template."index.tpl.php";
+ @include $sg->config->base_path.$sg->config->pathto_current_template."index.tpl.php";
 
 ?>
