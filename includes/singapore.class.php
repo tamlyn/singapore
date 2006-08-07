@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.71 2006/08/05 18:15:25 thepavian Exp $
+ * @version $Id: singapore.class.php,v 1.72 2006/08/07 10:02:39 thepavian Exp $
  */
 
 //define constants for regular expressions
@@ -103,7 +103,7 @@ class Singapore
     if(get_magic_quotes_gpc())
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
-    //desanitize request
+    //sanitize request
     $_REQUEST = array_map("htmlentities", $_REQUEST);
     
     //load config from singapore root directory
@@ -130,7 +130,10 @@ class Singapore
     $this->config->loadConfig($basePath.$this->config->pathto_galleries.$galleryId."/gallery.ini");
     
     //set current template from request vars or config
+    
+    //preset template to default one
     $this->template = $this->config->default_template;
+    //check if requested template exists
     if(isset($_REQUEST[$this->config->url_template])) {
     	$templates = Singapore::getListing($this->config->base_path.$this->config->pathto_templates);
 		foreach($templates->dirs as $single) {
