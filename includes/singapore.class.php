@@ -3,8 +3,8 @@
 /**
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.72 2006/08/07 10:02:39 thepavian Exp $
+ * @copyright (c)2003-2006 Tamlyn Rhodes
+ * @version $Id: singapore.class.php,v 1.73 2006/09/08 15:29:22 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -23,7 +23,7 @@ class Singapore
    * current script version 
    * @var string
    */
-  var $version = "0.10.0CVS";
+  var $version = "0.10.1CVS";
   
   /**
    * instance of a {@link sgConfig} object representing the current 
@@ -103,7 +103,7 @@ class Singapore
     if(get_magic_quotes_gpc())
       $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
     
-    //sanitize request
+    //desanitize request
     $_REQUEST = array_map("htmlentities", $_REQUEST);
     
     //load config from singapore root directory
@@ -130,18 +130,16 @@ class Singapore
     $this->config->loadConfig($basePath.$this->config->pathto_galleries.$galleryId."/gallery.ini");
     
     //set current template from request vars or config
-    
-    //preset template to default one
+    //first, preset template to default one
     $this->template = $this->config->default_template;
-    //check if requested template exists
-    if(isset($_REQUEST[$this->config->url_template])) {
+    //then check if requested template exists
     	$templates = Singapore::getListing($this->config->base_path.$this->config->pathto_templates);
-		foreach($templates->dirs as $single) {
-			if($single == $_REQUEST[$this->config->url_template]) {
-				$this->template = $single;
-				break;
-			}
-		}
+      foreach($templates->dirs as $single) {
+        if($single == $_REQUEST[$this->config->url_template]) {
+          $this->template = $single;
+          break;
+        }
+      }
     }
 
     $this->config->pathto_current_template = $this->config->pathto_templates.$this->template.'/';
@@ -423,8 +421,8 @@ class Singapore
       (time() - $_SESSION["sgUser"]["loginTime"] < 600)
     ) {
       //reset loginTime to current time
-  	  $_SESSION["sgUser"]["loginTime"] = time();
-  	  return true;
+      $_SESSION["sgUser"]["loginTime"] = time();
+      return true;
     }
     return false;
   }

@@ -5,8 +5,8 @@
  * 
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.64 2006/08/04 18:26:28 thepavian Exp $
+ * @copyright (c)2003-2006 Tamlyn Rhodes
+ * @version $Id: admin.class.php,v 1.65 2006/09/08 15:29:22 tamlyn Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -737,39 +737,51 @@ class sgAdmin extends Singapore
    * @param string the action to perform (either 'read', 'edit', 'add' or 'delete')
    * @return bool true if permissions are satisfied; false otherwise
    */
-  function checkPermissions($obj, $action, $gallery = null, $image = null, $ancestor = 0)
+  function checkPermissions($obj, $action, $gallery = null, $image = null)
   {
+    //admins and object owners automatically have full permissions
     if($this->user->isAdmin() || $this->user->isOwner($obj))// || (!$this->user->isGuest() && $obj->owner == "__nobody__"))
       return true;
-    
+      
+    //get the appropriate permission bitmask depending on action    
     switch($action) {
       case "read" :
-        if(($obj->permissions & SG_IHR_READ) == SG_IHR_READ)
-          if($this->galleryIsRoot($ancestor))
-            return false;
-          else 
-            return $this->checkPermissions($this->ancestors[$ancestor+1], $action, $gallery, $image, $ancestor+1);
-        else
-          return $obj->permissions & SG_WLD_READ
-             || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_READ);
+        $inheritPerm = SG_IHR_READ;
+        $worldPerm = SG_WLD_READ;
+        $groupPerm = SG_GRP_READ;
+        break;
       case "edit" :
-        if(($obj->permissions & SG_IHR_EDIT) == SG_IHR_EDIT)
-          if($this->galleryIsRoot($ancestor))
-            return false;
-          else 
-            return $this->checkPermissions($obj, $action, $gallery, $image, ++$ancestor);
-        else
-          return $obj->permissions & SG_WLD_EDIT 
-             || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_EDIT);
+        $inheritPerm = SG_IHR_EDIT;
+        $worldPerm = SG_WLD_EDIT;
+        $groupPerm = SG_GRP_EDIT;
+        break;
       case "add" :
-        return $obj->permissions & SG_WLD_ADD 
-           || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_ADD);
+        $inheritPerm = SG_IHR_ADD;
+        $worldPerm = SG_WLD_ADD;
+        $groupPerm = SG_GRP_ADD;
+        break;
       case "delete" :
-        return $obj->permissions & SG_WLD_DELETE 
-           || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & SG_GRP_DELETE);
+        $inheritPerm = SG_IHR_DELETE;
+        $worldPerm = SG_WLD_DELETE;
+        $groupPerm = SG_GRP_DELETE;
+        break;
       default :
+        //unrecognised action so disallow it
         return false;
     }
+    
+    //check if the permission is inherited 
+    if(($obj->permissions & $inheritPerm) == $inheritPerm)
+      if($obj->isRoot())
+        //shouldn't happen, but just in case
+        return false;
+      else
+        //check permissions of parent
+        return $this->checkPermissions($obj->parent, $action, $gallery, $image);
+    else
+      //not inherited so check world and group permissions of current object
+      return $obj->permissions & $worldPerm
+         || ($this->isInGroup($this->user->groups, $obj->groups) && $obj->permissions & $groupPerm);
   }
   
   function savePermissions()
@@ -806,11 +818,14 @@ class sgAdmin extends Singapore
       case "owner"   : break;
     }
         
-    $obj->permissions |= $perms;
-    $obj->permissions &= $perms;
+    $obj->permissions |= $perms; // isn't this equivalent
+    $obj->permissions &= $perms; // to == assignment?
     
+    //only the owner or admin can change groups
     if($this->user->isAdmin() || $this->user->isOwner($obj));
       $obj->groups = $_POST["sgGroups"];
+    
+    //only the admin can change the owner
     if($this->user->isAdmin())
       $obj->owner = $_POST["sgOwner"];
     
@@ -1076,11 +1091,8 @@ class sgAdmin extends Singapore
     $gal =& new sgGallery($newGalleryId, $this->gallery);
     $gal->name = $_REQUEST["newgallery"];
     
-    //set full permissions on guest-created objects
-    if($this->user->isGuest())
-      $gal->permissions = SG_GRP_READ | SG_GRP_EDIT | SG_GRP_ADD | SG_GRP_DELETE
-                        | SG_WLD_READ | SG_WLD_EDIT | SG_WLD_ADD | SG_WLD_DELETE;
-    else
+    //set object owner
+    if(!$this->user->isGuest())
       $gal->owner = $this->user->username;
     
     //save gallery metadata

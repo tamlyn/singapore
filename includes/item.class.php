@@ -5,8 +5,8 @@
  * 
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- * @copyright (c)2005 Tamlyn Rhodes
- * @version $Id: item.class.php,v 1.9 2006/05/20 18:48:16 tamlyn Exp $
+ * @copyright (c)2005-6 Tamlyn Rhodes
+ * @version $Id: item.class.php,v 1.10 2006/09/08 15:29:22 tamlyn Exp $
  */
 
 //permissions bit flags
@@ -29,7 +29,7 @@ define("SG_IHR_DELETE", 136);
  * @abstract
  * @package singapore
  * @author Tamlyn Rhodes <tam at zenology dot co dot uk>
- * @copyright (c)2005 Tamlyn Rhodes
+ * @copyright (c)2005-6 Tamlyn Rhodes
  */
 class sgItem
 {
@@ -55,9 +55,10 @@ class sgItem
   
   /**
    * Bit-field of permissions
+   * Default is to inherit everything.
    * @var int
    */
-  var $permissions = 0;
+  var $permissions = 255;
   
   /**
    * Space-separated list of categories to which the item belongs (not used)
