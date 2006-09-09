@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.73 2006/09/08 15:29:22 tamlyn Exp $
+ * @version $Id: singapore.class.php,v 1.74 2006/09/09 22:35:38 thepavian Exp $
  */
 
 //define constants for regular expressions
@@ -133,7 +133,8 @@ class Singapore
     //first, preset template to default one
     $this->template = $this->config->default_template;
     //then check if requested template exists
-    	$templates = Singapore::getListing($this->config->base_path.$this->config->pathto_templates);
+    if(!empty($_REQUEST[$this->config->url_template])) {
+     $templates = Singapore::getListing($this->config->base_path.$this->config->pathto_templates);
       foreach($templates->dirs as $single) {
         if($single == $_REQUEST[$this->config->url_template]) {
           $this->template = $single;
