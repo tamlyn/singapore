@@ -38,14 +38,6 @@ msgstr ""
 msgid "Sample image from gallery"
 msgstr ""
 
-#: ../includes/gallery.class.php:252
-msgid "Previous gallery"
-msgstr ""
-
-#: ../includes/gallery.class.php:257
-msgid "Next gallery"
-msgstr ""
-
 #: ../includes/image.class.php:164
 msgid "image|First"
 msgstr ""
