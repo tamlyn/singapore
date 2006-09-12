@@ -15,7 +15,7 @@
       <tr class="sgRow<?php echo $index%2 ?>">
         <td><?php echo $img->nameLink(); ?> (<?php echo $img->id ?>)</td>
         <td align="right"><?php echo empty($img->hits) ? "0" : $img->hits ?></td>
-        <td align="right" title="<?php echo empty($img->lasthit) ? "n/a" : date("Y-m-d H:i:s",$img->lasthit) ?>"><?php empty($img->lasthit) ? "n/a" : date("D j H:i",$img->lasthit) ?></td>
+        <td align="right" title="<?php echo empty($img->lasthit) ? "n/a" : date("Y-m-d H:i:s",$img->lasthit) ?>"><?php echo empty($img->lasthit) ? "n/a" : date("D j H:i",$img->lasthit) ?></td>
         <td><img src="<?php echo $sg->config->base_url.$sg->config->pathto_admin_template ?>images/graph.gif" height="8" width="<?php echo $maxhits==0 ? "0" : floor(($img->hits/$maxhits)*300) ?>" /></td>
       </tr>
       <?php endforeach; ?>
