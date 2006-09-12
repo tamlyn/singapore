@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.74 2006/09/09 22:35:38 thepavian Exp $
+ * @version $Id: singapore.class.php,v 1.75 2006/09/12 11:56:11 thepavian Exp $
  */
 
 //define constants for regular expressions
@@ -581,12 +581,13 @@ class Singapore
   
   
   /**
+   * @param string $seperator optional string to seperate the Gallery Tab Links
    * @return string
    */
-  function galleryTab()
+  function galleryTab($seperator = " | ")
   {
     $showing = $this->galleryTabShowing();
-    return Singapore::conditional($this->galleryTabLinks(), $showing." | %s", $showing);
+    return Singapore::conditional($this->galleryTabLinks(), $showing.$seperator."%s", $showing);
   }
   
   /**
