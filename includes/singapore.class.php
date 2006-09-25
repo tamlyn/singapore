@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.75 2006/09/12 11:56:11 thepavian Exp $
+ * @version $Id: singapore.class.php,v 1.76 2006/09/25 21:50:53 thepavian Exp $
  */
 
 //define constants for regular expressions
@@ -632,7 +632,7 @@ class Singapore
   }
   
   function navigationLinks() {
-    $ret = "<link rel=\"Top\" title=\"".$this->config->gallery_name."\" href=\"".$this->ancestors[0]->URL()."\" />\n";
+    $ret = "<link rel=\"Top\" title=\"".$this->ancestors[0]->name()."\" href=\"".$this->ancestors[0]->URL()."\" />\n";
     
     if($this->isImagePage()) {
       $ret .= "<link rel=\"Up\" title=\"".$this->image->parent->name()."\" href=\"".$this->image->parent->URL()."\" />\n";
