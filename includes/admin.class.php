@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.66 2006/09/25 21:39:20 thepavian Exp $
+ * @version $Id: admin.class.php,v 1.67 2006/09/25 21:47:45 thepavian Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1074,8 +1074,14 @@ class sgAdmin extends Singapore
    */
   function addGallery()
   {
-    $newGalleryId = $this->gallery->id."/";
-  	$newGalleryId .= ereg_replace("[^A-Za-z0-9]", "", $_REQUEST["newgallery"]); 
+    
+  	$newGalleryId = ereg_replace("[^A-Za-z0-9]", "", $_REQUEST["newgallery"]); 
+  	if(empty($newGalleryId)) {
+  		  return $this->pushError($this->translator->_g("Unable to create directory '%s'", $_REQUEST["newgallery"]));
+  	}
+  	else {
+  		$newGalleryId = $this->gallery->id."/".$newGalleryId;
+  	}
   	
     $path = $this->config->base_path.$this->config->pathto_galleries.$newGalleryId;
     
