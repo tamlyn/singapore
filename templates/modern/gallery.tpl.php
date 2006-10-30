@@ -1,6 +1,7 @@
 	<h2><?php echo $sg->gallery->name(); ?></h2>
 	<h4><?php echo $sg->gallery->byArtistText(); ?></h4>
 </div>
+
 <div id="sgMain-nav">
 	<?php if($sg->gallery->hasPrev()) echo $sg->gallery->prevLink()." | "; ?> 
 	<?php if(!$sg->gallery->isRoot()) echo $sg->gallery->parentLink(); ?> 
@@ -17,13 +18,14 @@
         	<p><?php echo $sg->gallery->galleries[$index]->summary(); ?></p>
         	<p class="sgCount"><?php echo $sg->gallery->galleries[$index]->itemCountText(); ?></p>
     		<?php if ($sg->config->show_slideshowURL == 1) { ?>
-    		<?php if ($sg->gallery->galleries[$index]->hasImages()) { ?>
+    		<?php if ($sg->gallery->galleries[$index]->hasImages() && !$sg->gallery->galleries[$index]->hasChildGalleries()) { ?>
 				<p><a href="<?php echo $sg->gallery->galleries[$index]->images[0]->URL(); if (!strstr($sg->gallery->galleries[$index]->images[0]->URL(), '?')) { echo '?'; } else { echo '&'; } ?>action=slideshow">View Slideshow</a></p>
     		<?php } ?>
 			<?php } ?>
 			<div class="sgFoot"></div>		
       	</div>
-		<?php if($index % 2) {echo '<div class="clear"></div>';} ?>
+      	<?php // The number below equals the number of boxes before a new line starts. 1 will never echo the clear
+		 	  if($index % 2) {echo '<div class="clear"></div>';} ?>
     <?php endfor; ?> 
 
 	<p class="sgTab"><?php echo $sg->galleryTab(); ?></p>

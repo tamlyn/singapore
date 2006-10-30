@@ -1,3 +1,4 @@
+<!-- start of footer.tpl.php -->
 </div>
 	<div id="sgFooter">
 		<p>

@@ -32,6 +32,12 @@ body {
 	border-top-color: #1A1A1A;
 }
 
+#sgUpdate {
+	background-color: #222;
+	border-bottom-color: #111;	
+	color: #666;			
+}
+
 /* Page Elements */
 
 .sgCrumb {

@@ -1,5 +1,5 @@
-Modern - singapore template v1.3b (www.sgal.org)
-by Ross Howard (www.abitcloser.com/singapore)	
+Modern - singapore template v1.3.2
+by Ross Howard (www.abitcloser.com/projects/singapore)	
 
 Modern is a lightweight xHTML/CSS template for singapore.
 
@@ -31,6 +31,12 @@ Add AJAX Slideshow
 
 CHANGELOG
 
+1.3.2 - NEW RSS included as <link> in each page - Uses RSS template
+1.3.2 - NEW Update check system checks for new version of Modern when logged in and viewing root public page
+1.3.2 - NEW versioning number system
+
+1.3 - FIX stop slideshow link for galleries with child galleries
+1.3 - FIX template.ini thumb_force_size renamed to thumb_crop_
 1.3 - FIX CSS image urls
 1.3 - FIX Slideshow rollovers wrong size with resized images
 1.3 - FIX slideshow links for galleries with no images

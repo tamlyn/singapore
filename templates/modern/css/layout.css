@@ -50,6 +50,14 @@ body {
 	text-align: center;
 }
 
+#sgUpdate {
+	font-size: 11px;
+	padding: 8px 0 8px 0;
+	text-align: center;
+	border-bottom: 1px solid;
+}
+
+
 /* Page Elements */
 
 .sgCrumb {
