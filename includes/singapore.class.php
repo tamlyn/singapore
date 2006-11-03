@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.76 2006/09/25 21:50:53 thepavian Exp $
+ * @version $Id: singapore.class.php,v 1.77 2006/11/03 15:59:15 tamlyn Exp $
  */
 
 //define constants for regular expressions
@@ -202,7 +202,8 @@ class Singapore
     if(empty($galleryId)) $galleryId = isset($_REQUEST[$this->config->url_gallery]) ? $_REQUEST[$this->config->url_gallery] : ".";
     
     //try to validate gallery id
-    if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
+    if($galleryId != '.' && substr($galleryId, 0, 2) != './') 
+      $galleryId = './'.$galleryId;
     
     //detect back-references to avoid file-system walking
     if(strpos($galleryId,"../")!==false) $galleryId = ".";
@@ -761,18 +762,23 @@ class Singapore
       "\">".$this->translator->_g("Add a comment")."</a>";
   }
   
-    /**
+  /**
    * @return array  array of sgImage objects
    */
   function &previewThumbnailsArray()
   {
     $ret = array();
-    $index = $this->image->index();
-    $start = ceil($index - $this->config->thumb_number_preview/2);
     
-    for($i = $start; $i < $start + $this->config->thumb_number_preview; $i++)
-      if(isset($this->image->parent->images[$i]))
-        $ret[$i] =& $this->image->parent->images[$i];
+    //start at half way before current image or at 0, whichever is greatest
+    $start = max($this->image->index() - floor($this->config->thumb_number_preview/2), 0);
+    //end at start plus number of previews or the last image, whichever comes first
+    $end = min($start + $this->config->thumb_number_preview, $this->image->parent->imageCount());
+    //adjust start to end minus number of previews if that is less than current start
+    $start = min($start, max($end - $this->config->thumb_number_preview, 0));
+    
+    //copy the images out of the array
+    for($i = $start; $i < $end; $i++)
+      $ret[$i] =& $this->image->parent->images[$i];
       
     return $ret;
   }
