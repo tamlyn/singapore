@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.67 2006/09/25 21:47:45 thepavian Exp $
+ * @version $Id: admin.class.php,v 1.68 2007/03/22 13:59:31 thepavian Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -1222,7 +1222,8 @@ class sgAdmin extends Singapore
   {
     if($_REQUEST["sgLocationChoice"] == "remote") {
       $image = $_REQUEST["sgImageURL"];
-      $path = $image;
+      $path = $_REQUEST["sgImageURL"];
+      $originalImagename = basename($_REQUEST["sgImageURL"]);
     } elseif($_REQUEST["sgLocationChoice"] == "single") {
       //set filename as requested and strip off any clandestine path info
       if($_REQUEST["sgNameChoice"] == "same") $image = basename($_FILES["sgImageFile"]["name"]);
