@@ -6,7 +6,7 @@
  * @package singapore
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: admin.class.php,v 1.68 2007/03/22 13:59:31 thepavian Exp $
+ * @version $Id: admin.class.php,v 1.69 2010/08/25 11:28:47 zhangweiwu Exp $
  */
 
 define("SG_ADMIN",     1024);
@@ -236,8 +236,8 @@ class sgAdmin extends Singapore
         if(!$this->checkPermissions($this->gallery,"add")) {
           $this->pushMessage($this->translator->_g("You do not have permission to perform this operation."));
           $this->includeFile = "view";
-        } elseif($this->addGallery()) {  	
-          $this->selectGallery($this->gallery->id."/".ereg_replace("[^A-Za-z0-9]", "", $_REQUEST["newgallery"]));
+        } elseif($this->addGallery()) {
+          $this->selectGallery($this->gallery->id."/".$_REQUEST["newgallery"]);
           $this->pushMessage($this->translator->_g("Gallery added"));
           $this->includeFile = "editgallery";
         } else {
@@ -1074,15 +1074,7 @@ class sgAdmin extends Singapore
    */
   function addGallery()
   {
-    
-  	$newGalleryId = ereg_replace("[^A-Za-z0-9]", "", $_REQUEST["newgallery"]); 
-  	if(empty($newGalleryId)) {
-  		  return $this->pushError($this->translator->_g("Unable to create directory '%s'", $_REQUEST["newgallery"]));
-  	}
-  	else {
-  		$newGalleryId = $this->gallery->id."/".$newGalleryId;
-  	}
-  	
+    $newGalleryId = $this->gallery->id."/".$_REQUEST["newgallery"];
     $path = $this->config->base_path.$this->config->pathto_galleries.$newGalleryId;
     
     //fail if directory already exists
@@ -1222,20 +1214,11 @@ class sgAdmin extends Singapore
   {
     if($_REQUEST["sgLocationChoice"] == "remote") {
       $image = $_REQUEST["sgImageURL"];
-      $path = $_REQUEST["sgImageURL"];
-      $originalImagename = basename($_REQUEST["sgImageURL"]);
+      $path = $image;
     } elseif($_REQUEST["sgLocationChoice"] == "single") {
       //set filename as requested and strip off any clandestine path info
       if($_REQUEST["sgNameChoice"] == "same") $image = basename($_FILES["sgImageFile"]["name"]);
       else $image = basename($_REQUEST["sgFileName"]);
-      
-      //make image-name filesystem safe
-      $originalImagename = $image;
-      $image =  ereg_replace("[^A-Za-z0-9.]", "", $image);
-      //if the whole image-name gets broken - recover a random one.
-      if(strlen($image) <= 4) {
-      	$image = substr(md5(time()),1,9);
-      }
       
       //make sure image is valid
       if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i", $image)) {
@@ -1252,11 +1235,9 @@ class sgAdmin extends Singapore
         }
       }
       
-     
-      
       $path = $this->config->base_path.$this->config->pathto_galleries.$this->gallery->id."/".$image;
       $srcImage = $image;
-
+      
       if(file_exists($path))
         switch($this->config->upload_overwrite) {
           case 1 : //overwrite
@@ -1284,7 +1265,7 @@ class sgAdmin extends Singapore
     
     $img =& new sgImage($image, $this->gallery);
     
-    $img->name = strtr(substr($originalImagename, strrpos($originalImagename,"/"), strrpos($originalImagename,".")-strlen($originalImagename)), "_", " ");
+    $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
     list($img->width, $img->height, $img->type) = GetImageSize($path);
     
     //leave owner of guest-uploaded files as default '__nobody__'
@@ -1346,14 +1327,6 @@ class sgAdmin extends Singapore
     //add any images to current gallery
     foreach($contents->files as $image) {
     
-      //make image-name filesystem safe
-      $originalImagename = $image;
-      $image =  ereg_replace("[^A-Za-z0-9.]", "", $image);
-      //if the whole image-name gets broken - recover a random one.
-      if(strlen($image) <= 4) {
-      	$image = substr(md5(time()),1,9);
-      }
-    
       //check image is valid and ignore it if it isn't
       if(!preg_match("/\.(".$this->config->recognised_extensions.")$/i", $image)) {
         $imgInfo = GetImageSize($wd.'/'.$image);
@@ -1399,7 +1372,7 @@ class sgAdmin extends Singapore
       
       $img =& new sgImage($image, $this->gallery);
       
-      $img->name = strtr(substr($originalImagename, strrpos($originalImagename,"/"), strrpos($originalImagename,".")-strlen($originalImagename)), "_", " ");
+      $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
       list($img->width, $img->height, $img->type) = GetImageSize($path);
 
       //leave owner of guest-uploaded files as default '__nobody__'
