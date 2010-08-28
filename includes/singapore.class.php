@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.78 2010/08/25 11:28:47 zhangweiwu Exp $
+ * @version $Id: singapore.class.php,v 1.79 2010/08/28 07:03:37 zhangweiwu Exp $
  */
 
 //define constants for regular expressions
@@ -124,7 +124,7 @@ class Singapore
     }
     
     //set current gallery to root if not specified in url
-    $galleryId = isset($_REQUEST[$this->config->url_gallery]) ? $_REQUEST[$this->config->url_gallery] : ".";
+    $galleryId = isset($_GET[$this->config->url_gallery]) ? $_GET[$this->config->url_gallery] : ".";
     
     //load config from gallery ini file (gallery.ini) if present
     $this->config->loadConfig($basePath.$this->config->pathto_galleries.$galleryId."/gallery.ini");
@@ -185,7 +185,10 @@ class Singapore
       $this->character_set = $this->translator->languageStrings[0]["charset"];
     else
       $this->character_set = $this->config->default_charset;
-    
+
+    if (ini_get("mbstring.func_overload") == "7") {
+      $this->character_set = "UTF-8";
+    }
     //set action to perform
     if(empty($_REQUEST["action"])) $this->action = "view";
     else $this->action = $_REQUEST["action"];

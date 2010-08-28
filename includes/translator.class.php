@@ -4,7 +4,7 @@
  * Translation class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2005 Tamlyn Rhodes
- * @version $Id: translator.class.php,v 1.5 2006/02/06 18:47:57 tamlyn Exp $
+ * @version $Id: translator.class.php,v 1.6 2010/08/28 07:03:37 zhangweiwu Exp $
  */
  
 /**
@@ -25,7 +25,7 @@ class Translator
   var $languageStrings = array();
   
   var $language = "en";
-  
+
   /**
    * Constructor
    * @param string  language code
@@ -80,7 +80,16 @@ class Translator
       while (!feof($fp)) $str .= fread($fp, 1024);
       // Unserialize
       $newStrings = @unserialize($str);
-      
+      if (ini_get("mbstring.func_overload") == "7") {
+        $encoding = $newStrings[0]["charset"] == 'gb2312' ? "CP936" : $newStrings[0]["charset"];
+        foreach ($newStrings as $key => $value) {
+          if (is_string($value))
+            $newStrings[$key] = mb_convert_encoding($value, "UTF-8", $encoding);
+          if (is_array($value))
+            foreach ($value as $subkey => $subvalue) 
+              $newStrings[$key][$subkey] = mb_convert_encoding($subvalue, "UTF-8", $encoding);
+        }
+      }
       //Append new strings to current languageStrings array
       $this->languageStrings = array_merge($this->languageStrings, $newStrings);
       
