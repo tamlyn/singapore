@@ -4,7 +4,7 @@
  * Main class.
  * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
  * @copyright (c)2003-2006 Tamlyn Rhodes
- * @version $Id: singapore.class.php,v 1.79 2010/08/28 07:03:37 zhangweiwu Exp $
+ * @version $Id: singapore.class.php,v 1.80 2010/09/01 00:33:13 zhangweiwu Exp $
  */
 
 //define constants for regular expressions
@@ -875,7 +875,8 @@ class Singapore
 
     while(false !== ($entry = readdir($dp)))
       if(is_dir($dir->path.$entry)) {
-        if(($entry{0} != '.' && $entry{0} != '_') || $getHidden)
+        if($entry    != "CVS" && $entry    != ".svn" && 
+         (($entry{0} != '.'   && $entry{0} != '_')   || $getHidden))
           $dir->dirs[] = $entry;
       } else {
         if($mask == null || preg_match("/\.($mask)$/i",$entry))
