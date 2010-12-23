@@ -56,9 +56,9 @@ class sgGallery extends sgItem
   function sgGallery($id, &$parent)
   {
     $this->id = $id;
-    $this->parent =& $parent;
-    $this->config =& sgConfig::getInstance();
-    $this->translator =& Translator::getInstance();
+    $this->parent = $parent;
+    $this->config = sgConfig::getInstance();
+    $this->translator = Translator::getInstance();
   }
   
   /** @return bool  true if this is a non-album gallery; false otherwise  */
@@ -215,25 +215,25 @@ class sgGallery extends sgItem
   
   function &prevGallery()
   {
-    $tmp =& new sgGallery($this->parent->id.'/'.$this->parent->galleries[$this->index()-1], $this->parent);
+    $tmp = new sgGallery($this->parent->id.'/'.$this->parent->galleries[$this->index()-1], $this->parent);
     return $tmp;
   }
   
   function &nextGallery()
   {
-    $tmp =& new sgGallery($this->parent->id.'/'.$this->parent->galleries[$this->index()+1], $this->parent);
+    $tmp = new sgGallery($this->parent->id.'/'.$this->parent->galleries[$this->index()+1], $this->parent);
     return $tmp;
   }
   
   function prevURL($action = null)
   {
-    $tmp =& $this->prevGallery();
+    $tmp = $this->prevGallery();
     return $tmp->URL(null, $action);
   }
   
   function nextURL($action = null)
   {
-    $tmp =& $this->nextGallery();
+    $tmp = $this->nextGallery();
     return $tmp->URL(null, $action);
   }
   
@@ -283,12 +283,12 @@ class sgGallery extends sgItem
         return;
       elseif($this->filename == "__random__") {
         srand(time()); //seed random number generator and select random image
-        $img =& $this->images[rand(0,count($this->images)-1)];
+        $img = $this->images[rand(0,count($this->images)-1)];
       } else
-        $img =& $this->findImage($this->filename);
+        $img = $this->findImage($this->filename);
       
       //create thumbnail
-      $this->thumbnails[$type] =& new sgThumbnail($img, $type);
+      $this->thumbnails[$type] = new sgThumbnail($img, $type);
     }
     
     return $this->thumbnails[$type];

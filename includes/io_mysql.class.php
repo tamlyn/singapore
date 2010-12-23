@@ -24,7 +24,7 @@ class sgIO_mysql extends sgIOsql
    */
   function sgIO_mysql()
   {
-    $this->config =& sgConfig::getInstance();
+    $this->config = sgConfig::getInstance();
     mysql_connect($this->config->sql_host, $this->config->sql_user, $this->config->sql_pass);
     mysql_select_db($this->config->sql_database);
   }

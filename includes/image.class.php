@@ -56,9 +56,9 @@ class sgImage extends sgItem
   function sgImage($id, &$parent)
   {
     $this->id = $id;
-    $this->parent =& $parent;
-    $this->config =& sgConfig::getInstance();
-    $this->translator =& Translator::getInstance();
+    $this->parent = $parent;
+    $this->config = sgConfig::getInstance();
+    $this->translator = Translator::getInstance();
   }
   
   /**
@@ -120,7 +120,7 @@ class sgImage extends sgItem
     if(!$this->hasPrev())
       return "";
     
-    $tmp =& $this->firstImage(); 
+    $tmp = $this->firstImage(); 
     return '<a href="'.$tmp->URL(null, $action).'">'.$this->firstText().'</a>';
   }
   
@@ -145,19 +145,19 @@ class sgImage extends sgItem
     if(!$this->hasNext())
       return "";
     
-    $tmp =& $this->lastImage(); 
+    $tmp = $this->lastImage(); 
     return '<a href="'.$tmp->URL(null, $action).'">'.$this->lastText().'</a>';
   }
   
   function prevURL($action = null)
   {
-    $tmp =& $this->prevImage(); 
+    $tmp = $this->prevImage(); 
     return $tmp->URL(null, $action);
   }
   
   function nextURL($action = null)
   {
-    $tmp =& $this->nextImage(); 
+    $tmp = $this->nextImage(); 
     return $tmp->URL(null, $action);
   }
   
@@ -330,7 +330,7 @@ class sgImage extends sgItem
   {
     //only create thumbnail if it doesn't already exist
     if(!isset($this->thumbnails[$type])) 
-      $this->thumbnails[$type] =& new sgThumbnail($this, $type);
+      $this->thumbnails[$type] = new sgThumbnail($this, $type);
     
     return $this->thumbnails[$type];
   }

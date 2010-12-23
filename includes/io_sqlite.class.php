@@ -29,7 +29,7 @@ class sgIO_sqlite extends sgIOsql
    */
   function sgIO_sqlite()
   {
-    $this->config =& sgConfig::getInstance();
+    $this->config = sgConfig::getInstance();
     $this->db = sqlite_open($this->config->base_path.$this->config->pathto_data_dir."sqlite.dat");
   }
 

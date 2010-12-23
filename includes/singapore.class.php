@@ -107,7 +107,7 @@ class Singapore
     $_REQUEST = array_map("htmlentities", $_REQUEST);
     
     //load config from singapore root directory
-    $this->config =& sgConfig::getInstance();
+    $this->config = sgConfig::getInstance();
     $this->config->loadConfig($basePath."singapore.ini");
     $this->config->loadConfig($basePath."secret.ini.php");
     
@@ -166,7 +166,7 @@ class Singapore
     }
     
     //read the language file
-    $this->translator =& Translator::getInstance($this->language);
+    $this->translator = Translator::getInstance($this->language);
     $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     
     //clear the UMASK
@@ -222,7 +222,7 @@ class Singapore
     
     //fetch galleries passing previous gallery as parent pointer
     for($i=0; $i<$numberOfAncestors; $i++)
-      if(!$this->ancestors[$i] =& $this->io->getGallery(
+      if(!$this->ancestors[$i] = $this->io->getGallery(
               $ancestorIds[$i], $this->ancestors[$i-1],
               //only fetch children of bottom level gallery 
               ($i==$numberOfAncestors-1) ? 1 : 0
@@ -285,14 +285,14 @@ class Singapore
     if(is_string($image)) {
       foreach($this->gallery->images as $index => $img)
         if($img->id == $image) {
-          $this->image =& $this->gallery->images[$index];
+          $this->image = $this->gallery->images[$index];
           return true;
         }
     } elseif(is_int($image) && $image >= 0 && $image < count($this->gallery->images)) {
-      $this->image =& $this->gallery->images[$image];
+      $this->image = $this->gallery->images[$image];
       return true;
     }
-    $this->image =& new sgImage("", $this->gallery);
+    $this->image = new sgImage("", $this->gallery);
     $this->image->name = $this->translator->_g("Image not found '%s'",htmlspecialchars($image));
     return false;
   }
@@ -775,14 +775,14 @@ class Singapore
     
     for($i = $start; $i < $start + $this->config->thumb_number_preview; $i++)
       if(isset($this->image->parent->images[$i]))
-        $ret[$i] =& $this->image->parent->images[$i];
+        $ret[$i] = $this->image->parent->images[$i];
       
     return $ret;
   }
   
   function previewThumbnails()
   {
-    $thumbs =& $this->previewThumbnailsArray();
+    $thumbs = $this->previewThumbnailsArray();
     $index = $this->image->index();
     $ret = "";
     foreach($thumbs as $key => $thumb) {
@@ -847,7 +847,7 @@ class Singapore
   
   function thumbnailPath($gallery, $image, $width, $height, $forceSize, $mode = 1)
   {
-    $config =& sgConfig::getInstance();
+    $config = sgConfig::getInstance();
     switch($mode) {
       case 0 :
         return $config->pathto_data_dir."cache/".$width."x".$height.($forceSize?"f":"").strtr("-$gallery-$image",":/?\\","----");
@@ -932,7 +932,7 @@ class Singapore
    */
   function mkdir($path)
   {
-    $config =& sgConfig::getInstance();
+    $config = sgConfig::getInstance();
     if($config->safe_mode_hack) {
       $connection = ftp_connect($config->ftp_server);
       // login to ftp server

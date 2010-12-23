@@ -39,7 +39,7 @@ class sgIOsql extends sgIO
    */
   function &getGallery($galleryId, &$parent, $getChildGalleries = 1, $language = null) 
   {
-    $gal =& new sgGallery($galleryId, $parent);
+    $gal = new sgGallery($galleryId, $parent);
     
     if($language == null) $language = $this->config->default_language;
     
@@ -81,7 +81,7 @@ class sgIOsql extends sgIO
                "WHERE galleryid='".$this->escape_string($galleryId)."' and lang=''");
       for($i=0;$i<$this->num_rows($res);$i++) {
         $imginfo = $this->fetch_array($res);
-        $gal->images[$i] =& new sgImage($imginfo['filename'], $gal);
+        $gal->images[$i] = new sgImage($imginfo['filename'], $gal);
         $gal->images[$i]->thumbnail = $imginfo['thumbnail'];
         $gal->images[$i]->owner = $imginfo['owner'];
         $gal->images[$i]->groups = $imginfo['groups'];
@@ -115,7 +115,7 @@ class sgIOsql extends sgIO
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
-        $gal->galleries[] =& $this->getGallery($galleryId."/".$gallery, $gal, $getChildGalleries-1, $language);
+        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $gal, $getChildGalleries-1, $language);
     else
       //otherwise just copy their names in so they can be counted
       $gal->galleries = $dir->dirs;

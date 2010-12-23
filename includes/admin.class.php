@@ -75,7 +75,7 @@ class sgAdmin extends Singapore
     $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
     //load config from singapore root directory
-    $this->config =& sgConfig::getInstance();
+    $this->config = sgConfig::getInstance();
     $this->config->loadConfig($basePath."singapore.ini");
     $this->config->loadConfig($basePath."secret.ini.php");
     
@@ -95,7 +95,7 @@ class sgAdmin extends Singapore
     //set current language from request vars or config
     $this->language = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : $this->config->default_language;
     //read the language file
-    $this->translator =& Translator::getInstance($this->language);
+    $this->translator = Translator::getInstance($this->language);
     $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.".$this->language.".pmo");
     $this->translator->readLanguageFile($this->config->base_path.$this->config->pathto_locale."singapore.admin.".$this->language.".pmo");
     
@@ -612,7 +612,7 @@ class sgAdmin extends Singapore
   
   function &allGalleriesArray()
   {
-    $root =& $this->io->getGallery(".", new stdClass, 100);
+    $root = $this->io->getGallery(".", new stdClass, 100);
     return $this->allGalleriesRecurse($root);
   }
   
@@ -786,7 +786,7 @@ class sgAdmin extends Singapore
   
   function savePermissions()
   {
-    $obj =& $this->gallery;
+    $obj = $this->gallery;
     
     $perms = 0;
     
@@ -940,9 +940,9 @@ class sgAdmin extends Singapore
   function reindexGallery($galleryId = null)
   {
     if($galleryId == null)
-      $gal =& $this->gallery;
+      $gal = $this->gallery;
     else
-      $gal =& $this->io->getGallery($galleryId, new stdClass);
+      $gal = $this->io->getGallery($galleryId, new stdClass);
     
     $imagesAdded = 0;
     //get list of images
@@ -1088,7 +1088,7 @@ class sgAdmin extends Singapore
     //explicitly set permissions on gallery directory
     @chmod($path, octdec($this->config->directory_mode));
     
-    $gal =& new sgGallery($newGalleryId, $this->gallery);
+    $gal = new sgGallery($newGalleryId, $this->gallery);
     $gal->name = $_REQUEST["newgallery"];
     
     //set object owner
@@ -1263,7 +1263,7 @@ class sgAdmin extends Singapore
       
     }
     
-    $img =& new sgImage($image, $this->gallery);
+    $img = new sgImage($image, $this->gallery);
     
     $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
     list($img->width, $img->height, $img->type) = GetImageSize($path);
@@ -1272,7 +1272,7 @@ class sgAdmin extends Singapore
     if(!$this->user->isGuest())
       $img->owner = $this->user->username;
     
-    $this->gallery->images[] =& $img;
+    $this->gallery->images[] = $img;
     
     //set as gallery thumbnail?
     if($this->gallery->imageCount()==1)
@@ -1370,7 +1370,7 @@ class sgAdmin extends Singapore
       // try to change file-permissions
       @chmod($path, octdec($this->config->file_mode));
       
-      $img =& new sgImage($image, $this->gallery);
+      $img = new sgImage($image, $this->gallery);
       
       $img->name = strtr(substr($image, strrpos($image,"/"), strrpos($image,".")-strlen($image)), "_", " ");
       list($img->width, $img->height, $img->type) = GetImageSize($path);

@@ -50,7 +50,7 @@ switch($setupStep) {
     setupHeader("Step 2 of 2: Delete database information");
     
     //create config object
-    $config =& sgConfig::getInstance();
+    $config = sgConfig::getInstance();
     $config->loadConfig($basePath."singapore.ini");
     $config->base_path = $basePath;
     

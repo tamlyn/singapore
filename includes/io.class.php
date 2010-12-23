@@ -30,7 +30,7 @@ class sgIO
    */
   function sgIO()
   {
-    $this->config =& sgConfig::getInstance();
+    $this->config = sgConfig::getInstance();
   }
   
   /**
@@ -74,7 +74,7 @@ class sgIO
    */
   function &getGallery($galleryId, &$parent, $getChildGalleries = 1, $language = null) 
   {
-    $gal =& new sgGallery($galleryId, $parent);
+    $gal = new sgGallery($galleryId, $parent);
     
     if(file_exists($this->config->base_path.$this->config->pathto_galleries.$galleryId)) { 
     
@@ -96,7 +96,7 @@ class sgIO
         //always get the first image for the gallery thumbnail 
         //but only get the rest if child galleries are requested
         if($getChildGalleries || $i==0) {
-          $gal->images[$i] =& new sgImage($dir->files[$i], $gal);
+          $gal->images[$i] = new sgImage($dir->files[$i], $gal);
         
           //trim off file extension and replace underscores with spaces
           $temp = strtr(substr($gal->images[$i]->id, 0, strrpos($gal->images[$i]->id,".")-strlen($gal->images[$i]->id)), "_", " ");
@@ -114,7 +114,7 @@ class sgIO
           ) = @GetImageSize($this->config->base_path.$this->config->pathto_galleries.$gal->id."/".$gal->images[$i]->id);
           
           //set parent link
-          $gal->images[$i]->parent =& $gal;
+          $gal->images[$i]->parent = $gal;
         } else
           //otherwise just create an empty array of the appropriate length
           $gal->images[$i] = $dir->files[$i];
@@ -127,7 +127,7 @@ class sgIO
     if($getChildGalleries)
       //but only fetch their info if required too
       foreach($dir->dirs as $gallery) 
-        $gal->galleries[] =& $this->getGallery($galleryId."/".$gallery, $gal, $getChildGalleries-1, $language);
+        $gal->galleries[] = $this->getGallery($galleryId."/".$gallery, $gal, $getChildGalleries-1, $language);
     else
       //otherwise just copy their names in so they can be counted
       $gal->galleries = $dir->dirs;

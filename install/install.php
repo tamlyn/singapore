@@ -92,7 +92,7 @@ switch($setupStep) {
     setupHeader("Step 2 of 2: Setup Database");
           
     //create config object
-    $config =& sgConfig::getInstance();
+    $config = sgConfig::getInstance();
     $config->loadConfig($basePath."singapore.ini");
     $config->base_path = $basePath;
     

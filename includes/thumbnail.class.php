@@ -31,8 +31,8 @@ class sgThumbnail
   
   function sgThumbnail(&$img, $type)
   {
-    $this->config =& sgConfig::getInstance();
-    $this->image  =& $img; 
+    $this->config = sgConfig::getInstance();
+    $this->image  = $img; 
     
     $widthVar  = "thumb_width_".$type;
     $heightVar = "thumb_height_".$type;

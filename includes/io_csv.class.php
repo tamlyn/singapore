@@ -62,10 +62,10 @@ class sgIO_csv extends sgIO
    */
   function &getGallery($galleryId, &$parent, $getChildGalleries = 1, $language = null) 
   {
-    $gal =& new sgGallery($galleryId, $parent);
+    $gal = new sgGallery($galleryId, $parent);
 
     if($language == null) {
-      $translator =& Translator::getInstance();
+      $translator = Translator::getInstance();
       $language = $translator->language;
     }
     
@@ -100,7 +100,7 @@ class sgIO_csv extends sgIO
       //only fetch individual images if child galleries are required
       if($getChildGalleries) {
         for($i=0;$i<count($temp)-3;$i++) {
-          $gal->images[$i] =& new sgImage($temp[$i+2][0], $gal, $this->config);
+          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal, $this->config);
           list(,
             $gal->images[$i]->thumbnail,
             $gal->images[$i]->owner,
@@ -131,7 +131,7 @@ class sgIO_csv extends sgIO
       //otherwise just fill in empty images
       } else if(count($temp) > 3) {
         for($i=0;$i<count($temp)-3;$i++)
-          $gal->images[$i] =& new sgImage($temp[$i+2][0], $gal);
+          $gal->images[$i] = new sgImage($temp[$i+2][0], $gal);
       }
         
     } else
