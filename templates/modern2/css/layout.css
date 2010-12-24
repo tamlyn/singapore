@@ -1,0 +1,348 @@
+/* 	
+	 Layout CSS for Modern - Singapore Template v1.3 (www.sgal.org)
+	   by Ross Howard (www.abitcloser.com)													
+*/
+
+/* Structure */
+													/* For editing and customisation read these notes */
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;		/* Set the font here to effect entire template */
+}
+
+#sgContainer {
+	width: 740px; 									/* This is the page width, if you want a full-screen/liquid layout use 'auto' */
+	border-right: 4px solid; 						/* If you use full-screen/liquid layout you probably want to set all borders to 'none' */
+	border-left: 1px solid;			 
+	border-top: 1px solid;
+	border-bottom: 4px solid;
+	margin: 24px auto 0 auto;
+}
+
+#sgHeader {
+	border-right: 1px solid;				
+}
+
+#sgOptions {
+	text-align: right;
+	float: right;
+	margin: 6px 0 0 0;
+}
+
+#sgMain-nav {
+	border-right: 1px solid;				
+	padding-top: 12px;
+	margin: 0 0 0 26px;
+	font-size: 11px;
+}
+
+#sgContent {
+	border-right: 1px solid;				
+	border-bottom: 1px solid;				
+	border-top: 1px solid;
+}
+
+#sgFooter {
+	width: 760px;
+	margin: 16px auto 0 auto;
+	padding: 0 0 16px 0;
+	text-align: center;
+}
+
+#sgUpdate {
+	font-size: 11px;
+	padding: 8px 0 8px 0;
+	text-align: center;
+	border-bottom: 1px solid;
+}
+
+
+/* Page Elements */
+
+.sgCrumb {
+	font-size: 11px;
+	line-height: 16px;
+	padding: 20px 0 16px 26px;
+}
+
+.sgGallery {
+	border: 1px solid;
+	margin: 18px 24px 24px 24px;
+	padding: 12px 12px 10px 12px;
+}
+
+.sgGalleryFloat {
+	margin: 18px 4px 12px 24px;
+	float: left;
+    width: 304px;
+}
+
+.sgAlbum {
+	border: 1px solid;
+	margin: 18px 24px 32px 24px;
+	padding: 22px 0 0 0;
+	clear: both;
+}
+
+.sgImageBox {
+	margin: 24px auto 24px auto;
+	position: relative;
+	font-size: 11px;
+	padding: 5px;
+	border: 1px solid;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+}
+
+img.sgImage  {
+	display: block;
+}
+
+.sgPreview {
+	text-align: center;
+	margin: 28px 0 24px 0;
+}
+
+.sgFoot {
+	clear: both;	
+}
+
+
+/* Typography */
+
+h2 {
+	font-size: 32px;
+	line-height: 32px;
+	font-weight: normal;
+	margin: 0 200px 0 24px;
+	padding: 0;
+}
+
+h3 {
+	font-size: 16px;
+	line-height: 18px;
+	font-weight: normal;
+	margin: 0px 0 6px 130px;
+	padding: 0;
+}
+
+h4 {
+	font-size: 11px;
+	line-height: 12px;
+	font-weight: normal;
+	margin: 0 0 0 26px;
+	padding: 0;
+}
+
+p {
+	font-size: 11px;
+	line-height: 16px;
+	margin: 6px 16px 4px 16px;
+}
+
+.sgGallery p {
+	border: none;
+	margin: 0 0 4px 130px;
+}
+
+#sgFooter p {
+	text-align: center;
+}
+
+p.sgLinks {
+	margin: 24px 0 -38px 24px;
+	padding: 0 0 6px 0;
+}
+
+p.sgTab {
+	line-height: 16px;
+	text-align: right;
+	margin: -16px 32px 0 24px;
+	padding: 0 0 0 0;
+	clear: both;
+}
+
+p.sgTab a{
+	margin-right: 0px;
+}
+
+p.sgFullsize {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* Links and Thumbnails */
+
+.sgAlbum a {
+	width: 134px;									/* This equals template.ini 'thumb_width_album' + padding and borders of inside img */
+	height: 134px;									/* This equals template.ini 'thumb_height_album' + padding and borders of inside img */
+	float: left;
+	text-align: center;
+	margin: 0 19px 20px 19px;	
+}
+
+.sgAlbum a img {
+	padding: 16px;									/* 16px x 2 = 32px																	*/
+	border: 1px solid	;							/* 1px x 2 = 2px 		= 34px														*/
+}
+
+.sgGallery a img {
+	padding: 16px;
+	border: 1px solid;
+	float: left;
+	margin: 0 -150px 0 0;
+}
+
+a:hover img.sgThumbnailAlbum, a:hover img.sgThumbGallery {
+	border: 1px solid;
+}
+
+.sgPreview a {
+	border: none;
+}
+
+.sgPreview a img {
+	border: 1px solid;
+	margin: 0 4px 0 4px;
+	padding: 2px;
+}
+
+img.sgThumbnailPreviewCurrent {
+	opacity: .6;
+}
+
+.sgPreview a:hover img, .sgPreview a:hover img.sgThumbnailPreviewCurrent{
+	border: 1px solid;
+	opacity: 1;
+}
+
+/* Details */
+
+dl {
+	font-size: 11px;
+	line-height: 16px;
+	margin: 12px 64px 24px 64px;
+	padding: 0;
+	text-align: center;
+}
+
+dt {
+	display: inline;
+	margin: 0 4px 0 0;
+	padding: 0;
+}
+
+dd {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+/* Forms */
+
+#sgOptions form{
+	border: none;
+	margin: 0 0 0 12px;
+	padding: 0 12px 0 0;
+	font-size: 10px;
+	display: inline;
+}
+
+input {
+	font-size: 10px;
+	margin: 12px 0 0 0;
+}
+
+select{
+	font-size: 10px;
+}
+
+/* Utility */
+
+.clear {
+	display: block;
+	clear:both;
+	float: none;
+}
+
+/* In-Image Rollovers */
+
+.sgImageBox a {
+	display: block;
+	position: absolute;
+	text-indent: -3000px;
+	font-size: 15px;
+	opacity: .0;
+	width: 80px;
+	text-align: center;
+}
+
+.sgImageBox a:hover {
+	opacity: .9;
+	text-indent: 0px;
+	text-decoration: none;
+}
+
+.sgImageBox a span{
+	display: block;
+}
+
+.sgImageBox a.thumb span, .sgImageBox a.control span{
+	margin-top: 22px;
+}
+
+.sgImageBox a.prev {
+	top: 5px;
+	left: 5px;
+	border-right: 1px solid;
+}
+
+.sgImageBox a.thumb {
+	top: 5px;
+	left: 5px;
+	height: 60px;
+	border-bottom: 1px solid;
+}
+
+.sgImageBox a.next {
+	top: 5px;
+	right: 5px;
+	border-left: 1px solid;
+}
+
+.sgImageBox a.control {
+	left: 5px;
+	bottom: 4px;
+	height: 60px;
+	border-top: 1px solid;
+}
+
+/* Slideshow */
+
+body#slideshow div.sgImageWrapper{
+	position: absolute;
+	top: 50%;
+	left: 0px;
+	width: 100%;
+}
+
+#slideshow div.sgImageBox {
+	margin: 0 auto 0 auto;
+	font-size: 11px;
+	padding: 5px;
+	border: none;
+}
+
+body#slideshow div img{
+	margin: 0px auto 0px;
+}
