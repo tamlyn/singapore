@@ -1,0 +1,12 @@
+Albums:
+<ol>
+	<?php foreach ($this->sgal->currentAlbum->albums as $album): ?>
+	<li><a href="?album=<?php echo $album->path; ?>"><?php echo $album->title; ?></a></li>
+	<?php endforeach; ?>
+</ol>
+Images:
+<ol>
+	<?php foreach ($this->sgal->currentAlbum->images as $image): ?>
+	<li><?php echo $image->title; ?></li>
+	<?php endforeach; ?>
+</ol>

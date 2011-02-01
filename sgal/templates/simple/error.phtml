@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Error</title>
+</head>
+<body>
+
+	<h1>Ah, shucks...</h1>
+	
+	<p><?php echo $exception->getMessage() ?></p>
+	
+	<p>Stack trace:</p>
+	<ol>
+	<?php 
+	
+	foreach (array_reverse($exception->getTrace()) as $trace) {
+		if (substr($trace['file'], 0, strlen(SGAL_BASE)) == SGAL_BASE) {
+			$trace['file'] = '...'.substr($trace['file'], strrpos(SGAL_BASE, DIRECTORY_SEPARATOR));
+		}
+		foreach ($trace['args'] as $key => $arg) {
+			if (is_string($arg)) $trace['args'][$key] = "'$arg'";
+			if (is_array($arg))  $trace['args'][$key] = "Array(".count($arg).")";
+			if (is_object($arg)) $trace['args'][$key] = "Object(".get_class($arg).")";
+		}
+		
+		echo "<li>$trace[file]($trace[line]): <code>";
+		if ($trace['class']) {
+			echo $trace['class'].$trace['type'];
+		}
+		echo $trace['function'].'(';
+		echo implode(', ', $trace['args']);
+		echo ")</code></li>\n";
+	}
+	?>
+	</ol>
+</body>
+</html>

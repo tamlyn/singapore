@@ -1,0 +1,1 @@
+This folder contains your albums and images. For best results, it should be writable (CHMOD 777).
