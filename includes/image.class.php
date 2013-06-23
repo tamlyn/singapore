@@ -216,6 +216,10 @@ class sgImage extends sgItem
     return '<a href="'.$this->URL().'">'.$this->thumbnailHTML($class, $type).'</a>';
   }
   
+  function thumbnailLinkLightBox($class = "sgThumbnailAlbum", $type = "album") {
+	return '<a href="'.$this->imageURL().'" rel="lightbox[1]" title="'.$this->name().'">'.$this->thumbnailHTML($class, $type).'</a>';
+  }  
+  
   function thumbnailPopupLink($class = "sgThumbnailAlbum", $type = "album")
   {
     $ret =  '<a href="'.$this->URL().'" onclick="';
