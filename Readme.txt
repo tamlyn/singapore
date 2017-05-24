@@ -1,6 +1,6 @@
 
  /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *  singapore - Copyright 2003 Tamlyn Rhodes <tam@zenology.org>        *
+ *  singapore - Copyright 2003 Tamlyn Rhodes <tamlyn@tamlyn.org>       *
  *                                                                     *
  *  singapore is free software; you can redistribute it and/or modify  *
  *  it under the terms of the GNU General Public License as published  *
