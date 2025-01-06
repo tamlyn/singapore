@@ -61,17 +61,6 @@ class sgAdmin extends Singapore
     //start execution timer
     $this->scriptStartTime = microtime();
 
-    //remove slashes
-    if(get_magic_quotes_gpc()) {
-      $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
-      
-      //as if magic_quotes_gpc wasn't insane enough, php doesn't add slashes 
-      //to the tmp_name variable so I have to add them manually. Grrrr.
-      foreach($_FILES as $key => $nothing)
-        $_FILES[$key]["tmp_name"] = addslashes($_FILES[$key]["tmp_name"]);
-      $_FILES   = array_map(array("Singapore","arraystripslashes"), $_FILES);
-    }
-    
     $galleryId = isset($_REQUEST["gallery"]) ? $_REQUEST["gallery"] : ".";
     
     //load config from singapore root directory
