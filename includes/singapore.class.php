@@ -201,7 +201,7 @@ class Singapore
     if(empty($galleryId)) $galleryId = isset($_REQUEST[$this->config->url_gallery]) ? $_REQUEST[$this->config->url_gallery] : ".";
     
     //try to validate gallery id
-    if(strlen($galleryId)>1 && $galleryId{1} != '/') $galleryId = './'.$galleryId;
+    if(strlen($galleryId)>1 && $galleryId[1] != '/') $galleryId = './'.$galleryId;
     
     //detect back-references to avoid file-system walking
     if(strpos($galleryId,"../")!==false) $galleryId = ".";
@@ -872,7 +872,7 @@ class Singapore
     while(false !== ($entry = readdir($dp)))
       if(is_dir($dir->path.$entry)) {
         if($entry    != "CVS" && $entry    != ".svn" && 
-         (($entry{0} != '.'   && $entry{0} != '_')   || $getHidden))
+         (($entry[0] != '.'   && $entry[0] != '_')   || $getHidden))
           $dir->dirs[] = $entry;
       } else {
         if($mask == null || preg_match("/\.($mask)$/i",$entry))
