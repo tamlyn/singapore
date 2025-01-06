@@ -208,7 +208,7 @@ class sgIO_csv extends sgIO
    * Fetches hit data from file.
    * @param sgGallery  gallery object to load hits into
    */
-  function getHits(&$gal) {
+  function getHits($gal) {
     
     $fp = @fopen($this->config->base_path.$this->config->pathto_galleries.$gal->id."/hits.csv","r");
     
