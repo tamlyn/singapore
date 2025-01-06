@@ -35,23 +35,23 @@ class sgConfig
   }
   
   /**
-	 * Parses an ini file for configuration directives and imports the values 
-	 * into the current object overwriting any previous values.
-	 * @param string relative or absolute path to the ini file to load
-	 * @return boolean true on success; false otherwise
-	 */
-	function loadConfig($configFilePath)
-	{
-	  if(!file_exists($configFilePath)) return false;
-	  
-	  //get values from ini file
+   * Parses an ini file for configuration directives and imports the values
+   * into the current object overwriting any previous values.
+   * @param string relative or absolute path to the ini file to load
+   * @return boolean true on success; false otherwise
+   */
+  function loadConfig($configFilePath)
+  {
+    if(!file_exists($configFilePath)) return false;
+
+    //get values from ini file
     $ini_values = parse_ini_file($configFilePath);
 
     //import values into object scope
     foreach($ini_values as $key => $value) $this->$key = $value;
  
     return true;
-	}
+  }
 }
 
 ?>
