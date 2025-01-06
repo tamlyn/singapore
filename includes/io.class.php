@@ -28,7 +28,7 @@ class sgIO
    * Constructor. Can be over-ridden by subclass but does not need to be.
    * @param sgConfig  pointer to current script configuration object
    */
-  function sgIO()
+  public function __construct()
   {
     $this->config = sgConfig::getInstance();
   }

@@ -29,7 +29,7 @@ class sgThumbnail
   var $imagePath = "";
   var $thumbPath = "";
   
-  function sgThumbnail(&$img, $type)
+  public function __construct(&$img, $type)
   {
     $this->config = sgConfig::getInstance();
     $this->image  = $img; 

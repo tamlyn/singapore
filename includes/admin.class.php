@@ -47,7 +47,7 @@ class sgAdmin extends Singapore
    * Admin constructor. Doesn't call {@link Singapore} constructor.
    * @param string the path to the base singapore directory
    */
-  function sgAdmin($basePath = "")
+  public function __construct($basePath = "")
   {
     //import class definitions
     //io handler class included once config is loaded

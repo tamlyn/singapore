@@ -27,7 +27,7 @@ class sgIO_sqlite extends sgIOsql
    * @param sgConfig pointer to a {@link sgConfig} object representing 
    *   the current script configuration
    */
-  function sgIO_sqlite()
+  public function __construct()
   {
     $this->config = sgConfig::getInstance();
     $this->db = sqlite_open($this->config->base_path.$this->config->pathto_data_dir."sqlite.dat");
