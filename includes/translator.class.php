@@ -43,7 +43,7 @@ class Translator
    * @param string  language code (optional)
    * @static
    */
-  function &getInstance($language = 0)
+  static function &getInstance($language = 0)
   {
     static $instances = array();
     

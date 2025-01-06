@@ -822,7 +822,7 @@ class Singapore
   /**
    * Slightly pointless method
    */
-  function conditional($conditional, $iftrue, $iffalse = null)
+  static function conditional($conditional, $iftrue, $iffalse = null)
   {
     if($conditional) return sprintf($iftrue, $conditional);
     elseif($iffalse != null) return sprintf($iffalse, $conditional);
@@ -833,7 +833,7 @@ class Singapore
    * Callback function for recursively stripping slashes
    * @static
    */
-  function arraystripslashes($toStrip)
+  static function arraystripslashes($toStrip)
   {
     if(is_array($toStrip))
       return array_map(array("Singapore","arraystripslashes"), $toStrip);
@@ -841,7 +841,7 @@ class Singapore
       return stripslashes($toStrip);
   }
   
-  function thumbnailPath($gallery, $image, $width, $height, $forceSize, $mode = 1)
+  static function thumbnailPath($gallery, $image, $width, $height, $forceSize, $mode = 1)
   {
     $config = sgConfig::getInstance();
     switch($mode) {
@@ -859,7 +859,7 @@ class Singapore
    * @returns stdClass|false  a data object representing the directory and its contents
    * @static
    */
-  function getListing($wd, $mask = null, $getHidden = false)
+  static function getListing($wd, $mask = null, $getHidden = false)
   {
     $dir = new stdClass;
     $dir->path = realpath($wd)."/";
@@ -957,7 +957,7 @@ class Singapore
    * @param bool    set false to prevent canonicalisation of paths (optional)
    * @return bool   true if $child is contained within or is $parent 
    */
-  function isSubPath($parent, $child, $canonicalise = true) 
+  static function isSubPath($parent, $child, $canonicalise = true)
   {
     $parentPath = $canonicalise ? realpath($parent) : $parent;
     $childPath = $canonicalise ? realpath($child) : $child;
@@ -965,7 +965,7 @@ class Singapore
   }
 
 
-  function isInGroup($groups1,$groups2) 
+  static function isInGroup($groups1,$groups2)
   {
     return (bool) array_intersect(explode(" ",$groups1),explode(" ",$groups2)); 
   }
