@@ -99,10 +99,6 @@ class Singapore
     //start execution timer
     $this->scriptStartTime = microtime();
     
-    //remove slashes
-    if(get_magic_quotes_gpc())
-      $_REQUEST = array_map(array("Singapore","arraystripslashes"), $_REQUEST);
-    
     //desanitize request
     $_REQUEST = array_map("htmlentities", $_REQUEST);
     
