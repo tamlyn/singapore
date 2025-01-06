@@ -24,7 +24,7 @@ class sgConfig
    * Implements the Singleton design pattern by always returning a reference
    * to the same sgConfig object. Use instead of 'new'.
    */
-  function &getInstance()
+  static function &getInstance()
   {
     static $instance;
     if(!is_object($instance))
