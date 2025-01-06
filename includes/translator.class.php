@@ -31,7 +31,7 @@ class Translator
    * @param string  language code
    * @private
    */
-  function Translator($language)
+  public function __construct($language)
   {
     $this->language = $language;
   }

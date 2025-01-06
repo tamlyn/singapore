@@ -22,7 +22,7 @@ class sgIO_mysql extends sgIOsql
    * @param sgConfig pointer to a {@link sgConfig} object representing 
    *   the current script configuration
    */
-  function sgIO_mysql()
+  public function __construct()
   {
     $this->config = sgConfig::getInstance();
     mysql_connect($this->config->sql_host, $this->config->sql_user, $this->config->sql_pass);

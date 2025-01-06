@@ -85,7 +85,7 @@ class Singapore
    * Constructor, does all init type stuff. This code is a total mess.
    * @param string the path to the base singapore directory
    */
-  function Singapore($basePath = "")
+  public function __construct($basePath = "")
   {
     //import class definitions
     //io handler class included once config is loaded

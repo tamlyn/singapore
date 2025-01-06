@@ -68,7 +68,7 @@ class sgUser
   /**
    * Constructor ensures username and userpass have values
    */
-  function sgUser($username, $userpass)
+  public function __construct($username, $userpass)
   {
     $this->username = $username;
     $this->userpass = $userpass;
