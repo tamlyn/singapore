@@ -53,7 +53,7 @@ class sgImage extends sgItem
    * @param string     image id
    * @param sgGallery  reference to the parent gallery
    */
-  public function __construct($id, &$parent)
+  public function __construct($id, $parent)
   {
     $this->id = $id;
     $this->parent = $parent;
