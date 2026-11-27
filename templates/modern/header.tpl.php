@@ -8,7 +8,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 <style type="text/css">@import url('.$sg->config->base_url.$sg->config->pathto_current_template.'css/layout.css);</style>
 <style type="text/css">@import url('.$sg->config->base_url.$sg->config->pathto_current_template.'css/color_'.$sg->config->template_scheme.'.css);</style>
 <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="'.$sg->config->base_url.$sg->config->pathto_current_template.'css/ie.css"><![endif]-->
-<link rel="alternate" type="application/rss+xml" title="'.$sg->pageTitle().'" href="'.$_SERVER["PHP_SELF"]; if (isset($_GET["gallery"])) { echo '?gallery='.$_GET["gallery"];} echo '&template=rss" />
+<link rel="alternate" type="application/rss+xml" title="'.$sg->pageTitle().'" href="'.$_SERVER["PHP_SELF"]; if (isset($_GET["gallery"])) { echo '?gallery='.htmlspecialchars($_GET["gallery"], ENT_COMPAT | ENT_DISALLOWED | ENT_XHTML);} echo '&template=rss" />
 '.$sg->navigationLinks().'</head>
 <body>
 ';
